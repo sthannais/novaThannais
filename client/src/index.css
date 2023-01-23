@@ -29,8 +29,14 @@
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
-
+        height: 100vh;
     }
+
+
+
+    /* @media screen and (max-width: 1366px) {
+        
+    } */
     
     /**
  * Render the `main` element consistently in IE.

@@ -48,7 +48,7 @@ const RendicionPage = () => {
         dispatch(ordenesRendicion())
     }
     return (
-        <div>
+        <div className={style.conenedor}>
             <p className={style.text}>Rendicion de gastos</p>
             <img src={JorgeGas} alt="logo" className={style.logo} />
             <div className={style.container}>

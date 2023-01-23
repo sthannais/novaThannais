@@ -26,7 +26,7 @@ const MainPage = () => {
     }, [dispatch])
 
     return (
-        <div>
+        <div className={style.margin}>
             <p className={style.text}>Lista de personal</p>
             <img src={JorgeGas} alt="logo" className={style.logo} />
             <div className={style.container}>

@@ -150,7 +150,6 @@
 
     .tableContainer {
         height: 32rem;
-        margin-top: -0.5rem;
     }
 
     .tabla {
@@ -160,6 +159,14 @@
     .containerPaginado{
         margin-left: 52.5rem;
         margin-top: -0.5rem;
+    }
+
+    .excel{
+        width: 135px;
+        height: 33px;
+        font-size: 14px;
+        top: 1.3rem;
+        left: 82%;
     }
 }
 
