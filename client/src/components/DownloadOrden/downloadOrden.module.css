@@ -1,0 +1,78 @@
+.iconContainer {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-items: center;
+    font-family: 'Roboto';
+    cursor: pointer;
+    width: 4rem;
+    margin-top: -3.7rem;
+    margin-left: 65rem;
+}
+.icon {
+    width: 2.8rem;
+    height: 2.8rem;
+    cursor: pointer;
+}
+
+.tabla {
+    border-radius: 5px 5px 0px 0px;
+    background: #FFFFFF;
+}
+
+.inputContainer {
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    display: flex;
+}
+
+.inputContainer2 {
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    display: flex;
+    padding: 0%;
+}
+
+.inputs{
+    width: 57px !important;
+    height: 25px !important;
+}
+
+.inputs2{
+    width: 100px !important;
+    height: 25px !important;
+    text-align: center;
+}
+
+.inputs3{
+    width: 190px;
+    height: 37px;
+}
+
+.grid3{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 1rem;
+    padding-left: 3rem;
+}
+
+@media screen and (min-width: 1800px) {
+    .iconContainer {
+        margin-left: 85rem;
+    }
+}
+
+@media screen and ( max-width: 1366px ) {
+    .iconContainer {
+        margin-left: 53rem;
+    }
+}
+
+
+
+
+
+

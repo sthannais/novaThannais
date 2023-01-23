@@ -1,0 +1,175 @@
+.container {
+    position: absolute;
+    top: 70px;
+    left: 17rem;
+    background-color: #F5F5F5;
+    width: 1210px;
+    height: 810px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    font-family: 'Roboto';
+}
+
+.text {
+    position: absolute;
+    left: 20%;
+    top: 4.5%;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 23px;
+    color: #FFFFFF;
+}
+
+.logo {
+    position: absolute;
+    left: 85%;
+    top: 2.5%;
+}
+
+.button {
+    position: absolute;
+    left: 5%;
+    top: 8%;
+    width: 160px;
+    height: 45px;
+    font-family: "Roboto";
+    font-weight: 800;
+    font-size: 14px;
+    background: #5E5F5F;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+}
+
+.button:hover {
+    background: #808080;
+}
+
+.selected {
+    position: absolute;
+    left: 20%;
+    top: 8%;
+    width: 225px;
+    height: 45px;
+}
+
+.datePicker {
+    position: absolute;
+    left: 5%;
+    top: 18%;
+    font-family: "Roboto";
+    font-size: 14px;
+}
+
+.textDatePicker {
+    color: #000000;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: 'Roboto';
+    text-align: center;
+}
+
+.classDatePicker {
+    border-radius: 3px;
+    border: 1px solid #000000;
+    background: #eed9d9;
+    width: 10rem;
+    height: 2rem;
+    text-align: center;
+}
+
+@media screen and (min-width: 1800px) {
+
+    .container {
+        position: absolute;
+        top: 70px;
+        left: 17rem;
+        width: 1590px;
+        height: 850px;
+    }
+
+    .text {
+        position: absolute;
+        left: 16.5%;
+        top: 3%;
+    }
+
+    .logo {
+        left: 89%;
+        top: 2%;
+    }
+
+    .button {
+        left: 5%;
+        top: 8%;
+        width: 180px;
+        height: 45px;
+        font-family: "Roboto";
+        font-weight: 800;
+        font-size: 16px;
+    }
+
+    .datePicker {
+        left: 5%;
+        top: 18%;
+    }
+
+    .textDatePicker {
+        font-size: 16px;
+    }
+
+    .classDatePicker {
+        border-radius: 3px;
+        border: 1px solid #000000;
+        background: #eed9d9;
+        width: 10rem;
+        height: 2rem;
+        text-align: center;
+    }
+}
+
+@media screen and ( max-width: 1366px ) {
+    
+    .text {
+        font-size: 16px;
+        left: 22%;
+        top: 2.5%;
+    }
+
+    .logo {
+        top: 0.5%;
+    }
+
+    .container {
+        width: 1040px;
+        height: 765px;
+        top: 52px;
+    }  
+
+    .button {
+        left: 4.5%;
+        top: 6%;
+        width: 160px;
+        height: 37px;
+        font-size: 14px;
+    }
+    
+    .datePicker {
+        left: 5%;
+        top: 15%;
+    }
+    
+    .textDatePicker {
+        font-size: 15px;
+    }
+
+    .selected {
+        left: 22%;
+        top: 6%;
+        width: 228px;
+        height: 37px;
+    }
+}
