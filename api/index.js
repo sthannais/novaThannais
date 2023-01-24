@@ -23,7 +23,7 @@ const createRoles = require('./src/testingCreators/roles.js');
 const createPatentes = require('./src/testingCreators/patentes.js');
 const createCuadrantes = require('./src/testingCreators/cuadrante.js');
 const createPrecios = require('./src/testingCreators/precios.js');
-const { createChoferes, createAdministradores, createAuxiliares, createAyudantes} = require('./src/testingCreators/usuarios.js');
+const { createChoferes, createAdministradores, createAyudantes} = require('./src/testingCreators/usuarios.js');
 const PORT = process.env.PORT || 3001;
 
 // Syncing all the models at once.
@@ -37,8 +37,8 @@ conn.sync({ force: true }).then(() => {
     const choferes = await Chofer.findAll();
     if (choferes.length < 1) createChoferes();
 
-    const auxiliares = await Auxiliar.findAll();
-    if (auxiliares.length < 1) createAuxiliares();
+    // const auxiliares = await Auxiliar.findAll();
+    // if (auxiliares.length < 1) createAuxiliares();
 
     const ayudantes = await Ayudante.findAll();
     if (ayudantes.length < 1) createAyudantes();

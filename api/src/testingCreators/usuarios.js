@@ -3,74 +3,291 @@ const bcrypt = require('bcryptjs');
 
 const choferes = [
     {
-        name: 'Juan',
-        lastname: 'Perez',
-        email: 'juan@gmail.com',
+        name: 'Luis',
+        lastname: 'Duran',
+        email: 'LuisDuran@gmail.com',
         password: '123456789',
         rut: '123456789',
     },
     {
-        name: 'Pedro',
-        lastname: 'Gomez',
-        email: 'pedro@gmail.com',
-        password: '123456789',
-        rut: '123456789',
-    },
-    {
-        name: 'Maria',
-        lastname: 'Gonzalez',
-        email: 'maria@gmail.com',
-        password: '123456789',
-        rut: '123456789',
-    }
-]
-
-const auxiliares = [
-    {
-        name: 'Jose',
-        lastname: 'Perez',
-        email: 'jose@gmail.com',
+        name: 'Jornan',
+        lastname: 'Acurero',
+        email: 'jornanAcurero@gmail.com',
         password: '123456789',
         rut: '123456789',
     },
     {
         name: 'Luis',
-        lastname: 'Gomez',  
-        email: 'Luis@gmail.com',
+        lastname: 'Coronado',
+        email: 'luisCoronado@gmail.com',
         password: '123456789',
         rut: '123456789',
     },
     {
-        name: 'Ana',
-        lastname: 'Gonzalez',
-        email: 'ana@gmail.com',
+        name: 'Carlos',
+        lastname: 'Vargas',
+        email: 'carlosVargas@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Nilander',
+        lastname: 'Moreno',
+        email: 'nilanderMoreno@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Wandell',
+        lastname: 'Lubin',
+        email: 'wandellLubin@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Ariennys',
+        lastname: 'Vidal',
+        email: 'AriennysVidal@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Jhonatan',
+        lastname: 'Cubillan',
+        email: 'jhonatanCubillan@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Roger',
+        lastname: 'Guevara',
+        email: 'rogerGuevara@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Junior',
+        lastname: 'Rosales',
+        email: 'juniorRosales@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Jose',
+        lastname: 'Hernandez',
+        email: 'joseHernandez@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Vicente',
+        lastname: 'Ribeiro',
+        email: 'vicenteRibeiro@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Jesus',
+        lastname: 'Lozada',
+        email: 'jesusLozada@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Andral',
+        lastname: 'Jean',
+        email: 'andralJean@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Jose',
+        lastname: 'villablanca',
+        email: 'joseVillablanca@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Julio',
+        lastname: 'Palima',
+        email: 'julioPalima@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Egnis',
+        lastname: 'Mato',
+        email: 'egnisMato@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Luis Angel',
+        lastname: 'Coronado',
+        email: 'luisAngelCoronado@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Jose',
+        lastname: 'Tucupido',
+        email: 'joseTucupido@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Marcelo',
+        lastname: 'Jimenez',
+        email: 'marceloJimenez@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Maikel',
+        lastname: 'Olmedillo',
+        email: 'maikelOlmedillo@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Jose',
+        lastname: 'Orellana',
+        email: 'joseOrellana@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Felipe',
+        lastname: 'Oria',
+        email: 'felipeOria@gmail.com',
         password: '123456789',
         rut: '123456789',
     }
 ]
 
+// const auxiliares = [
+//     {
+//         name: 'Jose',
+//         lastname: 'Perez',
+//         email: 'jose@gmail.com',
+//         password: '123456789',
+//         rut: '123456789',
+//     },
+//     {
+//         name: 'Luis',
+//         lastname: 'Gomez',  
+//         email: 'Luis@gmail.com',
+//         password: '123456789',
+//         rut: '123456789',
+//     },
+//     {
+//         name: 'Ana',
+//         lastname: 'Gonzalez',
+//         email: 'ana@gmail.com',
+//         password: '123456789',
+//         rut: '123456789',
+//     }
+// ]
+
 const ayudantes = [
     {
+        name: 'Williams',
+        lastname: 'Veliz',
+        email: 'williamsVeliz@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Daniel',
+        lastname: 'Valbuena',
+        email: 'danielValbuena@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
         name: 'Carlos',
+        lastname: 'Quintero',
+        email: 'carlosQuintero@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Peterson',
+        lastname: 'Sainta',
+        email: 'petersonSainta@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Octavio',
         lastname: 'Perez',
-        email: 'carlos@gmail.com',
+        email: 'octavioPerez@gmail.com',
         password: '123456789',
         rut: '123456789',
     },
     {
-        name: 'Miguel',
-        lastname: 'Gomez',
-        email: 'miguel@gmail.com',
+        name: 'Franklin',
+        lastname: 'Hernandez',
+        email: 'FranklinHernandez@gmail.com',
         password: '123456789',
         rut: '123456789',
     },
     {
-        name: 'Lucia',
-        lastname: 'Gonzalez',
-        email: 'lucia@gmail.com',
+        name: 'Gregory',
+        lastname: 'Hernandez',
+        email: 'gregoryHernandez@gmail.com',
         password: '123456789',
         rut: '123456789',
-    }
+    },
+    {
+        name: 'Juan',
+        lastname: 'Galindo',
+        email: 'juanGalindo@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Ruhander',
+        lastname: 'Diaz',
+        email: 'ruhanderDiaz@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Luigi',
+        lastname: 'Coronado',
+        email: 'luigiCoronado@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Christian',
+        lastname: 'Campos',
+        email: 'christianCampos@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Juan',
+        lastname: 'Burgos',
+        email: 'juanBurgos@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Jordan',
+        lastname: 'Briceño',
+        email: 'jordanBriceño@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Jose',
+        lastname: 'Atencio',
+        email: 'JoseAtencio@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
 ]
 
 const administradores = [
@@ -92,16 +309,6 @@ const administradores = [
         name: 'Sofia',
         lastname: 'Gonzalez',
         email: 'sofia@gmail.com',
-        password: '123456789',
-        rut: '123456789',
-    }
-]
-
-const administradorMaestro = [
-    {
-        name: 'Jorge',
-        lastname: 'Soto',
-        email: 'jorgesoto@gmail.com',
         password: '123456789',
         rut: '123456789',
     }
@@ -134,32 +341,32 @@ const createChoferes = async () => {
     }())
 };
 
-const createAuxiliares = async () => {
+// const createAuxiliares = async () => {
 
-    auxiliares.map(c => async function () {
+//     auxiliares.map(c => async function () {
 
-        const actualAuxiliar = await Personal.create({
-            name: c.name,
-            lastname: c.lastname,
-            email: c.email,
-            password: bcrypt.hashSync(c.password, 10),
-            rut: c.rut,
-        });
+//         const actualAuxiliar = await Personal.create({
+//             name: c.name,
+//             lastname: c.lastname,
+//             email: c.email,
+//             password: bcrypt.hashSync(c.password, 10),
+//             rut: c.rut,
+//         });
 
-        // Seteo el auxiliar al personal
-        const auxiliar = await Auxiliar.create();
-        actualAuxiliar.setAuxiliar(auxiliar);
+//         // Seteo el auxiliar al personal
+//         const auxiliar = await Auxiliar.create();
+//         actualAuxiliar.setAuxiliar(auxiliar);
 
-        // Seteo el rol al personal
-        const rol = await Rol.findOne({
-            where: {
-                name: 'Auxiliar'
-            }
-        });
-        actualAuxiliar.setRol(rol);
+//         // Seteo el rol al personal
+//         const rol = await Rol.findOne({
+//             where: {
+//                 name: 'Auxiliar'
+//             }
+//         });
+//         actualAuxiliar.setRol(rol);
 
-    }())
-};
+//     }())
+// };
 
 const createAyudantes = async () => {
 
@@ -218,7 +425,7 @@ const createAdministradores = async () => {
 
 module.exports = {
     createChoferes,
-    createAuxiliares,
+    // createAuxiliares,
     createAyudantes,
     createAdministradores,
 };
