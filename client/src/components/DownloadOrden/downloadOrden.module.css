@@ -8,8 +8,18 @@
     cursor: pointer;
     width: 4rem;
     margin-top: -3.7rem;
-    margin-left: 65rem;
+    margin-left: 57.5rem;
 }
+
+.botonsito {
+    background-color: transparent;
+    cursor: pointer;
+    font-family: 'Roboto';
+    font-size: 14px;
+    font-weight: 800;
+    color: #3C3C3C;
+}
+
 .icon {
     width: 2.8rem;
     height: 2.8rem;
@@ -61,13 +71,14 @@
 
 @media screen and (min-width: 1800px) {
     .iconContainer {
-        margin-left: 85rem;
+        margin-left: 82.5rem;
     }
 }
 
 @media screen and ( max-width: 1366px ) {
     .iconContainer {
-        margin-left: 53rem;
+        margin-top: -3.8rem;
+        margin-left: 48.5rem;
     }
 }
 

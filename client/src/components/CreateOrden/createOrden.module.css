@@ -4,12 +4,20 @@
     grid-template-columns: 1fr;
     align-items: center;
     justify-items: center;
-    font-family: 'Roboto';
     cursor: pointer;
-    margin-left: 58rem;
-    font-size: 14px;
+    margin-left: 51rem;
+    font-size: 24px;
     width: 5rem;
     height: 4rem;
+}
+
+.botonsito {
+    background-color: transparent;
+    cursor: pointer;
+    font-family: 'Roboto';
+    font-size: 14px;
+    font-weight: 800;
+    color: #3C3C3C;
 }
 
 .icon {
@@ -97,12 +105,13 @@
 
 @media screen and (min-width: 1800px) {
     .iconContainer2 {
-        margin-left: 78rem;
+        margin-left: 76rem;
     }
 }
 
 @media screen and ( max-width: 1366px ) {
     .iconContainer2 {
-        margin-left: 47rem;
+        
+        margin-left: 42.6rem;
     }
 }

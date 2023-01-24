@@ -193,11 +193,7 @@ const DownloadOrden = () => {
                     () => {
                         dispatch(ordenesActivas());
                         toggle();
-                    }
-                    } style={{
-                        backgroundColor: 'transparent',
-                        cursor: 'pointer',
-                    }}>
+                    }} className={style.botonsito}>
                     <img src={descargar} alt="descargar" className={style.icon} />
                     <p>Descargar</p>
                 </button>

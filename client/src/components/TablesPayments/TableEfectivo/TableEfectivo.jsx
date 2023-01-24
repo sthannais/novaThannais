@@ -3,18 +3,15 @@ import { Table } from 'reactstrap'
 import { numberWithDots } from '../../../helpers/numberWithDot'
 import style from './tableEfectivo.module.css'
 
-const TableEfectivo = ({ novaOrdenById }) => {
-
+const TableEfectivo = ({ novaOrdenById, tabla2Ref }) => {
     const efectivo = novaOrdenById?.metodoPagos?.map((metodoPago) => metodoPago.efectivo)
     const efectivoObj = efectivo ? Object.assign({}, ...efectivo) : null
 
     return (
         <div className={style.tabla}>
-            <Table
-                bordered
-                hover
-                responsive
-                className="table-sm"
+            <table
+                className="table-sm table table-bordered table-hover"
+                ref={tabla2Ref}
             >
                 <thead>
                     <tr>
@@ -135,7 +132,7 @@ const TableEfectivo = ({ novaOrdenById }) => {
                         </td>
                     </tr>
                 </tbody>
-            </Table>
+            </table>
         </div>
     )
 }

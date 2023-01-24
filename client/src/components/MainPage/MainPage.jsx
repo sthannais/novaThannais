@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPersonals } from '../../redux/novaSlice/thunks';
 import JorgeGas from '../../assetsOficial/jorgegas.svg';
 import style from './mainPage.module.css';
-import { RiFileExcel2Fill } from 'react-icons/ri';
 import CreatePersonal from '../CreatePersonal/CreatePersonal';
 import { Table } from 'reactstrap';
 import Paginado from '../Paginado/Paginado';
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import ExcelDownload from '../ExcelDownload/ExcelDownload';
 
 const MainPage = () => {
 
@@ -32,19 +31,7 @@ const MainPage = () => {
             <div className={style.container}>
                 <div>
                     <CreatePersonal />
-                    <ReactHTMLTableToExcel
-                    id="test-table-xls-button"
-                    className={style.excel}
-                    table="table-to-xls"
-                    filename="tablexls"
-                    sheet="tablexls"
-                    buttonText={
-                            <>
-                                <RiFileExcel2Fill className={style.icon} />
-                                Exportar a Excel
-                            </>
-                        }
-                    /> 
+                    <ExcelDownload id="table-to-xls" style2={style.excel} name="lista de personal"/>
                 </div>
                 <div className={style.tableContainer}>
                     <Table 
@@ -63,7 +50,7 @@ const MainPage = () => {
                                 <th className="px-4 py-3">Rol</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody >
                             {currentPosts?.map((personal) => (
                                 <tr key={personal.id}>
                                     <td className="px-4 py-3">{personal.name}</td>

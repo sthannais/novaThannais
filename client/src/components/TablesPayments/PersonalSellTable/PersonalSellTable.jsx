@@ -13,7 +13,7 @@ import style from './personalSellTable.module.css'
 
 registerLocale('es', es);
 
-const PersonalSellTable = () => {
+const PersonalSellTable = ({id}) => {
 
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const dispatch = useDispatch()
@@ -57,6 +57,7 @@ const PersonalSellTable = () => {
                         hover
                         responsive
                         className="table"
+                        id={id}
                     >
                         <thead>
                             <tr>

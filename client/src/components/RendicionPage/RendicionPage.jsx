@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import DatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
@@ -17,6 +17,9 @@ import OrdenInfo from '../TablesPayments/OrdenInfo/OrdenInfo';
 import Cuadratura from '../Cuadratura/Cuadratura';
 import { numberWithDots } from '../../helpers/numberWithDot';
 import ModifyOrden from '../ModifyOrden/ModifyOrden';
+import { RiFileExcel2Fill } from 'react-icons/ri';
+import XLSX from 'xlsx';
+
 
 registerLocale('es', es);
 
@@ -34,19 +37,37 @@ const RendicionPage = () => {
     const [date , setDate] = useState(new Date())
     const soloFecha = date.toISOString().slice(0, 10);
 
+    const tabla1Ref = useRef(null);
+    const tabla2Ref = useRef(null);
+
+    const handleExportExcel = () => {
+        const tabla1Data = [...tabla1Ref.current.querySelectorAll("tr")].map(row => [...row.querySelectorAll("td,th")].map(cell => cell.innerText));
+        const tabla2Data = [...tabla2Ref.current.querySelectorAll("tr")].map(row => [...row.querySelectorAll("td,th")].map(cell => cell.innerText));
+    
+        const libroExcel = XLSX.utils.book_new();
+        const hoja1 = XLSX.utils.aoa_to_sheet(tabla1Data);
+        const hoja2 = XLSX.utils.aoa_to_sheet(tabla2Data);
+    
+        XLSX.utils.book_append_sheet(libroExcel, hoja1, "rendicion-tarros");
+        XLSX.utils.book_append_sheet(libroExcel, hoja2, "efectivo");
+    
+        XLSX.writeFile(libroExcel, `rendicion-${soloFecha}.xlsx`);
+    }
+
     useEffect(() => {
         dispatch(bringOrdenByAdminId(usuario.administrador.id, soloFecha))
     }, [
         dispatch,
         usuario.administrador.id,
         soloFecha,
-        novaOrdenById?.contabilidadRecarga?.totalRecaudacion
+        novaOrdenById?.contabilidadRecarga?.totalRecaudacion,
     ])
 
     const dispatchOrden = () => {
         dispatch(bringOrdenById(ordenId))
         dispatch(ordenesRendicion())
     }
+
     return (
         <div className={style.conenedor}>
             <p className={style.text}>Rendicion de gastos</p>
@@ -112,12 +133,15 @@ const RendicionPage = () => {
                     )
                 }
                 <ModifyOrden novaOrdenById={novaOrdenById} ordenId={ordenId}/>
+                <button onClick={handleExportExcel} className={style.excel}>
+                    <RiFileExcel2Fill className={style.icon3} />
+                    <p>Exportar a excel</p>
+                </button>
                 <div className={style.tableContainer}>
-                    <Table 
-                        bordered
-                        hover   
-                        responsive
-                        className="table-sm" 
+                    <table 
+                        className="table-sm table table-bordered table-hover" 
+                        id='table-to-xls3'
+                        ref={tabla1Ref}
                     >
                         <thead>
                             <tr>
@@ -300,7 +324,7 @@ const RendicionPage = () => {
                                 </td>
                             </tr>
                         </tbody>
-                    </Table>   
+                    </table>   
                 </div> 
                 {
                     novaOrdenById?.rendida === false ? (
@@ -310,10 +334,10 @@ const RendicionPage = () => {
                 <RecaudacionOrden novaOrdenById={novaOrdenById} />
                 <OrdenInfo novaOrdenById={novaOrdenById} />
                 <div className={style.containerTables}>
-                    <TableVales novaOrdenById={novaOrdenById} />
-                    <TableEfectivo novaOrdenById={novaOrdenById} />
+                    <TableVales novaOrdenById={novaOrdenById} id="table-to-xls4"/>
+                    <TableEfectivo novaOrdenById={novaOrdenById} id="table-to-xls5" tabla2Ref={tabla2Ref}/>
                 </div>
-                <TablePayment novaOrdenById={novaOrdenById} />
+                <TablePayment novaOrdenById={novaOrdenById} id="table-to-xls6"/>
             </div>
         </div>
     )

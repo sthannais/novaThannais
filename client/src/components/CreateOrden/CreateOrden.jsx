@@ -171,10 +171,7 @@ const CreateOrden = () => {
     return (
         <div>
             <div className={style.iconContainer2}>
-                <button onClick={toggle} style={{
-                    backgroundColor: 'transparent',
-                    cursor: 'pointer',
-                }}>
+                <button onClick={toggle} className={style.botonsito}>
                     <img src={carrito} alt="carrito" className={style.icon}/>
                     <p>Crear orden</p>
                 </button>

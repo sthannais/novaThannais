@@ -10,6 +10,7 @@ import DownloadOrden from '../DownloadOrden/DownloadOrden';
 import style from './guidePage.module.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import es from 'date-fns/locale/es';
+import ExcelDownload from '../ExcelDownload/ExcelDownload';
 
 registerLocale('es', es);
 
@@ -52,6 +53,7 @@ const GuidePage = () => {
                         onClickOutside={() => dispatch(bringOrdenByAdminId(usuario.administrador.id, soloFecha))}
                     />
                 </div>
+                    <ExcelDownload id="table-to-xls2" style2={style.excel} name={`Guida de reparto ${usuario.name} ${usuario.lastname} ${soloFecha}`}/>
                     <CreateOrden/>
                     <DownloadOrden/>
                 <div className={style.tableContainer}>
@@ -60,6 +62,7 @@ const GuidePage = () => {
                         hover
                         responsive
                         className={style.tabla}
+                        id="table-to-xls2"
                     >
                         <thead>
                             <tr>

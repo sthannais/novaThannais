@@ -3,7 +3,7 @@ import { Table } from 'reactstrap'
 import style from './tableVales.module.css'
 import { numberWithDots } from '../../../helpers/numberWithDot'
 
-const TableVales = ({ novaOrdenById }) => {
+const TableVales = ({ novaOrdenById }, props) => {
     return (
         <div className={style.tabla}>
             <Table
@@ -11,6 +11,7 @@ const TableVales = ({ novaOrdenById }) => {
                 hover
                 responsive
                 className="table-md"
+                id={props["table-to-xls"]}
             >
                 <thead>
                     <tr>

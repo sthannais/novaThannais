@@ -19,32 +19,18 @@
 .excel{
     position: absolute;
     left: 83%;
-    top: 3.4%;
+    top: 2%;
     cursor: pointer;
     text-align: center;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 14px;
     border-radius: 5px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 16px;
-    font-family: 'Roboto';
-    color: #FFFFFF !important;
-    background-color: #5E5F5F;
+    color: #3C3C3C !important;
+    font-family: "Roboto";
+    font-weight: 800;
+    background-color: transparent;
     width: 164px;
     height: 37px;
-}
-
-.excel:hover{
-    color: #5E5F5F;
-    border: 1px solid #5E5F5F;
-    background-color: #8f9191;
-}
-
-.icon {
-    width: 1.2rem;
-    height: 1.2rem;
-    margin-right: 0.5rem;
 }
 
 .container {

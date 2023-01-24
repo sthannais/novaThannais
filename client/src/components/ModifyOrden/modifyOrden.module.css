@@ -1,7 +1,7 @@
 .boton{
     position: absolute;
-    left: 62rem;
-    top: 3.3rem;
+    left: 54rem;
+    top: 3rem;
     width: 160px;
     height: 35px;
     background-color: #F65108;
@@ -47,7 +47,7 @@
 
 @media screen and ( min-width: 1800px ) {
     .boton{
-        left: 84rem;
+        left: 70rem;
         top: 5.5rem;
         width: 180px;
         height: 40px;
@@ -56,7 +56,7 @@
 
 @media screen and ( max-width: 1366px ) {
     .boton{
-        left: 53rem;
+        left: 49rem;
         top: 3.3rem;
         width: 140px;
         height: 30px;
