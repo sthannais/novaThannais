@@ -20,10 +20,10 @@
 
 .tabla {
     text-align: center;
-    font-size: 1rem;
+    font-size: 14px;
     overflow: hidden;
     width: 20rem;
-    height: 22.8rem;
+    height: 26rem;
     border: 1px solid #3C3C3C;
     border-radius: 15px;
     background-color: #FFFFFF;
@@ -41,7 +41,7 @@
     }
 
     .tabla {
-        font-size: 1.1rem;
+        font-size: 12.5px;
         height: 24.5rem;
     }
 
@@ -60,7 +60,7 @@
     }
 
     .tabla {
-        font-size: 14px;
-        height: 20.8rem;
+        font-size: 12px;
+        height: 24rem;
     }
 }
