@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import DatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
-import { Input, Table }  from 'reactstrap';
+import { Input }  from 'reactstrap';
 import { bringOrdenById, ordenesRendicion, bringOrdenByAdminId } from '../../redux/novaSlice/thunks';
 import 'bootstrap/dist/css/bootstrap.css';
 import style from './rendicionPage.module.css';
@@ -19,7 +19,6 @@ import { numberWithDots } from '../../helpers/numberWithDot';
 import ModifyOrden from '../ModifyOrden/ModifyOrden';
 import { RiFileExcel2Fill } from 'react-icons/ri';
 import XLSX from 'xlsx';
-
 
 registerLocale('es', es);
 
@@ -39,19 +38,41 @@ const RendicionPage = () => {
 
     const tabla1Ref = useRef(null);
     const tabla2Ref = useRef(null);
+    const tabla3Ref = useRef(null);
+    const tabla4Ref = useRef(null);
 
     const handleExportExcel = () => {
+        
         const tabla1Data = [...tabla1Ref.current.querySelectorAll("tr")].map(row => [...row.querySelectorAll("td,th")].map(cell => cell.innerText));
         const tabla2Data = [...tabla2Ref.current.querySelectorAll("tr")].map(row => [...row.querySelectorAll("td,th")].map(cell => cell.innerText));
-    
+        const tabla3Data = [...tabla3Ref.current.querySelectorAll("tr")].map(row => [...row.querySelectorAll("td,th")].map(cell => cell.innerText));
+        const tabla4Data = [...tabla4Ref.current.querySelectorAll("tr")].map(row => [...row.querySelectorAll("td,th")].map(cell => cell.innerText));
+
         const libroExcel = XLSX.utils.book_new();
         const hoja1 = XLSX.utils.aoa_to_sheet(tabla1Data);
         const hoja2 = XLSX.utils.aoa_to_sheet(tabla2Data);
-    
+        const hoja3 = XLSX.utils.aoa_to_sheet(tabla3Data);
+        const hoja4 = XLSX.utils.aoa_to_sheet(tabla4Data);
+
         XLSX.utils.book_append_sheet(libroExcel, hoja1, "rendicion-tarros");
         XLSX.utils.book_append_sheet(libroExcel, hoja2, "efectivo");
-    
-        XLSX.writeFile(libroExcel, `rendicion-${soloFecha}.xlsx`);
+        XLSX.utils.book_append_sheet(libroExcel, hoja3, "vales");
+        XLSX.utils.book_append_sheet(libroExcel, hoja4, "opcionales");
+
+        const nombreChofer = ordenesRendidas?.filter(orden => orden.id === Number(ordenId))[0]?.chofer.personal.name;
+        const apellidoChofer = ordenesRendidas?.filter(orden => orden.id === Number(ordenId))[0]?.chofer.personal.lastname;
+        const nombreAyudante = ordenesRendidas?.filter(orden => orden.id === Number(ordenId))[0]?.ayudante.personal.name;
+        const apellidoAyudante = ordenesRendidas?.filter(orden => orden.id === Number(ordenId))[0]?.ayudante.personal.lastname;
+
+        XLSX.utils.sheet_add_json(hoja1, [
+            {A: ` `},
+            {A: `Rendicion de ${usuario.name} ${usuario.lastname} - ${soloFecha}`},
+            {A: `Chofer: ${nombreChofer} ${apellidoChofer}`},
+            {A: `Ayudante: ${nombreAyudante} ${apellidoAyudante}`},
+            {A: `Orden: ${ordenId}`},
+        ], {skipHeader: true, origin: -1, header: ['A']});   
+
+        XLSX.writeFile(libroExcel, `Rendicion-${usuario.name} ${usuario.lastname}-${soloFecha}-${nombreChofer} ${apellidoChofer}-${nombreAyudante} ${apellidoAyudante}.xlsx`);
     }
 
     useEffect(() => {
@@ -140,13 +161,12 @@ const RendicionPage = () => {
                 <div className={style.tableContainer}>
                     <table 
                         className="table-sm table table-bordered table-hover" 
-                        id='table-to-xls3'
                         ref={tabla1Ref}
                     >
                         <thead>
                             <tr>
                                 <th>Producto</th>
-                                <th>Recarga</th>
+                                <th>Recargas</th>
                                 <th>Total</th>
                                 <th>Llenos</th>
                                 <th>Venta</th>
@@ -162,14 +182,14 @@ const RendicionPage = () => {
                                     }}>
                                         <p>Gas 5 kilos</p>
                                 </td>
-                                <td>
+                                <td className={style.tdStyle}>
                                     {
                                         novaOrdenById?.recargas?.map((recarga) => (
-                                            <th key={recarga.id} className={style.tdclas}>
-                                                {recarga.cantidad5kg}
-                                            </th>
+                                            <span key={recarga.id} className={style.tdclas}>
+                                                {recarga.cantidad5kg} &nbsp;
+                                            </span>
                                         ))
-                                    }
+                                    }  
                                 </td>
                                 <td>
                                     {
@@ -198,18 +218,18 @@ const RendicionPage = () => {
                                 </td>
                             </tr>
                             <tr>
-                                <td className="px-4 py-2" style={{
+                                <td style={{
                                     textAlign: 'center',
                                     verticalAlign: 'middle'
                                     }}>
                                         <p>Gas 11 kilos</p>
                                 </td>
-                                <td>
+                                <td className={style.tdStyle}>
                                     {
                                         novaOrdenById?.recargas?.map((recarga) => (
-                                            <th key={recarga.id} className={style.tdclas}>
-                                                {recarga.cantidad11kg}
-                                            </th>
+                                            <p key={recarga.id} className={style.tdclas}>
+                                                {recarga.cantidad11kg} &nbsp;
+                                            </p>
                                         ))
                                     }
                                 </td>
@@ -240,18 +260,18 @@ const RendicionPage = () => {
                                 </td>
                             </tr>
                             <tr>
-                                <td className="px-4 py-2" style={{
+                                <td style={{
                                     textAlign: 'center',
                                     verticalAlign: 'middle'
                                     }}>
                                         <p>Gas 15 kilos</p>
                                 </td>
-                                <td>
+                                <td className={style.tdStyle}>
                                     {
                                         novaOrdenById?.recargas?.map((recarga) => (
-                                            <th key={recarga.id} className={style.tdclas}>
-                                                    {recarga.cantidad15kg}
-                                            </th>
+                                            <p key={recarga.id} className={style.tdclas}>
+                                                    {recarga.cantidad15kg} &nbsp;
+                                            </p>
                                         ))
                                     }
                                 </td>
@@ -282,18 +302,18 @@ const RendicionPage = () => {
                                 </td>
                             </tr>
                             <tr>
-                                <td className="px-4 py-2" style={{
+                                <td style={{
                                     textAlign: 'center',
                                     verticalAlign: 'middle'
                                     }}>
                                         <p>Gas 45 kilos</p>
                                 </td>
-                                <td>
+                                <td className={style.tdStyle}>
                                     {
                                         novaOrdenById?.recargas?.map((recarga) => (
-                                            <th key={recarga.id} className={style.tdclas}>
-                                                {recarga.cantidad45kg}
-                                            </th>
+                                            <p key={recarga.id} className={style.tdclas}>
+                                                {recarga.cantidad45kg} &nbsp;
+                                            </p>
                                         ))
                                     }
                                 </td>
@@ -334,10 +354,10 @@ const RendicionPage = () => {
                 <RecaudacionOrden novaOrdenById={novaOrdenById} />
                 <OrdenInfo novaOrdenById={novaOrdenById} />
                 <div className={style.containerTables}>
-                    <TableVales novaOrdenById={novaOrdenById} id="table-to-xls4"/>
-                    <TableEfectivo novaOrdenById={novaOrdenById} id="table-to-xls5" tabla2Ref={tabla2Ref}/>
+                    <TableVales novaOrdenById={novaOrdenById} tabla3Ref={tabla3Ref}/>
+                    <TableEfectivo novaOrdenById={novaOrdenById} tabla2Ref={tabla2Ref}/>
                 </div>
-                <TablePayment novaOrdenById={novaOrdenById} id="table-to-xls6"/>
+                <TablePayment novaOrdenById={novaOrdenById} tabla4Ref={tabla4Ref}/>
             </div>
         </div>
     )

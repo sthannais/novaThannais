@@ -1,5 +1,4 @@
 import React from 'react'
-import { Table } from 'reactstrap'
 import { numberWithDots } from '../../../helpers/numberWithDot'
 import style from './tableEfectivo.module.css'
 

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPersonals } from '../../redux/novaSlice/thunks';
 import JorgeGas from '../../assetsOficial/jorgegas.svg';
 import style from './mainPage.module.css';
 import CreatePersonal from '../CreatePersonal/CreatePersonal';
-import { Table } from 'reactstrap';
 import Paginado from '../Paginado/Paginado';
-import ExcelDownload from '../ExcelDownload/ExcelDownload';
+import { RiFileExcel2Fill } from 'react-icons/ri';
+import XLSX from 'xlsx';
 
 const MainPage = () => {
 
@@ -20,6 +20,18 @@ const MainPage = () => {
     const ultimoIndice = (paginaActual - 1) * porPagina + porPagina
     const currentPosts = personal?.slice(primerIndice, ultimoIndice)
 
+    const tablaRef = useRef(null);
+
+    const handleExportExcel = () => {
+
+        const tabla = tablaRef.current;
+        const ws = XLSX.utils.table_to_sheet(tabla);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Personal");
+        XLSX.writeFile(wb, `Personal.xlsx`);
+        
+    }
+
     useEffect(() => {
         dispatch(getPersonals())
     }, [dispatch])
@@ -29,17 +41,15 @@ const MainPage = () => {
             <p className={style.text}>Lista de personal</p>
             <img src={JorgeGas} alt="logo" className={style.logo} />
             <div className={style.container}>
-                <div>
-                    <CreatePersonal />
-                    <ExcelDownload id="table-to-xls" style2={style.excel} name="lista de personal"/>
-                </div>
+                <CreatePersonal />
+                <button onClick={handleExportExcel} className={style.excel}>
+                    <RiFileExcel2Fill className={style.icon3} />
+                    <p>Exportar a excel</p>
+                </button>
                 <div className={style.tableContainer}>
-                    <Table 
-                        bordered
-                        hover
-                        responsive
-                        className={style.tabla}
-                        id="table-to-xls"
+                    <table 
+                        className="table-sm table table-bordered table-hover" 
+                        ref={tablaRef}
                         >
                         <thead>
                             <tr>
@@ -61,7 +71,7 @@ const MainPage = () => {
                                 </tr>
                             ))}
                         </tbody>
-                    </Table>
+                    </table>
                 </div>
                 <Paginado pagina={paginaActual} setPagina={setPaginaActual} maximo={maximo} style={style}/>
             </div>

@@ -1,20 +1,17 @@
 import React from 'react'
-import { Table } from 'reactstrap'
 import { numberWithDots } from '../../../helpers/numberWithDot'
 import style from './tarrosTable.module.css'
 
-const TarrosTable = ({ cuadratura }) => {
+const TarrosTable = ({ cuadratura, tablaRef }) => {
     return (
         <div className={style.columna}>
             <p className={style.text}>
                 Rendicion de cilindros
             </p>
             <div className={style.tabla}>
-                <Table
-                    bordered
-                    hover
-                    responsive
-                    className="table-lg"
+                <table
+                    className="table-lg table table-bordered table-hover" 
+                    ref={tablaRef}
                 >
                     <thead>
                         <tr>
@@ -50,7 +47,7 @@ const TarrosTable = ({ cuadratura }) => {
                             <th>{cuadratura?.ventaTotalTarros?.totalRecaudacion ? numberWithDots(cuadratura?.ventaTotalTarros?.totalRecaudacion) : 0}</th>
                         </tr>
                     </tbody>
-                </Table>
+                </table>
             </div>
         </div>
     )

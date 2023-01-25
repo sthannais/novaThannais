@@ -48,17 +48,20 @@
     padding: 5rem 2.5rem 0 2.5rem;
 }
 
+.icon3 {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.3rem;
+}
+
 .tableContainer {
     /*centrada en el centro de la pantalla*/
     border-radius: 30px;
     overflow: hidden;
     background: #FFFFFF;
     height: 33.5rem;
-}
-
-.tabla {
     font-size: 14px;
-    overflow: hidden;
 }
 
 .containerPaginado{

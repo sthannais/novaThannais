@@ -1,20 +1,17 @@
 import React from 'react'
-import { Table } from 'reactstrap'
 import { numberWithDots } from '../../../helpers/numberWithDot'
 import style from './metodosTable.module.css'
 
-const MetodosTable = ({ cuadratura }) => {
+const MetodosTable = ({ cuadratura, tablaRef }) => {
     return (
         <div className={style.columna}>
             <p className={style.text}>
                 Rendicion Metodos Opcionales
             </p>
             <div className={style.tabla}>
-                <Table
-                    bordered
-                    hover
-                    responsive
-                    className="table-lg"
+                <table
+                    className="table-lg table table-bordered table-hover" 
+                    ref={tablaRef}
                 >
                     <thead>
                         <tr>
@@ -40,7 +37,7 @@ const MetodosTable = ({ cuadratura }) => {
                             <td>{cuadratura?.totalTransbank ? numberWithDots(cuadratura?.totalTransbank) : 0}</td>
                         </tr>
                     </tbody>
-                </Table>
+                </table>
             </div>
         </div>
     )

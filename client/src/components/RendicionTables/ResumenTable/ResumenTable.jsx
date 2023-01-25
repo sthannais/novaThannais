@@ -1,21 +1,17 @@
 import React from 'react'
-import { Table } from 'reactstrap'
 import { numberWithDots } from '../../../helpers/numberWithDot'
 import style from './resumenTable.module.css'
 
-const ResumenTable = ({ cuadratura, faltantes }) => {
+const ResumenTable = ({ cuadratura, faltantes, tablaRef }) => {
     return (
         <div className={style.columna}>
             <p className={style.text}>
                 Resumen
             </p>
             <div className={style.tabla}>
-                <Table
-                    bordered
-                    hover
-                    responsive
-                    className="table-lg"
-                    size='sm'
+                <table
+                    className="table-lg table table-bordered table-hover" 
+                    ref={tablaRef}
                     style={{
                         width: '100%',
                     }}
@@ -68,7 +64,7 @@ const ResumenTable = ({ cuadratura, faltantes }) => {
                             <th>{cuadratura?.totalGeneral ? numberWithDots(cuadratura?.totalGeneral) : 0}</th>
                         </tr>
                     </tbody>
-                </Table>
+                </table>
             </div>
         </div>
     )

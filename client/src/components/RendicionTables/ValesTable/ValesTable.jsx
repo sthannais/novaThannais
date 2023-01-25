@@ -1,20 +1,17 @@
 import React from 'react'
-import { Table } from 'reactstrap'
 import { numberWithDots } from '../../../helpers/numberWithDot'
 import style from './valesTable.module.css'
 
-const ValesTable = ({ cuadratura }) => {
+const ValesTable = ({ cuadratura, tablaRef }) => {
     return (
         <div className={style.columna}>
             <p className={style.text}>
                 Rendicion de vales
             </p>
             <div className={style.tabla}>
-                <Table
-                    bordered
-                    hover
-                    responsive
-                    className="table-lg"
+                <table
+                    className="table-lg table table-bordered table-hover" 
+                    ref={tablaRef}
                 >
                     <thead>
                         <tr>
@@ -62,7 +59,7 @@ const ValesTable = ({ cuadratura }) => {
                             <th>{cuadratura?.totalVales?.totalSumaVales ? numberWithDots(cuadratura?.totalVales?.totalSumaVales) : 0 }</th>
                         </tr>
                     </tbody>
-                </Table>
+                </table>
             </div>
         </div>
     )

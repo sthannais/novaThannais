@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Table } from 'reactstrap';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { bringOrdenByAdminId } from '../../redux/novaSlice/thunks';
 import JorgeGas from '../../assetsOficial/jorgegas.svg';
@@ -10,7 +9,8 @@ import DownloadOrden from '../DownloadOrden/DownloadOrden';
 import style from './guidePage.module.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import es from 'date-fns/locale/es';
-import ExcelDownload from '../ExcelDownload/ExcelDownload';
+import { RiFileExcel2Fill } from 'react-icons/ri';
+import XLSX from 'xlsx';
 
 registerLocale('es', es);
 
@@ -26,6 +26,15 @@ const GuidePage = () => {
     }, [dispatch, usuario.administrador.id, soloFecha]);
 
     const { novaOrdenes } = useSelector((state) => state.Nova);
+
+    const tablaRef = useRef(null);
+
+    const handleExportExcel = () => {
+        const ws = XLSX.utils.table_to_sheet(tablaRef.current);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, `Guia de reparto`);
+        XLSX.writeFile(wb, `Guia de reparto ${usuario.name} ${usuario.lastname} ${soloFecha}.xlsx`);
+    };
 
     return (
         <div>
@@ -53,16 +62,16 @@ const GuidePage = () => {
                         onClickOutside={() => dispatch(bringOrdenByAdminId(usuario.administrador.id, soloFecha))}
                     />
                 </div>
-                    <ExcelDownload id="table-to-xls2" style2={style.excel} name={`Guida de reparto ${usuario.name} ${usuario.lastname} ${soloFecha}`}/>
-                    <CreateOrden/>
-                    <DownloadOrden/>
+                <button onClick={handleExportExcel} className={style.excel}>
+                    <RiFileExcel2Fill className={style.icon3} />
+                    <p>Exportar a excel</p>
+                </button>
+                <CreateOrden/>
+                <DownloadOrden/>
                 <div className={style.tableContainer}>
-                    <Table
-                        bordered
-                        hover
-                        responsive
-                        className={style.tabla}
-                        id="table-to-xls2"
+                    <table
+                        className="table-md table table-bordered table-hover" 
+                        ref={tablaRef}
                     >
                         <thead>
                             <tr>
@@ -98,7 +107,7 @@ const GuidePage = () => {
                                 />
                             ))}
                         </tbody>
-                    </Table>
+                    </table>
                 </div>
             </div>
         </div>

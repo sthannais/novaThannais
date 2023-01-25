@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import DatePicker, { registerLocale } from 'react-datepicker';
@@ -13,6 +13,8 @@ import TarrosTable from '../RendicionTables/TarrosTable/TarrosTable';
 import ValesTable from '../RendicionTables/ValesTable/ValesTable';
 import MetodosTable from '../RendicionTables/MetodosTable/MetodosTable';
 import ResumenTable from '../RendicionTables/ResumenTable/ResumenTable';
+import { RiFileExcel2Fill } from 'react-icons/ri';
+import XLSX from 'xlsx';
 
 
 registerLocale('es', es)
@@ -32,9 +34,37 @@ const RendicionGeneral = () => {
     }
 
     const [id, setId] = useState(0)
-
     const dispatch = useDispatch()
     const { cuadratura, faltantes } = useSelector(state => state.Nova)
+
+    const tabla1Ref = useRef(null);
+    const tabla2Ref = useRef(null);
+    const tabla3Ref = useRef(null);
+    const tabla4Ref = useRef(null);
+    const tabla5Ref = useRef(null);
+
+    const handleExportExcel = () => {
+        const tabla1 = tabla1Ref.current;
+        const tabla2 = tabla2Ref.current;
+        const tabla3 = tabla3Ref.current;
+        const tabla4 = tabla4Ref.current;
+        const tabla5 = tabla5Ref.current;
+
+        const ws1 = XLSX.utils.table_to_sheet(tabla1);
+        const ws2 = XLSX.utils.table_to_sheet(tabla2);
+        const ws3 = XLSX.utils.table_to_sheet(tabla3);
+        const ws4 = XLSX.utils.table_to_sheet(tabla4);
+        const ws5 = XLSX.utils.table_to_sheet(tabla5);
+
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws1, 'Efectivo');
+        XLSX.utils.book_append_sheet(wb, ws2, 'Tarros');
+        XLSX.utils.book_append_sheet(wb, ws3, 'Vales');
+        XLSX.utils.book_append_sheet(wb, ws4, 'Metodos');
+        XLSX.utils.book_append_sheet(wb, ws5, 'Resumen');
+
+        XLSX.writeFile(wb, `Rendicion de gastos ${soloFecha} al ${soloFechaFin}.xlsx`);
+    }
 
     useEffect(() => {
         // setId(usuario.administrador.id)
@@ -69,6 +99,10 @@ const RendicionGeneral = () => {
                     <option value={usuario.administrador.id}>Mi rendicion</option>
                     <option value="all">Todas las rendiciones</option>
                 </Input>
+                <button onClick={handleExportExcel} className={style.excel}>
+                    <RiFileExcel2Fill className={style.icon3} />
+                    <p>Exportar a excel</p>
+                </button>
                 <div className={style.datePicker}>
                     <p className={style.textDatePicker}>
                         Seleccione un rango de fechas
@@ -91,11 +125,11 @@ const RendicionGeneral = () => {
                         }}	
                     />
                 </div>
-                <EfectivoTable cuadratura={cuadratura}/>
-                <TarrosTable cuadratura={cuadratura}/>
-                <ValesTable cuadratura={cuadratura}/>
-                <MetodosTable cuadratura={cuadratura} />
-                <ResumenTable cuadratura={cuadratura} faltantes={faltantes}/>
+                <EfectivoTable cuadratura={cuadratura} tablaRef={tabla1Ref}/>
+                <TarrosTable cuadratura={cuadratura} tablaRef={tabla2Ref}/>
+                <ValesTable cuadratura={cuadratura} tablaRef={tabla3Ref}/>
+                <MetodosTable cuadratura={cuadratura} tablaRef={tabla4Ref}/>
+                <ResumenTable cuadratura={cuadratura} faltantes={faltantes} tablaRef={tabla5Ref}/>
             </div>
         </div>
     )

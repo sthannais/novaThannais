@@ -133,11 +133,18 @@
     border-radius: 30px;
 }
 
+.tdStyle {
+    display: inline-flex;
+    flex-direction: row;
+    padding: 0.8rem 0 0 0 !important;
+}
+
 .tdclas {
     border: 0.5px;
     border-style: solid;
     border-color: #9e9999;
-    padding: 0.5rem;
+    font-weight: 800;
+    width: 2rem;
 }
 
 .input2 {

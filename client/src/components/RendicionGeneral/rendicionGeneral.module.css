@@ -56,6 +56,30 @@
     height: 45px;
 }
 
+.icon3 {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.3rem;
+}
+
+.excel{
+    position: absolute;
+    left: 84%;
+    top: 2%;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 5px;
+    color: #3C3C3C !important;
+    background-color: transparent;
+    font-family: "Roboto";
+    font-weight: 800;
+    width: 164px;
+    height: 37px;
+}
+
 .datePicker {
     position: absolute;
     left: 5%;
