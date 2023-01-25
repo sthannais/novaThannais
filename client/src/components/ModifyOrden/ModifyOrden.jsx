@@ -442,8 +442,8 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                                         } className={style.selects}>
                                             <option hidden>Seleccione</option>
                                             <option value="jhoskartoro@gmail.com">Jhoskar</option>
-                                            <option value="maicol@gmail.com">Maicol</option>
-                                            <option value="Jorge@gmail.com">Jorge</option>
+                                            <option value="maicol.nieto@gmail.com">Maicol</option>
+                                            <option value="jorgetalento@outlook.es">Jorge</option>
                                         </Input>
                                     </FormGroup>
                                     {
