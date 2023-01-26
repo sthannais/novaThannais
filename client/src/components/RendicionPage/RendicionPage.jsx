@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import DatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
 import { Input }  from 'reactstrap';
-import { bringOrdenById, ordenesRendicion, bringOrdenByAdminId } from '../../redux/novaSlice/thunks';
+import { bringOrdenById, ordenesRendicion, bringOrdenByAdminId, bringAllAdministradores } from '../../redux/novaSlice/thunks';
 import 'bootstrap/dist/css/bootstrap.css';
 import style from './rendicionPage.module.css';
 import JorgeGas from '../../assetsOficial/jorgegas.svg';
@@ -27,7 +27,9 @@ const RendicionPage = () => {
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const dispatch = useDispatch()
     const [ordenId , setOrdenId] = useState(0)
-    const { ordenesRendidas, novaOrdenById, precios } = useSelector(state => state.Nova)
+    const [ordenIdAdmin , setOrdenIdAdmin] = useState(0)
+    const { ordenesRendidas, novaOrdenById, precios, administradores } = useSelector(state => state.Nova)
+    const { email } = useSelector(state => state.Autenticacion.autBack)
     const precio5kg = precios?.filter(precio => precio.name === "GAS NORMAL 5 KILOS");
     const precio11kg = precios?.filter(precio => precio.name === "GAS NORMAL 11 KILOS");
     const precio15kg = precios?.filter(precio => precio.name === "GAS NORMAL 15 KILOS");
@@ -76,12 +78,19 @@ const RendicionPage = () => {
     }
 
     useEffect(() => {
-        dispatch(bringOrdenByAdminId(usuario.administrador.id, soloFecha))
+        if(email === "irmaperez.gea@gmail.com") {
+            dispatch(bringAllAdministradores())
+            dispatch(bringOrdenByAdminId(ordenIdAdmin, soloFecha))
+        } else {
+            dispatch(bringOrdenByAdminId(usuario?.administrador?.id, soloFecha))
+        }
     }, [
         dispatch,
         usuario.administrador.id,
         soloFecha,
         novaOrdenById?.contabilidadRecarga?.totalRecaudacion,
+        email,
+        ordenIdAdmin
     ])
 
     const dispatchOrden = () => {
@@ -94,6 +103,33 @@ const RendicionPage = () => {
             <p className={style.text}>Rendicion de gastos</p>
             <img src={JorgeGas} alt="logo" className={style.logo} />
             <div className={style.container}>
+                {
+                    email === "irmaperez.gea@gmail.com" ? (
+                        
+                        <Input
+                            type="select"
+                            value={ordenIdAdmin}
+                            onChange={(e) => setOrdenIdAdmin(e.target.value)}
+                            className={style.inputs2}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                dispatch(bringOrdenByAdminId(ordenIdAdmin, soloFecha))
+                            }}
+                        >
+                            <option hidden>Seleccione un administrador :</option>
+                            {
+                                administradores?.map((admin) => (
+                                    <option key={admin.administrador.id} value={admin.administrador.id}>
+                                        {
+                                            `${admin.name} ${admin.lastname}`
+                                        }
+                                    </option>
+                                ))
+                            }
+                        </Input>
+
+                    ) : null
+                }
                 <Input
                     type="select"
                     value={ordenId}
@@ -106,15 +142,13 @@ const RendicionPage = () => {
                         ordenesRendidas?.map((orden) => (
                             <option key={orden.id} value={orden.id}>
                                 {
-                                    `#${orden.id}` + " " + 
-                                    `Patente: ${orden.patente.name}` + " " + 
-                                    `Cuadrante: ${orden.cuadrante.name}` + " - " + 
-                                    `${orden.chofer.personal.name}` + " " + 
-                                    `${orden.chofer.personal.lastname}` + " "  
-                                }{
-                                    orden.ayudante ? "y" + " " + 
-                                    `${orden?.ayudante?.personal?.name}` + " " + 
-                                    `${orden?.ayudante?.personal?.lastname}` :
+                                    `#${orden.id} Patente: ${orden.patente.name} 
+                                    Cuadrante: ${orden.cuadrante.name} - 
+                                    ${orden.chofer.personal.name} ${orden.chofer.personal.lastname}`
+                                }
+                                {
+                                    orden.ayudante ?
+                                    ` y ${orden?.ayudante?.personal?.name} ${orden?.ayudante?.personal?.lastname}` :
                                     null
                                 }
                             </option>

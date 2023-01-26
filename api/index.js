@@ -18,7 +18,7 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
-const { conn, Rol, Chofer, Administrador, Auxiliar, Ayudante, Cuadrante, Patentes, Precio } = require('./src/db.js');
+const { conn, Rol, Chofer, Administrador, Ayudante, Cuadrante, Patentes, Precio } = require('./src/db.js');
 const createRoles = require('./src/testingCreators/roles.js');
 const createPatentes = require('./src/testingCreators/patentes.js');
 const createCuadrantes = require('./src/testingCreators/cuadrante.js');
@@ -27,7 +27,7 @@ const { createChoferes, createAdministradores, createAyudantes} = require('./src
 const PORT = process.env.PORT || 3001;
 
 // Syncing all the models at once.
-conn.sync({ force: false }).then(() => {
+conn.sync({ force: true }).then(() => {
   server.listen(PORT, async () => {
     console.log(`Servidor en puerto ${PORT}`); // eslint-disable-line no-console
 

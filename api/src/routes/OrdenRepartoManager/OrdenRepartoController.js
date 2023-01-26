@@ -223,6 +223,9 @@ const getOrdenDeRepartoByAdminIdAndDate = async (req, res) => {
                 }]
             }]
         });
+
+        if(!AdminOrden) return res.status(200).json({error: "No se encontró el administrador"});
+
         res.json(AdminOrden);
     } catch (error) {
         res.status(400).json({error: error.message});
@@ -349,6 +352,7 @@ const getAllAyudanteOrdenesDeRepartoBetweenDates = async (req, res) => {
         res.status(400).json({error: error.message});
     }
 };
+
 
 //////////////// POST  //////////////////////
 

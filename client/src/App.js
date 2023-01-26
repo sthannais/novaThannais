@@ -16,8 +16,6 @@ function App() {
     return <h1>Checking...</h1>
   }
 
-  
-
   return (
     <>
       {

@@ -21,7 +21,8 @@ import {
         setPorAutorizar,
         setAutorizado,
         getPrecios,
-        getAllFaltantes
+        getAllFaltantes, 
+        getAdministradores
     } from './novaSlice';
 
 export const getPersonals = () => async (dispatch) => {
@@ -398,3 +399,13 @@ export const bringAllFaltantes = (fechaInicio, fechaFin, administradorId) => asy
         console.error(error.message);
     }
 }
+
+export const bringAllAdministradores = () => async (dispatch) => {
+    try {
+        const response = await axios.get(`/admin`);
+        dispatch(getAdministradores(response.data));
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+

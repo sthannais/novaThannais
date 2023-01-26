@@ -23,6 +23,7 @@ export const NovaSlice = createSlice({
         autorizado: "No autorizado",
         precios: [],
         faltantes: [],
+        administradores: []
     },
     reducers: {
         getPersonal: (state, {payload}) => {
@@ -88,6 +89,9 @@ export const NovaSlice = createSlice({
         },
         getAllFaltantes: (state, {payload}) => {
             state.faltantes = payload;
+        },
+        getAdministradores: (state, {payload}) => {
+            state.administradores = payload;
         }
     }
 });
@@ -112,6 +116,7 @@ export const {  getPersonal,
                 setPorAutorizar,
                 setAutorizado,
                 getPrecios,
-                getAllFaltantes
+                getAllFaltantes,
+                getAdministradores
             } = NovaSlice.actions;
             

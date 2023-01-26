@@ -311,6 +311,20 @@ const administradores = [
         email: 'sofia@gmail.com',
         password: '123456789',
         rut: '123456789',
+    },
+    {
+        name: 'Irma',
+        lastname: 'Perez',
+        email: 'irmaperez.gea@gmail.com',
+        password: '123456789',
+        rut: '16247049-3',
+    },
+    {
+        name: 'bodega',
+        lastname: 'jorgegas',
+        email: 'bodega@jorgegas.cl',
+        password: '123456789',
+        rut: '111111111',
     }
 ]
 

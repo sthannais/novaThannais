@@ -1,15 +1,12 @@
 const { Administrador, Personal, Rol } = require('../../db')
 
-const getAdmins = async (req, res) => {
+const getAdmins = (req, res) => {
 
     Personal.findAll({
         where : {
             rolId : 1
         },
         include : [
-            {
-                model : Rol
-            },
             {
                 model : Administrador
             }

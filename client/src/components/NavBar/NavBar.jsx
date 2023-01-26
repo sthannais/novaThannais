@@ -9,7 +9,7 @@ import logo from '../../assets/nova-blanco-2.png';
 const NavBar = () => {
 
     const dispatch = useDispatch()
-    const { id, rolId, name, lastname } = useSelector((state) => state.Autenticacion.autBack)
+    const { id, rolId, name, lastname, email } = useSelector((state) => state.Autenticacion.autBack)
 
     const handleLogout = () => {
         dispatch(logoutAction(id))
@@ -22,7 +22,9 @@ const NavBar = () => {
                 <img src={monito} alt="monito" className={style.styleMonito} />
 
             {rolId && rolId === 1 ? (
-                <div>
+
+                email == 'irmaperez.gea@gmail.com' ? (
+                    <div>
                     <p className={style.completeName}>{name + " " + lastname}</p>
                     <p className={style.rolStyle}>Administrador</p>
 
@@ -34,15 +36,6 @@ const NavBar = () => {
                             } onClick={() => setButtonSelected('home')}>
                                 Lista de Personal
                             </button>  
-                        </Link>
-                        <Link to="/guide">
-                            <button onClick={
-                                () => setButtonSelected('guide')
-                            } className={
-                                buttonSelected === 'guide' ? style.guideStyleSelected : style.guideStyle
-                            }>
-                                Guia de Reparto
-                            </button>
                         </Link>
                         <Link to="/rendicion">
                             <button onClick={
@@ -76,7 +69,35 @@ const NavBar = () => {
                         </button>
                     </div>
                 </div>
-                ):
+                ) :(
+                    <div>
+                    <p className={style.completeName}>{name + " " + lastname}</p>
+                    <p className={style.rolStyle}>Administrador</p>
+
+                    <div className={style.grid1}>
+                        <Link to="/home" >
+                            <button
+                            className={
+                                buttonSelected === 'home' ? style.guideStyleSelected : style.guideStyle
+                            } onClick={() => setButtonSelected('home')}>
+                                Lista de Personal
+                            </button>  
+                        </Link>
+                        <Link to="/guide">
+                            <button onClick={
+                                () => setButtonSelected('guide')
+                            } className={
+                                buttonSelected === 'guide' ? style.guideStyleSelected : style.guideStyle
+                            }>
+                                Guia de Reparto
+                            </button>
+                        </Link>
+                        <button className={style.guideStyle} onClick={handleLogout}>
+                            Cerrar sesión
+                        </button>
+                    </div>
+                </div>
+                )):
                 (
                     <p className={style.completeName}> no tienes acceso </p>
                 )}
