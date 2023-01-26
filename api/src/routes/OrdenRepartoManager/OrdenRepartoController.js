@@ -232,6 +232,76 @@ const getOrdenDeRepartoByAdminIdAndDate = async (req, res) => {
     }
 };
 
+const getAllOrdenesByDate = async (req, res) => {
+    const { date } = req.params;
+    try {
+        const ordenDeRepartos = await OrdenDeReparto.findAll({
+            where: {
+                fecha: date
+            },
+            include: [
+                {
+                    model: Patentes,
+                },
+                {
+                    model: Recargas,
+                },
+                {
+                    model: ContabilidadRecargas,
+                },
+                {
+                    model: Cuadrante,
+                },
+                {
+                    model: Chofer,
+                    include: [
+                        {
+                            model: Personal
+                        }
+                    ]
+                },
+                {
+                    model: Ayudante,
+                    include: [
+                        {
+                            model: Personal
+                        }
+                    ]
+                },
+                {
+                    model: MetodoPagos,
+                    include: [
+                        {
+                            model: Abonos,
+                        },
+                        {
+                            model: DescuentoRut,
+                        },
+                        {
+                            model: Descuentos,
+                        },
+                        {
+                            model: Vales,
+                        },
+                        {
+                            model: Efectivo,
+                        },
+                        {
+                            model: Transferencias,
+                        },
+                        {
+                            model: Transbank,
+                        }
+                    ]
+                }
+            ]
+        });
+        res.json({ordenDeRepartos});
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+}
+
 const getAllChoferOrdenesDeRepartoBetweenDates = async (req, res) => {
     const { id, fechaInicio, fechaFin } = req.params;
     try {
@@ -841,11 +911,15 @@ const cuadrarOrden = async (req, res) => {
         faltanteChofer,
         faltantePeoneta,
         faltante,
-        sobrante
+        sobrante,
+        idDeDecuadre,
     } = req.body;
 
     try {
         const ordenDeReparto = await OrdenDeReparto.findByPk(id)
+        await ordenDeReparto.update({
+            cuadradoPor: idDeDecuadre
+        })
         const metodoPagos = await ordenDeReparto.getMetodoPagos();
         const efectivo = await Efectivo.findOne({
             where: {
@@ -967,5 +1041,6 @@ module.exports = {
     getOrdenDeRepartoByAdminIdAndDate,
     getAllChoferOrdenesDeRepartoBetweenDates,
     getAllAyudanteOrdenesDeRepartoBetweenDates,
-    sendEmailWithCode
+    sendEmailWithCode,
+    getAllOrdenesByDate
 }

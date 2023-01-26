@@ -78,7 +78,7 @@ const RendicionPage = () => {
     }
 
     useEffect(() => {
-        if(email === "irmaperez.gea@gmail.com") {
+        if(email === "irmaperez.gea@gmail.com" || "maicol.nieto@jorgegas.cl") {
             dispatch(bringAllAdministradores())
             dispatch(bringOrdenByAdminId(ordenIdAdmin, soloFecha))
         } else {
@@ -104,7 +104,7 @@ const RendicionPage = () => {
             <img src={JorgeGas} alt="logo" className={style.logo} />
             <div className={style.container}>
                 {
-                    email === "irmaperez.gea@gmail.com" ? (
+                    email === "irmaperez.gea@gmail.com" || "maicol.nieto@jorgegas.cl" ? (
                         
                         <Input
                             type="select"

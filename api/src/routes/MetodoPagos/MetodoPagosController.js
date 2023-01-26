@@ -303,7 +303,7 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
                         fecha: {
                             [Op.gte]: fechaInicio
                         },
-                        administradorId
+                        cuadradoPor: administradorId
                     }
                 })
             }else{
@@ -312,7 +312,7 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
                         fecha: {
                             [Op.between]: [fechaInicio, fechaFin]
                         },
-                        administradorId
+                        cuadradoPor: administradorId
                     }
                 })
             }

@@ -316,7 +316,7 @@ const administradores = [
         name: 'Irma',
         lastname: 'Perez',
         email: 'irmaperez.gea@gmail.com',
-        password: '123456789',
+        password: 'anahisbelen',
         rut: '16247049-3',
     },
     {
@@ -325,7 +325,15 @@ const administradores = [
         email: 'bodega@jorgegas.cl',
         password: '123456789',
         rut: '111111111',
-    }
+    },
+    {
+        name: 'Maicol',
+        lastname: 'Nieto',
+        email: 'maicol.nieto@jorgegas.cl',
+        password: 'Mans.,2020',
+        rut: '18604289-1',
+    },
+
 ]
 
 const createChoferes = async () => {

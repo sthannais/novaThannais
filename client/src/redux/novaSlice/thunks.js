@@ -25,6 +25,19 @@ import {
         getAdministradores
     } from './novaSlice';
 
+export const getAllOrdenes = (date) => async (dispatch) => {
+    try {
+        const response = await axios.get(`/orden/date/${date}`);
+        dispatch(getOrdenes(response.data));
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${error.message}`,
+        });
+    }
+}
+
 export const getPersonals = () => async (dispatch) => {
     try {
         const response = await axios.get(`/personal`);

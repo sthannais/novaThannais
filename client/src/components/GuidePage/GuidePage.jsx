@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { bringOrdenByAdminId } from '../../redux/novaSlice/thunks';
+import { bringOrdenByAdminId, getAllOrdenes } from '../../redux/novaSlice/thunks';
 import JorgeGas from '../../assetsOficial/jorgegas.svg';
 import CreateOrden from '../CreateOrden/CreateOrden';
 import OrdenList from '../OrdenList/OrdenList';
@@ -16,14 +16,19 @@ registerLocale('es', es);
 
 const GuidePage = () => {
 
+    const { email } = useSelector(state => state.Autenticacion.autBack)
     const dispatch = useDispatch();
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const [date, setDate] = useState(new Date());
     const soloFecha = date.toISOString().slice(0, 10);
 
     useEffect(() => {
+        if (email === "maicol.nieto@jorgegas.cl") {
+            dispatch(getAllOrdenes(soloFecha));
+        } else {
         dispatch(bringOrdenByAdminId(usuario.administrador.id, soloFecha));
-    }, [dispatch, usuario.administrador.id, soloFecha]);
+        }
+    }, [dispatch, usuario.administrador.id, soloFecha, email]);
 
     const { novaOrdenes } = useSelector((state) => state.Nova);
 

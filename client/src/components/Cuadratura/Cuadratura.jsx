@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 const Cuadratura = ({ novaOrdenById }) => {
 
+    const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const dispatch = useDispatch();
     const [disabled, setDisabled] = useState(true);
     const [modal, setModal] = useState(false);
@@ -31,6 +32,10 @@ const Cuadratura = ({ novaOrdenById }) => {
         setNestedModal(!nestedModal);
         setCloseAll(true);
     }
+
+    const [idDeDecuadre, setIdDeDecuadre] = useState({
+        idDeDecuadre : 0,
+    })
 
     const [faltanteChofer, setFaltanteChofer] = useState({
         faltanteChofer : 0,
@@ -163,6 +168,11 @@ const Cuadratura = ({ novaOrdenById }) => {
             )
         })
 
+        setIdDeDecuadre({
+            ...idDeDecuadre,
+            idDeDecuadre : usuario.administrador.id
+        })
+
         if ( faltante.faltante < 1 && faltante.faltante > -1) {
             setDisabled(false)
         } else {
@@ -225,7 +235,8 @@ const Cuadratura = ({ novaOrdenById }) => {
         preciosArray[0],
         preciosArray[1],
         preciosArray[2],
-        preciosArray[3]
+        preciosArray[3],
+        usuario.administrador.id
     ])
 
     const handleChange = (e) => {
@@ -352,6 +363,7 @@ const Cuadratura = ({ novaOrdenById }) => {
             ...faltanteChofer,
             ...faltantePeoneta,
             ...sobrante,
+            ...idDeDecuadre
         }))
         cleanStates()
         toggle()

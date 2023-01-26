@@ -11,11 +11,13 @@ const {
         cuadrarOrden,
         getAllChoferOrdenesDeRepartoBetweenDates,
         getAllAyudanteOrdenesDeRepartoBetweenDates,
-        sendEmailWithCode
+        sendEmailWithCode,
+        getAllOrdenesByDate
     } = require('./OrdenRepartoController');
 
 router.get('/admin/:id/:date', getOrdenDeRepartoByAdminIdAndDate);
 router.get('/', getOrdenesDeReparto);
+router.get('/date/:date', getAllOrdenesByDate);
 router.get('/:id', getOrdenDeRepartoById);
 router.post('/', createOrden);
 router.put('/:id', RechargeOrden);

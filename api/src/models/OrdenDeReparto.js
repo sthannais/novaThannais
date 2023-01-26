@@ -34,6 +34,10 @@ module.exports = (sequelize)=>{
             type: DataTypes.BIGINT,
             defaultValue: 0
         },
+        cuadradoPor : {
+            type: DataTypes.BIGINT,
+            defaultValue: 0
+        },
     },{
         timestamps : false
     })

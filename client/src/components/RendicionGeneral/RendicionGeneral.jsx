@@ -35,7 +35,7 @@ const RendicionGeneral = () => {
 
     const [id, setId] = useState(0)
     const dispatch = useDispatch()
-    const { cuadratura, faltantes } = useSelector(state => state.Nova)
+    const { cuadratura, faltantes, administradores } = useSelector(state => state.Nova)
 
     const tabla1Ref = useRef(null);
     const tabla2Ref = useRef(null);
@@ -96,7 +96,9 @@ const RendicionGeneral = () => {
                     }} 
                 >
                     <option hidden>Seleccione una rendicion </option>
-                    <option value={usuario.administrador.id}>Mi rendicion</option>
+                    {administradores?.map((admin) => (
+                        <option key={admin.administrador.id} value={admin.administrador.id}>{admin.name + " " + admin.lastname}</option>
+                    ))}
                     <option value="all">Todas las rendiciones</option>
                 </Input>
                 <button onClick={handleExportExcel} className={style.excel}>
