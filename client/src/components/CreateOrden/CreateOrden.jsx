@@ -23,7 +23,8 @@ const CreateOrden = () => {
     const precio45kg = precios?.filter(precio => precio.name === "GAS NORMAL 45 KILOS");
     const preciosArray = [precio5kg[0]?.precio, precio11kg[0]?.precio, precio15kg[0]?.precio, precio45kg[0]?.precio];
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
-    const onlyDate = new Date().toISOString().slice(0, 10);
+    const onlyDate = new Date().toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
+    console.log(onlyDate);
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
     const dispatch = useDispatch();
