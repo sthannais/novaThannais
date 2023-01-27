@@ -210,15 +210,15 @@ const DownloadOrden = () => {
                                     ordenesDisponibles?.map((orden) => (
                                         <option id={orden.id} key={orden.id} value={orden.id}>
                                             {
-                                                `#${orden.id}` + " " + 
-                                                `Patente: ${orden.patente.name}` + " " + 
-                                                `Cuadrante: ${orden.cuadrante.name}` + " - " + 
-                                                `${orden.chofer.personal.name}` + " " + 
-                                                `${orden.chofer.personal.lastname}` + " "  
+                                                `#${orden.id} 
+                                                Patente: ${orden.patente.name} 
+                                                Cuadrante: ${orden.cuadrante.name} 
+                                                ${orden.chofer.personal.name} 
+                                                ${orden.chofer.personal.lastname}`   
                                             }{
-                                                orden.ayudante ? "y" + " " + 
-                                                `${orden?.ayudante?.personal?.name}` + " " + 
-                                                `${orden?.ayudante?.personal?.lastname}` :
+                                                orden.ayudante ?  
+                                                ` y ${orden?.ayudante?.personal?.name} 
+                                                ${orden?.ayudante?.personal?.lastname}` :
                                                 null
                                             }
                                         </option>  

@@ -155,6 +155,14 @@ const getOrdenDeRepartoById = async (req, res) => {
                             model: Transbank,
                         }
                     ]
+                },
+                {
+                    model: Administrador,
+                    include: [
+                        {
+                            model: Personal
+                        }
+                    ]
                 }
             ]
         });

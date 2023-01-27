@@ -77,13 +77,15 @@ const RendicionPage = () => {
         XLSX.writeFile(libroExcel, `Rendicion-${usuario.name} ${usuario.lastname}-${soloFecha}-${nombreChofer} ${apellidoChofer}-${nombreAyudante} ${apellidoAyudante}.xlsx`);
     }
 
+    const dispatchOrden = () => {
+        dispatch(bringOrdenById(ordenId))
+        dispatch(ordenesRendicion())
+    }
+
     useEffect(() => {
-        if(email === "irmaperez.gea@gmail.com" || "maicol.nieto@jorgegas.cl") {
+        dispatchOrden()
             dispatch(bringAllAdministradores())
             dispatch(bringOrdenByAdminId(ordenIdAdmin, soloFecha))
-        } else {
-            dispatch(bringOrdenByAdminId(usuario?.administrador?.id, soloFecha))
-        }
     }, [
         dispatch,
         usuario.administrador.id,
@@ -93,10 +95,6 @@ const RendicionPage = () => {
         ordenIdAdmin
     ])
 
-    const dispatchOrden = () => {
-        dispatch(bringOrdenById(ordenId))
-        dispatch(ordenesRendicion())
-    }
 
     return (
         <div className={style.conenedor}>

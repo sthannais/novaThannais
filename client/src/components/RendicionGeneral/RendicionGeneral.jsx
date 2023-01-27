@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import DatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
-import { bringCuadratura, bringAllFaltantes, bringCuadratura2 } from '../../redux/novaSlice/thunks';
+import { bringCuadratura, bringAllFaltantes, bringCuadratura2, bringAllAdministradores } from '../../redux/novaSlice/thunks';
 import { Input } from 'reactstrap';
 import style from './rendicionGeneral.module.css'
 import JorgeGas from '../../assetsOficial/jorgegas.svg';
@@ -67,7 +67,7 @@ const RendicionGeneral = () => {
     }
 
     useEffect(() => {
-        // setId(usuario.administrador.id)
+        dispatch(bringAllAdministradores())
         dispatch(bringCuadratura2(soloFecha, soloFechaFin, id))
         dispatch(bringAllFaltantes(soloFecha, soloFechaFin, id))
     }, [dispatch, soloFecha, soloFechaFin, id, usuario.administrador.id])
@@ -90,10 +90,6 @@ const RendicionGeneral = () => {
                         e.preventDefault()
                         setId(e.target.value)
                     }}
-                    onClick={() => {
-                        dispatch(bringCuadratura2(soloFecha, soloFechaFin, id))
-                        dispatch(bringAllFaltantes(soloFecha, soloFechaFin, id))
-                    }} 
                 >
                     <option hidden>Seleccione una rendicion </option>
                     {administradores?.map((admin) => (
@@ -120,11 +116,6 @@ const RendicionGeneral = () => {
                         dateFormat="dd/MM/yyyy"
                         maxDate={new Date()}
                         className={style.classDatePicker}
-                        onInputClick={(e) => {
-                            e.preventDefault()
-                            dispatch(bringCuadratura2(soloFecha, soloFechaFin, id))
-                            dispatch(bringAllFaltantes(soloFecha, soloFechaFin, id))
-                        }}	
                     />
                 </div>
                 <EfectivoTable cuadratura={cuadratura} tablaRef={tabla1Ref}/>

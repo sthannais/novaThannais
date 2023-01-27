@@ -14,7 +14,7 @@
 
 .textContainer {
     font-family: "Roboto", "Helvetica Neue";
-    font-size: 1rem;
+    font-size: 14px;
     font-weight: inherit;
     color: #000000;
     margin-left: 1rem;
@@ -42,7 +42,7 @@
 }
 
 .texto3 {
-    font-size: 1rem;
+    font-size: 14px;
     color: #000000;
     font-family: "Roboto", "Helvetica Neue";
     font-weight: inherit;

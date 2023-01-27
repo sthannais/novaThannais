@@ -86,7 +86,6 @@ const GuidePage = () => {
                         placeholderText="Seleccione una fecha"
                         maxDate={new Date()}
                         className={style.classDatePicker}
-                        onClickOutside={() => dispatch(bringOrdenByAdminId(usuario.administrador.id, soloFecha))}
                     />
                 </div>
                 <button onClick={handleExportExcel} className={style.excel}>
