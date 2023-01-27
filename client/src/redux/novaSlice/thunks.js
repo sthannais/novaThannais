@@ -27,8 +27,9 @@ import {
 
 export const getAllOrdenes = (date) => async (dispatch) => {
     try {
-        const response = await axios.get(`/orden/date/${date}`);
-        dispatch(getOrdenes(response.data));
+        const response = await fetch(`${process.env.REACT_APP_API}/orden/date/${date}`);
+        const data = await response.json();
+        dispatch(getOrdenes(data));
     } catch (error) {
         Swal.fire({
             icon: 'error',
@@ -36,7 +37,7 @@ export const getAllOrdenes = (date) => async (dispatch) => {
             text: `${error.message}`,
         });
     }
-}
+};
 
 export const getPersonals = () => async (dispatch) => {
     try {
@@ -97,10 +98,12 @@ export const bringOrdenByAdminId = (id, date) => async (dispatch) => {
     }
 }
 
+
 export const bringOrdenById = (id) => async (dispatch) => {
     try {
-        const response = await axios.get(`/orden/${id}`);
-        dispatch(getOrdenById(response.data));
+        const response = await fetch(`${process.env.REACT_APP_API}/orden/${id}`);
+        const data = await response.json();
+        dispatch(getOrdenById(data));
     } catch (error) {
         Swal.fire({
             icon: 'error',
