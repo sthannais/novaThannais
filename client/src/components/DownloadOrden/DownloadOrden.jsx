@@ -46,7 +46,14 @@ const DownloadOrden = () => {
     const [totalCantidad, setTotalCantidad] = useState(0);
     const [totalRecaudacion, setTotalRecaudacion] = useState(0);
 
+    const dispatchOrden = () => {
+        dispatch(bringOrdenById(idOrden));
+    }
+
     useEffect(() => {
+
+        dispatchOrden();
+
         setRecaudacion({
             ...recaudacion,
             recaudacion5kg: ventas.ventas5kg * Number(preciosArray[0]),
@@ -94,7 +101,8 @@ const DownloadOrden = () => {
         preciosArray[0],
         preciosArray[1],
         preciosArray[2],
-        preciosArray[3]
+        preciosArray[3],
+        idOrden
     ])
 
     const handleChange = (e) => {
@@ -154,21 +162,6 @@ const DownloadOrden = () => {
         setTotalRecaudacion(0);
     }
 
-    const dispatchOrden = () => {
-        dispatch(bringOrdenById(idOrden));
-        setVentas({
-            ventas5kg: "",
-            ventas11kg: "",
-            ventas15kg: "",
-            ventas45kg: ""
-        })
-        setLlenos({
-            llenos5kg: "",
-            llenos11kg: "",
-            llenos15kg: "",
-            llenos45kg: ""
-        })
-    }
 
     const handleSubmit = () => {
         dispatch(finalizeOrden(idOrden, llenos))
@@ -210,7 +203,6 @@ const DownloadOrden = () => {
                                     type="select" 
                                     value={idOrden}
                                     onChange={(e) => setIdOrden(e.target.value)}
-                                    onClick={dispatchOrden}
                                     className="form-select"
                                 >
                                     <option hidden>Seleccione una orden</option>
