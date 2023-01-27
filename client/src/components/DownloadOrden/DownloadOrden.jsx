@@ -206,15 +206,12 @@ const DownloadOrden = () => {
                                 <Label for="exampleSelect" style={{
                                     fontWeight: '700'
                                 }}>Seleccione una orden</Label>
-                                <Input 
+                                <select 
                                     type="select" 
                                     value={idOrden}
                                     onChange={(e) => setIdOrden(e.target.value)}
                                     onClick={dispatchOrden}
-                                    style={{
-                                        backgroundColor: '#F5F5F5',
-                                        border: '1px solid #3C3C3C',
-                                    }}
+                                    className="form-select"
                                 >
                                     <option hidden>Seleccione una orden</option>
                                 {
@@ -235,7 +232,7 @@ const DownloadOrden = () => {
                                         </option>  
                                 ))
                                 }
-                                </Input>
+                                </select>
                                 <div className={style.tabla}>
                                 <Table
                                     bordered

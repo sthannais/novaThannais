@@ -58,38 +58,35 @@
 .tableContainer {
     /*centrada en el centro de la pantalla*/
     border-radius: 30px;
-    overflow: hidden;
+    overflow-y: scroll;
     background: #FFFFFF;
-    height: 33.5rem;
+    height: 33rem;
     font-size: 14px;
 }
 
-.containerPaginado{
-    display: inline-flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 7.5rem;
-    height: 3rem;
-    margin-left: 62rem;
-}
-
-.btnPaginado{
-    background: transparent;
-    cursor: pointer;
-}
-
-.textPaginado{
-    color: #d9d9d9;
-    font-size: "Roboto";
-    font-weight: bold;
-}
-
-.contPaginado{
-    border-radius: 6px;
-    border: none;
-    width: 39px;
-    height: 20px;
+.boton {
+    margin-top: 0.5rem;
     text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+    justify-content: center;
+    font-family: 'Roboto';
+    color: #FFFFFF;
+    background-color: #5E5F5F;
+    width: 100px;
+    height: 32px;
+}
+
+.boton:hover
+{
+    color: #5E5F5F;
+    background-color: #FFFFFF;
+    border: 1px solid #5E5F5F;
 }
 
 @media screen and ( min-width: 1800px ) {
@@ -97,11 +94,11 @@
     .container {
         top: 100px;
         width: 1590px;
-        height: 670px;
+        height: 50rem;
     }
 
     .tableContainer {
-        height: 33.5rem;
+        height: 40rem;
     }
 
     .text {
@@ -112,10 +109,6 @@
     .logo {
         left: 90%;
         top: 3.5%;
-    }
-
-    .containerPaginado{
-        margin-left: 85rem;
     }
 }
 
@@ -138,16 +131,11 @@
     }
 
     .tableContainer {
-        height: 32rem;
+        height: 30.5rem;
     }
 
     .tabla {
         font-size: 12px;
-    }
-
-    .containerPaginado{
-        margin-left: 52.5rem;
-        margin-top: -0.5rem;
     }
 
     .excel{
@@ -156,6 +144,12 @@
         font-size: 14px;
         top: 1.3rem;
         left: 82%;
+    }
+
+    .boton {
+        width: 80px;
+        height: 30px;
+        font-size: 14px;
     }
 }
 

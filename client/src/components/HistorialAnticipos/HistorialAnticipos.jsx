@@ -28,8 +28,8 @@ const HistorialAnticipos = () => {
         setEndDate(end);
     }
     
-    const fechaInicio = startDate.toISOString().slice(0, 10);
-    const fechaFin = endDate?.toISOString().slice(0, 10);
+    const fechaInicio = startDate.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
+    const fechaFin = endDate?.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
     const { ordenesChoferById, ordenesAyudanteById, ordenesChofer, ordenesAyudante } = useSelector(state => state.Nova)
 
     useEffect(() => {

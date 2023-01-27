@@ -4,22 +4,35 @@ import { getPersonals } from '../../redux/novaSlice/thunks';
 import JorgeGas from '../../assetsOficial/jorgegas.svg';
 import style from './mainPage.module.css';
 import CreatePersonal from '../CreatePersonal/CreatePersonal';
-import Paginado from '../Paginado/Paginado';
 import { RiFileExcel2Fill } from 'react-icons/ri';
 import XLSX from 'xlsx';
+import InfiniteScroll from 'react-infinite-scroller';
 
 const MainPage = () => {
 
+    const width = window.innerWidth;
     const personal = useSelector((state) => state.Nova.novaPersonals)
     const dispatch = useDispatch()
-    
+
     const [paginaActual, setPaginaActual] = useState(1)
-    const [porPagina, setPorPagina] = useState(9)
+    const [porPagina, setPorPagina] = useState(0)
+    const [hasMore, setHasMore] = useState(true)
     const maximo = personal?.length / porPagina
     const primerIndice = (paginaActual - 1) * porPagina
     const ultimoIndice = (paginaActual - 1) * porPagina + porPagina
     const currentPosts = personal?.slice(primerIndice, ultimoIndice)
 
+    const loadMore = () => {
+        if (paginaActual >= maximo) {
+            setHasMore(false)
+            return
+        }
+        setPorPagina(
+            porPagina + 9
+        )
+    }
+
+    /////// EXCEL ///////
     const tablaRef = useRef(null);
 
     const handleExportExcel = () => {
@@ -34,7 +47,8 @@ const MainPage = () => {
 
     useEffect(() => {
         dispatch(getPersonals())
-    }, [dispatch])
+        setPorPagina(width > 1800 ? 12 : 9)
+    }, [dispatch, width])
 
     return (
         <div className={style.margin}>
@@ -47,33 +61,41 @@ const MainPage = () => {
                     <p>Exportar a excel</p>
                 </button>
                 <div className={style.tableContainer}>
-                    <table 
-                        className="table-sm table table-bordered table-hover" 
-                        ref={tablaRef}
+                    <InfiniteScroll
+                        pageStart={0}
+                        loadMore={loadMore}
+                        hasMore={hasMore}
+                    >
+                        <table
+                            className="table-sm table table-bordered table-hover"
+                            ref={tablaRef}
                         >
-                        <thead>
-                            <tr>
-                                <th className="px-4 py-3">Nombre</th>
-                                <th className="px-4 py-3">Apellido</th>
-                                <th className="px-4 py-3">Rut</th>
-                                <th className="px-4 py-3">Email</th>
-                                <th className="px-4 py-3">Rol</th>
-                            </tr>
-                        </thead>
-                        <tbody >
-                            {currentPosts?.map((personal) => (
-                                <tr key={personal.id}>
-                                    <td className="px-4 py-3">{personal.name}</td>
-                                    <td className="px-4 py-3">{personal.lastname}</td>
-                                    <td className="px-4 py-3">{personal.rut}</td>
-                                    <td className="px-4 py-3">{personal.email}</td>
-                                    <td className="px-4 py-3">{personal.rol.name}</td>
+                            <thead>
+                                <tr>
+                                    <th className="px-4 py-3">Nombre</th>
+                                    <th className="px-4 py-3">Apellido</th>
+                                    <th className="px-4 py-3">Rut</th>
+                                    <th className="px-4 py-3">Email</th>
+                                    <th className="px-4 py-3">Rol</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-                <Paginado pagina={paginaActual} setPagina={setPaginaActual} maximo={maximo} style={style}/>
+                            </thead>
+                            <tbody >
+                                {currentPosts?.map((personal) => (
+                                    <tr key={personal.id}>
+                                        <td className="px-4 py-3">{personal?.name}</td>
+                                        <td className="px-4 py-3">{personal?.lastname}</td>
+                                        <td className="px-4 py-3">{personal?.rut}</td>
+                                        <td className="px-4 py-3">{personal?.email}</td>
+                                        <td className="px-4 py-3">{personal?.rol?.name === "Ayudante" ? "Peoneta" : personal?.rol?.name}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </InfiniteScroll>
+                </div> 
+                <button onClick={loadMore} className={style.boton}>
+                    Cargar mas
+                </button>
             </div>
         </div>
     )

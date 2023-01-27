@@ -24,8 +24,8 @@ const RendicionGeneral = () => {
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const [startDate , setStartDate] = useState(new Date())
     const [endDate , setEndDate] = useState(null)
-    const soloFecha = startDate.toISOString().slice(0, 10);
-    const soloFechaFin = endDate?.toISOString().slice(0, 10);
+    const soloFecha = startDate.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
+    const soloFechaFin = endDate?.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
     
     const onChangeDate = (dates) => {
         const [start, end] = dates;

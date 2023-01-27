@@ -11,16 +11,38 @@ import 'react-datepicker/dist/react-datepicker.css';
 import es from 'date-fns/locale/es';
 import { RiFileExcel2Fill } from 'react-icons/ri';
 import XLSX from 'xlsx';
+import InfiniteScroll from 'react-infinite-scroller';
 
 registerLocale('es', es);
 
 const GuidePage = () => {
 
-    const { email } = useSelector(state => state.Autenticacion.autBack)
     const dispatch = useDispatch();
+    const { novaOrdenes } = useSelector((state) => state.Nova);
+    const { email } = useSelector(state => state.Autenticacion.autBack)
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const [date, setDate] = useState(new Date());
-    const soloFecha = date.toISOString().slice(0, 10);
+    const soloFecha = date.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
+    const width = window.innerWidth;
+
+    ///// PAGINADO /////
+    const [paginaActual, setPaginaActual] = useState(1)
+    const [porPagina, setPorPagina] = useState(width > 1800 ? 18 : 12)
+    const [hasMore, setHasMore] = useState(true)
+    const maximo = novaOrdenes?.ordenDeRepartos?.length / porPagina
+    const primerIndice = (paginaActual - 1) * porPagina
+    const ultimoIndice = (paginaActual - 1) * porPagina + porPagina
+    const currentPosts = novaOrdenes?.ordenDeRepartos?.slice(primerIndice, ultimoIndice)
+
+    const loadMore = () => {
+        if (paginaActual >= maximo) {
+            setHasMore(false)
+            return
+        }
+        setPorPagina(
+            porPagina + 9
+        )
+    }
 
     useEffect(() => {
         if (email === "maicol.nieto@jorgegas.cl") {
@@ -28,10 +50,10 @@ const GuidePage = () => {
         } else {
         dispatch(bringOrdenByAdminId(usuario.administrador.id, soloFecha));
         }
-    }, [dispatch, usuario.administrador.id, soloFecha, email]);
 
-    const { novaOrdenes } = useSelector((state) => state.Nova);
-
+    }, [dispatch, usuario.administrador.id, soloFecha, email, date]);
+    
+    /////// EXCEL ///////
     const tablaRef = useRef(null);
 
     const handleExportExcel = () => {
@@ -74,46 +96,60 @@ const GuidePage = () => {
                 <CreateOrden/>
                 <DownloadOrden/>
                 <div className={style.tableContainer}>
-                    <table
-                        className="table-md table table-bordered table-hover" 
-                        ref={tablaRef}
+                    <InfiniteScroll
+                        pageStart={0}
+                        // loadMore={loadMore}
+                        hasMore={hasMore}
                     >
-                        <thead>
-                            <tr>
-                                <th>Numero de orden</th>
-                                <th>Fecha</th>
-                                <th>Cantidad tarrones</th>
-                                <th>Patente</th>
-                                <th>Chofer</th>
-                                <th>Peoneta</th>
-                                <th>Comuna</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody
-                            style={{
-                                overflowY: 'scroll',
-                            }}
+                        <table
+                            className="table-md table table-bordered table-hover" 
+                            ref={tablaRef}
                         >
-                            {novaOrdenes.ordenDeRepartos?.map((orden) => (
-                                <OrdenList
-                                    key={orden.id}
-                                    id={orden.id}
-                                    fecha={orden.fecha}
-                                    totalCantidad={orden.contabilidadRecarga?.totalCantidad}
-                                    patente={orden.patente?.name}
-                                    chofer={orden.chofer?.personal?.name + ' ' + orden.chofer?.personal?.lastname }
-                                    ayudante={orden.ayudante?.personal?.name + ' ' + orden.ayudante?.personal?.lastname}
-                                    cuadrante={orden.cuadrante?.name}
-                                    estado={orden?.estado === true ? 'Activa' : 'Descargada'}
-                                    recargas={orden.recargas}
-                                    contabilidadRecarga={orden.contabilidadRecarga}
-                                    metodoPagos={orden.metodoPagos}
-                                />
-                            ))}
-                        </tbody>
-                    </table>
+                            <thead>
+                                <tr>
+                                    <th>Numero de orden</th>
+                                    <th>Fecha</th>
+                                    <th>Cantidad tarrones</th>
+                                    <th>Patente</th>
+                                    <th>Chofer</th>
+                                    <th>Peoneta</th>
+                                    <th>Comuna</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody
+                                style={{
+                                    overflowY: 'scroll',
+                                }}
+                            >
+                                {currentPosts?.map((orden) => (
+                                    <OrdenList
+                                        key={orden?.id}
+                                        id={orden?.id}
+                                        fecha={orden?.fecha}
+                                        totalCantidad={orden?.contabilidadRecarga?.totalCantidad}
+                                        patente={orden?.patente?.name}
+                                        chofer={orden?.chofer?.personal?.name + ' ' + orden.chofer?.personal?.lastname }
+                                        ayudante= {
+                                            orden?.ayudante?.personal?.name && 
+                                            orden?.ayudante?.personal?.name ? 
+                                            orden?.ayudante?.personal?.name + ' ' + orden?.ayudante?.personal?.name : 
+                                            'Sin peoneta'
+                                        }
+                                        cuadrante={orden?.cuadrante?.name}
+                                        estado={orden?.estado === true ? 'Activa' : 'Descargada'}
+                                        recargas={orden?.recargas}
+                                        contabilidadRecarga={orden?.contabilidadRecarga}
+                                        metodoPagos={orden?.metodoPagos}
+                                    />
+                                ))}
+                            </tbody>
+                        </table>
+                    </InfiniteScroll>
                 </div>
+                <button onClick={loadMore} className={style.boton}>
+                    Cargar mas
+                </button>
             </div>
         </div>
     )

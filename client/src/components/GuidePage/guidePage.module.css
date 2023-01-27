@@ -24,8 +24,8 @@
 
 .tableContainer {
     border-radius: 30px;
-    height: 33.5rem;
-    overflow: hidden;
+    height: 31rem;
+    overflow-y: scroll;
     /* background del color de la tabla */
     background: #FFFFFF;
     font-family: "Roboto";
@@ -87,6 +87,30 @@
     position: relative;
 }
 
+.boton {
+    margin-top: 0.5rem;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+    justify-content: center;
+    font-family: 'Roboto';
+    color: #FFFFFF;
+    background-color: #5E5F5F;
+    width: 100px;
+    height: 32px;
+}
+
+.boton:hover
+{
+    color: #5E5F5F;
+    background-color: #FFFFFF;
+    border: 1px solid #5E5F5F;
+}
 
 @media screen and (min-width: 1800px) {
     .container {
@@ -95,7 +119,7 @@
     }
 
     .tableContainer {
-        height: 46rem;
+        height: 45rem;
     }
 
     .icon {

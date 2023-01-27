@@ -1,4 +1,4 @@
-const { Personal, Rol, Administrador, Auxiliar, Ayudante, Chofer, AdministradorMaestro } = require('../db')
+const { Personal, Rol, Administrador, Ayudante, Chofer } = require('../db')
 const bcrypt = require('bcryptjs');
 
 const choferes = [

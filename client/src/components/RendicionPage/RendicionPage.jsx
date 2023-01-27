@@ -36,7 +36,7 @@ const RendicionPage = () => {
     const precio45kg = precios?.filter(precio => precio.name === "GAS NORMAL 45 KILOS");
     const preciosArray = [precio5kg[0]?.precio, precio11kg[0]?.precio, precio15kg[0]?.precio, precio45kg[0]?.precio];
     const [date , setDate] = useState(new Date())
-    const soloFecha = date.toISOString().slice(0, 10);
+    const soloFecha = date.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
 
     const tabla1Ref = useRef(null);
     const tabla2Ref = useRef(null);
