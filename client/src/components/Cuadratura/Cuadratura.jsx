@@ -165,6 +165,8 @@ const Cuadratura = ({ novaOrdenById }) => {
             ) - (
                 faltanteChofer.faltanteChofer + 
                 faltantePeoneta.faltantePeoneta
+            ) + (
+                sobrante.sobrante
             )
         })
 
@@ -236,7 +238,8 @@ const Cuadratura = ({ novaOrdenById }) => {
         preciosArray[1],
         preciosArray[2],
         preciosArray[3],
-        usuario.administrador.id
+        usuario.administrador.id,
+        sobrante.sobrante
     ])
 
     const handleChange = (e) => {
@@ -756,23 +759,31 @@ const Cuadratura = ({ novaOrdenById }) => {
                                     className={style.inputs4}
                                     disabled
                                 />
-                                <p style={{
-                                    fontSize: '20px',
-                                    fontWeight: 'bold',
-                                    fontFamily: 'Roboto',
-                                }}>
-                                    Sobrante
-                                </p>
-                                <Input
-                                    type="number"
-                                    name="sobrante"
-                                    id="sobrante"
-                                    placeholder="Sobrante"
-                                    value={sobrante.sobrante === 0 ? "" : sobrante.sobrante}
-                                    className={style.inputs4}
-                                    min={0}
-                                    onChange={(e) => handleChange(e)}
-                                />
+                                {
+                                    //si faltante es menor a 0, se habilita el input de sobrante
+                                    faltante?.faltante < 0 ? (
+                                        <>
+                                            <p style={{
+                                                fontSize: '20px',
+                                                fontWeight: 'bold',
+                                                fontFamily: 'Roboto',
+                                            }}>
+                                                Sobrante
+                                            </p>
+                                            <Input
+                                                type="number"
+                                                name="sobrante"
+                                                id="sobrante"
+                                                placeholder="Sobrante"
+                                                value={sobrante.sobrante === 0 ? "" : sobrante.sobrante}
+                                                className={style.inputs4}
+                                                min={0}
+                                                onChange={(e) => handleChange(e)}
+                                            />
+                                        </>
+                                    ) : null
+                                }
+                                
                             </div>
                         </div>
                         {

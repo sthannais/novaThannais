@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import DatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
 import { Input }  from 'reactstrap';
-import { bringOrdenById, ordenesRendicion, bringOrdenByAdminId, bringAllAdministradores } from '../../redux/novaSlice/thunks';
+import { bringOrdenById, ordenesRendicion, getAllOrdenes, bringAllAdministradores } from '../../redux/novaSlice/thunks';
 import 'bootstrap/dist/css/bootstrap.css';
 import style from './rendicionPage.module.css';
 import JorgeGas from '../../assetsOficial/jorgegas.svg';
@@ -27,9 +27,7 @@ const RendicionPage = () => {
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const dispatch = useDispatch()
     const [ordenId , setOrdenId] = useState(0)
-    const [ordenIdAdmin , setOrdenIdAdmin] = useState(0)
-    const { ordenesRendidas, novaOrdenById, precios, administradores } = useSelector(state => state.Nova)
-    const { email } = useSelector(state => state.Autenticacion.autBack)
+    const { ordenesRendidas, novaOrdenById, precios } = useSelector(state => state.Nova)
     const precio5kg = precios?.filter(precio => precio.name === "GAS NORMAL 5 KILOS");
     const precio11kg = precios?.filter(precio => precio.name === "GAS NORMAL 11 KILOS");
     const precio15kg = precios?.filter(precio => precio.name === "GAS NORMAL 15 KILOS");
@@ -77,62 +75,30 @@ const RendicionPage = () => {
         XLSX.writeFile(libroExcel, `Rendicion-${usuario.name} ${usuario.lastname}-${soloFecha}-${nombreChofer} ${apellidoChofer}-${nombreAyudante} ${apellidoAyudante}.xlsx`);
     }
 
-    const dispatchOrden = () => {
-        dispatch(bringOrdenById(ordenId))
-        dispatch(ordenesRendicion())
-    }
-
     useEffect(() => {
-        dispatchOrden()
-            dispatch(bringAllAdministradores())
-            dispatch(bringOrdenByAdminId(ordenIdAdmin, soloFecha))
+        dispatch(bringOrdenById(ordenId))
+        dispatch(getAllOrdenes(soloFecha))
+        dispatch(bringAllAdministradores())
+        setTimeout(() => {
+            dispatch(ordenesRendicion())
+        }, 500)
     }, [
         dispatch,
         usuario.administrador.id,
+        ordenId,
         soloFecha,
         novaOrdenById?.contabilidadRecarga?.totalRecaudacion,
-        email,
-        ordenIdAdmin
     ])
-
 
     return (
         <div className={style.conenedor}>
             <p className={style.text}>Rendicion de gastos</p>
             <img src={JorgeGas} alt="logo" className={style.logo} />
             <div className={style.container}>
-                {
-                    email === "irmaperez.gea@gmail.com" || "maicol.nieto@jorgegas.cl" ? (
-                        
-                        <Input
-                            type="select"
-                            value={ordenIdAdmin}
-                            onChange={(e) => setOrdenIdAdmin(e.target.value)}
-                            className={style.inputs2}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                dispatch(bringOrdenByAdminId(ordenIdAdmin, soloFecha))
-                            }}
-                        >
-                            <option hidden>Seleccione un administrador :</option>
-                            {
-                                administradores?.map((admin) => (
-                                    <option key={admin.administrador.id} value={admin.administrador.id}>
-                                        {
-                                            `${admin.name} ${admin.lastname}`
-                                        }
-                                    </option>
-                                ))
-                            }
-                        </Input>
-
-                    ) : null
-                }
                 <Input
                     type="select"
                     value={ordenId}
                     onChange={(e) => setOrdenId(e.target.value)}
-                    onClick={dispatchOrden}
                     className={style.inputs}
                 >
                     <option hidden>Seleccione una orden :</option>
@@ -149,6 +115,10 @@ const RendicionPage = () => {
                                     ` y ${orden?.ayudante?.personal?.name} ${orden?.ayudante?.personal?.lastname}` :
                                     null
                                 }
+                                &nbsp;&nbsp;
+                                {
+                                    orden?.rendida === true ? <p>✔️</p> : <p>❌</p>
+                                }
                             </option>
                         ))
                     }
@@ -164,8 +134,7 @@ const RendicionPage = () => {
                         dateFormat="dd/MM/yyyy"
                         placeholderText='Seleccione una fecha'
                         maxDate={new Date()}
-                        className={style.classDatePicker}
-                        onClickOutside={() => dispatch(bringOrdenByAdminId(usuario.administrador.id, soloFecha))}	
+                        className={style.classDatePicker}	
                     />
                 </div>
                 {

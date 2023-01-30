@@ -109,7 +109,7 @@ const DownloadOrden = () => {
         //seteo los llenos
         setLlenos({
             ...llenos,
-            [e.target.name]: Number(e.target.value)
+            [e.target.name]: e.target.value
         })
 
         //seteo las ventas con los actuales menos los llenos

@@ -48,7 +48,7 @@ const GuidePage = () => {
         if (email === "maicol.nieto@jorgegas.cl") {
             dispatch(getAllOrdenes(soloFecha));
         } else {
-        dispatch(bringOrdenByAdminId(usuario.administrador.id, soloFecha));
+            dispatch(bringOrdenByAdminId(usuario.administrador.id, soloFecha));
         }
 
     }, [dispatch, usuario.administrador.id, soloFecha, email, date]);

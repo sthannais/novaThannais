@@ -24,7 +24,6 @@ const CreateOrden = () => {
     const preciosArray = [precio5kg[0]?.precio, precio11kg[0]?.precio, precio15kg[0]?.precio, precio45kg[0]?.precio];
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const onlyDate = new Date().toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
-    console.log(onlyDate);
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
     const dispatch = useDispatch();
@@ -95,7 +94,11 @@ const CreateOrden = () => {
             }
         ]);
 
-        if(orden.patente !== '' && orden.cuadranteId !== '' && orden.idChofer !== 0 && orden.idAyudante !== 0){
+        if( orden.patente !== '' &&
+            orden.cuadranteId !== '' && 
+            orden.idChofer !== 0 && 
+            orden.idPeoneta !== 0
+        ){
             setDisabled(false);
         } else {
             setDisabled(true);
@@ -110,7 +113,7 @@ const CreateOrden = () => {
         orden.patente,
         orden.cuadranteId,
         orden.idChofer,
-        orden.idAyudante
+        orden.idPeoneta,
     ]);
 
     const handleProductsChange = (e, index) => {
