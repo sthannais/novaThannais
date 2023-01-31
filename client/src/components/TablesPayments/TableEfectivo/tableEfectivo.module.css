@@ -13,7 +13,7 @@
 @media screen and (min-width: 1800px) {
     .tabla {
         width: 20.5rem;
-        height: 22.9rem;
+        height: 20.7rem;
         font-size: 16px;
     }
 }
@@ -21,7 +21,7 @@
 @media screen and ( max-width: 1366px ) {
     .tabla {
         width: 15rem;
-        height: 20.8rem;
+        height: 19rem;
         font-size: 14px;
     }
 }
