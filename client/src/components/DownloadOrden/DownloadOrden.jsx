@@ -51,9 +51,10 @@ const DownloadOrden = () => {
     }
 
     useEffect(() => {
-
         dispatchOrden();
+    }, [idOrden]);
 
+    useEffect(() => {
         setRecaudacion({
             ...recaudacion,
             recaudacion5kg: ventas.ventas5kg * Number(preciosArray[0]),
@@ -67,7 +68,22 @@ const DownloadOrden = () => {
         setTotalRecaudacion(
             Number(recaudacion.recaudacion5kg) + Number(recaudacion.recaudacion11kg) + Number(recaudacion.recaudacion15kg) + Number(recaudacion.recaudacion45kg)
         )
+    }, [
+        ventas.ventas5kg,
+        ventas.ventas11kg,
+        ventas.ventas15kg,
+        ventas.ventas45kg,
+        recaudacion.recaudacion5kg,
+        recaudacion.recaudacion11kg,
+        recaudacion.recaudacion15kg,
+        recaudacion.recaudacion45kg,
+        preciosArray[0],
+        preciosArray[1],
+        preciosArray[2],
+        preciosArray[3],
+    ])
 
+    useEffect(() => {
         if( idOrden === 0 ||
             llenos.llenos5kg === "" ||
             llenos.llenos5kg > novaOrdenById.contabilidadRecarga?.total5kg ||
@@ -82,28 +98,7 @@ const DownloadOrden = () => {
         } else {
             setDisabled(false);
         }
-
-    }, [
-        novaOrdenById?.contabilidadRecarga?.recaudacion5kg,
-        novaOrdenById?.contabilidadRecarga?.recaudacion11kg,
-        novaOrdenById?.contabilidadRecarga?.recaudacion15kg,
-        novaOrdenById?.contabilidadRecarga?.recaudacion45kg,
-        novaOrdenById?.contabilidadRecarga?.totalCantidad,
-        novaOrdenById?.contabilidadRecarga?.totalRecaudacion,
-        ventas.ventas5kg,
-        ventas.ventas11kg,
-        ventas.ventas15kg,
-        ventas.ventas45kg,
-        recaudacion.recaudacion5kg,
-        recaudacion.recaudacion11kg,
-        recaudacion.recaudacion15kg,
-        recaudacion.recaudacion45kg,
-        preciosArray[0],
-        preciosArray[1],
-        preciosArray[2],
-        preciosArray[3],
-        idOrden
-    ])
+    }, [idOrden, llenos])
 
     const handleChange = (e) => {
         //seteo los llenos
@@ -176,7 +171,7 @@ const DownloadOrden = () => {
         transform: 'translate(-32%, -2%)',
         fontFamily: 'Roboto, sans-serif',
         "--bs-modal-bg": "#F5F5F5",
-        "--bs-modal-width": "580px"
+        "--bs-modal-width": "580px",
     };
 
     return (    

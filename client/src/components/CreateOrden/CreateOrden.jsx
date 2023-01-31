@@ -70,7 +70,9 @@ const CreateOrden = () => {
         dispatch(bringChoferes());
         dispatch(bringAyudantes());
         dispatch(bringPrecios());
+    }, [ dispatch ]);
 
+    useEffect(() => {
         setProductos([
             {
                 name: "GAS NORMAL 5 KILOS",
@@ -93,7 +95,14 @@ const CreateOrden = () => {
                 quantity: 0
             }
         ]);
+    }, [
+        preciosArray[0],
+        preciosArray[1],
+        preciosArray[2],
+        preciosArray[3],
+    ]);
 
+    useEffect(() => {
         if( orden.patente !== '' &&
             orden.cuadranteId !== '' && 
             orden.idChofer !== 0 && 
@@ -103,13 +112,7 @@ const CreateOrden = () => {
         } else {
             setDisabled(true);
         }
-
     }, [
-        dispatch,
-        preciosArray[0],
-        preciosArray[1],
-        preciosArray[2],
-        preciosArray[3],
         orden.patente,
         orden.cuadranteId,
         orden.idChofer,

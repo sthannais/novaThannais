@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { cuadrarOrden, bringPrecios } from '../../redux/novaSlice/thunks';
 import style from './cuadratura.module.css';
 import cuadratura from '../../assetsOficial/cuadratura.svg';
+import validateBilletes from '../../helpers/validateBilletes';
 import { Modal, Button, ModalHeader, ModalBody, ModalFooter, Input, Form, FormGroup, Label } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -11,6 +12,7 @@ const Cuadratura = ({ novaOrdenById }) => {
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const dispatch = useDispatch();
     const [disabled, setDisabled] = useState(true);
+    const [error, setError] = useState({});
     const [modal, setModal] = useState(false);
     const [nestedModal, setNestedModal] = useState(false);
     const [closeAll, setCloseAll] = useState(false);
@@ -28,11 +30,6 @@ const Cuadratura = ({ novaOrdenById }) => {
         setCloseAll(false);
     }
 
-    const toggleAll = () => {
-        setNestedModal(!nestedModal);
-        setCloseAll(true);
-    }
-
     const [idDeDecuadre, setIdDeDecuadre] = useState({
         idDeDecuadre : 0,
     })
@@ -46,24 +43,12 @@ const Cuadratura = ({ novaOrdenById }) => {
     })
 
     const [efectivo, setEfectivo] = useState({
-        billetede1 : 0,
         totalBilletes1: 0,
-        billetesDe2 : 0,
         totalBilletes2 : 0,
-        billetesDe5 : 0,
         totalBilletes5 : 0,
-        billetesDe10 : 0,
         totalBilletes10 : 0,
-        billetesDe20 : 0,
         totalBilletes20 : 0,
-        moneda500 : 0,
-        totalMoneda500 : 0,
-        moneda100 : 0,
-        totalMoneda100 : 0,
-        moneda50 : 0,
-        totalMoneda50 : 0,
-        moneda10 : 0,
-        totalMoneda10 : 0,
+        monedas : 0,
         totalGeneral : 0
     })
 
@@ -111,6 +96,7 @@ const Cuadratura = ({ novaOrdenById }) => {
         sobrante : 0,
     })
 
+
     useEffect(() => {
         dispatch(bringPrecios());
     }, [dispatch])
@@ -119,16 +105,7 @@ const Cuadratura = ({ novaOrdenById }) => {
         
         setEfectivo({
             ...efectivo,
-            totalBilletes1 : (efectivo.billetede1 * 1000),
-            totalBilletes2 : (efectivo.billetesDe2 * 2000),
-            totalBilletes5 : (efectivo.billetesDe5 * 5000),
-            totalBilletes10 : (efectivo.billetesDe10 * 10000),
-            totalBilletes20 : (efectivo.billetesDe20 * 20000),
-            totalMoneda500 : (efectivo.moneda500 * 500),
-            totalMoneda100 : (efectivo.moneda100 * 100),
-            totalMoneda50 : (efectivo.moneda50 * 50),
-            totalMoneda10 : (efectivo.moneda10 * 10),
-            totalGeneral : (efectivo.totalBilletes1 + efectivo.totalBilletes2 + efectivo.totalBilletes5 + efectivo.totalBilletes10 + efectivo.totalBilletes20 + efectivo.totalMoneda500 + efectivo.totalMoneda100 + efectivo.totalMoneda50 + efectivo.totalMoneda10)
+            totalGeneral : (efectivo.totalBilletes1 + efectivo.totalBilletes2 + efectivo.totalBilletes5 + efectivo.totalBilletes10 + efectivo.totalBilletes20 + efectivo.monedas)
         })
         setVales({
             ...vales,
@@ -182,24 +159,12 @@ const Cuadratura = ({ novaOrdenById }) => {
         }
 
     }, [
-        efectivo.billetede1,
         efectivo.totalBilletes1,
-        efectivo.billetesDe2,
         efectivo.totalBilletes2,
-        efectivo.billetesDe5,
         efectivo.totalBilletes5,
-        efectivo.billetesDe10,
         efectivo.totalBilletes10,
-        efectivo.billetesDe20,
         efectivo.totalBilletes20,
-        efectivo.moneda500,
-        efectivo.totalMoneda500,
-        efectivo.moneda100,
-        efectivo.totalMoneda100,
-        efectivo.moneda50,
-        efectivo.totalMoneda50,
-        efectivo.moneda10,
-        efectivo.totalMoneda10,
+        efectivo.monedas,
         efectivo.totalGeneral,
         vales.fisico5kg,
         vales.totalFisico5kg,
@@ -242,7 +207,29 @@ const Cuadratura = ({ novaOrdenById }) => {
         sobrante.sobrante
     ])
 
+    useEffect(() => {
+        if(
+            !error.hasOwnProperty('totalBilletes1') &&
+            !error.hasOwnProperty('totalBilletes2') &&
+            !error.hasOwnProperty('totalBilletes5') &&
+            !error.hasOwnProperty('totalBilletes10') &&
+            !error.hasOwnProperty('totalBilletes20') 
+        ) {
+            setDisabled(false)
+        } else {
+            setDisabled(true)
+        }
+    }, [error])
+    
+
     const handleChange = (e) => {
+
+        setError(
+            validateBilletes({
+                ...efectivo,
+                [e.target.name] : Number(e.target.value)
+            })
+        )
         setEfectivo({
             ...efectivo,
             [e.target.name] : Number(e.target.value)
@@ -377,6 +364,7 @@ const Cuadratura = ({ novaOrdenById }) => {
         left: '15%',
         top: '3%',
         transform: 'translate(-28%, -3%)',
+        "--bs-modal-padding": "1.5rem"
     };
 
     return (
@@ -411,97 +399,74 @@ const Cuadratura = ({ novaOrdenById }) => {
                                     EFECTIVO
                                 </p>
                                 <div className={style.grid1}>
-                                    <p>Billete 20.000</p>
+                                    <p>B. 20.000</p>
                                     <Input
                                         type="number"
-                                        name="billetesDe20"
-                                        id="billetesDe20"
-                                        value={efectivo.billetesDe20 === 0 ? "" : efectivo.billetesDe20}
+                                        name="totalBilletes20"
+                                        id="totalBilletes20"
+                                        value={efectivo.totalBilletes20 === 0 ? "" : efectivo.totalBilletes20}
                                         className={style.inputs}
                                         onChange={(e) => handleChange(e)}
                                         min={0}
                                     />
-                                    <p>Billete 10.000</p>
+                                    <p>B. 10.000</p>
                                     <Input
                                         type="number"
-                                        name="billetesDe10"
-                                        id="billetesDe10"
-                                        value={efectivo.billetesDe10 === 0 ? "" : efectivo.billetesDe10}
+                                        name="totalBilletes10"
+                                        id="totalBilletes10"
+                                        value={efectivo.totalBilletes10 === 0 ? "" : efectivo.totalBilletes10}
                                         className={style.inputs}
                                         onChange={(e) => handleChange(e)}
                                         min={0}
                                     />
-                                    <p>Billete 5.000</p>
+                                    <p>B. 5.000</p>
                                     <Input
                                         type="number"
-                                        name="billetesDe5"
-                                        id="billetesDe5"
-                                        value={efectivo.billetesDe5 === 0 ? "" : efectivo.billetesDe5}
+                                        name="totalBilletes5"
+                                        id="totalBilletes5"
+                                        value={efectivo.totalBilletes5 === 0 ? "" : efectivo.totalBilletes5}
                                         className={style.inputs}
                                         onChange={(e) => handleChange(e)}
                                         min={0}
                                     />
-                                    <p>Billete 2.000</p>
+                                    <p>B. 2.000</p>
                                     <Input
                                         type="number"
-                                        name="billetesDe2"
-                                        id="billetesDe2"
-                                        value={efectivo.billetesDe2 === 0 ? "" : efectivo.billetesDe2}
+                                        name="totalBilletes2"
+                                        id="totalBilletes2"
+                                        value={efectivo.totalBilletes2 === 0 ? "" : efectivo.totalBilletes2}
                                         className={style.inputs}
                                         onChange={(e) => handleChange(e)}
                                         min={0}
                                     />
-                                    <p>Billete 1.000</p>
+                                    <p>B. 1.000</p>
                                     <Input
                                         type="number"
-                                        name="billetede1"
-                                        id="billetede1"
-                                        value={efectivo.billetede1 === 0 ? "" : efectivo.billetede1}
+                                        name="totalBilletes1"
+                                        id="totalBilletes1"
+                                        value={efectivo.totalBilletes1 === 0 ? "" : efectivo.totalBilletes1}
                                         className={style.inputs}
                                         onChange={(e) => handleChange(e)}
                                         min={0}
                                     />
-                                    <p>Moneda 500</p>
+                                    <p>Monedas</p>
                                     <Input
                                         type="number"
-                                        name="moneda500"
-                                        id="moneda500"
-                                        value={efectivo.moneda500 === 0 ? "" : efectivo.moneda500}
-                                        className={style.inputs}
-                                        onChange={(e) => handleChange(e)}
-                                        min={0}
-                                    />
-                                    <p>Moneda 100</p>
-                                    <Input
-                                        type="number"
-                                        name="moneda100"
-                                        id="moneda100"
-                                        value={efectivo.moneda100 === 0 ? "" : efectivo.moneda100}
-                                        className={style.inputs}
-                                        onChange={(e) => handleChange(e)}
-                                        min={0}
-                                    />
-                                    <p>Moneda 50</p>
-                                    <Input
-                                        type="number"
-                                        name="moneda50"
-                                        id="moneda50"
-                                        value={efectivo.moneda50 === 0 ? "" : efectivo.moneda50}
-                                        className={style.inputs}
-                                        onChange={(e) => handleChange(e)}
-                                        min={0}
-                                    />
-                                    <p>Moneda 10</p>
-                                    <Input
-                                        type="number"
-                                        name="moneda10"
-                                        id="moneda10"
-                                        value={efectivo.moneda10 === 0 ? "" : efectivo.moneda10}
+                                        name="monedas"
+                                        id="monedas"
+                                        value={efectivo.monedas === 0 ? "" : efectivo.monedas}
                                         className={style.inputs}
                                         onChange={(e) => handleChange(e)}
                                         min={0}
                                     />
                                 </div>
+                                {   
+                                    error.totalBilletes20 && <p className={style.error2}>{error.totalBilletes20}</p> ||
+                                    error.totalBilletes10 && <p className={style.error2}>{error.totalBilletes10}</p> ||
+                                    error.totalBilletes5 && <p className={style.error2}>{error.totalBilletes5}</p> ||
+                                    error.totalBilletes2 && <p className={style.error2}>{error.totalBilletes2}</p> ||
+                                    error.totalBilletes1 && <p className={style.error2}>{error.totalBilletes1}</p> 
+                                }
                             </div>
                             <div className={style.containerVales}>
                                 <p style={{
@@ -711,7 +676,7 @@ const Cuadratura = ({ novaOrdenById }) => {
                         <div className={style.containerRecaudacion}>
                             <div className={style.grid4}>
                                 <p style={{
-                                    fontSize: '20px',
+                                    fontSize: '18px',
                                     fontWeight: 'bold',
                                     fontFamily: 'Roboto',
                                 }}>
@@ -727,7 +692,7 @@ const Cuadratura = ({ novaOrdenById }) => {
                                     disabled
                                 />
                                 <p style={{
-                                    fontSize: '20px',
+                                    fontSize: '18px',
                                     fontWeight: 'bold',
                                     fontFamily: 'Roboto',
                                 }}>
@@ -744,7 +709,7 @@ const Cuadratura = ({ novaOrdenById }) => {
                                     min={0}
                                 />
                                 <p style={{
-                                    fontSize: '20px',
+                                    fontSize: '18px',
                                     fontWeight: 'bold',
                                     fontFamily: 'Roboto',
                                 }}>
@@ -764,7 +729,7 @@ const Cuadratura = ({ novaOrdenById }) => {
                                     faltante?.faltante < 0 ? (
                                         <>
                                             <p style={{
-                                                fontSize: '20px',
+                                                fontSize: '18px',
                                                 fontWeight: 'bold',
                                                 fontFamily: 'Roboto',
                                             }}>

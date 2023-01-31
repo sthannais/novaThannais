@@ -35,7 +35,7 @@
     justify-content: center;
     align-items: center;
     margin: 3rem 0 0 2.5rem;
-    width: 535px;
+    width: 538px;
     height: 35px;
     font-size: 14px;
     background: #FFFFFF;
@@ -298,9 +298,9 @@
 
     .inputs {
         margin-top:3rem;
-        width: 480px;
+        width: 510px;
         height: 35px;
-        font-size: 14px;
+        font-size: 13px;
         margin-left: 3rem;
     }
 
@@ -313,7 +313,7 @@
     }
 
     .datePicker{
-        left: 52%;
+        left: 55%;
         top: 1.6%;
         font-size: 14px;
     }
@@ -329,23 +329,23 @@
     }
 
     .icon {
-        left: 57%;
+        left: 59%;
         top: 6.7%;
         height: 2.3rem;
         color: #00FF0C;
     }
 
     .icon2 {
-        left: 57%;
+        left: 59%;
         top: 6.7%;
         height: 2.3rem;
         color: #E12C3F;
     }
 
     .info {
-        left: 67%;
+        left: 69%;
         top: 8%;
-        font-size: 15px;
+        font-size: 14px;
     }
 
     .tableContainer {

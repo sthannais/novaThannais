@@ -56,9 +56,9 @@
 
 @media screen and ( max-width: 1366px ) {
     .boton{
-        left: 49rem;
+        left: 50rem;
         top: 3.3rem;
-        width: 140px;
+        width: 125px;
         height: 30px;
         font-size: 14px;
     }

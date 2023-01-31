@@ -7,7 +7,6 @@ const {
     Transbank,
     Transferencias,
     Vales,
-    Administrador
     } = require('../../db.js');
 
 const { Op } = require('sequelize');
@@ -161,10 +160,7 @@ const getAllMetodoPagosInOrdenDeRepartoBetweenDates = async (req, res, next) => 
                 totalBilletes5: Number(acc.totalBilletes5) + Number(curr.efectivo.totalBilletes5),
                 totalBilletes2: Number(acc.totalBilletes2) + Number(curr.efectivo.totalBilletes2),
                 totalBilletes1: Number(acc.totalBilletes1) + Number(curr.efectivo.totalBilletes1),
-                totalMoneda500: Number(acc.totalMoneda500) + Number(curr.efectivo.totalMoneda500),
-                totalMoneda100: Number(acc.totalMoneda100) + Number(curr.efectivo.totalMoneda100),
-                totalMoneda50: Number(acc.totalMoneda50) + Number(curr.efectivo.totalMoneda50),
-                totalMoneda10 : Number(acc.totalMoneda10) + Number(curr.efectivo.totalMoneda10),
+                monedas: Number(acc.monedas) + Number(curr.efectivo.monedas),
                 totalGeneral: Number(acc.totalGeneral) + Number(curr.efectivo.totalGeneral),
             }
         }, {
@@ -173,10 +169,7 @@ const getAllMetodoPagosInOrdenDeRepartoBetweenDates = async (req, res, next) => 
             totalBilletes5: 0,
             totalBilletes2: 0,
             totalBilletes1: 0,
-            totalMoneda500: 0,
-            totalMoneda100: 0,
-            totalMoneda50: 0,
-            totalMoneda10 : 0,
+            monedas: 0,
             totalGeneral: 0
         })
 
@@ -284,7 +277,8 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
                     where: {
                         fecha: {
                             [Op.gte]: fechaInicio
-                        }
+                        },
+                        rendida : true
                     }
                 })
             }else{
@@ -292,7 +286,8 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
                     where: {
                         fecha: {
                             [Op.between]: [fechaInicio, fechaFin]
-                        }
+                        },
+                        rendida : true
                     }
                 })
             }
@@ -303,7 +298,8 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
                         fecha: {
                             [Op.gte]: fechaInicio
                         },
-                        cuadradoPor: administradorId
+                        cuadradoPor: administradorId,
+                        rendida : true
                     }
                 })
             }else{
@@ -312,7 +308,8 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
                         fecha: {
                             [Op.between]: [fechaInicio, fechaFin]
                         },
-                        cuadradoPor: administradorId
+                        cuadradoPor: administradorId,
+                        rendida : true
                     }
                 })
             }
@@ -418,10 +415,7 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
                 totalBilletes5: Number(acc.totalBilletes5) + Number(curr.efectivo.totalBilletes5),
                 totalBilletes2: Number(acc.totalBilletes2) + Number(curr.efectivo.totalBilletes2),
                 totalBilletes1: Number(acc.totalBilletes1) + Number(curr.efectivo.totalBilletes1),
-                totalMoneda500: Number(acc.totalMoneda500) + Number(curr.efectivo.totalMoneda500),
-                totalMoneda100: Number(acc.totalMoneda100) + Number(curr.efectivo.totalMoneda100),
-                totalMoneda50: Number(acc.totalMoneda50) + Number(curr.efectivo.totalMoneda50),
-                totalMoneda10 : Number(acc.totalMoneda10) + Number(curr.efectivo.totalMoneda10),
+                monedas: Number(acc.monedas) + Number(curr.efectivo.monedas),
                 totalGeneral: Number(acc.totalGeneral) + Number(curr.efectivo.totalGeneral),
             }
         }, {
@@ -430,10 +424,7 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
             totalBilletes5: 0,
             totalBilletes2: 0,
             totalBilletes1: 0,
-            totalMoneda500: 0,
-            totalMoneda100: 0,
-            totalMoneda50: 0,
-            totalMoneda10 : 0,
+            monedas: 0,
             totalGeneral: 0
         })
 
