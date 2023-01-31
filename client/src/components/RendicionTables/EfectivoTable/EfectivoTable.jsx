@@ -10,7 +10,7 @@ const EfectivoTable = ({ cuadratura, tablaRef }) => {
             </p>
             <div className={style.tabla}>
                 <table 
-                    className="table-sm table table-bordered table-hover" 
+                    className="table-lg table table-bordered table-hover" 
                     ref={tablaRef}
                 >
                     <thead>
@@ -41,20 +41,8 @@ const EfectivoTable = ({ cuadratura, tablaRef }) => {
                             <td>{cuadratura?.totalEfectivo?.totalBilletes1 ? numberWithDots(cuadratura?.totalEfectivo?.totalBilletes1) : 0}</td>
                         </tr>
                         <tr>
-                            <td> M. 500</td>
-                            <td>{cuadratura?.totalEfectivo?.totalMoneda500 ? numberWithDots(cuadratura?.totalEfectivo?.totalMoneda500) : 0}</td>
-                        </tr>
-                        <tr>
-                            <td> M. 100</td>
-                            <td>{cuadratura?.totalEfectivo?.totalMoneda100 ? numberWithDots(cuadratura?.totalEfectivo?.totalMoneda100) : 0}</td>
-                        </tr>
-                        <tr>
-                            <td> M. 50</td>
-                            <td>{cuadratura?.totalEfectivo?.totalMoneda50 ? numberWithDots(cuadratura?.totalEfectivo?.totalMoneda50) : 0}</td>
-                        </tr>
-                        <tr>
-                            <td> M. 10</td>
-                            <td>{cuadratura?.totalEfectivo?.totalMoneda10 ? numberWithDots(cuadratura?.totalEfectivo?.totalMoneda10) : 0}</td>
+                            <td> Monedas</td>
+                            <td>{cuadratura?.totalEfectivo?.monedas ? numberWithDots(cuadratura?.totalEfectivo?.monedas) : 0}</td>
                         </tr>
                         <tr>
                             <th>Total</th>

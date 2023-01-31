@@ -1,11 +1,11 @@
 .tabla {
     width: 35rem;
-    height: 5.6rem;
+    height: 5rem;
     border: 1px solid #3C3C3C;
     border-radius: 15px;
     background: #FFFFFF;
     overflow: hidden;
-    margin: -5.5rem 0 0 2.5rem;
+    margin: -3.7rem 0 0 2.5rem;
     text-align: center;
     font-size: 15px;
 }
