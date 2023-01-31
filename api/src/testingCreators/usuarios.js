@@ -293,9 +293,9 @@ const ayudantes = [
 const administradores = [
     {
         name: 'Jorge',
-        lastname: 'Perez',
-        email: 'jorge@gmail.com',
-        password: '123456789',
+        lastname: 'Soto',
+        email: 'jorgetalento@outlook.es',
+        password: 'asdF123465',
         rut: '123456789',
     },
     {

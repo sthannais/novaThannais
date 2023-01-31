@@ -152,12 +152,6 @@ const Cuadratura = ({ novaOrdenById }) => {
             idDeDecuadre : usuario.administrador.id
         })
 
-        if ( faltante.faltante < 1 && faltante.faltante > -1) {
-            setDisabled(false)
-        } else {
-            setDisabled(true)
-        }
-
     }, [
         efectivo.totalBilletes1,
         efectivo.totalBilletes2,
@@ -193,7 +187,6 @@ const Cuadratura = ({ novaOrdenById }) => {
         metodoPagos.porcentajeDescuentoRut,
         metodoPagos.porcentajeDescuento,
         totalRecaudacion.totalRecaudacion,
-        faltante.faltante,
         novaOrdenById?.contabilidadRecarga?.totalRecaudacion,
         novaOrdenById?.metodoPagos[0]?.abono?.monto,
         disabled,
@@ -213,13 +206,14 @@ const Cuadratura = ({ novaOrdenById }) => {
             !error.hasOwnProperty('totalBilletes2') &&
             !error.hasOwnProperty('totalBilletes5') &&
             !error.hasOwnProperty('totalBilletes10') &&
-            !error.hasOwnProperty('totalBilletes20') 
+            !error.hasOwnProperty('totalBilletes20') &&
+            faltante.faltante < 1 && faltante.faltante > -1
         ) {
             setDisabled(false)
         } else {
             setDisabled(true)
         }
-    }, [error])
+    }, [error, faltante.faltante,])
     
 
     const handleChange = (e) => {
