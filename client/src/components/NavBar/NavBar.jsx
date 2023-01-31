@@ -69,7 +69,7 @@ const NavBar = () => {
                         </button>
                     </div>
                 </div>
-                ) : email === "maicol.nieto@jorgegas.cl" ? (
+                ) : email === "maicol.nieto@jorgegas.cl" || "jorgetalento@outlook.es" ? (
                     <div>
                     <p className={style.completeName}>{name + " " + lastname}</p>
                     <p className={style.rolStyle}>Administrador</p>
