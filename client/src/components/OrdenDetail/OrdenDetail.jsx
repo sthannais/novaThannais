@@ -155,7 +155,7 @@ const OrdenDetail = (
                                 </td>
                                 <td>
                                     {
-                                        recargas.map((recarga) => ( 
+                                        recargas?.map((recarga) => ( 
                                             <th className={style.tdclas} key={recarga.id}>
                                                 {recarga.cantidad5kg} 
                                             </th>
@@ -164,7 +164,7 @@ const OrdenDetail = (
                                 </td>
                                 <td>
                                     {
-                                        contabilidadRecarga.total5kg
+                                        contabilidadRecarga?.total5kg
                                     }
                                 </td>
                                 {
@@ -190,16 +190,16 @@ const OrdenDetail = (
                                 </td>
                                 <td>
                                     {
-                                        recargas.map((recarga) => (
+                                        recargas?.map((recarga) => (
                                             <th className={style.tdclas} key={recarga.id}>
-                                                {recarga.cantidad11kg}
+                                                {recarga?.cantidad11kg}
                                             </th>
                                         ))
                                     }
                                 </td>
                                 <td>
                                     {
-                                        contabilidadRecarga.total11kg
+                                        contabilidadRecarga?.total11kg
                                     }
                                 </td>
                                 {
@@ -225,16 +225,16 @@ const OrdenDetail = (
                                 </td>
                                 <td>
                                     {
-                                        recargas.map((recarga) => (
+                                        recargas?.map((recarga) => (
                                             <th className={style.tdclas} key={recarga.id}>
-                                                {recarga.cantidad15kg}
+                                                {recarga?.cantidad15kg}
                                             </th>
                                         ))
                                     }
                                 </td>
                                 <td>
                                     {
-                                        contabilidadRecarga.total15kg
+                                        contabilidadRecarga?.total15kg
                                     }
                                 </td>
                                 {
@@ -260,16 +260,16 @@ const OrdenDetail = (
                                 </td>
                                 <td>
                                     {
-                                        recargas.map((recarga) => (
+                                        recargas?.map((recarga) => (
                                             <th className={style.tdclas} key={recarga.id}>
-                                                {recarga.cantidad45kg}
+                                                {recarga?.cantidad45kg}
                                             </th>
                                         ))
                                     }
                                 </td>
                                 <td>
                                     {
-                                        contabilidadRecarga.total45kg
+                                        contabilidadRecarga?.total45kg
                                     }
                                 </td>
                                 {
@@ -293,11 +293,11 @@ const OrdenDetail = (
                 </Table>
                 <FormGroup>
                     <Label>Total de tarros actuales:</Label>
-                    <Input type="number" name="totalCantidad" id="totalCantidad" value={contabilidadRecarga.totalCantidad} disabled/>
+                    <Input type="number" name="totalCantidad" id="totalCantidad" value={contabilidadRecarga?.totalCantidad} disabled/>
                 </FormGroup>
                 <FormGroup>
                     <Label>Precio total actuales</Label>
-                    <Input type="number" name="totalRecaudacion" id="totalRecaudacion" value={contabilidadRecarga.totalRecaudacion} disabled/>
+                    <Input type="number" name="totalRecaudacion" id="totalRecaudacion" value={contabilidadRecarga?.totalRecaudacion} disabled/>
                 </FormGroup>
                 {
                     editAbono === id ?
