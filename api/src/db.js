@@ -6,27 +6,15 @@ const {
   DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT, DB_DEPLOY
 } = process.env;
 
-let sequelize = 
-  process.env.NODE_ENV === 'production'
-  ? new Sequelize({
-    database: DB_NAME,
-    dialect: 'postgres',
-    host: DB_HOST,
-    port: DB_PORT,
-    username: DB_USER,
-    password: DB_PASSWORD,
+let sequelize = new Sequelize(DB_DEPLOY, {
     dialectOptions: {
       ssl: {
         require: true,
-      },
-      keepAlive: true,
+      }
     },
-    ssl: true,
-  })
-  : new Sequelize(
-    `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/nova`,
-    {logging: false, native: false}
-  )
+    logging: false,
+    native: false,
+  });
 
 const basename = path.basename(__filename);
 
@@ -72,7 +60,6 @@ const {
     Cuadrante, 
     OrdenDeReparto, 
     Patentes, 
-    Precio,
     Recargas,
     ContabilidadRecargas,
     MetodoPagos,
