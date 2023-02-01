@@ -725,12 +725,12 @@ const changeRecharge = async (req, res) => {
             }
         })
 
-        const total5kg = actual5kg * precio5kg.precio;
-        const total11kg = actual11kg * precio11kg.precio;
-        const total15kg = actual15kg * precio15kg.precio;
-        const total45kg = actual45kg * precio45kg.precio;
+        const total5kg = Number(actual5kg) * precio5kg.precio;
+        const total11kg = Number(actual11kg) * precio11kg.precio;
+        const total15kg = Number(actual15kg) * precio15kg.precio;
+        const total45kg = Number(actual45kg) * precio45kg.precio;
         const total = total5kg + total11kg + total15kg + total45kg;
-        const totalCantidad = actual5kg + actual11kg + actual15kg + actual45kg;
+        const totalCantidad = Number(actual5kg) + Number(actual11kg) + Number(actual15kg) + Number(actual45kg);
 
         const recarga = await Recargas.findByPk(idRecarga);
         
