@@ -188,7 +188,7 @@ const DownloadOrden = () => {
             </div>
             <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="md">
                 <ModalHeader toggle={toggle}>Descargar orden</ModalHeader>
-                <Form>
+                <Form onSubmit={handleSubmit}>
                     <ModalBody>
                             <FormGroup>
                                 <Label for="exampleSelect" style={{
@@ -533,7 +533,7 @@ const DownloadOrden = () => {
                                 </div>
                             </FormGroup>
                             <ModalFooter>
-                                <Button type='submit' color="primary" onClick={handleSubmit} disabled={disabled}>Descargar</Button>
+                                <Button type='submit' color="primary" disabled={disabled}>Descargar</Button>
                                 <Button color="secondary" onClick={
                                     () => {
                                         toggle();
