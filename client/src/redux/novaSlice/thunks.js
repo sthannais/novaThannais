@@ -41,21 +41,23 @@ export const getAllOrdenes = (date) => async (dispatch) => {
 
 export const getPersonals = () => async (dispatch) => {
     try {
-        const response = await axios.get(`/personal`);
-        dispatch(getPersonal(response.data));
+        const response = await fetch(`${process.env.REACT_APP_API}/personal`);
+        const data = await response.json();
+        dispatch(getPersonal(data));
     } catch (error) {
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Something went wrong!',
+            text: `${error.message}`,
         });
     }
 }
 
-export const getPersonalId = (id) => async (dispatch) => {
+export const gePersonalId = (id) => async (dispatch) => {
     try {
-        const response = await axios.get(`/personal/${id}`);
-        dispatch(getPersonalById(response.data));
+        const response = await fetch(`${process.env.REACT_APP_API}/personal/${id}`);
+        const data = await response.json();
+        dispatch(getPersonalById(data));
     } catch (error) {
         Swal.fire({
             icon: 'error',
@@ -67,7 +69,13 @@ export const getPersonalId = (id) => async (dispatch) => {
 
 export const createPersonal = async (personal) => {
     try {
-        await axios.post(`/personal`, personal);
+        await fetch(`${process.env.REACT_APP_API}/personal`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(personal)
+        });
         Swal.fire({
             title: 'Personal creado',
             text: 'El personal se ha creado correctamente',
@@ -81,14 +89,14 @@ export const createPersonal = async (personal) => {
             title: `${error.message}`,
             text: 'Something went wrong!',
         });
-        
     }
-}
+};
 
 export const bringOrdenByAdminId = (id, date) => async (dispatch) => {
     try {
-        const response = await axios.get(`/orden/admin/${id}/${date}`, );
-        dispatch(getOrdenes(response.data));
+        const response = await fetch(`${process.env.REACT_APP_API}/orden/admin/${id}/${date}`);
+        const data = await response.json();
+        dispatch(getOrdenes(data));
     } catch (error) {
         Swal.fire({
             icon: 'warning',
@@ -115,7 +123,13 @@ export const bringOrdenById = (id) => async (dispatch) => {
 
 export const createOrden = async (orden) => {
     try {
-        await axios.post(`/orden`, orden);
+        await fetch(`${process.env.REACT_APP_API}/orden`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(orden)
+        });
         Swal.fire({
             title: 'Orden creada',
             text: 'La orden se ha creado correctamente',
@@ -129,13 +143,18 @@ export const createOrden = async (orden) => {
             title: `${error.message}`,
             text: 'Something went wrong!',
         });
-        
-    };
+    }
 };
 
 export const updateOrdenQuantity = async (id, quantity) => {
     try {
-        await axios.put(`/orden/${id}`, quantity);
+        await fetch(`${process.env.REACT_APP_API}/orden/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(quantity)
+        });
         Swal.fire({
             title: 'Orden actualizada',
             text: 'La orden se ha actualizado correctamente',
@@ -152,9 +171,15 @@ export const updateOrdenQuantity = async (id, quantity) => {
     };
 };
 
-export const modifyRecargaOrdenQuantity = async (idOrden, idRecarga , quantity) => {
+export const modifyRecargaOrdenQuantity = async (idOrden, idRecarga, quantity) => {
     try {
-        await axios.put(`/orden/changeRecharge/${idOrden}/${idRecarga}`, quantity);
+        await fetch(`${process.env.REACT_APP_API}/orden/changeRecharge/${idOrden}/${idRecarga}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(quantity)
+        });
         Swal.fire({
             title: 'Orden actualizada',
             text: 'La orden se ha actualizado correctamente',
@@ -173,7 +198,13 @@ export const modifyRecargaOrdenQuantity = async (idOrden, idRecarga , quantity) 
 
 export const finalizeOrden = async (id, quantity) => {
     try {
-        await axios.put(`/orden/finalize/${id}`, quantity);
+        await fetch(`${process.env.REACT_APP_API}/orden/finalize/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(quantity)
+        });
         Swal.fire({
             title: 'Orden finalizada',
             text: 'La orden se ha finalizado correctamente',
@@ -192,7 +223,13 @@ export const finalizeOrden = async (id, quantity) => {
 
 export const cuadrarOrden = async (id, quantity) => {
     try {
-        await axios.put(`/orden/cuadrar/${id}`, quantity);
+        await fetch(`${process.env.REACT_APP_API}/orden/cuadrar/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(quantity)
+        });
         Swal.fire({
             title: 'Orden cuadrada',
             text: 'La orden se ha cuadrado correctamente',
@@ -209,11 +246,11 @@ export const cuadrarOrden = async (id, quantity) => {
     };
 };
 
-
 export const bringPatentes = () => async (dispatch) => {
     try {
-        const response = await axios.get(`/patente`);
-        dispatch(getPatentes(response.data));
+        const response = await fetch(`${process.env.REACT_APP_API}/patente`);
+        const data = await response.json();
+        dispatch(getPatentes(data));
     } catch (error) {
         Swal.fire({
             icon: 'error',
@@ -225,8 +262,9 @@ export const bringPatentes = () => async (dispatch) => {
 
 export const bringCuadrantes = () => async (dispatch) => {
     try {
-        const response = await axios.get(`/cuadrante`);
-        dispatch(getCuadrantes(response.data));
+        const response = await fetch(`${process.env.REACT_APP_API}/cuadrante`);
+        const data = await response.json();
+        dispatch(getCuadrantes(data));
     } catch (error) {
         Swal.fire({
             icon: 'error',
@@ -238,8 +276,9 @@ export const bringCuadrantes = () => async (dispatch) => {
 
 export const bringChoferes = () => async (dispatch) => {
     try {
-        const response = await axios.get(`/chofer/names`);
-        dispatch(getChoferes(response.data));
+        const response = await fetch(`${process.env.REACT_APP_API}/chofer/names`);
+        const data = await response.json();
+        dispatch(getChoferes(data));
     } catch (error) {
         Swal.fire({
             icon: 'error',
@@ -251,8 +290,9 @@ export const bringChoferes = () => async (dispatch) => {
 
 export const bringAyudantes = () => async (dispatch) => {
     try {
-        const response = await axios.get(`/ayudante/names`);
-        dispatch(getAyudantes(response.data));
+        const response = await fetch(`${process.env.REACT_APP_API}/ayudante/names`);
+        const data = await response.json();
+        dispatch(getAyudantes(data));
     } catch (error) {
         Swal.fire({
             icon: 'error',
@@ -301,7 +341,13 @@ export const cleanOrden = () => async (dispatch) => {
 
 export const updateAbono = async (id, abono) => {
     try {
-        await axios.put(`/metodoPago/${id}`, abono);
+        await fetch(`${process.env.REACT_APP_API}/metodoPago/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(abono)
+        });
         Swal.fire({
             title: 'Abono actualizado',
             text: 'El abono se ha actualizado correctamente',
@@ -316,12 +362,13 @@ export const updateAbono = async (id, abono) => {
             text: 'Something went wrong!',
         });
     };
-}
+};
 
 export const bringCuadratura = (date1, date2) => async (dispatch) => {
     try {
-        const response = await axios.get(`/metodoPago/${date1}/${date2}`);
-        dispatch(getCuadratura(response.data));
+        const response = await fetch(`${process.env.REACT_APP_API}/metodoPago/${date1}/${date2}`);
+        const data = await response.json();
+        dispatch(getCuadratura(data));
     } catch (error) {
         Swal.fire({
             icon: 'error',
@@ -329,7 +376,7 @@ export const bringCuadratura = (date1, date2) => async (dispatch) => {
             text: `${error.message}`,
         });
     }
-}
+};
 
 export const bringCuadratura2 = (fechaInicio, fechaFin, administradorId) => async (dispatch) => {
     try {
@@ -346,26 +393,29 @@ export const bringCuadratura2 = (fechaInicio, fechaFin, administradorId) => asyn
 
 export const bringOrdenesChoferById = (id, fechaInicio, fechaFin) => async (dispatch) => {
     try {
-        const response = await axios.get(`/orden/chofer/${id}/${fechaInicio}/${fechaFin}`);
-        dispatch(getOrdenesChoferById(response.data));
+        const response = await fetch(`${process.env.REACT_APP_API}/orden/chofer/${id}/${fechaInicio}/${fechaFin}`);
+        const data = await response.json();
+        dispatch(getOrdenesChoferById(data));
     } catch (error) {
         console.error(error.message);
     }
-}
+};
 
 export const bringOrdenesAyudanteById = (id, fechaInicio, fechaFin) => async (dispatch) => {
     try {
-        const response = await axios.get(`/orden/ayudante/${id}/${fechaInicio}/${fechaFin}`);
-        dispatch(getOrdenesAyudanteById(response.data));
+        const response = await fetch(`${process.env.REACT_APP_API}/orden/ayudante/${id}/${fechaInicio}/${fechaFin}`);
+        const data = await response.json();
+        dispatch(getOrdenesAyudanteById(data));
     } catch (error) {
         console.error(error.message);
     }
-}
+};
 
 export const bringOrdenesChofer = (fechaInicio, fechaFin) => async (dispatch) => {
     try {
-        const response = await axios.get(`/personal/chofer/faltantes/${fechaInicio}/${fechaFin}`);
-        dispatch(getOrdenesChofer(response.data));
+        const response = await fetch(`${process.env.REACT_APP_API}/personal/chofer/faltantes/${fechaInicio}/${fechaFin}`);
+        const data = await response.json();
+        dispatch(getOrdenesChofer(data));
     } catch (error) {
         console.error(error.message);
     }
@@ -373,8 +423,9 @@ export const bringOrdenesChofer = (fechaInicio, fechaFin) => async (dispatch) =>
 
 export const bringOrdenesAyudante = (fechaInicio, fechaFin) => async (dispatch) => {
     try {
-        const response = await axios.get(`/personal/ayudante/faltantes/${fechaInicio}/${fechaFin}`);
-        dispatch(getOrdenesAyudante(response.data));
+        const response = await fetch(`${process.env.REACT_APP_API}/personal/ayudante/faltantes/${fechaInicio}/${fechaFin}`);
+        const data = await response.json();
+        dispatch(getOrdenesAyudante(data));
     } catch (error) {
         console.error(error.message);
     }
@@ -382,13 +433,21 @@ export const bringOrdenesAyudante = (fechaInicio, fechaFin) => async (dispatch) 
 
 export const bringCodigoParaModificar = (info) => async (dispatch) => {
     try {
-        const response = await axios.post(`/orden/sendEmail`, info);
-        dispatch(getCodigoDeModificar(response.data));
+        const response = await fetch(`${process.env.REACT_APP_API}/orden/sendEmail`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(info)
+        });
+        const data = await response.json();
+        dispatch(getCodigoDeModificar(data));
         dispatch(setPorAutorizar());
     } catch (error) {
         console.log(error.message);
     };
 }
+
 
 export const setAutorizacion = () => async (dispatch) => {
     try {
@@ -400,28 +459,31 @@ export const setAutorizacion = () => async (dispatch) => {
 
 export const bringPrecios = () => async (dispatch) => {
     try {
-        const response = await axios.get(`/precios`);
-        dispatch(getPrecios(response.data));
+        const response = await fetch(`${process.env.REACT_APP_API}/precios`);
+        const data = await response.json();
+        dispatch(getPrecios(data));
     } catch (error) {
         console.error(error.message);
     }
-}
+};
 
 export const bringAllFaltantes = (fechaInicio, fechaFin, administradorId) => async (dispatch) => {
     try {
-        const response = await axios.get(`/personal/faltantes/${administradorId}/${fechaInicio}/${fechaFin}`);
-        dispatch(getAllFaltantes(response.data));
+        const response = await fetch(`${process.env.REACT_APP_API}/personal/faltantes/${administradorId}/${fechaInicio}/${fechaFin}`);
+        const data = await response.json();
+        dispatch(getAllFaltantes(data));
     } catch (error) {
         console.error(error.message);
     }
-}
+};
 
 export const bringAllAdministradores = () => async (dispatch) => {
     try {
-        const response = await axios.get(`/admin`);
-        dispatch(getAdministradores(response.data));
+        const response = await fetch(`${process.env.REACT_APP_API}/admin`);
+        const data = await response.json();
+        dispatch(getAdministradores(data));
     } catch (error) {
         console.error(error.message);
     }
-}
+};
 
