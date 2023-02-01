@@ -789,7 +789,7 @@ const finalizeOrden = async (req, res) => {
     } = req.body;
 
     try {
-        const ordenDeReparto = await OrdenDeReparto.findByPk(id, {
+        const ordenDeReparto = await OrdenDeReparto.findByPk(Number(id), {
             where: {
                 estado: true
             }
