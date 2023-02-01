@@ -46,13 +46,10 @@ const DownloadOrden = () => {
     const [totalCantidad, setTotalCantidad] = useState(0);
     const [totalRecaudacion, setTotalRecaudacion] = useState(0);
 
-    const dispatchOrden = () => {
-        dispatch(bringOrdenById(idOrden));
-    }
-
     useEffect(() => {
-        dispatchOrden();
-    }, [idOrden]);
+        dispatch(bringOrdenById(idOrden));
+        dispatch(cleanOrden());
+    }, [idOrden, dispatch]);
 
     useEffect(() => {
         setRecaudacion({
@@ -157,13 +154,6 @@ const DownloadOrden = () => {
         setTotalRecaudacion(0);
     }
 
-
-    const handleSubmit = () => {
-        dispatch(finalizeOrden(idOrden, llenos))
-        cleanStates();
-        toggle();
-    }
-
     const modalStyles = {
         position: 'relative',
         left: '15%',
@@ -188,7 +178,11 @@ const DownloadOrden = () => {
             </div>
             <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="md">
                 <ModalHeader toggle={toggle}>Descargar orden</ModalHeader>
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={(e) =>{
+                    e.preventDefault()
+                    dispatch(finalizeOrden(idOrden, llenos))
+                    
+                }}>
                     <ModalBody>
                             <FormGroup>
                                 <Label for="exampleSelect" style={{
@@ -533,7 +527,11 @@ const DownloadOrden = () => {
                                 </div>
                             </FormGroup>
                             <ModalFooter>
-                                <Button type='submit' color="primary" disabled={disabled}>Descargar</Button>
+                                <Button type='submit' color="primary" disabled={disabled} onClick={
+                                    () => {
+                                        toggle();
+                                    }
+                                }>Descargar</Button>
                                 <Button color="secondary" onClick={
                                     () => {
                                         toggle();
