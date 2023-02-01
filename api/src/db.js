@@ -8,7 +8,13 @@ const {
 
 let sequelize = 
   process.env.NODE_ENV === 'production'
-  ? new Sequelize(DB_DEPLOY,{
+  ? new Sequelize({
+    database: DB_NAME,
+    dialect: 'postgres',
+    host: DB_HOST,
+    port: DB_PORT,
+    username: DB_USER,
+    password: DB_PASSWORD,
     dialectOptions: {
       ssl: {
         require: true,
