@@ -205,13 +205,6 @@ export const finalizeOrden = async (id, quantity) => {
             },
             body: JSON.stringify(quantity)
         });
-        Swal.fire({
-            title: 'Orden finalizada',
-            text: 'La orden se ha finalizado correctamente',
-            icon: 'success',
-            showConfirmButton: false,
-            footer: '<a class="btn btn-primary" href="/guide">OK</a>'
-        });
     } catch (error) {
         Swal.fire({
             icon: 'error',
