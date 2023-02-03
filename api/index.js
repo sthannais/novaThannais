@@ -26,7 +26,7 @@ const createListaDePrecios = require('./src/testingCreators/listaDePrecios.js');
 const { createChoferes, createAdministradores, createAyudantes} = require('./src/testingCreators/usuarios.js');
 const PORT = process.env.PORT || 3001;
 
-// Syncing all the models at once.
+// Syncing all the models at once. true: DROP TABLES
 conn.sync({ force: true }).then(() => {
   server.listen(PORT, async () => {
     console.log(`Servidor en puerto ${PORT}`); // eslint-disable-line no-console
