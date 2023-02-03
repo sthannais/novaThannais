@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import DatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
 import { Input }  from 'reactstrap';
-import { bringOrdenById, ordenesRendicion, getAllOrdenes, bringAllAdministradores } from '../../redux/novaSlice/thunks';
+import { bringOrdenById, ordenesRendicion, getAllOrdenes, bringAllAdministradores, bringListaDePreciosActive } from '../../redux/novaSlice/thunks';
 import 'bootstrap/dist/css/bootstrap.css';
 import style from './rendicionPage.module.css';
 import JorgeGas from '../../assetsOficial/jorgegas.svg';
@@ -27,12 +27,7 @@ const RendicionPage = () => {
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const dispatch = useDispatch()
     const [ordenId , setOrdenId] = useState(0)
-    const { ordenesRendidas, novaOrdenById, precios } = useSelector(state => state.Nova)
-    const precio5kg = precios?.filter(precio => precio.name === "GAS NORMAL 5 KILOS");
-    const precio11kg = precios?.filter(precio => precio.name === "GAS NORMAL 11 KILOS");
-    const precio15kg = precios?.filter(precio => precio.name === "GAS NORMAL 15 KILOS");
-    const precio45kg = precios?.filter(precio => precio.name === "GAS NORMAL 45 KILOS");
-    const preciosArray = [precio5kg[0]?.precio, precio11kg[0]?.precio, precio15kg[0]?.precio, precio45kg[0]?.precio];
+    const { ordenesRendidas, novaOrdenById, listaDePrecios } = useSelector(state => state.Nova)
     const [date , setDate] = useState(new Date())
     const soloFecha = date.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
 
@@ -77,11 +72,9 @@ const RendicionPage = () => {
 
     useEffect(() => {
         dispatch(bringOrdenById(ordenId))
-        dispatch(getAllOrdenes(soloFecha))
         dispatch(bringAllAdministradores())
-        setTimeout(() => {
-            dispatch(ordenesRendicion())
-        }, 500)
+        dispatch(bringListaDePreciosActive())
+        dispatch(ordenesRendicion(soloFecha))
     }, [
         dispatch,
         usuario.administrador.id,
@@ -209,7 +202,7 @@ const RendicionPage = () => {
                                 </td>
                                 <td>
                                     {
-                                        preciosArray[0] ? numberWithDots(preciosArray[0]) : 0
+                                        listaDePrecios?.precio5kg ? numberWithDots(listaDePrecios?.precio5kg) : 0 
                                     }
                                 </td>
                                 <td>
@@ -251,7 +244,7 @@ const RendicionPage = () => {
                                 </td>
                                 <td>
                                     {
-                                        preciosArray[1] ? numberWithDots(preciosArray[1]) : 0
+                                        listaDePrecios?.precio11kg ? numberWithDots(listaDePrecios?.precio11kg) : 0
                                     }
                                 </td>
                                 <td>
@@ -293,7 +286,7 @@ const RendicionPage = () => {
                                 </td>
                                 <td>
                                     {
-                                        preciosArray[2] ? numberWithDots(preciosArray[2]) : 0
+                                        listaDePrecios?.precio15kg ? numberWithDots(listaDePrecios?.precio15kg) : 0
                                     }
                                 </td>
                                 <td>
@@ -335,7 +328,7 @@ const RendicionPage = () => {
                                 </td>
                                 <td>
                                     {
-                                        preciosArray[3] ? numberWithDots(preciosArray[3]) : 0
+                                        listaDePrecios?.precio45kg ? numberWithDots(listaDePrecios?.precio45kg) : 0
                                     }
                                 </td>
                                 <td>

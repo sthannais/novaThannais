@@ -4,7 +4,7 @@ import carrito from '../../assetsOficial/carrito.svg';
 import { Modal, Button, ModalHeader, ModalBody, ModalFooter, Input, Form } from 'reactstrap';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
-import { bringPatentes, bringCuadrantes, bringChoferes, bringAyudantes, createOrden, bringPrecios } from '../../redux/novaSlice/thunks';
+import { bringPatentes, bringCuadrantes, bringChoferes, bringAyudantes, createOrden, bringListaDePreciosActive } from '../../redux/novaSlice/thunks';
 import cinco from '../../assets/5n.ico';
 import once from '../../assets/11n.ico';
 import quince from '../../assets/15n.ico';
@@ -16,12 +16,7 @@ registerLocale('es', es);
 
 const CreateOrden = () => {
 
-    const { patentes, cuadrantes, choferes, ayudantes, precios } = useSelector(state => state.Nova);
-    const precio5kg = precios?.filter(precio => precio.name === "GAS NORMAL 5 KILOS");
-    const precio11kg = precios?.filter(precio => precio.name === "GAS NORMAL 11 KILOS");
-    const precio15kg = precios?.filter(precio => precio.name === "GAS NORMAL 15 KILOS");
-    const precio45kg = precios?.filter(precio => precio.name === "GAS NORMAL 45 KILOS");
-    const preciosArray = [precio5kg[0]?.precio, precio11kg[0]?.precio, precio15kg[0]?.precio, precio45kg[0]?.precio];
+    const { patentes, cuadrantes, choferes, ayudantes, listaDePrecios } = useSelector(state => state.Nova);
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const onlyDate = new Date().toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
     const [modal, setModal] = useState(false);
@@ -69,37 +64,37 @@ const CreateOrden = () => {
         dispatch(bringCuadrantes());
         dispatch(bringChoferes());
         dispatch(bringAyudantes());
-        dispatch(bringPrecios());
+        dispatch(bringListaDePreciosActive());
     }, [ dispatch ]);
 
     useEffect(() => {
         setProductos([
             {
                 name: "GAS NORMAL 5 KILOS",
-                price: preciosArray[0],
+                price: listaDePrecios?.precio5kg,
                 quantity: 0
             },
             {
                 name: "GAS NORMAL 11 KILOS",
-                price: preciosArray[1],
+                price: listaDePrecios?.precio11kg,
                 quantity: 0
             },
             {
                 name: "GAS NORMAL 15 KILOS",
-                price: preciosArray[2],
+                price: listaDePrecios?.precio15kg,
                 quantity: 0
             },
             {
                 name: "GAS NORMAL 45 KILOS",
-                price: preciosArray[3],
+                price: listaDePrecios?.precio45kg,
                 quantity: 0
             }
         ]);
     }, [
-        preciosArray[0],
-        preciosArray[1],
-        preciosArray[2],
-        preciosArray[3],
+        listaDePrecios?.precio5kg,
+        listaDePrecios?.precio11kg,
+        listaDePrecios?.precio15kg,
+        listaDePrecios?.precio45kg,
     ]);
 
     useEffect(() => {

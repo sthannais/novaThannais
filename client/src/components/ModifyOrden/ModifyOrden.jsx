@@ -19,12 +19,7 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
 
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const dispatch = useDispatch();
-    const { codigoDeModificar, autorizado, precios } = useSelector(state => state.Nova);
-    const precio5kg = precios?.filter(precio => precio.name === "GAS NORMAL 5 KILOS");
-    const precio11kg = precios?.filter(precio => precio.name === "GAS NORMAL 11 KILOS");
-    const precio15kg = precios?.filter(precio => precio.name === "GAS NORMAL 15 KILOS");
-    const precio45kg = precios?.filter(precio => precio.name === "GAS NORMAL 45 KILOS");
-    const preciosArray = [precio5kg[0]?.precio, precio11kg[0]?.precio, precio15kg[0]?.precio, precio45kg[0]?.precio];
+    const { codigoDeModificar, autorizado, listaDePrecios } = useSelector(state => state.Nova);
 
     const [info, setInfo] = useState({
         id: 0,
@@ -204,7 +199,7 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                                                 </td>
                                                 <td>
                                                     {
-                                                        preciosArray[0] ? numberWithDots(preciosArray[0]) : 0
+                                                        listaDePrecios?.precio5kg ? numberWithDots(listaDePrecios?.precio5kg) : 0
                                                     }
                                                 </td>
                                                 <td>
@@ -262,7 +257,7 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                                                 </td>
                                                 <td>
                                                     {
-                                                        preciosArray[1] ? numberWithDots(preciosArray[1]) : 0
+                                                        listaDePrecios ? numberWithDots(listaDePrecios.precio11kg) : 0
                                                     }
                                                 </td>
                                                 <td>
@@ -320,7 +315,7 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                                                 </td>
                                                 <td>
                                                     {
-                                                        preciosArray[2] ? numberWithDots(preciosArray[2]) : 0
+                                                        listaDePrecios ? numberWithDots(listaDePrecios.precio15kg) : 0
                                                     }
                                                 </td>
                                                 <td>
@@ -378,7 +373,7 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                                                 </td>
                                                 <td>
                                                     {
-                                                        preciosArray[3] ? numberWithDots(preciosArray[3]) : 0
+                                                        listaDePrecios ? numberWithDots(listaDePrecios.precio45kg) : 0
                                                     }
                                                 </td>
                                                 <td>

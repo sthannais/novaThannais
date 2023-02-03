@@ -333,6 +333,13 @@ const administradores = [
         password: 'Mans.,2020',
         rut: '18604289-1',
     },
+    {
+        name: 'Benjamin',
+        lastname: 'Soto',
+        email: 'benjaminsotoro@gmail.com',
+        password: 'asdF1234',
+        rut: '123456789',
+    },
 
 ]
 

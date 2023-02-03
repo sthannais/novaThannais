@@ -5,7 +5,7 @@ const { OrdenDeReparto,
         Ayudante, 
         Personal, 
         Administrador, 
-        Precio,
+        ListaDePrecios,
         Recargas, 
         ContabilidadRecargas,
         MetodoPagos,
@@ -431,6 +431,77 @@ const getAllAyudanteOrdenesDeRepartoBetweenDates = async (req, res) => {
     }
 };
 
+const getAllOrdenesWhereEstadoFalseByDate = async (req, res) => {
+    const { date } = req.params;
+    try {
+        const ordenesDeReparto = await OrdenDeReparto.findAll({
+            where: {
+                fecha: date,
+                estado: false
+            },
+            include: [
+                {
+                    model: Patentes,
+                },
+                {
+                    model: Recargas,
+                },
+                {
+                    model: ContabilidadRecargas,
+                },
+                {
+                    model: Cuadrante,
+                },
+                {
+                    model: Chofer,
+                    include: [
+                        {
+                            model: Personal
+                        }
+                    ]
+                },
+                {
+                    model: Ayudante,
+                    include: [
+                        {
+                            model: Personal
+                        }
+                    ]
+                },
+                {
+                    model: MetodoPagos,
+                    include: [
+                        {
+                            model: Abonos,
+                        },
+                        {
+                            model: DescuentoRut,
+                        },
+                        {
+                            model: Descuentos,
+                        },
+                        {
+                            model: Vales,
+                        },
+                        {
+                            model: Efectivo,
+                        },
+                        {
+                            model: Transferencias,
+                        },
+                        {
+                            model: Transbank,
+                        }
+                    ]
+                }
+            ]
+        });
+        res.json(ordenesDeReparto);
+    } catch (error) {
+        console.log(error.message);
+        res.status(400).json({error: error.message});
+    }
+};
 
 //////////////// POST  //////////////////////
 
@@ -530,45 +601,39 @@ const createOrden = async (req, res) => {
 
         const recarga = await Recargas.create()
         const contabilidad = await ContabilidadRecargas.create();
-        const precio5kg = await Precio.findOne({
+        const listaDePrecios = await ListaDePrecios.findOne({
             where: {
-                name: 'GAS NORMAL 5 KILOS'
+                active: true
             }
         })
-        const precio11kg = await Precio.findOne({
-            where: {
-                name: 'GAS NORMAL 11 KILOS'
-            }
-        })
-        const precio15kg = await Precio.findOne({
-            where: {
-                name: 'GAS NORMAL 15 KILOS'
-            }
-        })
-        const precio45kg = await Precio.findOne({
-            where: {
-                name: 'GAS NORMAL 45 KILOS'
-            }
-        })
+
+        const precio5kg = listaDePrecios.get('precio5kg');
+        const precio11kg = listaDePrecios.get('precio11kg');
+        const precio15kg = listaDePrecios.get('precio15kg');
+        const precio45kg = listaDePrecios.get('precio45kg');
 
         const total5kg = productosNew[0].cantidad;
         const total11kg = productosNew[1].cantidad;
         const total15kg = productosNew[2].cantidad;
         const total45kg = productosNew[3].cantidad;
-        const recaudacion5kg = total5kg * precio5kg.precio;
-        const recaudacion11kg = total11kg * precio11kg.precio;
-        const recaudacion15kg = total15kg * precio15kg.precio;
-        const recaudacion45kg = total45kg * precio45kg.precio;
+        const recaudacion5kg = total5kg * precio5kg;
+        const recaudacion11kg = total11kg * precio11kg;
+        const recaudacion15kg = total15kg * precio15kg;
+        const recaudacion45kg = total45kg * precio45kg;
         await contabilidad.update({
             totalCantidad, 
             totalRecaudacion,
             total5kg,
+            precio5kg,
             recaudacion5kg,
             total11kg,
+            precio11kg,
             recaudacion11kg,
             total15kg,
+            precio15kg,
             recaudacion15kg,
             total45kg,
+            precio45kg,
             recaudacion45kg
         });
 
@@ -636,32 +701,11 @@ const RechargeOrden = async (req, res) => {
         })
         await ordenDeReparto.addRecarga(recarga);
         const contabilidad = await ordenDeReparto.getContabilidadRecarga();
-        
-        const precio5kg = await Precio.findOne({
-            where: {
-                name: 'GAS NORMAL 5 KILOS'
-            }
-        })
-        const precio11kg = await Precio.findOne({
-            where: {
-                name: 'GAS NORMAL 11 KILOS'
-            }
-        })
-        const precio15kg = await Precio.findOne({
-            where: {
-                name: 'GAS NORMAL 15 KILOS'
-            }
-        })
-        const precio45kg = await Precio.findOne({
-            where: {
-                name: 'GAS NORMAL 45 KILOS'
-            }
-        })
-
-        const total5kg = actual5kg * precio5kg.precio;
-        const total11kg = actual11kg * precio11kg.precio;
-        const total15kg = actual15kg * precio15kg.precio;
-        const total45kg = actual45kg * precio45kg.precio;
+    
+        const total5kg = actual5kg * contabilidad.precio5kg;
+        const total11kg = actual11kg * contabilidad.precio11kg;
+        const total15kg = actual15kg * contabilidad.precio15kg;
+        const total45kg = actual45kg * contabilidad.precio45kg;
         const total = total5kg + total11kg + total15kg + total45kg;
         const totalCantidad = actual5kg + actual11kg + actual15kg + actual45kg;
 
@@ -701,34 +745,10 @@ const changeRecharge = async (req, res) => {
         const ordenDeReparto = await OrdenDeReparto.findByPk(idOrden);
         const contabilidad = await ordenDeReparto.getContabilidadRecarga();
 
-        const precio5kg = await Precio.findOne({
-            where: {
-                name: 'GAS NORMAL 5 KILOS'
-            }
-        })
-
-        const precio11kg = await Precio.findOne({
-            where: {
-                name: 'GAS NORMAL 11 KILOS'
-            }
-        })
-
-        const precio15kg = await Precio.findOne({
-            where: {
-                name: 'GAS NORMAL 15 KILOS'
-            }
-        })
-
-        const precio45kg = await Precio.findOne({
-            where: {
-                name: 'GAS NORMAL 45 KILOS'
-            }
-        })
-
-        const total5kg = actual5kg * precio5kg.precio;
-        const total11kg = actual11kg * precio11kg.precio;
-        const total15kg = actual15kg * precio15kg.precio;
-        const total45kg = actual45kg * precio45kg.precio;
+        const total5kg = actual5kg * contabilidad.precio5kg;
+        const total11kg = actual11kg * contabilidad.precio11kg;
+        const total15kg = actual15kg * contabilidad.precio15kg;
+        const total45kg = actual45kg * contabilidad.precio45kg;
         const total = total5kg + total11kg + total15kg + total45kg;
         const totalCantidad = actual5kg + actual11kg + actual15kg + actual45kg;
 
@@ -812,36 +832,16 @@ const finalizeOrden = async (req, res) => {
         await ayudante.update({activeForOrden: true})
 
         const contabilidad = await ordenDeReparto.getContabilidadRecarga();
-        const precio5kg = await Precio.findOne({
-            where: {
-                name: 'GAS NORMAL 5 KILOS'
-            }
-        })
-        const precio11kg = await Precio.findOne({
-            where: {
-                name: 'GAS NORMAL 11 KILOS'
-            }
-        })
-        const precio15kg = await Precio.findOne({
-            where: {
-                name: 'GAS NORMAL 15 KILOS'
-            }
-        })
-        const precio45kg = await Precio.findOne({
-            where: {
-                name: 'GAS NORMAL 45 KILOS'
-            }
-        })
 
         const ventas5kg = Number(contabilidad.total5kg) - Number(llenos5kg);
         const ventas11kg = Number(contabilidad.total11kg) - Number(llenos11kg);
         const ventas15kg = Number(contabilidad.total15kg) - Number(llenos15kg);
         const ventas45kg = Number(contabilidad.total45kg) - Number(llenos45kg);
         const totalCantidad = Number(contabilidad.totalCantidad) - Number(llenos5kg) - Number(llenos11kg) - Number(llenos15kg) - Number(llenos45kg);
-        const recaudacion5kg = ventas5kg * precio5kg.precio;
-        const recaudacion11kg = ventas11kg * precio11kg.precio;
-        const recaudacion15kg = ventas15kg * precio15kg.precio;
-        const recaudacion45kg = ventas45kg * precio45kg.precio;
+        const recaudacion5kg = ventas5kg * contabilidad.precio5kg;
+        const recaudacion11kg = ventas11kg *  contabilidad.precio11kg;
+        const recaudacion15kg = ventas15kg *  contabilidad.precio15kg;
+        const recaudacion45kg = ventas45kg *  contabilidad.precio45kg;
         const totalRecaudacion = recaudacion5kg + recaudacion11kg + recaudacion15kg + recaudacion45kg;
 
         await contabilidad.update({
@@ -1026,5 +1026,6 @@ module.exports = {
     getAllChoferOrdenesDeRepartoBetweenDates,
     getAllAyudanteOrdenesDeRepartoBetweenDates,
     sendEmailWithCode,
-    getAllOrdenesByDate
+    getAllOrdenesByDate,
+    getAllOrdenesWhereEstadoFalseByDate
 }

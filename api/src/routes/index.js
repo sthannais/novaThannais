@@ -11,7 +11,7 @@ const ordenRoutes = require('./OrdenRepartoManager/OrdenRepartoRoutes');
 const patentesRoutes = require('./PatenteManager/PatenteRoutes');
 const cuadranteRoutes = require('./CuadranteManager/CuadranteRoutes');
 const metodoPagoRoutes = require('./MetodoPagos/MetodoPagosRoutes');
-const preciosRoutes = require('./PreciosManager/PreciosRoute');
+const listaDePreciosRoutes = require('./ListaDePreciosManager/ListaDePreciosRoutes');
 
 router.use('/chofer', choferRoutes);
 router.use('/admin', adminRoutes);
@@ -23,7 +23,7 @@ router.use('/orden', ordenRoutes);
 router.use('/patente', patentesRoutes);
 router.use('/cuadrante', cuadranteRoutes);
 router.use('/metodoPago', metodoPagoRoutes);
-router.use('/precios', preciosRoutes);
+router.use('/listaDePrecios', listaDePreciosRoutes);
 
 
 module.exports = router;

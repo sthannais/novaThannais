@@ -6,6 +6,7 @@ import JorgeGas from '../../assetsOficial/jorgegas.svg';
 import CreateOrden from '../CreateOrden/CreateOrden';
 import OrdenList from '../OrdenList/OrdenList';
 import DownloadOrden from '../DownloadOrden/DownloadOrden';
+import ListaDePrecios from '../ListaDePrecios/ListaDePrecios';
 import style from './guidePage.module.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import es from 'date-fns/locale/es';
@@ -87,6 +88,7 @@ const GuidePage = () => {
                     <RiFileExcel2Fill className={style.icon3} />
                     <p>Exportar a excel</p>
                 </button>
+                <ListaDePrecios/>
                 <CreateOrden/>
                 <DownloadOrden/>
                 <div className={style.tableContainer}>
