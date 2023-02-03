@@ -21,7 +21,8 @@ export const NovaSlice = createSlice({
         ordenesAyudante: [],
         codigoDeModificar: {},
         autorizado: "No autorizado",
-        precios: [],
+        listaDePrecios: [],
+        todosLosPrecios: [],
         faltantes: [],
         administradores: []
     },
@@ -39,8 +40,8 @@ export const NovaSlice = createSlice({
         ordenesDisponibles: (state) => {
             state.ordenesDisponibles = state.ordenesParaFiltrar?.filter(orden => orden.estado === true);
         },
-        Rendidas: (state) => {
-            state.ordenesRendidas = state.ordenesParaFiltrar?.filter(orden => orden.estado === false);
+        Rendidas: (state, {payload}) => {
+            state.ordenesRendidas = payload;
         },
         getOrdenById: (state, {payload}) => {
             state.novaOrdenById = payload;
@@ -84,14 +85,17 @@ export const NovaSlice = createSlice({
         setAutorizado : (state) => {
             state.autorizado = "Autorizado";
         },
-        getPrecios: (state, {payload}) => {
-            state.precios = payload;
+        getListaDePrecios: (state, {payload}) => {
+            state.listaDePrecios = payload;
         },
         getAllFaltantes: (state, {payload}) => {
             state.faltantes = payload;
         },
         getAdministradores: (state, {payload}) => {
             state.administradores = payload;
+        },
+        getTodosLosPrecios : (state, {payload}) => {
+            state.todosLosPrecios = payload;
         }
     }
 });
@@ -115,8 +119,9 @@ export const {  getPersonal,
                 getCodigoDeModificar,
                 setPorAutorizar,
                 setAutorizado,
-                getPrecios,
+                getListaDePrecios,
                 getAllFaltantes,
-                getAdministradores
+                getAdministradores,
+                getTodosLosPrecios
             } = NovaSlice.actions;
             

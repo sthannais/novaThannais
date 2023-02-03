@@ -20,9 +20,10 @@ import {
         getCodigoDeModificar,
         setPorAutorizar,
         setAutorizado,
-        getPrecios,
+        getListaDePrecios,
         getAllFaltantes, 
-        getAdministradores
+        getAdministradores,
+        getTodosLosPrecios
     } from './novaSlice';
 
 export const getAllOrdenes = (date) => async (dispatch) => {
@@ -314,9 +315,12 @@ export const ordenesActivas = () => async (dispatch) => {
     }
 };
 
-export const ordenesRendicion = () => async (dispatch) => {
+export const ordenesRendicion = (date) => async (dispatch) => {
     try {
-        dispatch(Rendidas());
+        //fetch
+        const response = await fetch(`${process.env.REACT_APP_API}/orden/date/estado/${date}`);
+        const data = await response.json();
+        dispatch(Rendidas(data));
     } catch (error) {
         Swal.fire({
             icon: 'error',
@@ -457,11 +461,11 @@ export const setAutorizacion = () => async (dispatch) => {
     };
 }
 
-export const bringPrecios = () => async (dispatch) => {
+export const bringListaDePreciosActive = () => async (dispatch) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_API}/precios`);
+        const response = await fetch(`${process.env.REACT_APP_API}/listaDePrecios/active`);
         const data = await response.json();
-        dispatch(getPrecios(data));
+        dispatch(getListaDePrecios(data));
     } catch (error) {
         console.error(error.message);
     }
@@ -486,4 +490,14 @@ export const bringAllAdministradores = () => async (dispatch) => {
         console.error(error.message);
     }
 };
+
+export const bringAllListaDePrecios = () => async (dispatch) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_API}/listaDePrecios`);
+        const data = await response.json();
+        dispatch(getTodosLosPrecios(data));
+    } catch (error) {
+        console.error(error.message);
+    }
+}
 

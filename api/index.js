@@ -18,16 +18,16 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
-const { conn, Rol, Chofer, Administrador, Ayudante, Cuadrante, Patentes, Precio } = require('./src/db.js');
+const { conn, Rol, Chofer, Administrador, Ayudante, Cuadrante, Patentes, ListaDePrecios } = require('./src/db.js');
 const createRoles = require('./src/testingCreators/roles.js');
 const createPatentes = require('./src/testingCreators/patentes.js');
 const createCuadrantes = require('./src/testingCreators/cuadrante.js');
-const createPrecios = require('./src/testingCreators/precios.js');
+const createListaDePrecios = require('./src/testingCreators/listaDePrecios.js');
 const { createChoferes, createAdministradores, createAyudantes} = require('./src/testingCreators/usuarios.js');
 const PORT = process.env.PORT || 3001;
 
 // Syncing all the models at once.
-conn.sync({ force: false }).then(() => {
+conn.sync({ force: true }).then(() => {
   server.listen(PORT, async () => {
     console.log(`Servidor en puerto ${PORT}`); // eslint-disable-line no-console
 
@@ -52,8 +52,8 @@ conn.sync({ force: false }).then(() => {
     const patentes = await Patentes.findAll();
     if (patentes.length < 1) createPatentes();
 
-    const precios = await Precio.findAll();
-    if (precios.length < 1) createPrecios();
+    const listaDePrecios = await ListaDePrecios.findAll();
+    if (listaDePrecios.length < 1) createListaDePrecios();
 
   });
 });

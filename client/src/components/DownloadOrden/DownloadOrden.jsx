@@ -11,12 +11,8 @@ const DownloadOrden = () => {
     
     const dispatch = useDispatch();
 
-    const { ordenesDisponibles, novaOrdenById, precios } = useSelector((state) => state.Nova);
-    const precio5kg = precios?.filter(precio => precio.name === "GAS NORMAL 5 KILOS");
-    const precio11kg = precios?.filter(precio => precio.name === "GAS NORMAL 11 KILOS");
-    const precio15kg = precios?.filter(precio => precio.name === "GAS NORMAL 15 KILOS");
-    const precio45kg = precios?.filter(precio => precio.name === "GAS NORMAL 45 KILOS");
-    const preciosArray = [precio5kg[0]?.precio, precio11kg[0]?.precio, precio15kg[0]?.precio, precio45kg[0]?.precio];
+    const { ordenesDisponibles, novaOrdenById, listaDePrecios } = useSelector((state) => state.Nova);
+
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
     const [idOrden, setIdOrden] = useState(0);
@@ -54,10 +50,10 @@ const DownloadOrden = () => {
     useEffect(() => {
         setRecaudacion({
             ...recaudacion,
-            recaudacion5kg: ventas.ventas5kg * Number(preciosArray[0]),
-            recaudacion11kg: ventas.ventas11kg * Number(preciosArray[1]),
-            recaudacion15kg: ventas.ventas15kg * Number(preciosArray[2]),
-            recaudacion45kg: ventas.ventas45kg * Number(preciosArray[3])
+            recaudacion5kg: ventas.ventas5kg * Number(listaDePrecios?.precio5kg),
+            recaudacion11kg: ventas.ventas11kg * Number(listaDePrecios?.precio11kg),
+            recaudacion15kg: ventas.ventas15kg * Number(listaDePrecios?.precio15kg),
+            recaudacion45kg: ventas.ventas45kg * Number(listaDePrecios?.precio45kg)
         })
         setTotalCantidad(
             Number(ventas.ventas5kg) + Number(ventas.ventas11kg) + Number(ventas.ventas15kg) + Number(ventas.ventas45kg)
@@ -74,10 +70,10 @@ const DownloadOrden = () => {
         recaudacion.recaudacion11kg,
         recaudacion.recaudacion15kg,
         recaudacion.recaudacion45kg,
-        preciosArray[0],
-        preciosArray[1],
-        preciosArray[2],
-        preciosArray[3],
+        listaDePrecios.precio5kg,
+        listaDePrecios.precio11kg,
+        listaDePrecios.precio15kg,
+        listaDePrecios.precio45kg
     ])
 
     useEffect(() => {
@@ -281,7 +277,7 @@ const DownloadOrden = () => {
                                                 verticalAlign: 'middle'
                                             }}>
                                                 {
-                                                    preciosArray[0] ? numberWithDots(preciosArray[0]) : 0
+                                                    listaDePrecios ? <p>{listaDePrecios.precio5kg}</p> : null
                                                 }
                                             </td>
                                             <td>
@@ -342,7 +338,7 @@ const DownloadOrden = () => {
                                             }}>
                                                 <p>
                                                     {
-                                                        preciosArray[1] ? numberWithDots(preciosArray[1]) : 0
+                                                        listaDePrecios ? <p>{listaDePrecios.precio11kg}</p> : null
                                                     }
                                                 </p>
                                             </td>
@@ -404,7 +400,7 @@ const DownloadOrden = () => {
                                             }}>
                                                 <p>
                                                     {
-                                                        preciosArray[2] ? numberWithDots(preciosArray[2]) : 0
+                                                        listaDePrecios ? <p>{listaDePrecios.precio15kg}</p> : null
                                                     }
                                                 </p>
                                             </td>
@@ -466,7 +462,7 @@ const DownloadOrden = () => {
                                             }}>
                                                 <p>
                                                     {
-                                                        preciosArray[3] ? numberWithDots(preciosArray[3]) : 0
+                                                        listaDePrecios ? <p>{listaDePrecios.precio45kg}</p> : null
                                                     }
                                                 </p>
                                             </td>

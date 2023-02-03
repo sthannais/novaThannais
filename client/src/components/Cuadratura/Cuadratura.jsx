@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { cuadrarOrden, bringPrecios } from '../../redux/novaSlice/thunks';
+import { cuadrarOrden, bringListaDePreciosActive } from '../../redux/novaSlice/thunks';
 import style from './cuadratura.module.css';
 import cuadratura from '../../assetsOficial/cuadratura.svg';
 import validateBilletes from '../../helpers/validateBilletes';
@@ -17,12 +17,7 @@ const Cuadratura = ({ novaOrdenById }) => {
     const [nestedModal, setNestedModal] = useState(false);
     const [closeAll, setCloseAll] = useState(false);
 
-    const { precios } = useSelector(state => state.Nova);
-    const precio5kg = precios?.filter(precio => precio.name === "GAS NORMAL 5 KILOS");
-    const precio11kg = precios?.filter(precio => precio.name === "GAS NORMAL 11 KILOS");
-    const precio15kg = precios?.filter(precio => precio.name === "GAS NORMAL 15 KILOS");
-    const precio45kg = precios?.filter(precio => precio.name === "GAS NORMAL 45 KILOS");
-    const preciosArray = [precio5kg[0]?.precio, precio11kg[0]?.precio, precio15kg[0]?.precio, precio45kg[0]?.precio];
+    const { listaDePrecios } = useSelector(state => state.Nova);
 
     const toggle = () => setModal(!modal);
     const toggleNested = () => {
@@ -98,7 +93,7 @@ const Cuadratura = ({ novaOrdenById }) => {
 
 
     useEffect(() => {
-        dispatch(bringPrecios());
+        dispatch(bringListaDePreciosActive());
     }, [dispatch])
 
     useEffect(() => {
@@ -109,14 +104,14 @@ const Cuadratura = ({ novaOrdenById }) => {
         })
         setVales({
             ...vales,
-            totalFisico5kg : (vales.fisico5kg * Number(preciosArray[0])),
-            totalFisico11kg : (vales.fisico11kg * Number(preciosArray[1])),
-            totalFisico15kg : (vales.fisico15kg * Number(preciosArray[2])),
-            totalFisico45kg : (vales.fisico45kg * Number(preciosArray[3])),
-            totalDigital5kg : (vales.digital5kg * Number(preciosArray[0])),
-            totalDigital11kg : (vales.digital11kg * Number(preciosArray[1])),
-            totalDigital15kg : (vales.digital15kg * Number(preciosArray[2])),
-            totalDigital45kg : (vales.digital45kg * Number(preciosArray[3])),
+            totalFisico5kg : (vales.fisico5kg * Number(listaDePrecios?.precio5kg)),
+            totalFisico11kg : (vales.fisico11kg * Number(listaDePrecios?.precio11kg)),
+            totalFisico15kg : (vales.fisico15kg * Number(listaDePrecios?.precio15kg)),
+            totalFisico45kg : (vales.fisico45kg * Number(listaDePrecios?.precio45kg)),
+            totalDigital5kg : (vales.digital5kg * Number(listaDePrecios?.precio5kg)),
+            totalDigital11kg : (vales.digital11kg * Number(listaDePrecios?.precio11kg)),
+            totalDigital15kg : (vales.digital15kg * Number(listaDePrecios?.precio15kg)),
+            totalDigital45kg : (vales.digital45kg * Number(listaDePrecios?.precio45kg)),
             sumaTotalDigitalYFisico5kg : (vales.totalFisico5kg + vales.totalDigital5kg),
             sumaTotalDigitalYFisico11kg : (vales.totalFisico11kg + vales.totalDigital11kg),
             sumaTotalDigitalYFisico15kg : (vales.totalFisico15kg + vales.totalDigital15kg),
@@ -192,10 +187,10 @@ const Cuadratura = ({ novaOrdenById }) => {
         disabled,
         faltanteChofer.faltanteChofer,
         faltantePeoneta.faltantePeoneta,
-        preciosArray[0],
-        preciosArray[1],
-        preciosArray[2],
-        preciosArray[3],
+        listaDePrecios?.precio5kg,
+        listaDePrecios?.precio11kg,
+        listaDePrecios?.precio15kg,
+        listaDePrecios?.precio45kg,
         usuario.administrador.id,
         sobrante.sobrante
     ])

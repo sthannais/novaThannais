@@ -13,7 +13,7 @@ module.exports = (sequelize)=>{
         },
         precio5kg : {
             type: DataTypes.BIGINT,
-            defaultValue: 11850
+            defaultValue: 0
         },
         recaudacion5kg : {
             type: DataTypes.BIGINT,
@@ -29,7 +29,7 @@ module.exports = (sequelize)=>{
         },
         precio11kg : {
             type: DataTypes.BIGINT,
-            defaultValue: 18450
+            defaultValue: 0
         },
         recaudacion11kg : {
             type: DataTypes.BIGINT,
@@ -45,7 +45,7 @@ module.exports = (sequelize)=>{
         },
         precio15kg : {
             type: DataTypes.BIGINT,
-            defaultValue: 25250
+            defaultValue: 0
         },
         recaudacion15kg : {
             type: DataTypes.BIGINT,
@@ -61,7 +61,7 @@ module.exports = (sequelize)=>{
         },
         precio45kg : {
             type: DataTypes.BIGINT,
-            defaultValue: 74250,
+            defaultValue: 0,
         },
         recaudacion45kg : {
             type: DataTypes.BIGINT,
