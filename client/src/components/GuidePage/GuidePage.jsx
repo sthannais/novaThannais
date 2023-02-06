@@ -47,7 +47,7 @@ const GuidePage = () => {
 
     useEffect(() => {
             dispatch(getAllOrdenes(soloFecha));
-    }, [dispatch, usuario.administrador.id, soloFecha, email, date]);
+    }, [dispatch]);
     
     /////// EXCEL ///////
     const tablaRef = useRef(null);

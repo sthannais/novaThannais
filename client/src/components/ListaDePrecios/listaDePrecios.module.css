@@ -25,3 +25,7 @@
     height: 3rem;
     cursor: pointer;
 }
+
+.active {
+    font-size: 10rem;
+}
