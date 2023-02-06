@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateOrdenQuantity, updateAbono } from '../../redux/novaSlice/thunks';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Label, Table }  from 'reactstrap';
-import { numberWithDots } from '../../helpers/numberWithDot';
 import style from './ordenDetail.module.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -58,8 +57,9 @@ const OrdenDetail = (
 
 
     const handleUpdateQuantity = () => {
-        dispatch(updateOrdenQuantity(editQuantity, quantity));
+        dispatch(updateOrdenQuantity(editQuantity, quantity, fecha));
         setEditQuantity(!editQuantity);
+        cleanQuantity();
     }
 
     ////// MODIFICAR ABONO DE LA ORDEN //////
@@ -81,12 +81,15 @@ const OrdenDetail = (
     }
 
     const handleUpdateAbono = () => {
-        dispatch(updateAbono(editAbono, abono));
+        dispatch(updateAbono(editAbono, abono, fecha));
         setEditAbono(!editAbono);
+        cleanAbono();
     }
 
     const cleanAbono = () => {
-        setAbono(0);
+        setAbono({
+            abono: 0,
+        })
     }
 
     ////// MODAL //////

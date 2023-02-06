@@ -152,7 +152,7 @@ export const createOrden = (orden) => async (dispatch) => {
     }
 };
 
-export const updateOrdenQuantity = async (id, quantity) => {
+export const updateOrdenQuantity =  (id, quantity, fecha) => async (dispatch) => {
     try {
         await fetch(`${process.env.REACT_APP_API}/orden/${id}`, {
             method: 'PUT',
@@ -161,12 +161,12 @@ export const updateOrdenQuantity = async (id, quantity) => {
             },
             body: JSON.stringify(quantity)
         });
+        dispatch(getAllOrdenes(fecha));
         Swal.fire({
             title: 'Orden actualizada',
             text: 'La orden se ha actualizado correctamente',
             icon: 'success',
-            showConfirmButton: false,
-            footer: '<a class="btn btn-primary" href="/guide">OK</a>'
+            showConfirmButton: true,
         });
     } catch (error) {
         Swal.fire({
@@ -202,7 +202,7 @@ export const modifyRecargaOrdenQuantity = async (idOrden, idRecarga, quantity) =
     };
 };
 
-export const finalizeOrden = async (id, quantity) => {
+export const finalizeOrden = (id, quantity, fecha) => async (dispatch) => {
     try {
         await fetch(`${process.env.REACT_APP_API}/orden/finalize/${id}`, {
             method: 'PUT',
@@ -211,12 +211,11 @@ export const finalizeOrden = async (id, quantity) => {
             },
             body: JSON.stringify(quantity)
         });
+        dispatch(getAllOrdenes(fecha));
         Swal.fire({
             title: 'Orden finalizada',
             text: 'La orden se ha finalizado correctamente.',
             icon: 'success',
-            showConfirmButton: false,
-            footer: '<a class="btn btn-primary" href="/guide">OK</a>'
         });
     } catch (error) {
         Swal.fire({
@@ -227,7 +226,7 @@ export const finalizeOrden = async (id, quantity) => {
     };
 };
 
-export const cuadrarOrden = async (id, quantity) => {
+export const cuadrarOrden =  (fecha, id, quantity) => async (dispatch) => {
     try {
         await fetch(`${process.env.REACT_APP_API}/orden/cuadrar/${id}`, {
             method: 'PUT',
@@ -236,12 +235,11 @@ export const cuadrarOrden = async (id, quantity) => {
             },
             body: JSON.stringify(quantity)
         });
+        dispatch(ordenesRendicion(fecha));
         Swal.fire({
             title: 'Orden cuadrada',
             text: 'La orden se ha cuadrado correctamente',
             icon: 'success',
-            showConfirmButton: false,
-            footer: '<a class="btn btn-primary" href="/rendicion">OK</a>'
         });
     } catch (error) {
         Swal.fire({
@@ -348,7 +346,7 @@ export const cleanOrden = () => async (dispatch) => {
     }
 };
 
-export const updateAbono = async (id, abono) => {
+export const updateAbono = (id, abono, fecha) => async (dispatch) => {
     try {
         await fetch(`${process.env.REACT_APP_API}/metodoPago/${id}`, {
             method: 'PUT',
@@ -357,12 +355,11 @@ export const updateAbono = async (id, abono) => {
             },
             body: JSON.stringify(abono)
         });
+        dispatch(getAllOrdenes(fecha));
         Swal.fire({
             title: 'Abono actualizado',
             text: 'El abono se ha actualizado correctamente',
             icon: 'success',
-            showConfirmButton: false,
-            footer: '<a class="btn btn-primary" href="/guide">OK</a>'
         });
     } catch (error) {
         Swal.fire({

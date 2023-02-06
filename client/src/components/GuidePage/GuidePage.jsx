@@ -88,13 +88,18 @@ const GuidePage = () => {
                     <RiFileExcel2Fill className={style.icon3} />
                     <p>Exportar a excel</p>
                 </button>
-                <ListaDePrecios/>
+                {
+                    email === "maicol.nieto@jorgegas.cl" ||
+                    email === "benjaminsotoro@gmail.com" ||
+                    email === "jorgetalento@outlook.es" ? (
+                        <ListaDePrecios/>
+                    ) : null
+                }
                 <CreateOrden/>
-                <DownloadOrden/>
+                <DownloadOrden fecha={soloFecha}/>
                 <div className={style.tableContainer}>
                     <InfiniteScroll
                         pageStart={0}
-                        // loadMore={loadMore}
                         hasMore={hasMore}
                     >
                         <table

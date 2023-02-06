@@ -48,6 +48,9 @@ const getOrdenesDeReparto = async (req, res) => {
                     ]
                 },
                 {
+                    model: ListaDePrecios,
+                },
+                {
                     model: Ayudante,
                     include: [
                         {
@@ -131,6 +134,9 @@ const getOrdenDeRepartoById = async (req, res) => {
                     ]
                 },
                 {
+                    model: ListaDePrecios,
+                },
+                {
                     model: MetodoPagos,
                     include: [
                         {
@@ -204,6 +210,9 @@ const getOrdenDeRepartoByAdminIdAndDate = async (req, res) => {
                     }]
                 },
                 {
+                    model: ListaDePrecios,
+                },
+                {
                     model: MetodoPagos,
                     include: [
                         {
@@ -267,6 +276,9 @@ const getAllOrdenesByDate = async (req, res) => {
                             model: Personal
                         }
                     ]
+                },
+                {
+                    model: ListaDePrecios,
                 },
                 {
                     model: Ayudante,
@@ -461,6 +473,9 @@ const getAllOrdenesWhereEstadoFalseByDate = async (req, res) => {
                     ]
                 },
                 {
+                    model: ListaDePrecios,
+                },
+                {
                     model: Ayudante,
                     include: [
                         {
@@ -606,6 +621,7 @@ const createOrden = async (req, res) => {
                 active: true
             }
         })
+        await ordenDeReparto.setListaDePrecio(listaDePrecios);
 
         const precio5kg = listaDePrecios.get('precio5kg');
         const precio11kg = listaDePrecios.get('precio11kg');
@@ -744,11 +760,12 @@ const changeRecharge = async (req, res) => {
     try {
         const ordenDeReparto = await OrdenDeReparto.findByPk(idOrden);
         const contabilidad = await ordenDeReparto.getContabilidadRecarga();
+        console.log(contabilidad);
 
-        const total5kg = actual5kg * contabilidad.precio5kg;
-        const total11kg = actual11kg * contabilidad.precio11kg;
-        const total15kg = actual15kg * contabilidad.precio15kg;
-        const total45kg = actual45kg * contabilidad.precio45kg;
+        const total5kg = actual5kg * Number(contabilidad.precio5kg);
+        const total11kg = actual11kg * Number(contabilidad.precio11kg);
+        const total15kg = actual15kg * Number(contabilidad.precio15kg);
+        const total45kg = actual45kg * Number(contabilidad.precio45kg);
         const total = total5kg + total11kg + total15kg + total45kg;
         const totalCantidad = actual5kg + actual11kg + actual15kg + actual45kg;
 
@@ -757,15 +774,15 @@ const changeRecharge = async (req, res) => {
         //le resto los valores actuales de la recarga en la orden de reparto
         await contabilidad.update({
             total5kg:  Number(contabilidad.total5kg)  - Number(recarga.cantidad5kg),
-            recaudacion5kg: Number(contabilidad.recaudacion5kg) - Number(recarga.cantidad5kg * precio5kg.precio),
+            recaudacion5kg: Number(contabilidad.recaudacion5kg) - Number(recarga.cantidad5kg * Number(contabilidad.precio5kg)),
             total11kg: Number(contabilidad.total11kg) - Number(recarga.cantidad11kg),
-            recaudacion11kg: Number(contabilidad.recaudacion11kg) - Number(recarga.cantidad11kg * precio11kg.precio),
+            recaudacion11kg: Number(contabilidad.recaudacion11kg) - Number(recarga.cantidad11kg * Number(contabilidad.precio11kg)),
             total15kg: Number(contabilidad.total15kg) - Number(recarga.cantidad15kg),
-            recaudacion15kg: Number(contabilidad.recaudacion15kg) - Number(recarga.cantidad15kg * precio15kg.precio),
+            recaudacion15kg: Number(contabilidad.recaudacion15kg) - Number(recarga.cantidad15kg * Number(contabilidad.precio15kg)),
             total45kg: Number(contabilidad.total45kg) - Number(recarga.cantidad45kg),
-            recaudacion45kg: Number(contabilidad.recaudacion45kg) - Number(recarga.cantidad45kg * precio45kg.precio),
+            recaudacion45kg: Number(contabilidad.recaudacion45kg) - Number(recarga.cantidad45kg * Number(contabilidad.precio45kg)),
             totalCantidad: Number(contabilidad.totalCantidad) - (Number(recarga.cantidad5kg) + Number(recarga.cantidad11kg) + Number(recarga.cantidad15kg) + Number(recarga.cantidad45kg)),
-            totalRecaudacion: Number(contabilidad.totalRecaudacion) - (Number(recarga.cantidad5kg) * Number(precio5kg.precio) + Number(recarga.cantidad11kg) * Number(precio11kg.precio) + Number(recarga.cantidad15kg) * Number(precio15kg.precio) + Number(recarga.cantidad45kg) * Number(precio45kg.precio))
+            totalRecaudacion: Number(contabilidad.totalRecaudacion) - (Number(recarga.cantidad5kg) * Number(contabilidad.precio5kg) + Number(recarga.cantidad11kg) * Number(contabilidad.precio11kg) + Number(recarga.cantidad15kg) * Number(contabilidad.precio15kg) + Number(recarga.cantidad45kg) * Number(contabilidad.precio45kg))
         })
 
         //le sumo los valores nuevos de la recarga en la orden de reparto
