@@ -7,7 +7,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, F
 import { numberWithDots } from '../../helpers/numberWithDot';
 import 'bootstrap/dist/css/bootstrap.css';
 
-const DownloadOrden = () => {
+const DownloadOrden = ({ fecha }) => {
     
     const dispatch = useDispatch();
 
@@ -176,8 +176,8 @@ const DownloadOrden = () => {
                 <ModalHeader toggle={toggle}>Descargar orden</ModalHeader>
                 <Form onSubmit={(e) =>{
                     e.preventDefault()
-                    dispatch(finalizeOrden(idOrden, llenos))
-                    
+                    dispatch(finalizeOrden(idOrden, llenos,fecha))
+                    cleanStates();
                 }}>
                     <ModalBody>
                             <FormGroup>

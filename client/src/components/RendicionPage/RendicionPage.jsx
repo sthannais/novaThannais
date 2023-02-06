@@ -22,14 +22,14 @@ import XLSX from 'xlsx';
 
 registerLocale('es', es);
 
-const RendicionPage = () => {
-
+const RendicionPage = () => { 
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const dispatch = useDispatch()
     const [ordenId , setOrdenId] = useState(0)
-    const { ordenesRendidas, novaOrdenById, listaDePrecios } = useSelector(state => state.Nova)
+    const { ordenesRendidas, novaOrdenById } = useSelector(state => state.Nova)
     const [date , setDate] = useState(new Date())
     const soloFecha = date.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
+
 
     const tabla1Ref = useRef(null);
     const tabla2Ref = useRef(null);
@@ -202,7 +202,7 @@ const RendicionPage = () => {
                                 </td>
                                 <td>
                                     {
-                                        listaDePrecios?.precio5kg ? numberWithDots(listaDePrecios?.precio5kg) : 0 
+                                        novaOrdenById?.listaDePrecio?.precio5kg ? numberWithDots(novaOrdenById?.listaDePrecio?.precio5kg) : 0 
                                     }
                                 </td>
                                 <td>
@@ -244,7 +244,7 @@ const RendicionPage = () => {
                                 </td>
                                 <td>
                                     {
-                                        listaDePrecios?.precio11kg ? numberWithDots(listaDePrecios?.precio11kg) : 0
+                                        novaOrdenById?.listaDePrecio?.precio11kg ? numberWithDots(novaOrdenById?.listaDePrecio?.precio11kg) : 0
                                     }
                                 </td>
                                 <td>
@@ -286,7 +286,7 @@ const RendicionPage = () => {
                                 </td>
                                 <td>
                                     {
-                                        listaDePrecios?.precio15kg ? numberWithDots(listaDePrecios?.precio15kg) : 0
+                                        novaOrdenById?.listaDePrecio?.precio15kg ? numberWithDots(novaOrdenById?.listaDePrecio?.precio15kg) : 0
                                     }
                                 </td>
                                 <td>
@@ -328,7 +328,7 @@ const RendicionPage = () => {
                                 </td>
                                 <td>
                                     {
-                                        listaDePrecios?.precio45kg ? numberWithDots(listaDePrecios?.precio45kg) : 0
+                                        novaOrdenById?.listaDePrecio?.precio45kg ? numberWithDots(novaOrdenById?.listaDePrecio?.precio45kg) : 0
                                     }
                                 </td>
                                 <td>
@@ -342,7 +342,7 @@ const RendicionPage = () => {
                 </div> 
                 {
                     novaOrdenById?.rendida === false ? (
-                        <Cuadratura novaOrdenById={novaOrdenById} />
+                        <Cuadratura novaOrdenById={novaOrdenById} fecha={soloFecha}/>
                     ) : null
                 }
                 <RecaudacionOrden novaOrdenById={novaOrdenById} />

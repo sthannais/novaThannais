@@ -7,7 +7,7 @@ import validateBilletes from '../../helpers/validateBilletes';
 import { Modal, Button, ModalHeader, ModalBody, ModalFooter, Input, Form, FormGroup, Label } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 
-const Cuadratura = ({ novaOrdenById }) => {
+const Cuadratura = ({ novaOrdenById, fecha }) => {
 
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const dispatch = useDispatch();
@@ -16,8 +16,6 @@ const Cuadratura = ({ novaOrdenById }) => {
     const [modal, setModal] = useState(false);
     const [nestedModal, setNestedModal] = useState(false);
     const [closeAll, setCloseAll] = useState(false);
-
-    const { listaDePrecios } = useSelector(state => state.Nova);
 
     const toggle = () => setModal(!modal);
     const toggleNested = () => {
@@ -104,14 +102,14 @@ const Cuadratura = ({ novaOrdenById }) => {
         })
         setVales({
             ...vales,
-            totalFisico5kg : (vales.fisico5kg * Number(listaDePrecios?.precio5kg)),
-            totalFisico11kg : (vales.fisico11kg * Number(listaDePrecios?.precio11kg)),
-            totalFisico15kg : (vales.fisico15kg * Number(listaDePrecios?.precio15kg)),
-            totalFisico45kg : (vales.fisico45kg * Number(listaDePrecios?.precio45kg)),
-            totalDigital5kg : (vales.digital5kg * Number(listaDePrecios?.precio5kg)),
-            totalDigital11kg : (vales.digital11kg * Number(listaDePrecios?.precio11kg)),
-            totalDigital15kg : (vales.digital15kg * Number(listaDePrecios?.precio15kg)),
-            totalDigital45kg : (vales.digital45kg * Number(listaDePrecios?.precio45kg)),
+            totalFisico5kg : (vales.fisico5kg * Number(novaOrdenById?.listaDePrecio?.precio5kg)),
+            totalFisico11kg : (vales.fisico11kg * Number(novaOrdenById?.listaDePrecio?.precio11kg)),
+            totalFisico15kg : (vales.fisico15kg * Number(novaOrdenById?.listaDePrecio?.precio15kg)),
+            totalFisico45kg : (vales.fisico45kg * Number(novaOrdenById?.listaDePrecio?.precio45kg)),
+            totalDigital5kg : (vales.digital5kg * Number(novaOrdenById?.listaDePrecio?.precio5kg)),
+            totalDigital11kg : (vales.digital11kg * Number(novaOrdenById?.listaDePrecio?.precio11kg)),
+            totalDigital15kg : (vales.digital15kg * Number(novaOrdenById?.listaDePrecio?.precio15kg)),
+            totalDigital45kg : (vales.digital45kg * Number(novaOrdenById?.listaDePrecio?.precio45kg)),
             sumaTotalDigitalYFisico5kg : (vales.totalFisico5kg + vales.totalDigital5kg),
             sumaTotalDigitalYFisico11kg : (vales.totalFisico11kg + vales.totalDigital11kg),
             sumaTotalDigitalYFisico15kg : (vales.totalFisico15kg + vales.totalDigital15kg),
@@ -187,10 +185,10 @@ const Cuadratura = ({ novaOrdenById }) => {
         disabled,
         faltanteChofer.faltanteChofer,
         faltantePeoneta.faltantePeoneta,
-        listaDePrecios?.precio5kg,
-        listaDePrecios?.precio11kg,
-        listaDePrecios?.precio15kg,
-        listaDePrecios?.precio45kg,
+        novaOrdenById?.listaDePrecio?.precio5kg,
+        novaOrdenById?.listaDePrecio?.precio11kg,
+        novaOrdenById?.listaDePrecio?.precio15kg,
+        novaOrdenById?.listaDePrecio?.precio45kg,
         usuario.administrador.id,
         sobrante.sobrante
     ])
@@ -334,7 +332,7 @@ const Cuadratura = ({ novaOrdenById }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(cuadrarOrden(novaOrdenById.id, {
+        dispatch(cuadrarOrden(fecha, novaOrdenById.id, {
             ...efectivo,
             ...vales,
             ...metodoPagos,
