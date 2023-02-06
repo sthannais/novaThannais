@@ -122,7 +122,7 @@ export const bringOrdenById = (id) => async (dispatch) => {
     }
 };
 
-export const createOrden = async (orden) => {
+export const createOrden = (orden) => async (dispatch) => {
     try {
         await fetch(`${process.env.REACT_APP_API}/orden`, {
             method: 'POST',
@@ -131,12 +131,17 @@ export const createOrden = async (orden) => {
             },
             body: JSON.stringify(orden)
         });
+        dispatch(getAllOrdenes(orden.fecha))
+        dispatch(bringPatentes());
+        dispatch(bringCuadrantes());
+        dispatch(bringChoferes());
+        dispatch(bringAyudantes());
+        dispatch(bringListaDePreciosActive());
         Swal.fire({
             title: 'Orden creada',
             text: 'La orden se ha creado correctamente',
             icon: 'success',
-            showConfirmButton: false,
-            footer: '<a class="btn btn-primary" href="/guide">OK</a>'
+            showConfirmButton: true,
         });
     } catch (error) {
         Swal.fire({
@@ -501,3 +506,44 @@ export const bringAllListaDePrecios = () => async (dispatch) => {
     }
 }
 
+export const activeListaDePrecios = (id) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/listaDePrecios/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        dispatch(bringListaDePreciosActive());
+        dispatch(bringAllListaDePrecios());
+        Swal.fire({
+            icon: 'success',
+            title: 'Lista de precios activada',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+export const createListaDePrecios = (nuevaLista) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/listaDePrecios`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(nuevaLista)
+        });
+        dispatch(bringAllListaDePrecios());
+        Swal.fire({
+            icon: 'success',
+            title: 'Lista de precios creada',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    } catch (error) {
+        console.error(error.message);
+    }
+}
