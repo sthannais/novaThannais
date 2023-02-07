@@ -24,7 +24,8 @@ export const NovaSlice = createSlice({
         listaDePrecios: [],
         todosLosPrecios: [],
         faltantes: [],
-        administradores: []
+        administradores: [],
+        loading: false,
     },
     reducers: {
         getPersonal: (state, {payload}) => {
@@ -96,6 +97,9 @@ export const NovaSlice = createSlice({
         },
         getTodosLosPrecios : (state, {payload}) => {
             state.todosLosPrecios = payload;
+        },
+        changeLoading: (state, {payload}) => {
+            state.loading = payload;
         }
     }
 });
