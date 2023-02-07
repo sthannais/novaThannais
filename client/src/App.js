@@ -8,6 +8,7 @@ import RendicionPage from './components/RendicionPage/RendicionPage';
 import RendicionGeneral from './components/RendicionGeneral/RendicionGeneral';
 import PersonalSellTable from './components/TablesPayments/PersonalSellTable/PersonalSellTable';
 import HistorialAnticipos from './components/HistorialAnticipos/HistorialAnticipos';
+import Metricas from './components/Metricas/Metricas';
 
 function App() {
   
@@ -30,6 +31,7 @@ function App() {
             <Route path="/rendicionGeneral" element={<RendicionGeneral />} />
             <Route path="/personalSellTable" element={<PersonalSellTable />} />
             <Route path="/historialAnticipos" element={<HistorialAnticipos />} />
+            <Route path="/metricas" element={<Metricas />} />
           </Routes>
         </>
         :

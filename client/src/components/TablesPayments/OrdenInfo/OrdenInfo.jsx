@@ -1,7 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import style from './ordenInfo.module.css'
-import monito from '../../../assets/JORGITO.svg';
 
 const OrdenInfo = ({ novaOrdenById }) => {
 

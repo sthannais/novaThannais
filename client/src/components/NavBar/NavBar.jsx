@@ -119,6 +119,15 @@ const NavBar = () => {
                                 Historial Anticipos
                             </button>
                         </Link>
+                        {/* <Link to="/metricas">
+                            <button onClick={
+                                () => setButtonSelected('metricas')
+                            } className={
+                                buttonSelected === 'metricas' ? style.guideStyleSelected : style.guideStyle
+                            }>
+                                Metricas
+                            </button>
+                        </Link> */}
                         <button className={style.guideStyle} onClick={handleLogout}>
                             Cerrar sesión
                         </button>
