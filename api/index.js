@@ -26,7 +26,7 @@ const createListaDePrecios = require('./src/testingCreators/listaDePrecios.js');
 const { createChoferes, createAdministradores, createAyudantes} = require('./src/testingCreators/usuarios.js');
 const PORT = process.env.PORT || 3001;
 
-conn.sync({ force: true }).then(() => {
+conn.sync({ force: true }).then(() => { // slint ignore line
   server.listen(PORT, async () => {
     console.log(`Servidor en puerto ${PORT}`); 
 
