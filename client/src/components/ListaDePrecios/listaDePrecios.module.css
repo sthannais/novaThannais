@@ -29,3 +29,15 @@
 .active {
     font-size: 10rem;
 }
+
+@media screen and (min-width: 1800px) {
+    .iconContainer2 {
+        left: 71rem;
+    }
+}
+
+@media screen and ( max-width: 1366px ) {
+    .iconContainer2 {
+        left: 38rem;
+    }
+}

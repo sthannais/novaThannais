@@ -79,13 +79,13 @@ const DownloadOrden = ({ fecha }) => {
     useEffect(() => {
         if( idOrden === 0 ||
             llenos.llenos5kg === "" ||
-            llenos.llenos5kg > novaOrdenById.contabilidadRecarga?.total5kg ||
+            Number(llenos.llenos5kg) > Number(novaOrdenById.contabilidadRecarga?.total5kg) ||
             llenos.llenos11kg === "" ||
-            llenos.llenos11kg > novaOrdenById.contabilidadRecarga?.total11kg ||
+            Number(llenos.llenos11kg) > Number(novaOrdenById.contabilidadRecarga?.total11kg) ||
             llenos.llenos15kg === "" ||
-            llenos.llenos15kg > novaOrdenById.contabilidadRecarga?.total15kg ||
+            Number(llenos.llenos15kg) > Number(novaOrdenById.contabilidadRecarga?.total15kg) ||
             llenos.llenos45kg === "" ||
-            llenos.llenos45kg > novaOrdenById.contabilidadRecarga?.total45kg
+            Number(llenos.llenos45kg) > Number(novaOrdenById.contabilidadRecarga?.total45kg)
         ) {
             setDisabled(true);
         } else {
@@ -484,10 +484,10 @@ const DownloadOrden = ({ fecha }) => {
                                 </Table>
                                 </div>
                                 {
-                                    llenos?.llenos5kg > novaOrdenById?.contabilidadRecarga?.total5kg ||
-                                    llenos?.llenos11kg > novaOrdenById?.contabilidadRecarga?.total10kg ||
-                                    llenos?.llenos15kg > novaOrdenById?.contabilidadRecarga?.total15kg ||
-                                    llenos?.llenos45kg > novaOrdenById?.contabilidadRecarga?.total45kg ?
+                                    Number(llenos?.llenos5kg) > Number(novaOrdenById?.contabilidadRecarga?.total5kg) ||
+                                    Number(llenos?.llenos11kg) > Number(novaOrdenById?.contabilidadRecarga?.total10kg) ||
+                                    Number(llenos?.llenos15kg) > Number(novaOrdenById?.contabilidadRecarga?.total15kg) ||
+                                    Number(llenos?.llenos45kg) > Number(novaOrdenById?.contabilidadRecarga?.total45kg) ?
                                     <div className="danger">
                                             <h4 className="alert-heading">¡Atención!</h4>
                                             <p>
