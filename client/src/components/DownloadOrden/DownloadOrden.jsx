@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import style from './downloadOrden.module.css';
 import descargar from '../../assetsOficial/descargar.svg';
-import { ordenesActivas, bringOrdenById, cleanOrden, finalizeOrden } from '../../redux/novaSlice/thunks';
+import { ordenesActivas, bringOrdenById, cleanOrden, finalizeOrden, switchLoading } from '../../redux/novaSlice/thunks';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Label, Table }  from 'reactstrap';
 import { numberWithDots } from '../../helpers/numberWithDot';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -178,6 +178,7 @@ const DownloadOrden = ({ fecha }) => {
                     e.preventDefault()
                     dispatch(finalizeOrden(idOrden, llenos,fecha))
                     cleanStates();
+                    dispatch(switchLoading())
                 }}>
                     <ModalBody>
                             <FormGroup>
