@@ -4,19 +4,20 @@ import carrito from '../../assetsOficial/carrito.svg';
 import { Modal, Button, ModalHeader, ModalBody, ModalFooter, Input, Form } from 'reactstrap';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
-import { bringPatentes, bringCuadrantes, bringChoferes, bringAyudantes, createOrden, bringListaDePreciosActive } from '../../redux/novaSlice/thunks';
+import { bringPatentes, bringCuadrantes, bringChoferes, bringAyudantes, createOrden, bringListaDePreciosActive, switchLoading } from '../../redux/novaSlice/thunks';
 import cinco from '../../assets/5n.ico';
 import once from '../../assets/11n.ico';
 import quince from '../../assets/15n.ico';
 import cuarenta from '../../assets/45n.ico';
 import style from './createOrden.module.css';
+import Loading from '../Loading/Loading';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-datepicker/dist/react-datepicker.css';
 registerLocale('es', es);
 
 const CreateOrden = () => {
 
-    const { patentes, cuadrantes, choferes, ayudantes, listaDePrecios } = useSelector(state => state.Nova);
+    const { patentes, cuadrantes, choferes, ayudantes, listaDePrecios, loading } = useSelector(state => state.Nova);
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const onlyDate = new Date().toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
     const [modal, setModal] = useState(false);
@@ -159,6 +160,7 @@ const CreateOrden = () => {
         }));
         cleanState(productos);
         toggle();
+        dispatch(switchLoading());
     };
 
     const modalStyles = {
@@ -172,6 +174,9 @@ const CreateOrden = () => {
 
     return (
         <div>
+            {/* {
+                loading ? <Loading /> : null
+            } */}
             <div className={style.iconContainer2}>
                 <button onClick={toggle} className={style.botonsito}>
                     <img src={carrito} alt="carrito" className={style.icon}/>

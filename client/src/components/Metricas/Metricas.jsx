@@ -32,14 +32,15 @@ const Metricas = () => {
             <p className={style.text}>Metricas</p>
             <img src={JorgeGas} alt="jorgeGas" className={style.logo} />
             <div className={style.container}>
-                <Doughnut
-                data={data}
-                options={{
-                    maintainAspectRatio: true,
-                    responsive: true,
-                    }}
-                className={style.grafica}
-            />
+                {/* <Doughnut
+                    data={data}
+                    options={{
+                        maintainAspectRatio: true,
+                        responsive: true,
+                        }}
+                    className={style.grafica}
+                /> */}
+                
             </div>
             
         </div>

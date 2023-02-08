@@ -47,7 +47,7 @@ const GuidePage = () => {
 
     useEffect(() => {
             dispatch(getAllOrdenes(soloFecha));
-    }, [dispatch]);
+    }, [dispatch, soloFecha]);
     
     /////// EXCEL ///////
     const tablaRef = useRef(null);

@@ -98,8 +98,8 @@ export const NovaSlice = createSlice({
         getTodosLosPrecios : (state, {payload}) => {
             state.todosLosPrecios = payload;
         },
-        changeLoading: (state, {payload}) => {
-            state.loading = payload;
+        changeLoading: (state) => {
+            state.loading = !state.loading;
         }
     }
 });
@@ -126,6 +126,7 @@ export const {  getPersonal,
                 getListaDePrecios,
                 getAllFaltantes,
                 getAdministradores,
-                getTodosLosPrecios
+                getTodosLosPrecios,
+                changeLoading
             } = NovaSlice.actions;
             

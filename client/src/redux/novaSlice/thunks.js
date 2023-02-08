@@ -23,7 +23,8 @@ import {
         getListaDePrecios,
         getAllFaltantes, 
         getAdministradores,
-        getTodosLosPrecios
+        getTodosLosPrecios,
+        changeLoading
     } from './novaSlice';
 
 export const getAllOrdenes = (date) => async (dispatch) => {
@@ -137,6 +138,7 @@ export const createOrden = (orden) => async (dispatch) => {
         dispatch(bringChoferes());
         dispatch(bringAyudantes());
         dispatch(bringListaDePreciosActive());
+        dispatch(switchLoading());
         Swal.fire({
             title: 'Orden creada',
             text: 'La orden se ha creado correctamente',
@@ -544,3 +546,12 @@ export const createListaDePrecios = (nuevaLista) => async (dispatch) => {
         console.error(error.message);
     }
 }
+
+export const switchLoading = () => async (dispatch) => {
+    try {
+        dispatch(changeLoading());
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
