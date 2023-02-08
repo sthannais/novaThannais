@@ -214,6 +214,7 @@ export const finalizeOrden = (id, quantity, fecha) => async (dispatch) => {
             body: JSON.stringify(quantity)
         });
         dispatch(getAllOrdenes(fecha));
+        dispatch(switchLoading);
         Swal.fire({
             title: 'Orden finalizada',
             text: 'La orden se ha finalizado correctamente.',
