@@ -174,9 +174,9 @@ const CreateOrden = () => {
 
     return (
         <div>
-            {/* {
+            {
                 loading ? <Loading /> : null
-            } */}
+            }
             <div className={style.iconContainer2}>
                 <button onClick={toggle} className={style.botonsito}>
                     <img src={carrito} alt="carrito" className={style.icon}/>
