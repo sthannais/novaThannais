@@ -3,19 +3,16 @@ const { Ayudante, Personal, Rol } = require('../../db')
 
 const getAyudantes = async (req, res) => {
     
-        Personal.findAll({
-            where : {
-                rolId : 4
-            },
-            include : [{
-                model : Ayudante,
+    const ayudantes = await Ayudante.findAll({
+        include: [{
+            model: Personal,
+            include: [{
                 model: Rol
             }]
-        })
-        .then(ayudantes => {
-            res.json(ayudantes)
-        });
-    }
+        }]
+    });
+    res.json(ayudantes);
+}
 
 const getAyudanteById = async (req, res) => {
     const { id } = req.params;
@@ -38,9 +35,12 @@ const getAllAyudanteNames = async (req, res) => {
     try {
         const ayudantes = await Personal.findAll({
             attributes: ['name', 'lastname'],
-            where: {
-                rolId: 4
-            },
+            include: [{
+                model: Rol,
+                where: {
+                    rolId: 4
+                }
+            }],
             include: [{
                 model: Ayudante,
                 where: {

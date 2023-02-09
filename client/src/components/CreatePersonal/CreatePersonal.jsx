@@ -93,7 +93,7 @@ export default function CreatePersonal() {
                     &nbsp;
                     Crear personal
                 </button>
-                <Modal isOpen={modal} toggle={toggle} style={modalStyles}>
+                <Modal isOpen={modal} toggle={toggle} style={modalStyles} backdrop="static">
                     <ModalHeader toggle={toggle}>Crear personal</ModalHeader>
                     <Form onSubmit={handleSubmit}>
                     <ModalBody>
@@ -169,11 +169,11 @@ export default function CreatePersonal() {
                                     borderRadius: "2px",
                                     border: "1px solid #3C3C3C"
                                 }}>
-                                    <option selected disabled>Rol</option>
+                                    <option hidden>Rol</option>
                                     <option value="Administrador">Administrador</option>
                                     <option value="Auxiliar">Auxiliar</option>
                                     <option value="Chofer">Chofer</option>
-                                    <option value="Ayudante">Ayudante</option>
+                                    <option value="Ayudante">Peoneta</option>
                                 </select>
                                 {error.rol && <p className={style.error}>{error.rol}</p>}
                             </FormGroup>

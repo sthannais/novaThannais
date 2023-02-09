@@ -182,7 +182,7 @@ const CreateOrden = () => {
                 </button>
                 
             </div>
-            <Modal isOpen={modal} toggle={toggle} style={modalStyles}>
+            <Modal isOpen={modal} toggle={toggle} style={modalStyles} backdrop="static">
                 <ModalHeader toggle={toggle}>Crear Orden</ModalHeader>
                 <Form onSubmit={handleSubmit}>
                     <ModalBody >

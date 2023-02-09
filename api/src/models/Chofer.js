@@ -5,7 +5,6 @@ module.exports = (sequelize)=>{
     sequelize.define('chofer',{
         esPeoneta : {
             type : DataTypes.BOOLEAN,
-            allowNull : false,
             defaultValue : false
         },
         activeForOrden : {

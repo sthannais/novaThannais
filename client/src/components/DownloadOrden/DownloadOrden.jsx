@@ -172,7 +172,7 @@ const DownloadOrden = ({ fecha }) => {
                     <p>Descargar</p>
                 </button>
             </div>
-            <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="md">
+            <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="md" backdrop="static">
                 <ModalHeader toggle={toggle}>Descargar orden</ModalHeader>
                 <Form onSubmit={(e) =>{
                     e.preventDefault()

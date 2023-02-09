@@ -51,16 +51,17 @@ export const NovaSlice = createSlice({
             state.novaOrdenById = {};
         },
         getPatentes: (state, {payload}) => {
-            state.patentes = payload;
+            state.patentes = payload.sort((a,b) => a.name.localeCompare(b.name));
         },
         getCuadrantes: (state, {payload}) => {
-            state.cuadrantes = payload;
+            //ordeno los cuadrantes por nombre alfabeticamente
+            state.cuadrantes = payload.sort((a,b) => a.name.localeCompare(b.name));
         },
         getChoferes: (state, {payload}) => {
-            state.choferes = payload;
+            state.choferes = payload.sort((a,b) => a.name.localeCompare(b.name));
         },
         getAyudantes: (state, {payload}) => {
-            state.ayudantes = payload;
+            state.ayudantes = payload.sort((a,b) => a.name.localeCompare(b.name));
         },
         getCuadratura: (state, {payload}) => {
             state.cuadratura = payload;

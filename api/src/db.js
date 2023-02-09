@@ -103,8 +103,8 @@ Personal.hasOne(Chofer, { foreignKey: 'fk_personalID', targetKey: 'id' }, {
 Chofer.belongsTo(Personal, { foreignKey: 'fk_personalID', targetKey: 'id' });
 
 //Relacion entre personal y rol
-Rol.hasMany(Personal)
-Personal.belongsTo(Rol)
+Rol.belongsToMany(Personal, { through: 'Personal_Rol', timestamps: false });
+Personal.belongsToMany(Rol, { through: 'Personal_Rol', timestamps: false });
 
 //Relacion entre personal y ayudante
 Personal.hasOne(Ayudante, { foreignKey: 'fk_personalID', targetKey: 'id' }, {

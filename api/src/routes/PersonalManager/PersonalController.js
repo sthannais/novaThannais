@@ -57,7 +57,7 @@ const createPersonal = async (req, res) => {
 
                     if (newChofer) {
                         await newPersonal.setChofer(newChofer);
-                        await newPersonal.setRol(newRol);
+                        await newPersonal.addRols(newRol);
                         res.json([newPersonal, newChofer]);
                     }
                     break;
@@ -66,7 +66,7 @@ const createPersonal = async (req, res) => {
 
                     if (newAuxiliar) {
                         await newPersonal.setAuxiliar(newAuxiliar);
-                        await newPersonal.setRol(newRol);
+                        await newPersonal.addRols(newRol);
                         res.json([newPersonal, newAuxiliar]);
                     }
                     break;
@@ -75,7 +75,7 @@ const createPersonal = async (req, res) => {
 
                     if (newAyudante) {
                         await newPersonal.setAyudante(newAyudante);
-                        await newPersonal.setRol(newRol);
+                        await newPersonal.addRols(newRol);
                         res.json([newPersonal, newAyudante]);
                     }
                     break;
@@ -84,7 +84,7 @@ const createPersonal = async (req, res) => {
 
                     if (newAdministrador) {
                         await newPersonal.setAdministrador(newAdministrador);
-                        await newPersonal.setRol(newRol);
+                        await newPersonal.addRols(newRol);
                         res.json([newPersonal, newAdministrador]);
                     }
                     break;
