@@ -22,7 +22,7 @@ export const AutenticacionSlice = createSlice({
             state.autBack.name = payload.usuario.name;
             state.autBack.lastname = payload.usuario.lastname;
             state.autBack.email = payload.usuario.email;
-            state.autBack.rolId = payload.usuario.rolId;
+            state.autBack.rolId = payload.usuario.rols[0].id;
         },
         logout: (state) => {
             state.autBack.status = 'notLogged';
