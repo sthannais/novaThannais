@@ -110,7 +110,7 @@ const GuidePage = () => {
                                 <tr>
                                     <th>Numero de orden</th>
                                     <th>Fecha</th>
-                                    <th>Cantidad tarrones</th>
+                                    <th>Cantidad de tarros</th>
                                     <th>Patente</th>
                                     <th>Chofer</th>
                                     <th>Peoneta</th>

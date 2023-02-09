@@ -101,8 +101,7 @@ const CreateOrden = () => {
     useEffect(() => {
         if( orden.patente !== '' &&
             orden.cuadranteId !== '' && 
-            orden.idChofer !== 0 && 
-            orden.idPeoneta !== 0
+            orden.idChofer !== 0
         ){
             setDisabled(false);
         } else {
@@ -112,7 +111,6 @@ const CreateOrden = () => {
         orden.patente,
         orden.cuadranteId,
         orden.idChofer,
-        orden.idPeoneta,
     ]);
 
     const handleProductsChange = (e, index) => {
