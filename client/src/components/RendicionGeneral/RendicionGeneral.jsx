@@ -16,7 +16,6 @@ import ResumenTable from '../RendicionTables/ResumenTable/ResumenTable';
 import { RiFileExcel2Fill } from 'react-icons/ri';
 import XLSX from 'xlsx';
 
-
 registerLocale('es', es)
 
 const RendicionGeneral = () => {
@@ -93,7 +92,7 @@ const RendicionGeneral = () => {
                 >
                     <option hidden>Seleccione una rendicion </option>
                     {administradores?.map((admin) => (
-                        <option key={admin.administrador.id} value={admin.administrador.id}>{admin.name + " " + admin.lastname}</option>
+                        <option key={admin.id} value={admin.id}>{admin.personal.name + " " + admin.personal.lastname}</option>
                     ))}
                     <option value="all">Todas las rendiciones</option>
                 </Input>

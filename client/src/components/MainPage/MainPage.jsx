@@ -86,7 +86,7 @@ const MainPage = () => {
                                         <td className="px-4 py-3">{personal?.lastname}</td>
                                         <td className="px-4 py-3">{personal?.rut}</td>
                                         <td className="px-4 py-3">{personal?.email}</td>
-                                        <td className="px-4 py-3">{personal?.rol?.name === "Ayudante" ? "Peoneta" : personal?.rol?.name}</td>
+                                        <td className="px-4 py-3">{personal?.rols[0]?.name === "Ayudante" ? "Peoneta" : personal?.rols[0].name}</td>
                                     </tr>
                                 ))}
                             </tbody>

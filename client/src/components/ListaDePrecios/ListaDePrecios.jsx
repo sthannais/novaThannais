@@ -58,7 +58,7 @@ const ListaDePrecios = () => {
                     <p>Lista de precios</p>
                 </button>
             </div>
-            <Modal isOpen={modal} toggle={toggle} className={style.modal}>
+            <Modal isOpen={modal} toggle={toggle} className={style.modal} backdrop="static">
                 <Form onSubmit={(e) => {
                     e.preventDefault()
                     dispatch(activeListaDePrecios(precioId))
@@ -134,7 +134,7 @@ const ListaDePrecios = () => {
                         <Button color="secondary" onClick={toggle}>Cancelar</Button>
                     </ModalBody>
                 </Form>
-                <Modal isOpen={modal2} toggle={toggle2} className={style.modal} size="sm">
+                <Modal isOpen={modal2} toggle={toggle2} className={style.modal} size="sm" backdrop="static">
                     <ModalHeader toggle={toggle2}>Crear nueva lista de precios</ModalHeader>
                     <ModalBody>
                         <Form onSubmit={nuevaListaOnsubmit}>

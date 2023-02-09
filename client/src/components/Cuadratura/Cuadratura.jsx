@@ -371,7 +371,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                 <p>Cuadratura</p>
                 <img src={cuadratura} alt="cuadratura" className={style.icono} />
             </Button> 
-            <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="lg" className={style.modal}>
+            <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="lg" className={style.modal} backdrop="static">
                 <Form onSubmit={(e) => handleSubmit(e)}>
                     <ModalHeader toggle={toggle}>Cuadratura</ModalHeader>
                     <ModalBody>
@@ -752,6 +752,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                             toggle={toggleNested}
                             onClosed={closeAll ? toggle : undefined}
                             style={modalStyles}
+                            backdrop="static"
                         >
                             <ModalHeader>Asignar Faltante</ModalHeader>
                             <ModalBody>

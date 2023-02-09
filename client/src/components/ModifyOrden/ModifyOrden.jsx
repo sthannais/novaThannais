@@ -125,7 +125,7 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                     <Button onClick={toggle} className={style.boton} disabled={disabled3}>Modificar Orden</Button>
                 ) : null
             }
-            <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="lg">
+            <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="lg" backdrop="static">
                 {
                     autorizado === "Autorizado"  ?  (
                         <>

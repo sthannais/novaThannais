@@ -365,7 +365,7 @@ const createChoferes = async () => {
                 name: 'Chofer'
             }
         });
-        actualChofer.setRol(rol);
+        actualChofer.addRols(rol);
 
     }())
 };
@@ -419,7 +419,7 @@ const createAyudantes = async () => {
                 name: 'Ayudante'
             }
         });
-        actualAyudante.setRol(rol);
+        actualAyudante.addRols(rol);
 
     }())
 };
@@ -446,7 +446,7 @@ const createAdministradores = async () => {
                 name: 'Administrador'
             }
         });
-        actualAdministrador.setRol(rol);
+        actualAdministrador.addRols(rol);
 
     }())
 };

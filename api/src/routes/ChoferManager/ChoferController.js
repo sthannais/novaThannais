@@ -2,22 +2,15 @@ const { Personal, Chofer, Rol } = require('../../db')
 
 const getChofer = async (req, res) => {
 
-        Personal.findAll({
-            where : {
-                rolId : 3
-            },
-            include : [{
-                model : Rol
-            },{
-                model : Chofer,
-            }],
-            order : [
-                ['id', 'ASC']
-            ]
-        })
-        .then(choferes => {
-            res.json(choferes)
-        });
+    const choferes = await Chofer.findAll({
+        include: [{
+            model: Personal,
+            include: [{
+                model: Rol
+            }]
+        }]
+    });
+    res.json(choferes);
 }
 
 const getChoferById = async (req, res) => {
@@ -40,9 +33,12 @@ const getAllChoferNames = async (req, res) => {
     try {
         const choferes = await Personal.findAll({
             attributes: ['name', 'lastname'],
-            where: {
-                rolId: 3
-            },
+            include: [{
+                model: Rol,
+                where: {
+                    rolId: 3
+                }
+            }],
             include: [{
                 model: Chofer,
                 where: {
@@ -54,7 +50,7 @@ const getAllChoferNames = async (req, res) => {
         res.json(choferes);
     } catch (error) {
         res.status(500).json({
-            msg: 'Error al obtener los choferes'
+            msg: error.message
         });
     }
 }
