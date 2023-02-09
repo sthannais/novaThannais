@@ -439,6 +439,7 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                                             <option value="jhoskartoro@gmail.com">Jhoskar</option>
                                             <option value="maicol.nieto@gmail.com">Maicol</option>
                                             <option value="jorgetalento@outlook.es">Jorge</option>
+                                            <option value="benjaminsotoro@gmail.com">Benjamin</option>
                                         </Input>
                                     </FormGroup>
                                     {
