@@ -23,8 +23,11 @@ const GuidePage = () => {
     const { novaOrdenes } = useSelector((state) => state.Nova);
     const { email } = useSelector(state => state.Autenticacion.autBack)
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
+    
     const [date, setDate] = useState(new Date());
-    const soloFecha = moment(date).format('YYYY-MM-DD');
+    const fechaChile = date.toLocaleString('es-CL', { timeZone: 'America/Santiago' });
+    const soloFecha = moment(fechaChile).format('YYYY-MM-DD');
+
     const width = window.innerWidth;
 
     ///// PAGINADO /////
