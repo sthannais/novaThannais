@@ -26,7 +26,7 @@ const GuidePage = () => {
     
     const [date, setDate] = useState(new Date());
     const fechaChile = date.toLocaleString('es-CL', { timeZone: 'America/Santiago' });
-    const soloFecha = moment(fechaChile).format('YYYY-MM-DD');
+    const soloFecha = moment(fechaChile).format('YYYY-DD-MM');
 
     const width = window.innerWidth;
 

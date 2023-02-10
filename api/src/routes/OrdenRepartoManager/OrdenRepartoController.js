@@ -860,7 +860,6 @@ const finalizeOrden = async (req, res) => {
         
 
         const contabilidad = await ordenDeReparto.getContabilidadRecarga();
-        console.log(contabilidad)
 
         const ventas5kg = Number(contabilidad.total5kg) - Number(llenos5kg);
         const ventas11kg = Number(contabilidad.total11kg) - Number(llenos11kg);
