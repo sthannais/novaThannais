@@ -26,6 +26,15 @@ const CreateOrden = () => {
 
     const [disabled, setDisabled] = useState(false);
 
+    
+
+    const handleKeydown = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    };
+
     const [productos, setProductos] = useState([
         {
             name: "GAS NORMAL 5 KILOS",
@@ -59,6 +68,13 @@ const CreateOrden = () => {
         idPeoneta: 0,
         idAdmin: usuario.administrador.id,
     });
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeydown);
+        return () => {
+            document.removeEventListener('keydown', handleKeydown);
+        };
+    }, []);
 
     useEffect(() => {
         dispatch(bringPatentes());
