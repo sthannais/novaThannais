@@ -10,6 +10,9 @@ const getPatentes = async (req, res) => {
             include: {
                 model: OrdenDeReparto,
             },
+            order : [
+                ['id', 'ASC']
+            ]
         });
         res.json(patentes);
     } catch (error) {
@@ -18,6 +21,28 @@ const getPatentes = async (req, res) => {
     }
 }
 
+const getAllPatentes = (req, res) => {
+    Patentes.findAll()
+        .then(patentes => res.json(patentes))
+        .catch(err => console.log(err));
+}
+
+const createPatente = async (req, res) => {
+
+    const { name } = req.body;
+    try {
+        const newPatente = await Patentes.create({ name });
+        res.json(newPatente);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+};
+
+
+
 module.exports = {
-    getPatentes
+    getPatentes,
+    getAllPatentes,
+    createPatente
 }

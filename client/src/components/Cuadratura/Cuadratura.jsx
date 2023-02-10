@@ -4,6 +4,7 @@ import { cuadrarOrden, bringListaDePreciosActive } from '../../redux/novaSlice/t
 import style from './cuadratura.module.css';
 import cuadratura from '../../assetsOficial/cuadratura.svg';
 import validateBilletes from '../../helpers/validateBilletes';
+import { handleKeydown } from '../../helpers/KeyDown';
 import { Modal, Button, ModalHeader, ModalBody, ModalFooter, Input, Form, FormGroup, Label } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -89,6 +90,12 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
         sobrante : 0,
     })
 
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeydown);
+        return () => {
+            document.removeEventListener('keydown', handleKeydown);
+        };
+    }, []);
 
     useEffect(() => {
         dispatch(bringListaDePreciosActive());

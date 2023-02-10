@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { bringAllListaDePrecios, activeListaDePrecios, createListaDePrecios } from '../../redux/novaSlice/thunks'
 import { Modal, Button, ModalHeader, ModalBody, ModalFooter, Form, Table } from 'reactstrap';
 import { MdPriceChange } from 'react-icons/md'
-import activa from '../../assetsOficial/activa.svg'
+import { handleKeydown } from '../../helpers/KeyDown';
 import 'bootstrap/dist/css/bootstrap.css';
 import style from './listaDePrecios.module.css'
 
@@ -46,6 +46,13 @@ const ListaDePrecios = () => {
         toggle2()
     }
 
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeydown);
+        return () => {
+            document.removeEventListener('keydown', handleKeydown);
+        };
+    }, []);
+
     useEffect (() => {
         dispatch(bringAllListaDePrecios())
     }, [dispatch])
@@ -58,7 +65,7 @@ const ListaDePrecios = () => {
                     <p>Lista de precios</p>
                 </button>
             </div>
-            <Modal isOpen={modal} toggle={toggle} className={style.modal} backdrop="static">
+            <Modal isOpen={modal} toggle={toggle} backdrop="static">
                 <Form onSubmit={(e) => {
                     e.preventDefault()
                     dispatch(activeListaDePrecios(precioId))

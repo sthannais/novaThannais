@@ -24,7 +24,7 @@ import {
         getAllFaltantes, 
         getAdministradores,
         getTodosLosPrecios,
-        changeLoading
+        changeLoading,
     } from './novaSlice';
 
 export const getAllOrdenes = (date) => async (dispatch) => {
@@ -214,6 +214,9 @@ export const finalizeOrden = (id, quantity, fecha) => async (dispatch) => {
             body: JSON.stringify(quantity)
         });
         dispatch(getAllOrdenes(fecha));
+        dispatch(bringPatentes());
+        dispatch(bringChoferes());
+        dispatch(bringAyudantes());
         dispatch(switchLoading());
         Swal.fire({
             title: 'Orden finalizada',
@@ -551,6 +554,27 @@ export const createListaDePrecios = (nuevaLista) => async (dispatch) => {
 export const switchLoading = () => async (dispatch) => {
     try {
         dispatch(changeLoading());
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+export const createPatente = (name) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/patente`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(name)
+        });
+        dispatch(bringPatentes());
+        Swal.fire({
+            icon: 'success',
+            title: 'Patente creada',
+            showConfirmButton: false,
+            timer: 1500
+        });
     } catch (error) {
         console.error(error.message);
     }

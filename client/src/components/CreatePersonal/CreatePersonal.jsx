@@ -4,6 +4,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, F
 import validate from '../../helpers/validate';
 import { createPersonal } from '../../redux/novaSlice/thunks';
 import CreateButton from '../../assetsOficial/botonCrear.svg';
+import { handleKeydown } from '../../helpers/KeyDown';
 import style from './createPersonal.module.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -53,6 +54,13 @@ export default function CreatePersonal() {
             cleanStates();
             toggle();
         };
+
+        useEffect(() => {
+            document.addEventListener('keydown', handleKeydown);
+            return () => {
+                document.removeEventListener('keydown', handleKeydown);
+            };
+        }, []);
 
         useEffect(() => {
             if ( //Validacion habilitar el boton submit

@@ -4,6 +4,7 @@ import { bringCodigoParaModificar, setAutorizacion, modifyRecargaOrdenQuantity }
 import style from './modifyOrden.module.css';
 import { numberWithDots } from '../../helpers/numberWithDot';
 import vectorDerecho from "../../assetsOficial/vectorDerecho.svg"
+import { handleKeydown } from '../../helpers/KeyDown';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Label, Table }  from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -67,6 +68,13 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
             email: "",
         });
     };
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeydown);
+        return () => {
+            document.removeEventListener('keydown', handleKeydown);
+        };
+    }, []);
 
     useEffect(() => {
         setInfo({
