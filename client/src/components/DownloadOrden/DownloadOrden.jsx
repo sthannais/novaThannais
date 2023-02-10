@@ -4,7 +4,7 @@ import style from './downloadOrden.module.css';
 import descargar from '../../assetsOficial/descargar.svg';
 import { ordenesActivas, bringOrdenById, cleanOrden, finalizeOrden, switchLoading } from '../../redux/novaSlice/thunks';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Label, Table }  from 'reactstrap';
-import { numberWithDots } from '../../helpers/numberWithDot';
+import { handleKeydown } from '../../helpers/KeyDown';
 import 'bootstrap/dist/css/bootstrap.css';
 
 const DownloadOrden = ({ fecha }) => {
@@ -41,6 +41,13 @@ const DownloadOrden = ({ fecha }) => {
 
     const [totalCantidad, setTotalCantidad] = useState(0);
     const [totalRecaudacion, setTotalRecaudacion] = useState(0);
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeydown);
+        return () => {
+            document.removeEventListener('keydown', handleKeydown);
+        };
+    }, []);
 
     useEffect(() => {
         dispatch(bringOrdenById(idOrden));

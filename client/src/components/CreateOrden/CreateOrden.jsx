@@ -11,6 +11,7 @@ import quince from '../../assets/15n.ico';
 import cuarenta from '../../assets/45n.ico';
 import style from './createOrden.module.css';
 import Loading from '../Loading/Loading';
+import { handleKeydown } from '../../helpers/KeyDown';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-datepicker/dist/react-datepicker.css';
 registerLocale('es', es);
@@ -25,15 +26,6 @@ const CreateOrden = () => {
     const dispatch = useDispatch();
 
     const [disabled, setDisabled] = useState(false);
-
-    
-
-    const handleKeydown = (event) => {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-    };
 
     const [productos, setProductos] = useState([
         {
