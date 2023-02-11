@@ -839,7 +839,7 @@ const finalizeOrden = async (req, res) => {
                 estado: true
             }
         });
-        console.log(ordenDeReparto)
+        
         await ordenDeReparto.update({
             estado: false,
         });
