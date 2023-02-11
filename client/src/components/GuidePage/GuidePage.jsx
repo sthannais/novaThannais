@@ -14,9 +14,9 @@ import es from 'date-fns/locale/es';
 import { RiFileExcel2Fill } from 'react-icons/ri';
 import XLSX from 'xlsx';
 import InfiniteScroll from 'react-infinite-scroller';
+import moment from 'moment';
 
 registerLocale('es', es);
-
 const GuidePage = () => {
 
     const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const GuidePage = () => {
     const { email } = useSelector(state => state.Autenticacion.autBack)
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const [date, setDate] = useState(new Date());
-    const soloFecha = date.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
+    const soloFecha = moment(date).format('YYYY-MM-DD');
     const width = window.innerWidth;
 
     ///// PAGINADO /////

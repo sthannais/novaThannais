@@ -26,18 +26,18 @@ const OrdenDetail = (
     const dispatch = useDispatch();
 
     const [quantity, setQuantity] = useState({
-            "actual5kg": 0,
-            "actual11kg": 0,
-            "actual15kg": 0,
-            "actual45kg": 0,
+            actual5kg: "",
+            actual11kg: "",
+            actual15kg: "",
+            actual45kg: "",
         });
 
     const cleanQuantity = () => {
         setQuantity({
-            "actual5kg": 0,
-            "actual11kg": 0,
-            "actual15kg": 0,
-            "actual45kg": 0,
+            actual5kg: "",
+            actual11kg: "",
+            actual15kg: "",
+            actual45kg: "",
         })
     }
     
@@ -45,7 +45,7 @@ const OrdenDetail = (
     const handleQuantity = (e) => {
         const { name, value } = e.target;
         const newQuantity = {...quantity};
-        newQuantity[name] = Number(value);
+        newQuantity[name] = value;
         setQuantity(newQuantity);
     }
 
@@ -177,7 +177,7 @@ const OrdenDetail = (
                                             type="number" 
                                             name="actual5kg" 
                                             id="actual5kg" 
-                                            value={quantity.actual5kg === 0 ? "" : quantity.actual5kg} 
+                                            value={quantity.actual5kg} 
                                             onChange={handleQuantity}
                                             className={style.inputs}
                                             min="0"
@@ -212,7 +212,7 @@ const OrdenDetail = (
                                             type="number"
                                             name="actual11kg"
                                             id="actual11kg"
-                                            value={quantity.actual11kg === 0 ? "" : quantity.actual11kg}
+                                            value={quantity.actual11kg}
                                             onChange={handleQuantity}
                                             className={style.inputs}
                                             min="0"
@@ -247,7 +247,7 @@ const OrdenDetail = (
                                             type="number"
                                             name="actual15kg"
                                             id="actual15kg"
-                                            value={quantity.actual15kg === 0 ? "" : quantity.actual15kg}
+                                            value={quantity.actual15kg}
                                             onChange={handleQuantity}
                                             className={style.inputs}
                                             min="0"
@@ -282,7 +282,7 @@ const OrdenDetail = (
                                             type="number"
                                             name="actual45kg"
                                             id="actual45kg"
-                                            value={quantity.actual45kg === 0 ? "" : quantity.actual45kg}
+                                            value={quantity.actual45kg}
                                             onChange={handleQuantity}
                                             className={style.inputs}
                                             min="0"

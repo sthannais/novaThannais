@@ -17,7 +17,7 @@ const choferes = [
         rut: '123456789',
     },
     {
-        name: 'Luis',
+        name: 'Luis Atencio',
         lastname: 'Coronado',
         email: 'luisCoronado@gmail.com',
         password: '123456789',
@@ -38,7 +38,7 @@ const choferes = [
         rut: '123456789',
     },
     {
-        name: 'Wandell',
+        name: 'Wander',
         lastname: 'Lubin',
         email: 'wandellLubin@gmail.com',
         password: '123456789',
@@ -88,7 +88,7 @@ const choferes = [
     },
     {
         name: 'Jesus',
-        lastname: 'Lozada',
+        lastname: 'Montilla',
         email: 'jesusLozada@gmail.com',
         password: '123456789',
         rut: '123456789',
@@ -233,7 +233,7 @@ const ayudantes = [
         rut: '123456789',
     },
     {
-        name: 'Gregory',
+        name: 'Gregori',
         lastname: 'Hernandez',
         email: 'gregoryHernandez@gmail.com',
         password: '123456789',
@@ -254,7 +254,7 @@ const ayudantes = [
         rut: '123456789',
     },
     {
-        name: 'Luigi',
+        name: 'Luiggy',
         lastname: 'Coronado',
         email: 'luigiCoronado@gmail.com',
         password: '123456789',
@@ -285,6 +285,13 @@ const ayudantes = [
         name: 'Jose',
         lastname: 'Atencio',
         email: 'JoseAtencio@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    },
+    {
+        name: 'Leivis',
+        lastname: 'Angalita',
+        email: 'leivisAngalita@gmail.com',
         password: '123456789',
         rut: '123456789',
     },
