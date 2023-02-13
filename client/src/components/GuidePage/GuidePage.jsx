@@ -15,6 +15,7 @@ import { RiFileExcel2Fill } from 'react-icons/ri';
 import XLSX from 'xlsx';
 import InfiniteScroll from 'react-infinite-scroller';
 import moment from 'moment';
+import 'moment-timezone';
 
 registerLocale('es', es);
 const GuidePage = () => {
@@ -25,8 +26,7 @@ const GuidePage = () => {
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     
     const [date, setDate] = useState(new Date());
-    const fechaChile = date.toLocaleString('es-CL', { timeZone: 'America/Santiago' });
-    const soloFecha = moment(fechaChile).format('YYYY-DD-MM');
+    const soloFecha = moment(date).tz('America/Santiago').format('YYYY-MM-DD');
 
     const width = window.innerWidth;
 

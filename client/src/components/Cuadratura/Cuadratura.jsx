@@ -6,6 +6,7 @@ import cuadratura from '../../assetsOficial/cuadratura.svg';
 import validateBilletes from '../../helpers/validateBilletes';
 import { handleKeydown } from '../../helpers/KeyDown';
 import { Modal, Button, ModalHeader, ModalBody, ModalFooter, Input, Form, FormGroup, Label } from 'reactstrap';
+import { NumericFormat } from 'react-number-format';
 import 'bootstrap/dist/css/bootstrap.css';
 
 const Cuadratura = ({ novaOrdenById, fecha }) => {
@@ -128,22 +129,22 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
         // se setea el faltante con cada billete y moneda
         setFaltante({
             ...faltante,
-            faltante : (novaOrdenById?.contabilidadRecarga?.totalRecaudacion) - 
-            (   efectivo.totalGeneral +
-                vales.totalSumaVales 
+            faltante : Number(novaOrdenById?.contabilidadRecarga?.totalRecaudacion) - 
+            (   Number(efectivo.totalGeneral) +
+                Number(vales.totalSumaVales) 
             ) - (
-                metodoPagos.montoTransbank +
-                metodoPagos.montoTransferencias 
+                Number(metodoPagos.montoTransbank) +
+                Number(metodoPagos.montoTransferencias) 
             ) - (
-                metodoPagos.porcentajeDescuentoRut +
-                metodoPagos.porcentajeDescuento
+                Number(metodoPagos.porcentajeDescuentoRut) +
+                Number(metodoPagos.porcentajeDescuento)
             ) - (
-                novaOrdenById?.metodoPagos[0]?.abono?.monto
+                Number(novaOrdenById?.metodoPagos[0]?.abono?.monto)
             ) - (
-                faltanteChofer.faltanteChofer + 
-                faltantePeoneta.faltantePeoneta
+                Number(faltanteChofer.faltanteChofer) + 
+                Number(faltantePeoneta.faltantePeoneta)
             ) + (
-                sobrante.sobrante
+                Number(sobrante.sobrante)
             )
         })
 
@@ -218,6 +219,8 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
 
     const handleChange = (e) => {
 
+        const inputValue = Number(e.target.value)
+
         setError(
             validateBilletes({
                 ...efectivo,
@@ -226,7 +229,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
         )
         setEfectivo({
             ...efectivo,
-            [e.target.name] : Number(e.target.value)
+            [e.target.name] : inputValue
         })
         
         setVales({
@@ -249,11 +252,6 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
             [e.target.name] : Number(e.target.value)
         })
 
-        setFaltante({
-            ...faltante,
-            [e.target.name] : Number(e.target.value)
-        })
-
         setSobrante({
             ...sobrante,
             [e.target.name] : Number(e.target.value)
@@ -262,24 +260,13 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
 
     const cleanStates = () => {
         setEfectivo({
-            billetede1 : 0,
             totalBilletes1 : 0,
-            billetesDe2 : 0,
             totalBilletes2 : 0,
-            billetesDe5 : 0,
             totalBilletes5 : 0,
-            billetesDe10 : 0,
             totalBilletes10 : 0,
-            billetesDe20 : 0,
             totalBilletes20 : 0,
-            moneda500 : 0,
-            totalMoneda500 : 0,
-            moneda100 : 0,
-            totalMoneda100 : 0,
-            moneda50 : 0,
-            totalMoneda50 : 0,
-            moneda10 : 0,
-            totalMoneda10 : 0,
+            monedas : 0,
+            totalGeneral : 0,
         })
         setVales({
             fisico5kg : 0,
@@ -311,9 +298,6 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
         })
         setTotalRecaudacion({
             totalRecaudacion : novaOrdenById?.contabilidadRecarga?.totalRecaudacion,
-        })
-        setFaltante({
-            faltante : 0,
         })
 
         setFaltanteChofer({
@@ -395,7 +379,6 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                 <div className={style.grid1}>
                                     <p>B. 20.000</p>
                                     <Input
-                                        type="number"
                                         name="totalBilletes20"
                                         id="totalBilletes20"
                                         value={efectivo.totalBilletes20 === 0 ? "" : efectivo.totalBilletes20}
@@ -774,17 +757,23 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                             onChange={(e) => handleChange(e)}
                                         />
                                     </FormGroup>
-                                    <FormGroup>
-                                        <Label>Peoneta: { novaOrdenById?.ayudante?.personal?.name + " " + novaOrdenById?.ayudante?.personal?.lastname }</Label>
-                                        <Input
-                                            type='number'
-                                            name="faltantePeoneta"
-                                            id="faltantePeoneta"
-                                            value={faltantePeoneta.faltantePeoneta === 0 ? "" : faltantePeoneta.faltantePeoneta}
-                                            className={style.inputs4}
-                                            onChange={(e) => handleChange(e)}
-                                        />
-                                    </FormGroup>
+                                    {
+                                        novaOrdenById?.ayudante ? (
+                                            <FormGroup>
+                                                <Label>Peoneta: { novaOrdenById?.ayudante?.personal?.name + " " + novaOrdenById?.ayudante?.personal?.lastname }</Label>
+                                                <Input
+                                                    type='number'
+                                                    name="faltantePeoneta"
+                                                    id="faltantePeoneta"
+                                                    value={faltantePeoneta.faltantePeoneta === 0 ? "" : faltantePeoneta.faltantePeoneta}
+                                                    className={style.inputs4}
+                                                    onChange={(e) => handleChange(e)}
+                                                />
+                                            </FormGroup>
+                                        ) :
+                                        null
+                                    }
+                                    
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="primary" onClick={toggleNested}>Aceptar</Button>

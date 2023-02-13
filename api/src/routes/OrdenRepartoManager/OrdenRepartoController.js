@@ -711,20 +711,20 @@ const RechargeOrden = async (req, res) => {
     try {
         const ordenDeReparto = await OrdenDeReparto.findByPk(id);
         const recarga = await Recargas.create({
-            cantidad5kg: actual5kg,
-            cantidad11kg: actual11kg,
-            cantidad15kg: actual15kg,
-            cantidad45kg: actual45kg,
+            cantidad5kg: Number(actual5kg),
+            cantidad11kg: Number(actual11kg),
+            cantidad15kg: Number(actual15kg),
+            cantidad45kg: Number(actual45kg),
         })
         await ordenDeReparto.addRecarga(recarga);
         const contabilidad = await ordenDeReparto.getContabilidadRecarga();
     
-        const total5kg = actual5kg * contabilidad.precio5kg;
-        const total11kg = actual11kg * contabilidad.precio11kg;
-        const total15kg = actual15kg * contabilidad.precio15kg;
-        const total45kg = actual45kg * contabilidad.precio45kg;
+        const total5kg = Number(actual5kg) * contabilidad.precio5kg;
+        const total11kg = Number(actual11kg) * contabilidad.precio11kg;
+        const total15kg = Number(actual15kg) * contabilidad.precio15kg;
+        const total45kg = Number(actual45kg) * contabilidad.precio45kg;
         const total = total5kg + total11kg + total15kg + total45kg;
-        const totalCantidad = actual5kg + actual11kg + actual15kg + actual45kg;
+        const totalCantidad = Number(actual5kg) + Number(actual11kg) + Number(actual15kg) + Number(actual45kg);
 
         await contabilidad.update({
             total5kg:  Number(contabilidad.total5kg)  + Number(actual5kg),

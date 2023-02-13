@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateOrdenQuantity, updateAbono } from '../../redux/novaSlice/thunks';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Label, Table }  from 'reactstrap';
+import { numberWithDots } from '../../helpers/numberWithDot';
 import style from './ordenDetail.module.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -91,6 +92,22 @@ const OrdenDetail = (
             abono: 0,
         })
     }
+
+    let totalCantidad =  0
+    
+    recargas?.forEach((recarga) => {
+        totalCantidad += Number(recarga.cantidad5kg) + Number(recarga.cantidad11kg) + Number(recarga.cantidad15kg) + Number(recarga.cantidad45kg)
+    })
+
+    let totalRecaudacion = 0
+
+    recargas?.forEach((recarga) => {
+        let recargas5kg = Number(recarga.cantidad5kg) * Number(contabilidadRecarga?.precio5kg)
+        let recargas11kg = Number(recarga.cantidad11kg) * Number(contabilidadRecarga?.precio11kg)
+        let recargas15kg = Number(recarga.cantidad15kg) * Number(contabilidadRecarga?.precio15kg)
+        let recargas45kg = Number(recarga.cantidad45kg) * Number(contabilidadRecarga?.precio45kg)
+        totalRecaudacion += recargas5kg + recargas11kg + recargas15kg + recargas45kg
+    })
 
     ////// MODAL //////
 
@@ -295,12 +312,14 @@ const OrdenDetail = (
                     </tbody>
                 </Table>
                 <FormGroup>
-                    <Label>Total de tarros actuales:</Label>
-                    <Input type="number" name="totalCantidad" id="totalCantidad" value={contabilidadRecarga?.totalCantidad} disabled/>
+                    <Label>Total de tarros</Label>
+                    <Input type="number" name="totalCantidad" id="totalCantidad" value={totalCantidad} disabled/>
                 </FormGroup>
                 <FormGroup>
-                    <Label>Precio total actuales</Label>
-                    <Input type="number" name="totalRecaudacion" id="totalRecaudacion" value={contabilidadRecarga?.totalRecaudacion} disabled/>
+                    <Label>Recaudacion</Label>
+                    <Input type="text" name="totalRecaudacion" id="totalRecaudacion" value={
+                        totalRecaudacion ? numberWithDots(totalRecaudacion) : 0
+                    } disabled/>
                 </FormGroup>
                 {
                     editAbono === id ?
