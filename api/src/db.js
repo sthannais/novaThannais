@@ -7,19 +7,19 @@ const {
 } = process.env;
 
 let sequelize = 
-    // new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`, {
-    //   logging: false,
-    //   native: false,  
-  new Sequelize(DB_DEPLOY, { // eslint-disable-line
-    dialectOptions: {
-      ssl: {
-        require: true,
-      },
-      keepAlive: true,
-    },
-    ssl: true,
-    logging: false,
-    native: false,
+    new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`, {
+      logging: false,
+      native: false,  
+  // new Sequelize(DB_DEPLOY, { // eslint-disable-line
+  //   dialectOptions: {
+  //     ssl: {
+  //       require: true,
+  //     },
+  //     keepAlive: true,
+  //   },
+  //   ssl: true,
+  //   logging: false,
+  //   native: false,
   });
 
 const basename = path.basename(__filename);
