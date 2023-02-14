@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { bringOrdenByAdminId, getAllOrdenes } from '../../redux/novaSlice/thunks';
+import { getAllOrdenes } from '../../redux/novaSlice/thunks';
 import JorgeGas from '../../assetsOficial/jorgegas.svg';
 import CreateOrden from '../CreateOrden/CreateOrden';
 import OrdenList from '../OrdenList/OrdenList';
 import DownloadOrden from '../DownloadOrden/DownloadOrden';
 import ListaDePrecios from '../ListaDePrecios/ListaDePrecios';
-import Patentes from '../Pantetes/Patentes';
+import Patentes from '../Patentes/Patentes';
+import Cuadrantes from '../Cuadrantes/Cuadrantes';
 import style from './guidePage.module.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import es from 'date-fns/locale/es';
@@ -99,6 +100,7 @@ const GuidePage = () => {
                         <>
                             <ListaDePrecios/>
                             <Patentes />
+                            <Cuadrantes />
                         </>
                     ) : null
                 }

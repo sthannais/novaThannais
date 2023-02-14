@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Modal, Button, ModalHeader, ModalBody, ModalFooter, Form, Label, Input } from 'reactstrap';
 import { createPatente } from '../../redux/novaSlice/thunks';
 import { handleKeydown } from '../../helpers/KeyDown';

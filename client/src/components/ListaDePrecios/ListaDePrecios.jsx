@@ -46,13 +46,6 @@ const ListaDePrecios = () => {
         toggle2()
     }
 
-    useEffect(() => {
-        document.addEventListener('keydown', handleKeydown);
-        return () => {
-            document.removeEventListener('keydown', handleKeydown);
-        };
-    }, []);
-
     useEffect (() => {
         dispatch(bringAllListaDePrecios())
     }, [dispatch])
@@ -65,7 +58,7 @@ const ListaDePrecios = () => {
                     <p>Lista de precios</p>
                 </button>
             </div>
-            <Modal isOpen={modal} toggle={toggle} backdrop="static">
+            <Modal isOpen={modal} toggle={toggle} backdrop="static" onKeyDown={handleKeydown}>
                 <Form onSubmit={(e) => {
                     e.preventDefault()
                     dispatch(activeListaDePrecios(precioId))
@@ -141,7 +134,7 @@ const ListaDePrecios = () => {
                         <Button color="secondary" onClick={toggle}>Cancelar</Button>
                     </ModalBody>
                 </Form>
-                <Modal isOpen={modal2} toggle={toggle2} className={style.modal} size="sm" backdrop="static">
+                <Modal isOpen={modal2} toggle={toggle2} className={style.modal} size="sm" backdrop="static" onKeyDown={handleKeydown}>
                     <ModalHeader toggle={toggle2}>Crear nueva lista de precios</ModalHeader>
                     <ModalBody>
                         <Form onSubmit={nuevaListaOnsubmit}>

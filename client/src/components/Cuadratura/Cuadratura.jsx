@@ -92,13 +92,6 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
     })
 
     useEffect(() => {
-        document.addEventListener('keydown', handleKeydown);
-        return () => {
-            document.removeEventListener('keydown', handleKeydown);
-        };
-    }, []);
-
-    useEffect(() => {
         dispatch(bringListaDePreciosActive());
     }, [dispatch])
 
@@ -362,7 +355,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                 <p>Cuadratura</p>
                 <img src={cuadratura} alt="cuadratura" className={style.icono} />
             </Button> 
-            <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="lg" className={style.modal} backdrop="static">
+            <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="lg" backdrop="static" onKeyDown={handleKeydown}>
                 <Form onSubmit={(e) => handleSubmit(e)}>
                     <ModalHeader toggle={toggle}>Cuadratura</ModalHeader>
                     <ModalBody>
@@ -743,6 +736,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                             onClosed={closeAll ? toggle : undefined}
                             style={modalStyles}
                             backdrop="static"
+                            onKeyDown={handleKeydown}
                         >
                             <ModalHeader>Asignar Faltante</ModalHeader>
                             <ModalBody>

@@ -12,6 +12,7 @@ export const NovaSlice = createSlice({
         novaOrdenById: {},
         patentes: [],
         cuadrantes: [],
+        allCuadrantes: [],
         choferes: [],
         ayudantes: [],
         cuadratura: [],
@@ -53,12 +54,11 @@ export const NovaSlice = createSlice({
         getPatentes: (state, {payload}) => {
             state.patentes = payload.sort((a,b) => a.name.localeCompare(b.name));
         },
-        getAllPatentes: (state, {payload}) => {
-            state.allPatentes = payload.sort((a,b) => a.name.localeCompare(b.name));
-        },
         getCuadrantes: (state, {payload}) => {
-            //ordeno los cuadrantes por nombre alfabeticamente
             state.cuadrantes = payload.sort((a,b) => a.name.localeCompare(b.name));
+        },
+        getAllCuadrantes: (state, {payload}) => {
+            state.allCuadrantes = payload.sort((a,b) => a.name.localeCompare(b.name));
         },
         getChoferes: (state, {payload}) => {
             state.choferes = payload.sort((a,b) => a.name.localeCompare(b.name));
@@ -132,5 +132,6 @@ export const {  getPersonal,
                 getAdministradores,
                 getTodosLosPrecios,
                 changeLoading,
+                getAllCuadrantes
             } = NovaSlice.actions;
             

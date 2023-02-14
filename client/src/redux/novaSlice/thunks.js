@@ -25,6 +25,7 @@ import {
         getAdministradores,
         getTodosLosPrecios,
         changeLoading,
+        getAllCuadrantes
     } from './novaSlice';
 
 export const getAllOrdenes = (date) => async (dispatch) => {
@@ -134,7 +135,7 @@ export const createOrden = (orden) => async (dispatch) => {
         });
         dispatch(getAllOrdenes(orden.fecha))
         dispatch(bringPatentes());
-        dispatch(bringCuadrantes());
+        dispatch(bringCuadrantesActive());
         dispatch(bringChoferes());
         dispatch(bringAyudantes());
         dispatch(bringListaDePreciosActive());
@@ -179,7 +180,7 @@ export const updateOrdenQuantity =  (id, quantity, fecha) => async (dispatch) =>
     };
 };
 
-export const modifyRecargaOrdenQuantity = async (idOrden, idRecarga, quantity) => {
+export const modifyRecargaOrdenQuantity =  (idOrden, idRecarga, quantity, fecha) => async (dispatch) => {
     try {
         await fetch(`${process.env.REACT_APP_API}/orden/changeRecharge/${idOrden}/${idRecarga}`, {
             method: 'PUT',
@@ -191,10 +192,33 @@ export const modifyRecargaOrdenQuantity = async (idOrden, idRecarga, quantity) =
         Swal.fire({
             title: 'Orden actualizada',
             text: 'La orden se ha actualizado correctamente',
-            icon: 'success',
-            showConfirmButton: false,
-            footer: '<a class="btn btn-primary" href="/rendicion">OK</a>'
+            icon: 'success'
         });
+        dispatch(getAllOrdenes(fecha));
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: `${error.message}`,
+            text: 'Something went wrong!',
+        });
+    };
+};
+
+export const modifyRecargaOrdenQuantity2 =  (idOrden, idRecarga, quantity, ordenId) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/orden/changeRecharge/${idOrden}/${idRecarga}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(quantity)
+        });
+        Swal.fire({
+            title: 'Orden actualizada',
+            text: 'La orden se ha actualizado correctamente',
+            icon: 'success'
+        });
+        dispatch(bringOrdenById(ordenId))
     } catch (error) {
         Swal.fire({
             icon: 'error',
@@ -270,9 +294,9 @@ export const bringPatentes = () => async (dispatch) => {
     }
 };
 
-export const bringCuadrantes = () => async (dispatch) => {
+export const bringCuadrantesActive = () => async (dispatch) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_API}/cuadrante`);
+        const response = await fetch(`${process.env.REACT_APP_API}/cuadrante/active`);
         const data = await response.json();
         dispatch(getCuadrantes(data));
     } catch (error) {
@@ -280,6 +304,93 @@ export const bringCuadrantes = () => async (dispatch) => {
             icon: 'error',
             title: 'Oops...',
             text: `${error.message}`,
+        });
+    }
+};
+
+export const bringAllCuadrantes = () => async (dispatch) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_API}/cuadrante`);
+        const data = await response.json();
+        dispatch(getAllCuadrantes(data));
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${error.message}`,
+        });
+    }
+};
+
+export const createCuadrante = (name) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/cuadrante`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(name)
+        });
+        dispatch(bringAllCuadrantes());
+        Swal.fire({
+            title: 'Cuadrante creado',
+            text: 'El cuadrante se ha creado correctamente',
+            icon: 'success',
+        });
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: `${error.message}`,
+            text: 'Something went wrong!',
+        });
+    }
+};
+
+export const activeCuadrante = (id) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/cuadrante/active/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        dispatch(bringAllCuadrantes());
+        dispatch(bringCuadrantesActive());  
+        Swal.fire({
+            title: 'Cuadrante activado',
+            text: 'El cuadrante se ha activado correctamente',
+            icon: 'success',
+        });
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: `${error.message}`,
+            text: 'Something went wrong!',
+        });
+    }
+};
+
+export const desactiveCuadrante = (id) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/cuadrante/desactive/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        dispatch(bringAllCuadrantes());
+        dispatch(bringCuadrantesActive());
+        Swal.fire({
+            title: 'Cuadrante desactivado',
+            text: 'El cuadrante se ha desactivado correctamente',
+            icon: 'success',
+        });
+    }
+    catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: `${error.message}`,
+            text: 'Something went wrong!',
         });
     }
 };

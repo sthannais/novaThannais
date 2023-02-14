@@ -4,7 +4,7 @@ import carrito from '../../assetsOficial/carrito.svg';
 import { Modal, Button, ModalHeader, ModalBody, ModalFooter, Input, Form } from 'reactstrap';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
-import { bringPatentes, bringCuadrantes, bringChoferes, bringAyudantes, createOrden, bringListaDePreciosActive, switchLoading } from '../../redux/novaSlice/thunks';
+import { bringPatentes, bringCuadrantesActive, bringChoferes, bringAyudantes, createOrden, bringListaDePreciosActive, switchLoading } from '../../redux/novaSlice/thunks';
 import cinco from '../../assets/5n.ico';
 import once from '../../assets/11n.ico';
 import quince from '../../assets/15n.ico';
@@ -62,15 +62,8 @@ const CreateOrden = () => {
     });
 
     useEffect(() => {
-        document.addEventListener('keydown', handleKeydown);
-        return () => {
-            document.removeEventListener('keydown', handleKeydown);
-        };
-    }, []);
-
-    useEffect(() => {
         dispatch(bringPatentes());
-        dispatch(bringCuadrantes());
+        dispatch(bringCuadrantesActive());
         dispatch(bringChoferes());
         dispatch(bringAyudantes());
         dispatch(bringListaDePreciosActive());
@@ -190,7 +183,7 @@ const CreateOrden = () => {
                 </button>
                 
             </div>
-            <Modal isOpen={modal} toggle={toggle} style={modalStyles} backdrop="static">
+            <Modal isOpen={modal} toggle={toggle} style={modalStyles} backdrop="static" onKeyDown={handleKeydown}>
                 <ModalHeader toggle={toggle}>Crear Orden</ModalHeader>
                 <Form onSubmit={handleSubmit}>
                     <ModalBody >
