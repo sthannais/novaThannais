@@ -471,7 +471,7 @@ const OrdenDetail = (
                 {
                     editRecarga === id ? (
                         <>
-                            <Button color="primary" onClick={handleUpdateRecarga}>Guardar</Button>
+                            <Button color="success" onClick={handleUpdateRecarga}>Guardar</Button>
                             <Button color="secondary" onClick={
                                 () => {
                                     cleanRecarga();
@@ -482,14 +482,14 @@ const OrdenDetail = (
                         </>
                     ) : estado === "Activa" ? (
                         <>
-                            <Button color="primary" onClick={(e) => handleEditRecarga(e, id)}>Modificar recargas</Button>
+                            <Button color="success" onClick={(e) => handleEditRecarga(e, id)}>Modificar recargas</Button>
                         </>
                     ) : null
                 }
                 {
                     editQuantity === id ? (
                         <>
-                            <Button color="primary" onClick={handleUpdateQuantity}>Guardar</Button>
+                            <Button color="success" onClick={handleUpdateQuantity}>Guardar</Button>
                             <Button color="secondary" onClick={
                                 () => {
                                     cleanQuantity();
@@ -507,7 +507,7 @@ const OrdenDetail = (
                 {
                     editAbono === id ? (
                         <>
-                            <Button color="primary" onClick={handleUpdateAbono}>Abonar</Button>
+                            <Button color="success" onClick={handleUpdateAbono}>Abonar</Button>
                             <Button color="secondary" onClick={
                                 () => {
                                     cleanAbono();
@@ -517,7 +517,7 @@ const OrdenDetail = (
                         </>
                     ) : estado === "Activa" ? (
                         <>
-                            <Button color="primary" onClick={(e) => handleEditAbono(e, id)}>
+                            <Button color="warning" onClick={(e) => handleEditAbono(e, id)}>
                                 Abonar</Button>
                         </>
                     ) : null
