@@ -7,8 +7,8 @@
     cursor: pointer;
     font-size: 24px;
     width: 7rem;
-    height: 4rem;
-    left: 47rem;
+    height: 3rem;
+    left: 34rem;
 }
 
 .botonsito {
@@ -20,24 +20,26 @@
     color: #3C3C3C;
 }
 
-.icono {
+.icon {
     width: 3rem;
     height: 3rem;
     cursor: pointer;
 }
 
-.active {
-    font-size: 10rem;
+.botones {
+    margin-top: 1rem;
+    justify-content: end;
+    align-items: end;
 }
 
 @media screen and (min-width: 1800px) {
     .iconContainer2 {
-        left: 71rem;
+        left: 64rem;
     }
 }
 
 @media screen and ( max-width: 1366px ) {
     .iconContainer2 {
-        left: 38rem;
+        left: 31rem;
     }
 }

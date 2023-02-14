@@ -43,13 +43,6 @@ const DownloadOrden = ({ fecha }) => {
     const [totalRecaudacion, setTotalRecaudacion] = useState(0);
 
     useEffect(() => {
-        document.addEventListener('keydown', handleKeydown);
-        return () => {
-            document.removeEventListener('keydown', handleKeydown);
-        };
-    }, []);
-
-    useEffect(() => {
         dispatch(bringOrdenById(idOrden));
         dispatch(cleanOrden());
     }, [idOrden, dispatch]);
@@ -179,7 +172,7 @@ const DownloadOrden = ({ fecha }) => {
                     <p>Descargar</p>
                 </button>
             </div>
-            <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="md" backdrop="static">
+            <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="md" backdrop="static" onKeyDown={handleKeydown}>
                 <ModalHeader toggle={toggle}>Descargar orden</ModalHeader>
                 <Form onSubmit={(e) =>{
                     e.preventDefault()

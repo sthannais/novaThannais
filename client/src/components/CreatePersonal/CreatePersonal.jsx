@@ -54,14 +54,7 @@ export default function CreatePersonal() {
             cleanStates();
             toggle();
         };
-
-        useEffect(() => {
-            document.addEventListener('keydown', handleKeydown);
-            return () => {
-                document.removeEventListener('keydown', handleKeydown);
-            };
-        }, []);
-
+        
         useEffect(() => {
             if ( //Validacion habilitar el boton submit
                 personal.name.length > 0 &&
@@ -101,11 +94,10 @@ export default function CreatePersonal() {
                     &nbsp;
                     Crear personal
                 </button>
-                <Modal isOpen={modal} toggle={toggle} style={modalStyles} backdrop="static">
+                <Modal isOpen={modal} toggle={toggle} style={modalStyles} backdrop="static" onKeyDown={handleKeydown}>
                     <ModalHeader toggle={toggle}>Crear personal</ModalHeader>
                     <Form onSubmit={handleSubmit}>
                     <ModalBody>
-                        
                             <FormGroup>
                                 <Input 
                                     type="text" 

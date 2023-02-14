@@ -13,7 +13,7 @@ const createCuadrantes = () => {
     Cuadrante.create({ name: 'Apoyo Raqueles'});
     Cuadrante.create({ name: 'Raquel Baja'});
     Cuadrante.create({ name: 'Florida alta alta'});
-    Cuadrante.create({ name: 'Caetas 2'});
+    Cuadrante.create({ name: 'Caletas 2'});
     Cuadrante.create({ name: 'Apoyo caletas'});
     Cuadrante.create({ name: 'Florida baja'});
     Cuadrante.create({ name: 'Caletas 1'});

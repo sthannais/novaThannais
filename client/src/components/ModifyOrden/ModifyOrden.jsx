@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { bringCodigoParaModificar, setAutorizacion, modifyRecargaOrdenQuantity } from '../../redux/novaSlice/thunks';
+import { bringCodigoParaModificar, setAutorizacion, modifyRecargaOrdenQuantity2 } from '../../redux/novaSlice/thunks';
 import style from './modifyOrden.module.css';
 import { numberWithDots } from '../../helpers/numberWithDot';
 import vectorDerecho from "../../assetsOficial/vectorDerecho.svg"
@@ -55,7 +55,7 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
 
     const handleRecargaSubmit = (e) => {
         e.preventDefault();
-        dispatch(modifyRecargaOrdenQuantity(novaOrdenById?.id, idRecarga, recarga));
+        dispatch(modifyRecargaOrdenQuantity2(novaOrdenById?.id, idRecarga, recarga, ordenId));
         cleanRecarga();
         toggle();
     };
@@ -68,13 +68,6 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
             email: "",
         });
     };
-
-    useEffect(() => {
-        document.addEventListener('keydown', handleKeydown);
-        return () => {
-            document.removeEventListener('keydown', handleKeydown);
-        };
-    }, []);
 
     useEffect(() => {
         setInfo({
@@ -133,7 +126,7 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                     <Button onClick={toggle} className={style.boton} disabled={disabled3}>Modificar Orden</Button>
                 ) : null
             }
-            <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="lg" backdrop="static">
+            <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="lg" backdrop="static" onKeyDown={handleKeydown}>
                 {
                     autorizado === "Autorizado"  ?  (
                         <>
