@@ -151,7 +151,7 @@ const Cuadrantes = () => {
                         {
                             activarCrear ? (
                                 <Button
-                                    color="primary"
+                                    color="success"
                                     type='submit'
                                 >
                                     Guardar Cuadrante
