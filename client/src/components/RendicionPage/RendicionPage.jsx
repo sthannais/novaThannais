@@ -19,6 +19,8 @@ import { numberWithDots } from '../../helpers/numberWithDot';
 import ModifyOrden from '../ModifyOrden/ModifyOrden';
 import { RiFileExcel2Fill } from 'react-icons/ri';
 import XLSX from 'xlsx';
+import moment from 'moment';
+import 'moment-timezone';
 
 registerLocale('es', es);
 
@@ -27,8 +29,8 @@ const RendicionPage = () => {
     const dispatch = useDispatch()
     const [ordenId , setOrdenId] = useState(0)
     const { ordenesRendidas, novaOrdenById } = useSelector(state => state.Nova)
-    const [date , setDate] = useState(new Date())
-    const soloFecha = date.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
+    const [date, setDate] = useState(new Date());
+    const soloFecha = moment(date).tz('America/Santiago').format('YYYY-MM-DD');
 
 
     const tabla1Ref = useRef(null);

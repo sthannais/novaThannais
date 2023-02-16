@@ -19,7 +19,7 @@ const RecaudacionOrden = ({ novaOrdenById }) => {
                 />               
             </div>
             <div className={style.containerInfo2}>
-                <Label className={style.texto2}>Total de Tarros</Label>
+                <Label className={style.texto2}>Tarros vendidos</Label>
                 <Input
                     type="number"
                     name="totalTarros"
