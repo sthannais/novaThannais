@@ -43,54 +43,76 @@ const createPersonal = async (req, res) => {
                 res.status(400).json({message: 'El email ya existe'})
             }
         });
+
+        if(rol === 'Chofer/Peoneta') {
+            const newChofer = await Chofer.create();
+            const newAyudante = await Ayudante.create();
+
+            
+            const rolChofer = await Rol.findOne({
+                where: {
+                    name: 'Chofer'
+                }
+            });
+            const rolAyudante = await Rol.findOne({
+                where: {
+                    name: 'Ayudante'
+                }
+            });
+            await newPersonal.setChofer(newChofer);
+            await newPersonal.setAyudante(newAyudante);
+            await newPersonal.addRols([rolChofer, rolAyudante]);
+            res.json([newPersonal, newChofer, newAyudante]);
+        } else {
         
-        const newRol = await Rol.findOne({
-            where: {
-                name: rol
-            }
-        });
+            const newRol = await Rol.findOne({
+                where: {
+                    name: rol
+                }
+            });
 
-        if (newPersonal && newRol) {
-            switch (rol) {
-                case 'Chofer':
-                    const newChofer = await Chofer.create();
+            if (newPersonal && newRol) {
+                switch (rol) {
+                    case 'Chofer':
+                        const newChofer = await Chofer.create();
 
-                    if (newChofer) {
-                        await newPersonal.setChofer(newChofer);
-                        await newPersonal.addRols(newRol);
-                        res.json([newPersonal, newChofer]);
-                    }
-                    break;
-                case 'Auxiliar':
-                    const newAuxiliar = await Auxiliar.create();
+                        if (newChofer) {
+                            await newPersonal.setChofer(newChofer);
+                            await newPersonal.addRols(newRol);
+                            res.json([newPersonal, newChofer]);
+                        }
+                        break;
+                    case 'Auxiliar':
+                        const newAuxiliar = await Auxiliar.create();
 
-                    if (newAuxiliar) {
-                        await newPersonal.setAuxiliar(newAuxiliar);
-                        await newPersonal.addRols(newRol);
-                        res.json([newPersonal, newAuxiliar]);
-                    }
-                    break;
-                case 'Ayudante':
-                    const newAyudante = await Ayudante.create();
+                        if (newAuxiliar) {
+                            await newPersonal.setAuxiliar(newAuxiliar);
+                            await newPersonal.addRols(newRol);
+                            res.json([newPersonal, newAuxiliar]);
+                        }
+                        break;
+                    case 'Ayudante':
+                        const newAyudante = await Ayudante.create();
 
-                    if (newAyudante) {
-                        await newPersonal.setAyudante(newAyudante);
-                        await newPersonal.addRols(newRol);
-                        res.json([newPersonal, newAyudante]);
-                    }
-                    break;
-                case 'Administrador':
-                    const newAdministrador = await Administrador.create();
+                        if (newAyudante) {
+                            await newPersonal.setAyudante(newAyudante);
+                            await newPersonal.addRols(newRol);
+                            res.json([newPersonal, newAyudante]);
+                        }
+                        break;
+                    case 'Administrador':
+                        const newAdministrador = await Administrador.create();
 
-                    if (newAdministrador) {
-                        await newPersonal.setAdministrador(newAdministrador);
-                        await newPersonal.addRols(newRol);
-                        res.json([newPersonal, newAdministrador]);
-                    }
-                    break;
-                default:
-                    res.status(400).json({ message: 'No se pudo crear el personal' });
-                    break;
+                        if (newAdministrador) {
+                            await newPersonal.setAdministrador(newAdministrador);
+                            await newPersonal.addRols(newRol);
+                            res.json([newPersonal, newAdministrador]);
+                        }
+                        break;
+                    default:
+                        res.status(400).json({ message: 'No se pudo crear el personal' });
+                        break;
+                }
             }
         }
     } catch

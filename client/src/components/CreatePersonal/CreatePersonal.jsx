@@ -69,7 +69,6 @@ export default function CreatePersonal() {
                 personal.password.length <= 20 &&
                 personal.rut.length > 0 &&
                 personal.rut.length <= 10 &&
-                !isNaN(personal.rut) &&
                 personal.rol.length > 0
         ) {
           setDisabled(false); //si todo esta correcto se habilitara el boton submit
@@ -174,6 +173,7 @@ export default function CreatePersonal() {
                                     <option value="Auxiliar">Auxiliar</option>
                                     <option value="Chofer">Chofer</option>
                                     <option value="Ayudante">Peoneta</option>
+                                    <option value="Chofer/Peoneta">Chofer/Peoneta</option>
                                 </select>
                                 {error.rol && <p className={style.error}>{error.rol}</p>}
                             </FormGroup>

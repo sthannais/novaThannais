@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import DatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
-import { bringCuadratura, bringAllFaltantes, bringCuadratura2, bringAllAdministradores } from '../../redux/novaSlice/thunks';
+import { bringAllFaltantes, bringCuadratura2, bringAllAdministradores } from '../../redux/novaSlice/thunks';
 import { Input } from 'reactstrap';
 import style from './rendicionGeneral.module.css'
 import JorgeGas from '../../assetsOficial/jorgegas.svg';

@@ -254,13 +254,6 @@ const ayudantes = [
         rut: '123456789',
     },
     {
-        name: 'Luiggy',
-        lastname: 'Coronado',
-        email: 'luigiCoronado@gmail.com',
-        password: '123456789',
-        rut: '123456789',
-    },
-    {
         name: 'Christian',
         lastname: 'Campos',
         email: 'christianCampos@gmail.com',
@@ -350,6 +343,16 @@ const administradores = [
 
 ]
 
+const choferPeoneta = [
+    {
+        name: 'Luiggy',
+        lastname: 'Coronado',
+        email: 'luigiCoronado@gmail.com',
+        password: '123456789',
+        rut: '123456789',
+    }
+]
+
 const createChoferes = async () => {
 
     choferes.map(c => async function () {
@@ -431,6 +434,42 @@ const createAyudantes = async () => {
     }())
 };
 
+const createChoferPeoeneta = async () => {
+
+    choferPeoneta.map(c => async function () {
+
+        const actualChoferPeoneta = await Personal.create({
+            name: c.name,
+            lastname: c.lastname,
+            email: c.email,
+            password: bcrypt.hashSync(c.password, 10),
+            rut: c.rut,
+        });
+
+        // Seteo el ayudante al personal
+        const chofer = await Chofer.create();
+        const peoneta = await Ayudante.create();
+
+        actualChoferPeoneta.setChofer(chofer);
+        actualChoferPeoneta.setAyudante(peoneta);
+
+        // Seteo el rol al personal
+        const rolChofer = await Rol.findOne({
+            where: {
+                name: 'Chofer'
+            }
+        });
+        const rolPeoneta = await Rol.findOne({
+            where: {
+                name: 'Ayudante'
+            }
+        });
+
+        actualChoferPeoneta.addRols([rolChofer, rolPeoneta]);
+
+    }())
+};
+
 const createAdministradores = async () => {
 
     administradores.map(c => async function () {
@@ -464,6 +503,7 @@ module.exports = {
     // createAuxiliares,
     createAyudantes,
     createAdministradores,
+    createChoferPeoeneta
 };
 
 

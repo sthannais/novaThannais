@@ -3,14 +3,7 @@ const {DataTypes} = require('sequelize');
 
 module.exports = (sequelize)=>{
     sequelize.define('chofer',{
-        esPeoneta : {
-            type : DataTypes.BOOLEAN,
-            defaultValue : false
-        },
-        activeForOrden : {
-            type : DataTypes.BOOLEAN,
-            defaultValue : true
-        },
+        
     },{
         timestamps : false
     })

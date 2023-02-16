@@ -33,25 +33,28 @@ const getAyudanteById = async (req, res) => {
 
 const getAllAyudanteNames = async (req, res) => {
     try {
-        const ayudantes = await Personal.findAll({
+        const personalActivo = await Personal.findAll({
             attributes: ['name', 'lastname'],
-            include: [{
-                model: Rol,
-                where: {
-                    rolId: 4
+            where: {
+                activeForOrden: true
+            },
+            include: [
+                {
+                    model: Rol,
+                },
+                {
+                    model: Ayudante
                 }
-            }],
-            include: [{
-                model: Ayudante,
-                where: {
-                    activeForOrden: true
-                }
-            }]
+            ]
         });
-        res.json(ayudantes);
+
+        const ayudantes = personalActivo.filter(personal => personal.rols[0].name === 'Ayudante');
+        const ayudantes2 = personalActivo.filter(personal => personal?.rols[1]?.name === 'Ayudante');
+
+        res.json([...ayudantes, ...ayudantes2]);
     } catch (error) {
         res.status(500).json({
-            msg: 'Error al obtener los ayudantes'
+            msg: error.message
         });
     }
 }

@@ -23,7 +23,7 @@ const NavBar = () => {
 
             {rolId && rolId === 1 ? (
 
-                email == 'irmaperez.gea@gmail.com'  ? (
+                email === 'irmaperez.gea@gmail.com'  ? (
                     <div>
                     <p className={style.completeName}>{name + " " + lastname}</p>
                     <p className={style.rolStyle}>Administrador</p>
