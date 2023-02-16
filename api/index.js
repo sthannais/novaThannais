@@ -23,7 +23,7 @@ const createRoles = require('./src/testingCreators/roles.js');
 const createPatentes = require('./src/testingCreators/patentes.js');
 const createCuadrantes = require('./src/testingCreators/cuadrante.js');
 const createListaDePrecios = require('./src/testingCreators/listaDePrecios.js');
-const { createChoferes, createAdministradores, createAyudantes} = require('./src/testingCreators/usuarios.js');
+const { createChoferes, createAdministradores, createAyudantes, createChoferPeoeneta} = require('./src/testingCreators/usuarios.js');
 const PORT = process.env.PORT || 3001;
 
 conn.sync({ force: true }).then(() => {
@@ -34,7 +34,10 @@ conn.sync({ force: true }).then(() => {
     if (roles.length < 1) createRoles();
 
     const choferes = await Chofer.findAll();
-    if (choferes.length < 1) createChoferes();
+    if (choferes.length < 1) {
+      createChoferes();
+      createChoferPeoeneta();
+    }
 
     // const auxiliares = await Auxiliar.findAll();
     // if (auxiliares.length < 1) createAuxiliares();

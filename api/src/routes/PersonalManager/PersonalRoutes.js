@@ -27,7 +27,7 @@ router.post('/', [
     check('password', 'La contraseña es obligatoria').not().isEmpty(),
     check('password', 'La contraseña debe tener al menos 6 caracteres').isLength({min: 6}),
     check('rol', 'El rol es obligatorio').not().isEmpty(),
-    check('rol', 'El rol no es válido').isIn(['Administrador', 'Auxiliar', 'Ayudante', 'Chofer']),
+    check('rol', 'El rol no es válido').isIn(['Administrador', 'Auxiliar', 'Ayudante', 'Chofer', 'Chofer/Peoneta']),
     validateFields
 ], createPersonal);
 

@@ -142,8 +142,8 @@ const GuidePage = () => {
                                         chofer={orden?.chofer?.personal?.name + ' ' + orden.chofer?.personal?.lastname }
                                         ayudante= {
                                             orden?.ayudante?.personal?.name && 
-                                            orden?.ayudante?.personal?.name ? 
-                                            orden?.ayudante?.personal?.name + ' ' + orden?.ayudante?.personal?.name : 
+                                            orden?.ayudante?.personal?.lastname ? 
+                                            orden?.ayudante?.personal?.name + ' ' + orden?.ayudante?.personal?.lastname : 
                                             'Sin peoneta'
                                         }
                                         cuadrante={orden?.cuadrante?.name}

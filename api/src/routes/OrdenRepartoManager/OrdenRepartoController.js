@@ -589,7 +589,10 @@ const createOrden = async (req, res) => {
                 }]
             });
             await ordenDeReparto.setAyudante(realPeoneta);
-            await realPeoneta.update({activeForOrden: false});
+            
+            await realPeoneta.getPersonal().then(personal => {
+                personal.update({activeForOrden: false});
+            });
         } else if (idPeoneta === 0 ) {
             await ordenDeReparto.setAyudante(null);
         }
@@ -612,7 +615,9 @@ const createOrden = async (req, res) => {
         await patenteNew.update({active: true});
         await ordenDeReparto.setCuadrante(cuadranteNew);
         await ordenDeReparto.setChofer(realChofer);
-        await realChofer.update({activeForOrden: false});
+        await realChofer.getPersonal().then(personal => {
+            personal.update({activeForOrden: false});
+        });
         await ordenDeReparto.setAdministrador(newAdmin);
 
         const recarga = await Recargas.create()
@@ -850,15 +855,14 @@ const finalizeOrden = async (req, res) => {
 
         //busco el chofer de la orden de reparto y lo actualizo
         const chofer = await ordenDeReparto.getChofer();
-        await chofer.update({activeForOrden: true})
+        await chofer.getPersonal().then(personal => personal.update({activeForOrden: true}))
 
         //busco el ayudante de la orden de reparto y lo actualizo
         const ayudante = await ordenDeReparto.getAyudante();
         if(ayudante){
-            await ayudante.update({activeForOrden: true})
+            await ayudante.getPersonal().then(personal => personal.update({activeForOrden: true}))
         }
         
-
         const contabilidad = await ordenDeReparto.getContabilidadRecarga();
 
         const ventas5kg = Number(contabilidad.total5kg) - Number(llenos5kg);

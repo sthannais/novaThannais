@@ -30,24 +30,30 @@ const getChoferById = async (req, res) => {
 }
 
 const getAllChoferNames = async (req, res) => {
+    
     try {
-        const choferes = await Personal.findAll({
+        const personalActivo = await Personal.findAll({
             attributes: ['name', 'lastname'],
-            include: [{
-                model: Rol,
-                where: {
-                    rolId: 3
+            where: {
+                activeForOrden: true
+            },
+            include: [
+                {
+                    model: Rol,
+                },
+                {
+                    model: Chofer
                 }
-            }],
-            include: [{
-                model: Chofer,
-                where: {
-                    activeForOrden: true
-                }
-            }]
+            ]
+        });
+
+        const choferes = personalActivo.filter(persona => {
+            const rol = persona.rols.map(rol => rol.Personal_Rol.rolId === 3);
+            return rol[0];
         });
 
         res.json(choferes);
+
     } catch (error) {
         res.status(500).json({
             msg: error.message

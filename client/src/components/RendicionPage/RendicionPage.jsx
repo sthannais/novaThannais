@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import DatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
 import { Input }  from 'reactstrap';
-import { bringOrdenById, ordenesRendicion, getAllOrdenes, bringAllAdministradores, bringListaDePreciosActive } from '../../redux/novaSlice/thunks';
+import { bringOrdenById, ordenesRendicion, bringAllAdministradores, bringListaDePreciosActive } from '../../redux/novaSlice/thunks';
 import 'bootstrap/dist/css/bootstrap.css';
 import style from './rendicionPage.module.css';
 import JorgeGas from '../../assetsOficial/jorgegas.svg';

@@ -31,6 +31,10 @@ module.exports = (sequelize)=>{
             type : DataTypes.BOOLEAN,
             defaultValue : false
         },
+        activeForOrden : {
+            type : DataTypes.BOOLEAN,
+            defaultValue : true
+        },
     },{
         timestamps : false
     })

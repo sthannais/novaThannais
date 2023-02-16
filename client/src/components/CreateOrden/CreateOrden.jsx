@@ -4,6 +4,7 @@ import carrito from '../../assetsOficial/carrito.svg';
 import { Modal, Button, ModalHeader, ModalBody, ModalFooter, Input, Form } from 'reactstrap';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
+import Select from 'react-select';
 import { bringPatentes, bringCuadrantesActive, bringChoferes, bringAyudantes, createOrden, bringListaDePreciosActive, switchLoading } from '../../redux/novaSlice/thunks';
 import cinco from '../../assets/5n.ico';
 import once from '../../assets/11n.ico';
@@ -146,7 +147,7 @@ const CreateOrden = () => {
             patente: '',
             cuadranteId: '',
             idChofer:0,
-            idAyudante: 0,
+            idPeoneta: 0,
             idAdmin: usuario.administrador.id,
         })
     };
@@ -160,6 +161,46 @@ const CreateOrden = () => {
         cleanState(productos);
         toggle();
         dispatch(switchLoading());
+    };
+
+    /////////// SELECT BUSCADOR ///////////
+    
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    
+    const onMenuOpen = () => setIsMenuOpen(true);
+    const onMenuClose = () => setIsMenuOpen(false);
+
+    const optionsPatentes = patentes?.map((patente) => {
+        return {
+            value: patente?.name,
+            label: patente?.name
+        }
+    });
+
+    const optionsCuadrantes = cuadrantes?.map((cuadrante) => {
+        return {
+            value: cuadrante?.id,
+            label: cuadrante?.name
+        }
+    });
+
+    const optionsChoferes = choferes?.map((chofer) => {
+        return {
+            value: chofer?.chofer?.id,
+            label: `${chofer?.name} ${chofer?.lastname}`
+        }
+    });
+
+    const optionsAyudantes = ayudantes?.map((ayudante) => {
+        return {
+            value: ayudante?.ayudante?.id,
+            label: `${ayudante?.name} ${ayudante?.lastname}`
+        }
+    });
+
+    const optionDefaultAyudante = {
+        value: 0,
+        label: 'Sin peoneta'
     };
 
     const modalStyles = {
@@ -197,75 +238,46 @@ const CreateOrden = () => {
                                 />
                             </div>
                                 <div className={style.containerForm}>
-                                    <Input
-                                        type="select"
+                                    <Select
                                         name="patente"
-                                        value={orden.patente}
-                                        onChange={(e) => setOrden({ ...orden, patente: e.target.value })}
                                         className={style.inpusitos}
-                                    >
-                                        <option hidden>Patente</option>
-                                        {
-                                            patentes?.map((patente, index) => {
-                                                return (
-                                                    <option key={index} value={patente.name}>{patente.name}</option>
-                                                )
-                                            })
-                                        }
-                                    </Input>
-                                    <Input
-                                        type="select"
+                                        options={optionsPatentes}
+                                        placeholder="Patente"
+                                        isMenuOpen={isMenuOpen}
+                                        onMenuOpen={onMenuOpen}
+                                        onMenuClose={onMenuClose}
+                                        onChange={(e) => setOrden({ ...orden, patente: e.value })}
+                                    />
+                                    <Select
                                         name="cuadrante"
-                                        value={orden.cuadranteId}
-                                        onChange={(e) => setOrden({ ...orden, cuadranteId: Number(e.target.value) })}
                                         className={style.inpusitos}
-                                    >
-                                        <option hidden>Cuadrante</option>
-                                        {
-                                            cuadrantes?.map((cuadrante, index) => {
-                                                return (
-                                                    <option key={index} value={cuadrante.id}>{cuadrante.name}</option>
-                                                )
-                                            })
-                                        }
-                                    </Input>
-                                    <Input
-                                        type="select"
+                                        options={optionsCuadrantes}
+                                        placeholder="Cuadrante"
+                                        isMenuOpen={isMenuOpen}
+                                        onMenuOpen={onMenuOpen}
+                                        onMenuClose={onMenuClose}
+                                        onChange={(e) => setOrden({ ...orden, cuadranteId: Number(e.value) })}
+                                    />
+                                    <Select
                                         name="chofer"
-                                        value={orden.idChofer}
-                                        onChange={
-                                            (e) => setOrden({ ...orden, idChofer: Number(e.target.value) })
-                                        }
                                         className={style.inpusitos}
-                                    >
-                                        <option hidden>Chofer</option>
-                                        {
-                                            choferes?.map((chofer, index) => {
-                                                return (
-                                                    <option key={index} value={chofer.chofer.id}>{chofer.name + " " + chofer.lastname}</option>
-                                                )
-                                            })
-                                        }
-                                    </Input>
-                                    <Input
-                                        type="select"
-                                        name="peoneta"
-                                        value={orden.idPeoneta}
-                                        onChange={
-                                            (e) => setOrden({ ...orden, idPeoneta: Number(e.target.value) })
-                                        }
+                                        options={optionsChoferes}
+                                        placeholder="Chofer"
+                                        isMenuOpen={isMenuOpen}
+                                        onMenuOpen={onMenuOpen}
+                                        onMenuClose={onMenuClose}
+                                        onChange={(e) => setOrden({ ...orden, idChofer: Number(e.value) })}
+                                    />
+                                    <Select
+                                        name="ayudante"
                                         className={style.inpusitos}
-                                    >
-                                        <option hidden>Peoneta</option>
-                                        {
-                                            ayudantes?.map((peoneta, index) => {
-                                                return (
-                                                    <option key={index} value={peoneta.ayudante.id}>{peoneta.name + " " + peoneta.lastname}</option>
-                                                )
-                                            })
-                                        }
-                                        <option value={0}>Sin peoneta</option>
-                                    </Input>
+                                        options={[optionDefaultAyudante, ...optionsAyudantes]}
+                                        placeholder="Peoneta"
+                                        isMenuOpen={isMenuOpen}
+                                        onMenuOpen={onMenuOpen}
+                                        onMenuClose={onMenuClose}
+                                        onChange={(e) => setOrden({ ...orden, idPeoneta: Number(e.value) })}
+                                    />
                                 </div>
                                 <div className={style.containerProductos}>
                                         <img src={cinco} alt="cinco" className={style.iconGas} />
