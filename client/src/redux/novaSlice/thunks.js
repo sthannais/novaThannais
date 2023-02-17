@@ -265,11 +265,12 @@ export const cuadrarOrden =  (fecha, id, quantity) => async (dispatch) => {
             },
             body: JSON.stringify(quantity)
         });
-        dispatch(ordenesRendicion(fecha));
         Swal.fire({
             title: 'Orden cuadrada',
             text: 'La orden se ha cuadrado correctamente',
             icon: 'success',
+            showConfirmButton: false,
+            footer: '<a class="btn btn-primary" href="/rendicion">OK</a>'
         });
     } catch (error) {
         Swal.fire({

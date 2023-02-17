@@ -3,6 +3,17 @@ import { numberWithDots } from '../../../helpers/numberWithDot'
 import style from './resumenTable.module.css'
 
 const ResumenTable = ({ cuadratura, faltantes, tablaRef }) => {
+
+    const sumaDeTodo =  Number(cuadratura?.totalVales?.totalSumaVales) + 
+                        Number(cuadratura?.totalEfectivo?.totalGeneral) + 
+                        Number(cuadratura?.totalTransferencia) + 
+                        Number(cuadratura?.totalDescuentosRut) + 
+                        Number(cuadratura?.totalDescuentos) + 
+                        Number(cuadratura?.totalTransbank) +
+                        Number(cuadratura?.sobrante) + 
+                        Number(faltantes)
+                        
+
     return (
         <div className={style.columna}>
             <p className={style.text}>
@@ -37,7 +48,7 @@ const ResumenTable = ({ cuadratura, faltantes, tablaRef }) => {
                         </tr>
                         <tr>
                             <td>Descuento Rut</td>
-                            <td>{cuadratura?.totalDescuentoRut ? numberWithDots(cuadratura?.totalDescuentoRut) : 0}</td>
+                            <td>{cuadratura?.totalDescuentosRut ? numberWithDots(cuadratura?.totalDescuentosRut) : 0}</td>
                         </tr>
                         <tr>
                             <td>Descuentos</td>
@@ -48,20 +59,16 @@ const ResumenTable = ({ cuadratura, faltantes, tablaRef }) => {
                             <td>{cuadratura?.totalTransbank ? numberWithDots(cuadratura?.totalTransbank) : 0}</td>
                         </tr>
                         <tr>
-                            <td>Sobrantes</td>
-                            <td>{cuadratura?.sobrante ? numberWithDots(cuadratura?.sobrante) : 0}</td>
-                        </tr>
-                        <tr>
-                            <th>Cilindros</th>
-                            <th>{cuadratura?.ventaTotalTarros?.totalRecaudacion ? numberWithDots(cuadratura?.ventaTotalTarros?.totalRecaudacion) : 0}</th>
-                        </tr>
-                        <tr>
                             <th>Anticipos</th>
                             <th>{faltantes ? numberWithDots(faltantes) : 0}</th>
                         </tr>
                         <tr>
+                            <td>Sobrantes</td>
+                            <td>{cuadratura?.sobrante ? numberWithDots(cuadratura?.sobrante) : 0}</td>
+                        </tr>
+                        <tr>
                             <th>Total</th>
-                            <th>{cuadratura?.totalGeneral ? numberWithDots(cuadratura?.totalGeneral) : 0}</th>
+                            <th>{sumaDeTodo ? numberWithDots(sumaDeTodo) : 0}</th>
                         </tr>
                     </tbody>
                 </table>

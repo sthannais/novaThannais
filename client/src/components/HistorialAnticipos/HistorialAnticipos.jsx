@@ -8,12 +8,33 @@ import 'react-datepicker/dist/react-datepicker.css';
 import style from './historialAnticipos.module.css'
 import JorgeGas from '../../assetsOficial/jorgegas.svg';
 import { numberWithDots } from '../../helpers/numberWithDot';
+import InfiniteScroll from 'react-infinite-scroller';
 
 registerLocale('es', es)
 
 const HistorialAnticipos = () => {
 
     const dispatch = useDispatch()
+
+    const { ordenesChoferById, ordenesAyudanteById, ordenesChofer, ordenesAyudante } = useSelector(state => state.Nova)
+    const [paginaActual, setPaginaActual] = useState(1)
+    const [porPagina, setPorPagina] = useState(0)
+    const [hasMore, setHasMore] = useState(true)
+    const maximo = ordenesChofer?.length / porPagina
+    const primerIndice = (paginaActual - 1) * porPagina
+    const ultimoIndice = (paginaActual - 1) * porPagina + porPagina
+    const currentPosts = ordenesChofer?.slice(primerIndice, ultimoIndice)
+    const currentPostsAyudante = ordenesAyudante?.slice(primerIndice, ultimoIndice)
+
+    const loadMore = () => {
+        if (paginaActual >= maximo) {
+            setHasMore(false)
+            return
+        }
+        setPorPagina(
+            porPagina + 2
+        )
+    }
 
     const [startDate , setStartDate] = useState(new Date())
     const [endDate , setEndDate] = useState(null)
@@ -30,7 +51,7 @@ const HistorialAnticipos = () => {
     
     const fechaInicio = startDate.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
     const fechaFin = endDate?.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
-    const { ordenesChoferById, ordenesAyudanteById, ordenesChofer, ordenesAyudante } = useSelector(state => state.Nova)
+    
 
     useEffect(() => {
         dispatch(bringOrdenesChofer(fechaInicio, fechaFin))
@@ -75,93 +96,99 @@ const HistorialAnticipos = () => {
                     Historial de Anticipos
                 </p>
                 <div className={style.tabla}>
-                    <Table
-                        bordered
-                        hover
-                        responsive
-                        className='table'
+                    <InfiniteScroll
+                        pageStart={0}
+                        loadMore={loadMore}
+                        hasMore={hasMore}
                     >
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Rol</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                ordenesChofer?.map((chofer, index) => (
-                                    <tr key={index} onClick={
-                                        () => {
-                                            setSelected({
-                                                id: chofer?.faltantes[0]?.chofer?.id,
-                                                rol: 'Chofer'
-                                            })
-                                            dispatch(bringOrdenesChoferById(chofer?.faltantes[0]?.chofer?.id, fechaInicio, fechaFin))
-                                        }
-                                    } className={
-                                        selected?.id === chofer?.faltantes[0]?.chofer?.id && selected?.rol === 'Chofer' ? style.selected : style.notSelected
-                                    }>
-                                        <td>
-                                            {
-                                                chofer?.name
+                        <table
+                            className='table table-striped table-bordered table-hover table-sm'
+                        >
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Rol</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    currentPosts?.map((chofer, index) => (
+                                        <tr key={index} onClick={
+                                            () => {
+                                                setSelected({
+                                                    id: chofer?.faltantes[0]?.chofer?.id,
+                                                    rol: 'Chofer'
+                                                })
+                                                dispatch(bringOrdenesChoferById(chofer?.faltantes[0]?.chofer?.id, fechaInicio, fechaFin))
                                             }
-                                        </td>
-                                        <td>
-                                            {
-                                                chofer?.lastname
+                                        } className={
+                                            selected?.id === chofer?.faltantes[0]?.chofer?.id && selected?.rol === 'Chofer' ? style.selected : style.notSelected
+                                        }>
+                                            <td>
+                                                {
+                                                    chofer?.name
+                                                }
+                                            </td>
+                                            <td>
+                                                {
+                                                    chofer?.lastname
+                                                }
+                                            </td>
+                                            <td>
+                                                Chofer
+                                            </td>
+                                            <td>
+                                                {
+                                                    chofer?.totalFaltantes ? numberWithDots(chofer?.totalFaltantes) : 0
+                                                }
+                                            </td>
+                                        </tr>
+                                        
+                                    ))
+                                }
+                                {
+                                    currentPostsAyudante?.map((ayudante, index) => (
+                                        <tr key={index} onClick={
+                                            () => {
+                                                setSelected({
+                                                    id: ayudante?.faltantes[0]?.ayudante?.id,
+                                                    rol: 'ayudante'
+                                                })
+                                                dispatch(bringOrdenesAyudanteById(ayudante?.faltantes[0]?.ayudante?.id, fechaInicio, fechaFin))
                                             }
-                                        </td>
-                                        <td>
-                                            Chofer
-                                        </td>
-                                        <td>
-                                            {
-                                                chofer?.totalFaltantes ? numberWithDots(chofer?.totalFaltantes) : 0
-                                            }
-                                        </td>
-                                    </tr>
-                                    
-                                ))
-                            }
-                            {
-                                ordenesAyudante?.map((ayudante, index) => (
-                                    <tr key={index} onClick={
-                                        () => {
-                                            setSelected({
-                                                id: ayudante?.faltantes[0]?.ayudante?.id,
-                                                rol: 'ayudante'
-                                            })
-                                            dispatch(bringOrdenesAyudanteById(ayudante?.faltantes[0]?.ayudante?.id, fechaInicio, fechaFin))
-                                        }
-                                    } className={
-                                        selected?.id === ayudante?.faltantes[0]?.ayudante?.id && selected?.rol === 'ayudante' ? style.selected : style.notSelected
-                                    }>
-                                        <td>
-                                            {
-                                                ayudante?.name
-                                            }
-                                        </td>
-                                        <td>
-                                            {
-                                                ayudante?.lastname
-                                            }
-                                        </td>
-                                        <td>
-                                            Ayudante
-                                        </td>
-                                        <td>
-                                            {
-                                                ayudante?.totalFaltantes ? numberWithDots(ayudante?.totalFaltantes) : 0
-                                            }
-                                        </td>
-                                    </tr>
-                                ))
-                            }
-                        </tbody>
-                    </Table>
+                                        } className={
+                                            selected?.id === ayudante?.faltantes[0]?.ayudante?.id && selected?.rol === 'ayudante' ? style.selected : style.notSelected
+                                        }>
+                                            <td>
+                                                {
+                                                    ayudante?.name
+                                                }
+                                            </td>
+                                            <td>
+                                                {
+                                                    ayudante?.lastname
+                                                }
+                                            </td>
+                                            <td>
+                                                Ayudante
+                                            </td>
+                                            <td>
+                                                {
+                                                    ayudante?.totalFaltantes ? numberWithDots(ayudante?.totalFaltantes) : 0
+                                                }
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
+                        </table>
+                    </InfiniteScroll>
                 </div>
+                <button onClick={loadMore} className={style.boton}>
+                    Cargar mas
+                </button>
                 <div className={style.tabla2}>
                     <Table
                         bordered

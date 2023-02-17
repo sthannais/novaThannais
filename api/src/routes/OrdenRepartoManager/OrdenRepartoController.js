@@ -949,36 +949,12 @@ const cuadrarOrden = async (req, res) => {
             cuadradoPor: idDeDecuadre
         })
         const metodoPagos = await ordenDeReparto.getMetodoPagos();
-        const efectivo = await Efectivo.findOne({
-            where: {
-                fk_MetodoPagosID: metodoPagos[0].id
-            }
-        })
-        const vales = await Vales.findOne({
-            where: {
-                fk_MetodoPagosID: metodoPagos[0].id
-            }
-        })
-        const transbank = await Transbank.findOne({
-            where: {
-                fk_MetodoPagosID: metodoPagos[0].id
-            }
-        })
-        const transferencias = await Transferencias.findOne({
-            where: {
-                fk_MetodoPagosID: metodoPagos[0].id
-            }
-        })
-        const descuentos = await Descuentos.findOne({
-            where: {
-                fk_MetodoPagosID: metodoPagos[0].id
-            }
-        })
-        const descuentoRut = await DescuentoRut.findOne({
-            where: {
-                fk_MetodoPagosID: metodoPagos[0].id
-            }
-        })
+        const efectivo = await metodoPagos[0].getEfectivo();
+        const vales = await metodoPagos[0].getVale();
+        const transbank = await metodoPagos[0].getTransbank();
+        const transferencias = await metodoPagos[0].getTransferencia();
+        const descuentos = await metodoPagos[0].getDescuento();
+        const descuentoRut = await metodoPagos[0].getDescuentoRut();
 
         await efectivo.update({
             totalBilletes1,
