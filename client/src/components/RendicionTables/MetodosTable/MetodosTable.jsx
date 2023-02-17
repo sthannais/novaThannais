@@ -26,7 +26,7 @@ const MetodosTable = ({ cuadratura, tablaRef }) => {
                         </tr>
                         <tr>
                             <td>Descuento Rut</td>
-                            <td>{cuadratura?.totalDescuentoRut ? numberWithDots(cuadratura?.totalDescuentoRut) : 0}</td>
+                            <td>{cuadratura?.totalDescuentosRut ? numberWithDots(cuadratura?.totalDescuentosRut) : 0}</td>
                         </tr>
                         <tr>
                             <td>Descuentos</td>

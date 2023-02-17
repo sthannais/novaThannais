@@ -126,15 +126,18 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
             (   Number(efectivo.totalGeneral) +
                 Number(vales.totalSumaVales) 
             ) - (
-                Number(metodoPagos.montoTransbank) +
+                Number(metodoPagos.montoTransbank)
+            ) - (
                 Number(metodoPagos.montoTransferencias) 
             ) - (
-                Number(metodoPagos.porcentajeDescuentoRut) +
+                Number(metodoPagos.porcentajeDescuentoRut) 
+            ) - (
                 Number(metodoPagos.porcentajeDescuento)
             ) - (
                 Number(novaOrdenById?.metodoPagos[0]?.abono?.monto)
             ) - (
-                Number(faltanteChofer.faltanteChofer) + 
+                Number(faltanteChofer.faltanteChofer) 
+            ) - (
                 Number(faltantePeoneta.faltantePeoneta)
             ) + (
                 Number(sobrante.sobrante)
@@ -326,8 +329,10 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
             ...sobrante,
             ...idDeDecuadre
         }))
-        cleanStates()
-        toggle()
+        cleanStates();
+        toggle();
+        cleanFaltantes();
+
     }
 
     const modalStyles = {

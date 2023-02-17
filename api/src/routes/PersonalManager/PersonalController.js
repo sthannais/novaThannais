@@ -277,7 +277,6 @@ const getOnlyAyudantesWithFaltantesBetweenDates = async (req, res) => {
                 }
             ]
         });
-
         // se calcula el total de faltantes de cada chofer y ayudante manejando promesas
         const ayudantesWithFaltantes = await Promise.all(ayudantes.map(async (ayudante) => {
             const faltantes = ordenesDeReparto.filter(orden => orden.ayudante.id === ayudante.id);
