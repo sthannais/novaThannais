@@ -18,8 +18,10 @@ import {
         getOrdenesChofer,
         getOrdenesAyudante,
         getCodigoDeModificar,
+        limpiarCodigo,
         setPorAutorizar,
         setAutorizado,
+        setNoAutorizado,
         getListaDePrecios,
         getAllFaltantes, 
         getAdministradores,
@@ -218,7 +220,35 @@ export const modifyRecargaOrdenQuantity2 =  (idOrden, idRecarga, quantity, orden
             text: 'La orden se ha actualizado correctamente',
             icon: 'success'
         });
+        dispatch(bringOrdenById(ordenId));
+        dispatch(limpiarCodigo());
+        dispatch(setNoAutorizado());
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: `${error.message}`,
+            text: 'Something went wrong!',
+        });
+    };
+};
+
+export const modifyLlenos = (ordenId, quantity) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/orden/changeLlenos/${ordenId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(quantity)
+        });
+        Swal.fire({
+            title: 'Orden actualizada',
+            text: 'La orden se ha actualizado correctamente',
+            icon: 'success'
+        });
         dispatch(bringOrdenById(ordenId))
+        dispatch(limpiarCodigo());
+        dispatch(setNoAutorizado());
     } catch (error) {
         Swal.fire({
             icon: 'error',
@@ -571,7 +601,6 @@ export const bringCodigoParaModificar = (info) => async (dispatch) => {
         console.log(error.message);
     };
 }
-
 
 export const setAutorizacion = () => async (dispatch) => {
     try {
