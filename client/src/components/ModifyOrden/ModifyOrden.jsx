@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { bringCodigoParaModificar, setAutorizacion, modifyRecargaOrdenQuantity2 } from '../../redux/novaSlice/thunks';
+import { bringCodigoParaModificar, setAutorizacion, modifyRecargaOrdenQuantity2, modifyLlenos } from '../../redux/novaSlice/thunks';
 import style from './modifyOrden.module.css';
 import { numberWithDots } from '../../helpers/numberWithDot';
 import vectorDerecho from "../../assetsOficial/vectorDerecho.svg"
@@ -16,7 +16,9 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
     const [disabled, setDisabled] = useState(false);
     const [disabled2, setDisabled2] = useState(false);
     const [disabled3, setDisabled3] = useState(false);
+    const [disabled4, setDisabled4] = useState(false);
     const [idRecarga, setIdRecarga] = useState(null);
+    const [isLleno, setIsLleno] = useState(false);
 
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const dispatch = useDispatch();
@@ -28,6 +30,42 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
         lastname: "",
         email: "",
     });
+
+    //////// ESTADO PARA MODIFICAR LLENOS ////////
+
+    const [llenos, setLlenos] = useState({
+        llenos5kg: "",
+        llenos11kg: "",
+        llenos15kg: "",
+        llenos45kg: "",
+    });
+
+    const handleLlenos = (e) => {
+        e.preventDefault();
+        setLlenos({
+            ...llenos,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const cleanLlenos = () => {
+        setLlenos({
+            llenos5kg: "",
+            llenos11kg: "",
+            llenos15kg: "",
+            llenos45kg: "",
+        });
+    };
+
+    const handleLlenosSubmit = (e) => {
+        e.preventDefault();
+        dispatch(modifyLlenos(ordenId, llenos));
+        setIsLleno(false);
+        cleanLlenos();
+        toggle();
+    };
+
+    //////// ESTADO PARA MODIFICAR RECARGAS ////////
 
     const [recarga, setRecarga] = useState({
         actual5kg: 0,
@@ -75,6 +113,7 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
             id: novaOrdenById?.id,
             name: usuario?.name,
             lastname: usuario?.lastname,
+            email: usuario?.email,
         });
 
         if(codigoDeModificar?.code !== codigo ) {
@@ -99,6 +138,16 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
             setDisabled3(false);
         }
 
+        if( llenos.llenos11kg === "" ||
+            llenos.llenos15kg === "" ||
+            llenos.llenos45kg === "" ||
+            llenos.llenos5kg === ""
+        ) {
+            setDisabled4(true);
+        } else {
+            setDisabled4(false);
+        }
+
     }, [
         codigoDeModificar?.code,
         codigo,
@@ -108,6 +157,10 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
         recarga.actual15kg,
         recarga.actual45kg,
         ordenId,
+        llenos.llenos5kg,
+        llenos.llenos11kg,
+        llenos.llenos15kg,
+        llenos.llenos45kg,
     ]);
 
     const modalStyles = {
@@ -131,7 +184,9 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                     autorizado === "Autorizado"  ?  (
                         <>
                             <ModalHeader toggle={toggle}>Modifique las recargas</ModalHeader>
-                            <Form onSubmit={handleRecargaSubmit}>
+                            <Form onSubmit={
+                                idRecarga ? handleRecargaSubmit : isLleno ? handleLlenosSubmit : null
+                            }>
                                 <ModalBody>
                                     <Table 
                                         bordered
@@ -190,7 +245,22 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                                                 </td>
                                                 <td>
                                                     {
-                                                        novaOrdenById?.contabilidadRecarga?.llenos5kg
+                                                        isLleno ? (
+                                                            <td>
+                                                                <Input
+                                                                    type="number"
+                                                                    name="llenos5kg"
+                                                                    id="llenos5kg"
+                                                                    onChange={(e) => handleLlenos(e)}
+                                                                    value={llenos.llenos5kg}
+                                                                    className={style.inputs}
+                                                                    min={0}
+                                                                    autoComplete="off"
+                                                                />
+                                                            </td>
+                                                        ) : (
+                                                            novaOrdenById?.contabilidadRecarga?.llenos5kg
+                                                        )
                                                     }
                                                 </td>
                                                 <td>
@@ -248,7 +318,22 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                                                 </td>
                                                 <td>
                                                     {
-                                                        novaOrdenById?.contabilidadRecarga?.llenos11kg
+                                                        isLleno ? (
+                                                            <td>
+                                                                <Input
+                                                                    type="number"
+                                                                    name="llenos11kg"
+                                                                    id="llenos11kg"
+                                                                    onChange={(e) => handleLlenos(e)}
+                                                                    value={llenos.llenos11kg}
+                                                                    className={style.inputs}
+                                                                    min={0}
+                                                                    autoComplete="off"
+                                                                />
+                                                            </td>
+                                                        ) : (
+                                                            novaOrdenById?.contabilidadRecarga?.llenos11kg
+                                                        )
                                                     }
                                                 </td>
                                                 <td>
@@ -306,7 +391,22 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                                                 </td>
                                                 <td>
                                                     {
-                                                        novaOrdenById?.contabilidadRecarga?.llenos15kg
+                                                        isLleno ? (
+                                                            <td>
+                                                                <Input
+                                                                    type="number"
+                                                                    name="llenos15kg"
+                                                                    id="llenos15kg"
+                                                                    onChange={(e) => handleLlenos(e)}
+                                                                    value={llenos.llenos15kg}
+                                                                    className={style.inputs}
+                                                                    min={0}
+                                                                    autoComplete="off"
+                                                                />
+                                                            </td>
+                                                        ) : (
+                                                            novaOrdenById?.contabilidadRecarga?.llenos15kg
+                                                        )
                                                     }
                                                 </td>
                                                 <td>
@@ -364,7 +464,22 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                                                 </td>
                                                 <td>
                                                     {
-                                                        novaOrdenById?.contabilidadRecarga?.llenos45kg
+                                                        isLleno ? (
+                                                            <td>
+                                                                <Input
+                                                                    type="number"
+                                                                    name="llenos45kg"
+                                                                    id="llenos45kg"
+                                                                    onChange={(e) => handleLlenos(e)}
+                                                                    value={llenos.llenos45kg}
+                                                                    className={style.inputs}
+                                                                    min={0}
+                                                                    autoComplete="off"
+                                                                />
+                                                            </td>
+                                                        ) : (
+                                                            novaOrdenById?.contabilidadRecarga?.llenos45kg
+                                                        )
                                                     }
                                                 </td>
                                                 <td>
@@ -404,19 +519,46 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                                                         ))
                                                     }
                                                 </th>
+                                                <th>
+
+                                                </th>
+                                                <th>
+                                                    <button style={{
+                                                            cursor: 'pointer',
+                                                        }} onClick={(e) => {
+                                                            e.preventDefault()
+                                                            setIsLleno(true)
+                                                        }}>
+                                                            <img src={vectorDerecho} alt="flechita" className={style.flechita} />
+                                                    </button>
+                                                </th>
                                             </tr>
                                         </tbody>
                                     </Table>   
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button color="primary" type="submit" disabled={disabled2} className={style.tamaño}>
-                                        Actualizar recarga
-                                    </Button>
+                                    {
+                                        idRecarga ? (
+                                            <Button color="primary" type="submit" disabled={disabled2} className={style.tamaño}>
+                                                Actualizar recarga
+                                            </Button>
+                                        ) : null
+                                    }
+                                    {
+                                        isLleno ? (
+                                            <Button color="primary" type="submit" disabled={disabled4} className={style.tamaño}>
+                                                Actualizar llenos
+                                            </Button>
+                                        ) : null
+                                    }
                                     <Button color="secondary" onClick={() => {
-                                        cleanRecarga()
-                                        toggle()
+                                        setIdRecarga(null);
+                                        setIsLleno(false);
+                                        cleanRecarga();
+                                        cleanLlenos();
+                                        toggle();
                                     }} className={style.tamaño}>
-                                        Cerrar
+                                        Cancelar
                                     </Button>
                                 </ModalFooter>
                             </Form>

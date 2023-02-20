@@ -32,7 +32,7 @@ const HistorialAnticipos = () => {
             return
         }
         setPorPagina(
-            porPagina + 2
+            porPagina + 5
         )
     }
 
@@ -52,7 +52,6 @@ const HistorialAnticipos = () => {
     const fechaInicio = startDate.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
     const fechaFin = endDate?.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
     
-
     useEffect(() => {
         dispatch(bringOrdenesChofer(fechaInicio, fechaFin))
         dispatch(bringOrdenesAyudante(fechaInicio, fechaFin))

@@ -84,11 +84,17 @@ export const NovaSlice = createSlice({
         getCodigoDeModificar: (state, {payload}) => {
             state.codigoDeModificar = payload;
         },
+        limpiarCodigo: (state) => {
+            state.codigoDeModificar = {};
+        },
         setPorAutorizar: (state) => {
             state.autorizado = "Por autorizar";
         },
         setAutorizado : (state) => {
             state.autorizado = "Autorizado";
+        },
+        setNoAutorizado : (state) => {
+            state.autorizado = "No autorizado";
         },
         getListaDePrecios: (state, {payload}) => {
             state.listaDePrecios = payload;
@@ -125,8 +131,10 @@ export const {  getPersonal,
                 getOrdenesChofer,
                 getOrdenesAyudante,
                 getCodigoDeModificar,
+                limpiarCodigo,
                 setPorAutorizar,
                 setAutorizado,
+                setNoAutorizado,
                 getListaDePrecios,
                 getAllFaltantes,
                 getAdministradores,

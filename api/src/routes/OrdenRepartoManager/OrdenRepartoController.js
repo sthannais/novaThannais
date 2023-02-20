@@ -829,6 +829,53 @@ const changeRecharge = async (req, res) => {
     }
 };
 
+const changeLlenos = async (req, res) => {
+    const { idOrden } = req.params;
+    const {
+        llenos5kg,
+        llenos11kg,
+        llenos15kg,
+        llenos45kg,
+    } = req.body;
+
+    try {
+        const ordenDeReparto = await OrdenDeReparto.findByPk(idOrden);
+        const contabilidad = await ordenDeReparto.getContabilidadRecarga();
+
+        const ventas5kg = Number(contabilidad.total5kg) - Number(llenos5kg);
+        const ventas11kg = Number(contabilidad.total11kg) - Number(llenos11kg);
+        const ventas15kg = Number(contabilidad.total15kg) - Number(llenos15kg);
+        const ventas45kg = Number(contabilidad.total45kg) - Number(llenos45kg);
+        const totalCantidad = Number(ventas5kg) + Number(ventas11kg) + Number(ventas15kg) + Number(ventas45kg);
+        const recaudacion5kg = ventas5kg * Number(contabilidad.precio5kg);
+        const recaudacion11kg = ventas11kg *  Number(contabilidad.precio11kg);
+        const recaudacion15kg = ventas15kg *  Number(contabilidad.precio15kg);
+        const recaudacion45kg = ventas45kg *  Number(contabilidad.precio45kg);
+        const totalRecaudacion = recaudacion5kg + recaudacion11kg + recaudacion15kg + recaudacion45kg;
+
+        await contabilidad.update({
+            llenos5kg,
+            ventas5kg,
+            recaudacion5kg,
+            llenos11kg,
+            ventas11kg,
+            recaudacion11kg,
+            llenos15kg,
+            ventas15kg,
+            recaudacion15kg,
+            llenos45kg,
+            ventas45kg,
+            recaudacion45kg,
+            totalCantidad,
+            totalRecaudacion
+        });
+
+        res.json({msg: "Llenos modificados correctamente"});
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+};
+
 const finalizeOrden = async (req, res) => {
     const { id } = req.params;
     const {
@@ -1035,5 +1082,6 @@ module.exports = {
     getAllAyudanteOrdenesDeRepartoBetweenDates,
     sendEmailWithCode,
     getAllOrdenesByDate,
-    getAllOrdenesWhereEstadoFalseByDate
+    getAllOrdenesWhereEstadoFalseByDate,
+    changeLlenos
 }

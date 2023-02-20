@@ -166,23 +166,30 @@
     .tabla {
         left: 24rem;
         top: 9rem; 
-        height: 30rem;
+        height: 40rem;
+        width: 30rem;
     }
 
     .tabla2 {
-        left: 47.5rem;
+        left: 55rem;
         top: 9rem;
-        
+        height: 40rem;
+        width: 40rem;
     }
 
     .text1 {
         margin-top: 6.5rem;
-        margin-right: 31rem;
+        margin-right: 21rem;
     }
 
     .text2 {
         margin-top: -2.5rem;
-        margin-left: 30rem;
+        margin-left: 54rem;
+    }
+
+    .boton {
+        top: 50rem;
+        left: 24rem;
     }
 }
 
@@ -212,12 +219,14 @@
         top: 6.8rem; 
         font-size: 14px;
         width: 17.5rem;
+        height: 27rem;
     }
 
     .tabla2 {
         left: 37.5rem;
         top: 7rem; 
         width: 24rem;
+        height: 27rem;
     }
 
     .text1 {
@@ -230,5 +239,10 @@
         margin-top: -2.5rem;
         margin-left: 35rem;
         font-size: 15px;
+    }
+
+    .boton {
+        top: 34.5rem;
+        left: 19.8rem;
     }
 }
