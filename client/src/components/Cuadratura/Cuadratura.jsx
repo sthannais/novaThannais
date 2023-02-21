@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { cuadrarOrden, bringListaDePreciosActive } from '../../redux/novaSlice/thunks';
 import style from './cuadratura.module.css';
 import cuadratura from '../../assetsOficial/cuadratura.svg';
 import validateBilletes from '../../helpers/validateBilletes';
 import { handleKeydown } from '../../helpers/KeyDown';
 import { Modal, Button, ModalHeader, ModalBody, ModalFooter, Input, Form, FormGroup, Label } from 'reactstrap';
-import { NumericFormat } from 'react-number-format';
+import { numberWithDots } from '../../helpers/numberWithDot';
 import 'bootstrap/dist/css/bootstrap.css';
 
 const Cuadratura = ({ novaOrdenById, fecha }) => {
@@ -30,21 +30,39 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
     })
 
     const [faltanteChofer, setFaltanteChofer] = useState({
+        faltanteChofer : "",
+    })
+
+    const [faltanteChoferNumber, setFaltanteChoferNumber] = useState({
         faltanteChofer : 0,
     })
 
     const [faltantePeoneta, setFaltantePeoneta] = useState({
+        faltantePeoneta : "",
+    })
+
+    const [faltantePeonetaNumber, setFaltantePeonetaNumber] = useState({
         faltantePeoneta : 0,
     })
 
     const [efectivo, setEfectivo] = useState({
+        totalBilletes1: "",
+        totalBilletes2 : "",
+        totalBilletes5 : "",
+        totalBilletes10 : "",
+        totalBilletes20 : "",
+        monedas : "",
+        totalGeneral : ""
+    })
+
+    const [efectivoNumber, setEfectivoNumber] = useState({
         totalBilletes1: 0,
         totalBilletes2 : 0,
         totalBilletes5 : 0,
         totalBilletes10 : 0,
         totalBilletes20 : 0,
         monedas : 0,
-        totalGeneral : 0
+        totalGeneral: 0
     })
 
     const [vales, setVales] = useState({
@@ -73,6 +91,13 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
     })
 
     const [metodoPagos, setMetodoPagos] = useState({
+        montoTransbank : "",
+        montoTransferencias : "",
+        porcentajeDescuentoRut : "",
+        porcentajeDescuento : "",
+    })
+
+    const [metodoPagosNumber, setMetodoPagosNumber] = useState({
         montoTransbank : 0,
         montoTransferencias : 0,
         porcentajeDescuentoRut : 0,
@@ -99,8 +124,14 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
         
         setEfectivo({
             ...efectivo,
-            totalGeneral : (efectivo.totalBilletes1 + efectivo.totalBilletes2 + efectivo.totalBilletes5 + efectivo.totalBilletes10 + efectivo.totalBilletes20 + efectivo.monedas)
+            totalGeneral : efectivoNumber.totalGeneral.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ',')
         })
+
+        setEfectivoNumber({
+            ...efectivoNumber,
+            totalGeneral : (efectivoNumber.totalBilletes1 + efectivoNumber.totalBilletes2 + efectivoNumber.totalBilletes5 + efectivoNumber.totalBilletes10 + efectivoNumber.totalBilletes20 + efectivoNumber.monedas)
+        })
+
         setVales({
             ...vales,
             totalFisico5kg : (vales.fisico5kg * Number(novaOrdenById?.listaDePrecio?.precio5kg)),
@@ -123,22 +154,22 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
         setFaltante({
             ...faltante,
             faltante : Number(novaOrdenById?.contabilidadRecarga?.totalRecaudacion) - 
-            (   Number(efectivo.totalGeneral) +
+            (   Number(efectivoNumber.totalGeneral) +
                 Number(vales.totalSumaVales) 
             ) - (
-                Number(metodoPagos.montoTransbank)
+                Number(metodoPagosNumber.montoTransbank)
             ) - (
-                Number(metodoPagos.montoTransferencias) 
+                Number(metodoPagosNumber.montoTransferencias) 
             ) - (
-                Number(metodoPagos.porcentajeDescuentoRut) 
+                Number(metodoPagosNumber.porcentajeDescuentoRut) 
             ) - (
-                Number(metodoPagos.porcentajeDescuento)
+                Number(metodoPagosNumber.porcentajeDescuento)
             ) - (
                 Number(novaOrdenById?.metodoPagos[0]?.abono?.monto)
             ) - (
-                Number(faltanteChofer.faltanteChofer) 
+                Number(faltanteChoferNumber.faltanteChofer) 
             ) - (
-                Number(faltantePeoneta.faltantePeoneta)
+                Number(faltantePeonetaNumber.faltantePeoneta)
             ) + (
                 Number(sobrante.sobrante)
             )
@@ -150,13 +181,13 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
         })
 
     }, [
-        efectivo.totalBilletes1,
-        efectivo.totalBilletes2,
-        efectivo.totalBilletes5,
-        efectivo.totalBilletes10,
-        efectivo.totalBilletes20,
-        efectivo.monedas,
-        efectivo.totalGeneral,
+        efectivoNumber.totalBilletes1,
+        efectivoNumber.totalBilletes2,
+        efectivoNumber.totalBilletes5,
+        efectivoNumber.totalBilletes10,
+        efectivoNumber.totalBilletes20,
+        efectivoNumber.monedas,
+        efectivoNumber.totalGeneral,
         vales.fisico5kg,
         vales.totalFisico5kg,
         vales.fisico11kg,
@@ -187,8 +218,8 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
         novaOrdenById?.contabilidadRecarga?.totalRecaudacion,
         novaOrdenById?.metodoPagos[0]?.abono?.monto,
         disabled,
-        faltanteChofer.faltanteChofer,
-        faltantePeoneta.faltantePeoneta,
+        faltanteChoferNumber.faltanteChofer,
+        faltantePeonetaNumber.faltantePeoneta,
         novaOrdenById?.listaDePrecio?.precio5kg,
         novaOrdenById?.listaDePrecio?.precio11kg,
         novaOrdenById?.listaDePrecio?.precio15kg,
@@ -213,49 +244,96 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
     }, [error, faltante.faltante,])
     
 
-    const handleChange = (e) => {
+    const handleEfectivoChange = (e) => {
 
-        const inputValue = Number(e.target.value)
+        const inputValue = e.target.value
+        const formatted = inputValue.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ',')
 
         setError(
             validateBilletes({
-                ...efectivo,
-                [e.target.name] : Number(e.target.value)
+                ...efectivoNumber,
+                [e.target.name] : formatted ? parseInt(formatted.replace(/,/g, '')) : 0
             })
         )
         setEfectivo({
             ...efectivo,
-            [e.target.name] : inputValue
+            [e.target.name] : formatted
         })
-        
+
+        setEfectivoNumber({
+            ...efectivoNumber,
+            [e.target.name] : formatted ? parseInt(formatted.replace(/,/g, '')) : 0
+        })
+    }
+
+    const handleValesChange = (e) => {
         setVales({
             ...vales,
             [e.target.name] : Number(e.target.value)
         })
+    }
 
+    const handleMetodoPagosChange = (e) => {
+        const inputValue = e.target.value
+        const formatted = inputValue.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ',')
         setMetodoPagos({
             ...metodoPagos,
-            [e.target.name] : Number(e.target.value)
+            [e.target.name] : formatted
         })
+        setMetodoPagosNumber({
+            ...metodoPagosNumber,
+            [e.target.name] : formatted ? parseInt(formatted.replace(/,/g, '')) : 0
+        })
+    }
+
+    const handleFaltanteChoferChange = (e) => {
+        
+        const inputValue = e.target.value
+        const formatted = inputValue.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ',')
 
         setFaltanteChofer({
             ...faltanteChofer,
-            [e.target.name] : Number(e.target.value)
+            [e.target.name] : formatted
         })
+        setFaltanteChoferNumber({
+            ...faltanteChoferNumber,
+            [e.target.name] : formatted ? parseInt(formatted.replace(/,/g, '')) : 0
+        })
+    }
+
+    const handleFaltantePeonetaChange = (e) => {
+        const inputValue = e.target.value
+        const formatted = inputValue.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ',')
 
         setFaltantePeoneta({
             ...faltantePeoneta,
-            [e.target.name] : Number(e.target.value)
+            [e.target.name] : formatted
         })
+        setFaltantePeonetaNumber({
+            ...faltantePeonetaNumber,
+            [e.target.name] : formatted ? parseInt(formatted.replace(/,/g, '')) : 0
+        })
+    }
 
+    const handleSobranteChange = (e) => {
         setSobrante({
             ...sobrante,
             [e.target.name] : Number(e.target.value)
         })
     }
 
+
     const cleanStates = () => {
         setEfectivo({
+            totalBilletes1 : "",
+            totalBilletes2 : "",
+            totalBilletes5 : "",
+            totalBilletes10 : "",
+            totalBilletes20 : "",
+            monedas : "",
+            totalGeneral : "",
+        })
+        setEfectivoNumber({
             totalBilletes1 : 0,
             totalBilletes2 : 0,
             totalBilletes5 : 0,
@@ -287,6 +365,12 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
             sumaTotalDigitalYFisico45kg : 0,
         })
         setMetodoPagos({
+            montoTransbank : "",
+            montoTransferencias : "",
+            porcentajeDescuentoRut : "",
+            porcentajeDescuento : "",
+        })
+        setMetodoPagosNumber({
             montoTransbank : 0,
             montoTransferencias : 0,
             porcentajeDescuentoRut : 0,
@@ -320,12 +404,12 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(cuadrarOrden(fecha, novaOrdenById.id, {
-            ...efectivo,
+            ...efectivoNumber,
             ...vales,
-            ...metodoPagos,
+            ...metodoPagosNumber,
             ...faltante,
-            ...faltanteChofer,
-            ...faltantePeoneta,
+            ...faltanteChoferNumber,
+            ...faltantePeonetaNumber,
             ...sobrante,
             ...idDeDecuadre
         }))
@@ -377,62 +461,81 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                 <div className={style.grid1}>
                                     <p>B. 20.000</p>
                                     <Input
+                                        type='text'
                                         name="totalBilletes20"
                                         id="totalBilletes20"
                                         value={efectivo.totalBilletes20 === 0 ? "" : efectivo.totalBilletes20}
                                         className={style.inputs}
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={(e) => handleEfectivoChange(e)}
                                         min={0}
+                                        autoComplete="off"
                                     />
                                     <p>B. 10.000</p>
                                     <Input
-                                        type="number"
+                                        type="text"
                                         name="totalBilletes10"
                                         id="totalBilletes10"
                                         value={efectivo.totalBilletes10 === 0 ? "" : efectivo.totalBilletes10}
                                         className={style.inputs}
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={(e) => handleEfectivoChange(e)}
                                         min={0}
+                                        autoComplete="off"
                                     />
                                     <p>B. 5.000</p>
                                     <Input
-                                        type="number"
+                                        type="text"
                                         name="totalBilletes5"
                                         id="totalBilletes5"
                                         value={efectivo.totalBilletes5 === 0 ? "" : efectivo.totalBilletes5}
                                         className={style.inputs}
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={(e) => handleEfectivoChange(e)}
                                         min={0}
+                                        autoComplete="off"
                                     />
                                     <p>B. 2.000</p>
                                     <Input
-                                        type="number"
+                                        type="text"
                                         name="totalBilletes2"
                                         id="totalBilletes2"
                                         value={efectivo.totalBilletes2 === 0 ? "" : efectivo.totalBilletes2}
                                         className={style.inputs}
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={(e) => handleEfectivoChange(e)}
                                         min={0}
+                                        autoComplete="off"
                                     />
                                     <p>B. 1.000</p>
                                     <Input
-                                        type="number"
+                                        type="text"
                                         name="totalBilletes1"
                                         id="totalBilletes1"
                                         value={efectivo.totalBilletes1 === 0 ? "" : efectivo.totalBilletes1}
                                         className={style.inputs}
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={(e) => handleEfectivoChange(e)}
                                         min={0}
+                                        autoComplete="off"
                                     />
                                     <p>Monedas</p>
                                     <Input
-                                        type="number"
+                                        type="text"
                                         name="monedas"
                                         id="monedas"
                                         value={efectivo.monedas === 0 ? "" : efectivo.monedas}
                                         className={style.inputs}
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={(e) => handleEfectivoChange(e)}
                                         min={0}
+                                        autoComplete="off"
+                                    />
+                                    <p>Total</p>
+                                    <Input
+                                        type="text"
+                                        name="totalGeneral"
+                                        id="totalGeneral"
+                                        value={efectivo.totalGeneral === 0 ? "" : efectivo.totalGeneral}
+                                        className={style.inputs}
+                                        onChange={(e) => handleEfectivoChange(e)}
+                                        min={0}
+                                        disabled={true}
+                                        autoComplete="off"
                                     />
                                 </div>
                                 {   
@@ -464,7 +567,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                         id="fisico5kg"
                                         value={vales.fisico5kg === 0 ? "" : vales.fisico5kg}
                                         className={style.inputs3}
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={(e) => handleValesChange(e)}
                                         min={0}
                                     />
                                     </div>
@@ -476,7 +579,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                         id="digital5kg"
                                         value={vales.digital5kg === 0 ? "" : vales.digital5kg}
                                         className={style.inputs3}
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={(e) => handleValesChange(e)}
                                         min={0}
                                     />
                                     </div>
@@ -488,7 +591,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                         id="fisico11kg"
                                         value={vales.fisico11kg === 0 ? "" : vales.fisico11kg}
                                         className={style.inputs3}
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={(e) => handleValesChange(e)}
                                         min={0}
                                     />
                                     </div>
@@ -500,7 +603,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                         id="digital11kg"
                                         value={vales.digital11kg === 0 ? "" : vales.digital11kg}
                                         className={style.inputs3}
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={(e) => handleValesChange(e)}
                                         min={0}
                                     />
                                     </div>
@@ -512,7 +615,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                         id="fisico15kg"
                                         value={vales.fisico15kg === 0 ? "" : vales.fisico15kg}
                                         className={style.inputs3}
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={(e) => handleValesChange(e)}
                                         min={0}
                                     />
                                     </div>
@@ -524,7 +627,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                         id="digital15kg"
                                         value={vales.digital15kg === 0 ? "" : vales.digital15kg}
                                         className={style.inputs3}
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={(e) => handleValesChange(e)}
                                         min={0}
                                     />
                                     </div>
@@ -536,7 +639,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                         id="fisico45kg"
                                         value={vales.fisico45kg === 0 ? "" : vales.fisico45kg}
                                         className={style.inputs3}
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={(e) => handleValesChange(e)}
                                         min={0}
                                     />
                                     </div>
@@ -548,7 +651,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                         id="digital45kg"
                                         value={vales.digital45kg === 0 ? "" : vales.digital45kg}
                                         className={style.inputs3}
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={(e) => handleValesChange(e)}
                                         min={0}
                                     />
                                     </div>
@@ -577,12 +680,12 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                         Trasnbank
                                     </p>
                                     <Input
-                                        type="number"
+                                        type="text"
                                         name="montoTransbank"
                                         id="montoTransbank"
                                         value={metodoPagos.montoTransbank === 0 ? "" : metodoPagos.montoTransbank}
                                         className={style.inputs2}
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={(e) => handleMetodoPagosChange(e)}
                                         min={0} 
                                     />
                                 </div>
@@ -597,12 +700,12 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                         Transferencias
                                     </p>
                                     <Input
-                                        type="number"
+                                        type="text"
                                         name="montoTransferencias"
                                         id="montoTransferencias"
                                         value={metodoPagos.montoTransferencias === 0 ? "" : metodoPagos.montoTransferencias}
                                         className={style.inputs2}
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={(e) => handleMetodoPagosChange(e)}
                                         min={0}
                                     />
                                 </div>
@@ -617,12 +720,12 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                         Descuentos
                                     </p>
                                     <Input
-                                        type="number"
+                                        type="text"
                                         name="porcentajeDescuento"
                                         id="porcentajeDescuento"
                                         value={metodoPagos.porcentajeDescuento === 0 ? "" : metodoPagos.porcentajeDescuento}
                                         className={style.inputs2}
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={(e) => handleMetodoPagosChange(e)}
                                         min={0}
                                     />
                                 </div>
@@ -637,12 +740,12 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                         Descuento Rut
                                     </p>
                                     <Input
-                                        type="number"
+                                        type="text"
                                         name="porcentajeDescuentoRut"
                                         id="porcentajeDescuentoRut"
                                         value={metodoPagos.porcentajeDescuentoRut === 0 ? "" : metodoPagos.porcentajeDescuentoRut}
                                         className={style.inputs2}
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={(e) => handleMetodoPagosChange(e)}
                                         min={0}
                                     />
                                 </div>
@@ -658,11 +761,11 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                     Total Recaudado
                                 </p>
                                 <Input
-                                    type="number"
+                                    type="text"
                                     name="totalRecaudado"
                                     id="totalRecaudado"
                                     placeholder="Total Recaudado"
-                                    value={totalRecaudacion.totalRecaudacion}
+                                    value={totalRecaudacion.totalRecaudacion ? numberWithDots(totalRecaudacion.totalRecaudacion) : ""}
                                     className={style.inputs4}
                                     disabled
                                 />
@@ -674,11 +777,11 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                     Faltante
                                 </p>
                                 <Input
-                                    type="number"
+                                    type="text"
                                     name="faltante"
                                     id="faltante"
                                     placeholder="Faltante"
-                                    value={faltante.faltante}
+                                    value={faltante.faltante ? numberWithDots(faltante.faltante) : "0"}
                                     className={style.inputs4}
                                     disabled
                                     min={0}
@@ -718,7 +821,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                                 value={sobrante.sobrante === 0 ? "" : sobrante.sobrante}
                                                 className={style.inputs4}
                                                 min={0}
-                                                onChange={(e) => handleChange(e)}
+                                                onChange={(e) => handleSobranteChange(e)}
                                             />
                                         </>
                                     ) : null
@@ -748,12 +851,12 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                     <FormGroup>
                                         <Label>Chofer: { novaOrdenById?.chofer?.personal?.name + " " + novaOrdenById?.chofer?.personal?.lastname }</Label>
                                         <Input
-                                            type="number"
+                                            type="text"
                                             name="faltanteChofer"
                                             id="faltanteChofer"
                                             value={faltanteChofer.faltanteChofer === 0 ? "" : faltanteChofer.faltanteChofer}
                                             className={style.inputs4}
-                                            onChange={(e) => handleChange(e)}
+                                            onChange={(e) => handleFaltanteChoferChange(e)}
                                         />
                                     </FormGroup>
                                     {
@@ -761,12 +864,12 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                             <FormGroup>
                                                 <Label>Peoneta: { novaOrdenById?.ayudante?.personal?.name + " " + novaOrdenById?.ayudante?.personal?.lastname }</Label>
                                                 <Input
-                                                    type='number'
+                                                    type='text'
                                                     name="faltantePeoneta"
                                                     id="faltantePeoneta"
                                                     value={faltantePeoneta.faltantePeoneta === 0 ? "" : faltantePeoneta.faltantePeoneta}
                                                     className={style.inputs4}
-                                                    onChange={(e) => handleChange(e)}
+                                                    onChange={(e) => handleFaltantePeonetaChange(e)}
                                                 />
                                             </FormGroup>
                                         ) :
