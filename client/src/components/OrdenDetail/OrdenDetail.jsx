@@ -26,6 +26,7 @@ const OrdenDetail = (
     const [editQuantity, setEditQuantity] = useState(null);
     const [editRecarga, setEditRecarga] = useState(null);
     const [idRecarga, setIdRecarga] = useState(null);
+    const [desactive, setDesactive] = useState(false);
     const [editAbono, setEditAbono] = useState(null);
     const dispatch = useDispatch();
 
@@ -158,6 +159,7 @@ const OrdenDetail = (
         top: '3%',
         transform: 'translate(-38%, -3%)',
         fontFamily: 'Roboto',
+        "--bs-modal-width": "530px",
     };
 
     return (    
@@ -468,6 +470,13 @@ const OrdenDetail = (
                 }
             </ModalBody>
             <ModalFooter>
+                {
+                    desactive === true ? (
+                        <Button color="danger">Desactivar</Button>
+                    ) : (
+                        <Button color="danger">Eliminar recarga</Button>
+                    )
+                }
                 {
                     editRecarga === id ? (
                         <>

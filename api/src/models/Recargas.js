@@ -18,6 +18,10 @@ module.exports = (sequelize)=>{
             type: DataTypes.BIGINT,
             defaultValue: 0
         },
+        active : {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true
+        }
     },{
         timestamps : false
     })

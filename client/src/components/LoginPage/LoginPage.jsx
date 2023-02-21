@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import RealImg from '../../assetsOficial/portadaLogin.svg';
+import RealImg from '../../assetsOficial/benjanova.svg';
 import './loginPage.css';
 import Monito from '../../assetsOficial/jorgito.svg';
 import { fetchLoginThunk } from '../../redux/autenticacionSlice/thunks';

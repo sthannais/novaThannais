@@ -13,6 +13,7 @@ import cuarenta from '../../assets/45n.ico';
 import style from './createOrden.module.css';
 import Loading from '../Loading/Loading';
 import { handleKeydown } from '../../helpers/KeyDown';
+import { numberWithDots } from '../../helpers/numberWithDot';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-datepicker/dist/react-datepicker.css';
 registerLocale('es', es);
@@ -333,9 +334,9 @@ const CreateOrden = () => {
                                     </div>
                                     <div>
                                         <Input
-                                            type="number"
+                                            type="text"
                                             name="precioTotal"
-                                            value={orden.totalRecaudacion}
+                                            value={orden.totalRecaudacion ? numberWithDots(orden?.totalRecaudacion) : 0}
                                             placeholder="Precio Total"
                                             className={style.inpusitos2}
                                             disabled={true}
