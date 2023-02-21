@@ -110,6 +110,9 @@ const getOrdenDeRepartoById = async (req, res) => {
                 },
                 {
                     model: Recargas,
+                    where: {
+                        active: true
+                    }
                 },
                 {
                     model: ContabilidadRecargas,
@@ -263,6 +266,9 @@ const getAllOrdenesByDate = async (req, res) => {
                 },
                 {
                     model: Recargas,
+                    where: {
+                        active: true
+                    }
                 },
                 {
                     model: ContabilidadRecargas,
@@ -458,6 +464,9 @@ const getAllOrdenesWhereEstadoFalseByDate = async (req, res) => {
                 },
                 {
                     model: Recargas,
+                    where: {
+                        active: true
+                    }
                 },
                 {
                     model: ContabilidadRecargas,
@@ -876,6 +885,52 @@ const changeLlenos = async (req, res) => {
     }
 };
 
+const desactiveRecarga = async (req, res) => {
+    const { idOrden, idRecarga } = req.params;
+
+    try {
+        const ordenDeReparto = await OrdenDeReparto.findByPk(idOrden);
+
+        const contabilidad = await ordenDeReparto.getContabilidadRecarga();
+        const recarga = await Recargas.findByPk(idRecarga);
+        
+        const total5kg = Number(recarga.cantidad5kg) * Number(contabilidad.precio5kg);
+        const total11kg = Number(recarga.cantidad11kg) * Number(contabilidad.precio11kg);
+        const total15kg = Number(recarga.cantidad15kg) * Number(contabilidad.precio15kg);
+        const total45kg = Number(recarga.cantidad45kg) * Number(contabilidad.precio45kg);
+
+        const totalCantidad = Number(recarga.cantidad5kg) + Number(recarga.cantidad11kg) + Number(recarga.cantidad15kg) + Number(recarga.cantidad45kg);
+        const total = total5kg + total11kg + total15kg + total45kg;
+
+        await contabilidad.update({
+            total5kg:  Number(contabilidad.total5kg)  - Number(recarga.cantidad5kg),
+            ventas5kg:  Number(contabilidad.ventas5kg)  - Number(recarga.cantidad5kg),
+            recaudacion5kg: Number(contabilidad.recaudacion5kg) - Number(total5kg),
+            total11kg: Number(contabilidad.total11kg) - Number(recarga.cantidad11kg),
+            ventas11kg: Number(contabilidad.ventas11kg) - Number(recarga.cantidad11kg),
+            recaudacion11kg: Number(contabilidad.recaudacion11kg) - Number(total11kg),
+            total15kg: Number(contabilidad.total15kg) - Number(recarga.cantidad15kg),
+            ventas15kg: Number(contabilidad.ventas15kg) - Number(recarga.cantidad15kg),
+            recaudacion15kg: Number(contabilidad.recaudacion15kg) - Number(total15kg),
+            total45kg: Number(contabilidad.total45kg) - Number(recarga.cantidad45kg),
+            ventas45kg: Number(contabilidad.ventas45kg) - Number(recarga.cantidad45kg),
+            recaudacion45kg: Number(contabilidad.recaudacion45kg) - Number(total45kg),
+            totalCantidad: Number(contabilidad.totalCantidad) - Number(totalCantidad),
+            totalRecaudacion: Number(contabilidad.totalRecaudacion) - Number(total)
+        });
+
+        await recarga.update({
+            active: false
+        });
+
+        res.json({msg: "Recarga desactivada correctamente"});
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+};
+        
+
+
 const finalizeOrden = async (req, res) => {
     const { id } = req.params;
     const {
@@ -1083,5 +1138,6 @@ module.exports = {
     sendEmailWithCode,
     getAllOrdenesByDate,
     getAllOrdenesWhereEstadoFalseByDate,
-    changeLlenos
+    changeLlenos,
+    desactiveRecarga
 }

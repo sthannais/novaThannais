@@ -47,12 +47,10 @@ const getAllChoferNames = async (req, res) => {
             ]
         });
 
-        const choferes = personalActivo.filter(persona => {
-            const rol = persona.rols.map(rol => rol.Personal_Rol.rolId === 3);
-            return rol[0];
-        });
+        const choferes = personalActivo.filter(persona => persona.rols[0].name === 'Chofer');
+        const choferes2 = personalActivo.filter(persona => persona?.rols[1]?.name === 'Chofer');
 
-        res.json(choferes);
+        res.json([...choferes, ...choferes2]);
 
     } catch (error) {
         res.status(500).json({

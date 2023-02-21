@@ -5,6 +5,7 @@ import descargar from '../../assetsOficial/descargar.svg';
 import { ordenesActivas, bringOrdenById, cleanOrden, finalizeOrden, switchLoading } from '../../redux/novaSlice/thunks';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Label, Table }  from 'reactstrap';
 import { handleKeydown } from '../../helpers/KeyDown';
+import { numberWithDots } from '../../helpers/numberWithDot';
 import 'bootstrap/dist/css/bootstrap.css';
 
 const DownloadOrden = ({ fecha }) => {
@@ -278,15 +279,15 @@ const DownloadOrden = ({ fecha }) => {
                                                 verticalAlign: 'middle'
                                             }}>
                                                 {
-                                                    listaDePrecios ? <p>{listaDePrecios.precio5kg}</p> : null
+                                                    listaDePrecios ? <p>{listaDePrecios.precio5kg ? numberWithDots(listaDePrecios.precio5kg) : 0}</p> : null
                                                 }
                                             </td>
                                             <td>
                                                 <td className={style.inputContainer2}>
                                                     <Input
-                                                        type="number"
+                                                        type="text"
                                                         name="recaudacion5kg"
-                                                        value={recaudacion.recaudacion5kg}
+                                                        value={recaudacion.recaudacion5kg ? numberWithDots(recaudacion.recaudacion5kg) : 0}
                                                         onChange={handleChange}
                                                         className={style.inputs2}
                                                         min={0}
@@ -339,16 +340,16 @@ const DownloadOrden = ({ fecha }) => {
                                             }}>
                                                 <p>
                                                     {
-                                                        listaDePrecios ? <p>{listaDePrecios.precio11kg}</p> : null
+                                                        listaDePrecios ? <p>{listaDePrecios.precio11kg ? numberWithDots(listaDePrecios.precio11kg) : 0}</p> : null
                                                     }
                                                 </p>
                                             </td>
                                             <td>
                                                 <td className={style.inputContainer2}>
                                                     <Input
-                                                        type="number"
+                                                        type="text"
                                                         name="recaudacion11kg"
-                                                        value={recaudacion.recaudacion11kg}
+                                                        value={recaudacion.recaudacion11kg ? numberWithDots(recaudacion.recaudacion11kg) : 0}
                                                         onChange={handleChange}
                                                         className={style.inputs2}
                                                         min={0}
@@ -401,16 +402,16 @@ const DownloadOrden = ({ fecha }) => {
                                             }}>
                                                 <p>
                                                     {
-                                                        listaDePrecios ? <p>{listaDePrecios.precio15kg}</p> : null
+                                                        listaDePrecios ? <p>{listaDePrecios.precio15kg ? numberWithDots(listaDePrecios.precio15kg) : 0}</p> : null
                                                     }
                                                 </p>
                                             </td>
                                             <td>
                                                 <td className={style.inputContainer2}>
                                                     <Input
-                                                        type="number"
+                                                        type="text"
                                                         name="recaudacion15kg"
-                                                        value={recaudacion.recaudacion15kg}
+                                                        value={recaudacion.recaudacion15kg ? numberWithDots(recaudacion.recaudacion15kg) : 0}
                                                         onChange={handleChange}
                                                         className={style.inputs2}
                                                         min={0}
@@ -463,16 +464,16 @@ const DownloadOrden = ({ fecha }) => {
                                             }}>
                                                 <p>
                                                     {
-                                                        listaDePrecios ? <p>{listaDePrecios.precio45kg}</p> : null
+                                                        listaDePrecios ? <p>{listaDePrecios.precio45kg ? numberWithDots(listaDePrecios.precio45kg) : 0}</p> : null
                                                     }
                                                 </p>
                                             </td>
                                             <td>
                                                 <td className={style.inputContainer2}>
                                                     <Input
-                                                        type="number"
+                                                        type="text"
                                                         name="recaudacion45kg"
-                                                        value={recaudacion.recaudacion45kg}
+                                                        value={recaudacion.recaudacion45kg ? numberWithDots(recaudacion.recaudacion45kg) : 0}
                                                         onChange={handleChange}
                                                         className={style.inputs2}
                                                         min={0}
@@ -512,9 +513,9 @@ const DownloadOrden = ({ fecha }) => {
                                     </FormGroup>
                                     <FormGroup>
                                         <Input
-                                            type="number"
+                                            type="text"
                                             name="totalRecaudacion"
-                                            value={totalRecaudacion}
+                                            value={totalRecaudacion ? numberWithDots(totalRecaudacion) : 0}
                                             onChange={handleChange}
                                             disabled
                                             className={style.inputs3}

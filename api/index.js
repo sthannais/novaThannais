@@ -18,15 +18,15 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
-const { conn, Rol, Chofer, Administrador, Ayudante, Cuadrante, Patentes, ListaDePrecios } = require('./src/db.js');
+const { conn, Rol, Chofer, Administrador, Cuadrante, Patentes, ListaDePrecios } = require('./src/db.js');
 const createRoles = require('./src/testingCreators/roles.js');
 const createPatentes = require('./src/testingCreators/patentes.js');
 const createCuadrantes = require('./src/testingCreators/cuadrante.js');
 const createListaDePrecios = require('./src/testingCreators/listaDePrecios.js');
-const { createChoferes, createAdministradores, createAyudantes, createChoferPeoeneta} = require('./src/testingCreators/usuarios.js');
+const { createAdministradores, createChoferPeoeneta, createPeonetaChofer} = require('./src/testingCreators/usuarios.js');
 const PORT = process.env.PORT || 3001;
 
-conn.sync({ force: false }).then(() => {
+conn.sync({ force: true }).then(() => {
   server.listen(PORT, async () => {
     console.log(`Servidor en puerto ${PORT}`); 
 
@@ -35,15 +35,15 @@ conn.sync({ force: false }).then(() => {
 
     const choferes = await Chofer.findAll();
     if (choferes.length < 1) {
-      createChoferes();
       createChoferPeoeneta();
+      createPeonetaChofer();
     }
 
     // const auxiliares = await Auxiliar.findAll();
     // if (auxiliares.length < 1) createAuxiliares();
 
-    const ayudantes = await Ayudante.findAll();
-    if (ayudantes.length < 1) createAyudantes();
+    // const ayudantes = await Ayudante.findAll();
+    // if (ayudantes.length < 1) createAyudantes();
 
     const administradores = await Administrador.findAll();
     if (administradores.length < 1) createAdministradores();
