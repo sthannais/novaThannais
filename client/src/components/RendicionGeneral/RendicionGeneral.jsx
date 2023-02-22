@@ -73,7 +73,7 @@ const RendicionGeneral = () => {
 
     return (
         <div>
-            <p className={style.text}>Rendicion de gastos</p>
+            <p className={style.text}>Rendición general</p>
             <img src={JorgeGas} alt="logo" className={style.logo} />
             <div className={style.container}>
                 <Link to="/personalSellTable">

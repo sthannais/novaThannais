@@ -11,9 +11,8 @@
 }
 
 .logo {
-    position: absolute;
-    left: 85%;
-    top: 2.5%;
+    margin-left: 82rem;
+    margin-top: 1rem;
 }
 
 .excel{
@@ -43,7 +42,7 @@
     overflow: hidden;
     z-index: -1;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 30px;
+    border-radius: 10px;
     font-family: 'Roboto';
     padding: 5rem 2.5rem 0 2.5rem;
 }
@@ -92,23 +91,25 @@
 @media screen and ( min-width: 1800px ) {
 
     .container {
-        top: 100px;
         width: 1590px;
-        height: 50rem;
+        height: 870px;
     }
 
     .tableContainer {
-        height: 40rem;
+        height: 44rem;
     }
 
     .text {
-        left: 16%;
-        top: 4.9%;
+        left: 15%;
+        top: 3%;
     }
 
     .logo {
-        left: 90%;
-        top: 3.5%;
+        margin-left: 105rem;
+    }
+
+    .boton {
+        margin-top: 1rem;
     }
 }
 
@@ -121,13 +122,15 @@
     }
 
     .logo {
-        top: 0.5%;
+        margin-top: 0.3rem;
+        margin-left: 72rem;
     }
 
     .container {
         width: 1040px;
         height: 618px;
         top: 52px;
+        left: 16rem;
     }
 
     .tableContainer {

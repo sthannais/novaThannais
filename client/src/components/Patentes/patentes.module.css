@@ -26,6 +26,12 @@
     cursor: pointer;
 }
 
+.botones {
+    margin-top: 1rem;
+    justify-content: end;
+    align-items: end;
+}
+
 @media screen and (min-width: 1800px) {
     .iconContainer2 {
         left: 64rem;

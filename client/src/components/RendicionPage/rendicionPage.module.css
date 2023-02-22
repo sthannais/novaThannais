@@ -24,9 +24,8 @@
 }
 
 .logo {
-    position: absolute;
-    left: 85%;
-    top: 2.5%;
+    margin-left: 82rem;
+    margin-top: 1rem;
 }
 
 .inputs {
@@ -203,8 +202,7 @@
     }
 
     .logo {
-        left: 90%;
-        top: 2%;
+        margin-left: 105rem
     }
 
     .inputs {
@@ -287,13 +285,15 @@
     }
 
     .logo {
-        top: 0.5%;
+        margin-top: 0.3rem;
+        margin-left: 72rem;
     }
 
     .container {
         width: 1040px;
         height: 750px;
         top: 52px;
+        left: 16rem;
     }
 
     .inputs {

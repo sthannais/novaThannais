@@ -134,9 +134,7 @@ const getOnlyChofercWithFaltantesBetweenDates = async (req, res) => {
                     faltanteChofer: {
                         [Op.gt]: 0
                     },
-                    fecha: {
-                        [Op.gte]: fechaInicio
-                    }
+                    fecha: fechaInicio
                 },
                 include: [
                     {
@@ -223,9 +221,7 @@ const getOnlyAyudantesWithFaltantesBetweenDates = async (req, res) => {
                     faltantePeoneta: {
                         [Op.gt]: 0
                     },
-                    fecha: {
-                        [Op.gte]: fechaInicio
-                    }
+                    fecha: fechaInicio
                 },
                 include: [
                     {

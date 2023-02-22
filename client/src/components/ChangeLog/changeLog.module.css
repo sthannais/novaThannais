@@ -1,0 +1,29 @@
+.changelog {
+    position: absolute;
+    left: 2.8rem;
+    top: 95.5%;
+    width: 8rem;
+    height: 2rem;
+    background-color: transparent;
+    border: none;
+    color: #FFFFFF;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: 'Roboto';
+    font-weight: 200;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.changelog:hover {
+    font-style: bold;
+    font-weight: 700;
+}
+
+.newli {
+    color: #1f22e7;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+}

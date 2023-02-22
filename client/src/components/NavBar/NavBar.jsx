@@ -5,6 +5,7 @@ import { logoutAction } from '../../redux/autenticacionSlice/thunks';
 import style from './navBar.module.css';
 import monito from '../../assets/JORGITO.svg';
 import logo from '../../assets/nova-blanco-2.png';
+import ChangeLog from '../ChangeLog/ChangeLog';
 
 const NavBar = () => {
 
@@ -168,6 +169,7 @@ const NavBar = () => {
                     <p className={style.completeName}> no tienes acceso </p>
                 )}
                 <img src={logo} alt="logo" className={style.logo} />
+                <ChangeLog />
         </div>
     )
 }

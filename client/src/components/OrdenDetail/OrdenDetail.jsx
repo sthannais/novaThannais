@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateOrdenQuantity, updateAbono, modifyRecargaOrdenQuantity } from '../../redux/novaSlice/thunks';
+import { updateOrdenQuantity, updateAbono, modifyRecargaOrdenQuantity, desactiveRecarga } from '../../redux/novaSlice/thunks';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Label, Table }  from 'reactstrap';
 import { numberWithDots } from '../../helpers/numberWithDot';
 import vectorDerecho from "../../assetsOficial/vectorDerecho.svg"
@@ -26,9 +26,23 @@ const OrdenDetail = (
     const [editQuantity, setEditQuantity] = useState(null);
     const [editRecarga, setEditRecarga] = useState(null);
     const [idRecarga, setIdRecarga] = useState(null);
+
     const [desactive, setDesactive] = useState(false);
+    const [idRecargaDesactive, setIdRecargaDesactive] = useState(null);
+    const [modalDesactive, setModalDesactive] = useState(false);
+    const toggleDesactive = () => setModalDesactive(!modalDesactive);
+
     const [editAbono, setEditAbono] = useState(null);
     const dispatch = useDispatch();
+
+    /////// ELIMINAR UNA RECARGA DE LA ORDEN //////////////
+
+    const handleDesactiveRecarga = () => {
+        dispatch(desactiveRecarga(id, idRecargaDesactive, fecha));
+        setDesactive(!desactive);
+        setIdRecargaDesactive(!idRecargaDesactive);
+        toggleDesactive();
+    }
 
     /////////////// MODIFICA LA RECARGA DE LA ORDEN ///////////////
 
@@ -159,7 +173,7 @@ const OrdenDetail = (
         top: '3%',
         transform: 'translate(-38%, -3%)',
         fontFamily: 'Roboto',
-        "--bs-modal-width": "530px",
+        "--bs-modal-width": "580px",
     };
 
     return (    
@@ -234,7 +248,11 @@ const OrdenDetail = (
                                                 </td>
                                             ) :
                                             (
-                                                <th className={style.tdclas} key={recarga.id}>
+                                                <th className={
+                                                    idRecargaDesactive === recarga.id ? 
+                                                    style.tdclasDesactive
+                                                    : style.tdclas
+                                                } key={recarga.id}>
                                                     {recarga?.cantidad5kg}
                                                 </th>
                                             )   
@@ -285,7 +303,11 @@ const OrdenDetail = (
                                                 </td>
                                             ) :
                                             (
-                                                <th className={style.tdclas} key={recarga.id}>
+                                                <th className={
+                                                    idRecargaDesactive === recarga.id ?
+                                                    style.tdclasDesactive
+                                                    : style.tdclas
+                                                } key={recarga.id}>
                                                     {recarga?.cantidad11kg}
                                                 </th>
                                             )
@@ -336,7 +358,11 @@ const OrdenDetail = (
                                                 </td>
                                             ) :
                                             (
-                                                <th className={style.tdclas} key={recarga.id}>
+                                                <th className={
+                                                    idRecargaDesactive === recarga.id ?
+                                                    style.tdclasDesactive
+                                                    : style.tdclas
+                                                } key={recarga.id}>
                                                     {recarga?.cantidad15kg}
                                                 </th>
                                             )
@@ -387,7 +413,9 @@ const OrdenDetail = (
                                                 </td>
                                             ) :
                                             (
-                                                <th className={style.tdclas} key={recarga.id}>
+                                                <th className={
+                                                    idRecargaDesactive === recarga.id ? style.tdclasDesactive : style.tdclas
+                                                } key={recarga.id}>
                                                     {recarga?.cantidad45kg}
                                                 </th>
                                             )
@@ -423,7 +451,7 @@ const OrdenDetail = (
                                             textAlign: 'center',
                                             verticalAlign: 'middle'
                                         }}>
-                                            Seleccionar
+                                            Modifica
                                         </th>
                                         <th>
                                             {
@@ -442,7 +470,32 @@ const OrdenDetail = (
                                     </tr>    
                                 ) : null
                             }
-                                                    
+                            {
+                                desactive ? (
+                                    <tr>
+                                        <th className="px-4 py-2" style={{
+                                            textAlign: 'center',
+                                            verticalAlign: 'middle'
+                                        }}>
+                                            Eliminar
+                                        </th>
+                                        <th>
+                                            {
+                                                recargas?.map((recarga) => (
+                                                    <button key={recarga.id} style={{
+                                                        cursor: 'pointer',
+                                                    }} onClick={(e) => {
+                                                        e.preventDefault()
+                                                        setIdRecargaDesactive(recarga.id)
+                                                    }}>
+                                                        <img src={vectorDerecho} alt="flechita" className={style.flechita} />
+                                                    </button>
+                                                ))
+                                            }
+                                        </th>
+                                    </tr>
+                                ) : null
+                            }
                     </tbody>
                 </Table>
                 <FormGroup>
@@ -472,9 +525,32 @@ const OrdenDetail = (
             <ModalFooter>
                 {
                     desactive === true ? (
-                        <Button color="danger">Desactivar</Button>
+                        <>
+                            <Button color="danger" onClick={toggleDesactive}>Eliminar</Button>
+                            <Button color="secondary" onClick={
+                                () => {
+                                    setDesactive(false);
+                                    setIdRecargaDesactive(null);
+                                }
+                            }>Cancelar</Button>
+                            <Modal isOpen={modalDesactive} toggle={toggleDesactive}>
+                                <ModalHeader toggle={toggleDesactive}>Eliminar recarga</ModalHeader>
+                                <ModalBody>
+                                    <p style={{color: "red"}}>¿Está seguro que desea eliminar esta recarga?</p>
+                                </ModalBody>
+                                <ModalFooter>
+                                    <Button color="danger" onClick={handleDesactiveRecarga}>Eliminar</Button>
+                                    <Button color="secondary" onClick={toggleDesactive}>Cancelar</Button>
+                                </ModalFooter>
+                            </Modal>
+                        </>
                     ) : (
-                        <Button color="danger">Eliminar recarga</Button>
+                        <Button color="danger" onClick={
+                            () => {
+                                setDesactive(true);
+                                setIdRecargaDesactive(null);
+                            }
+                        } >Eliminar recarga</Button>
                     )
                 }
                 {
@@ -498,7 +574,7 @@ const OrdenDetail = (
                 {
                     editQuantity === id ? (
                         <>
-                            <Button color="success" onClick={handleUpdateQuantity}>Guardar</Button>
+                            <Button color="primary" onClick={handleUpdateQuantity}>Guardar Recarga</Button>
                             <Button color="secondary" onClick={
                                 () => {
                                     cleanQuantity();
@@ -516,7 +592,7 @@ const OrdenDetail = (
                 {
                     editAbono === id ? (
                         <>
-                            <Button color="success" onClick={handleUpdateAbono}>Abonar</Button>
+                            <Button color="warning" onClick={handleUpdateAbono}>Guardar abono</Button>
                             <Button color="secondary" onClick={
                                 () => {
                                     cleanAbono();

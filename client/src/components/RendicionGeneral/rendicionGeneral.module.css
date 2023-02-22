@@ -24,9 +24,8 @@
 }
 
 .logo {
-    position: absolute;
-    left: 85%;
-    top: 2.5%;
+    margin-left: 82rem;
+    margin-top: 1rem;
 }
 
 .button {
@@ -116,14 +115,12 @@
     }
 
     .text {
-        position: absolute;
-        left: 16.5%;
+        left: 15%;
         top: 3%;
     }
 
     .logo {
-        left: 89%;
-        top: 2%;
+        margin-left: 105rem;
     }
 
     .button {
@@ -164,13 +161,15 @@
     }
 
     .logo {
-        top: 0.5%;
+        margin-top: 0.3rem;
+        margin-left: 72rem;
     }
 
     .container {
         width: 1040px;
-        height: 820px;
+        height: 790px;
         top: 52px;
+        left: 16rem;
     }  
 
     .button {

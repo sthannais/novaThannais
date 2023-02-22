@@ -10,7 +10,11 @@ module.exports = (sequelize)=>{
         active: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
-        }
+        },
+        habilitada: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true
+        },
     },{
         timestamps : false
     })

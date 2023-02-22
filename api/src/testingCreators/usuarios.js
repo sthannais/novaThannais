@@ -719,8 +719,8 @@ const createChoferPeoeneta = async () => {
         const chofer = await Chofer.create();
         const peoneta = await Ayudante.create();
 
-        actualChoferPeoneta.setChofer(chofer);
-        actualChoferPeoneta.setAyudante(peoneta);
+        await actualChoferPeoneta.setChofer(chofer);
+        await actualChoferPeoneta.setAyudante(peoneta);
 
         // Seteo el rol al personal
         const rolChofer = await Rol.findOne({
@@ -754,6 +754,9 @@ const createPeonetaChofer = async () => {
         // Seteo el ayudante al personal
         const peoneta = await Ayudante.create();
         const chofer = await Chofer.create();
+
+        await actualPeonetaChofer.setAyudante(peoneta);
+        await actualPeonetaChofer.setChofer(chofer);
 
         // Seteo el rol al personal
         const rolPeoneta = await Rol.findOne({
