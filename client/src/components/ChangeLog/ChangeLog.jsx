@@ -37,7 +37,9 @@ const ChangeLog = () => {
                         <li>Se estilizaron los estilos para que cada pantalla tenga las mismas dimensiones en cada tipo de pantalla.</li>
                         <li>Se agregó la funcionalidad activar y desactivar patentes.</li>
                         <li>Se corrigio bug en historial de anticipos que enseñaba anticipos anteriores al seleccionar cualquier fecha</li>
-                        <li>Se corrigio en rendicion de personal</li>
+                        <li>Se corrigio bug en rendicion de personal</li>
+                        <li>Se corrigio bug de boton Eliminar cuando ya la orden esta descargada</li>
+                        <li>Se corrigio bug que no validaba los llenos de 11kg al momento de descargar</li>
                     </ul>
                 </ModalBody>
                 <ModalFooter>

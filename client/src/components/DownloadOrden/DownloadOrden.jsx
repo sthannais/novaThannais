@@ -487,7 +487,7 @@ const DownloadOrden = ({ fecha }) => {
                                 </div>
                                 {
                                     Number(llenos?.llenos5kg) > Number(novaOrdenById?.contabilidadRecarga?.total5kg) ||
-                                    Number(llenos?.llenos11kg) > Number(novaOrdenById?.contabilidadRecarga?.total10kg) ||
+                                    Number(llenos?.llenos11kg) > Number(novaOrdenById?.contabilidadRecarga?.total11kg) ||
                                     Number(llenos?.llenos15kg) > Number(novaOrdenById?.contabilidadRecarga?.total15kg) ||
                                     Number(llenos?.llenos45kg) > Number(novaOrdenById?.contabilidadRecarga?.total45kg) ?
                                     <div className="danger">
