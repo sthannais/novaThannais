@@ -77,7 +77,7 @@
     overflow: hidden;
     z-index: -1;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 30px;
+    border-radius: 10px;
     font-family: 'Roboto';
     padding: 1rem 2.5rem 0 2.5rem;
 }
@@ -116,6 +116,7 @@
     .container {
         width: 1590px;
         height: 870px;
+        
     }
 
     .tableContainer {
@@ -127,9 +128,8 @@
     }
 
     .text {
-        left: 17%;
+        left: 15%;
         top: 3%;
-        line-height: 29px;
     }
 
     .excel {
@@ -142,18 +142,19 @@
     .text {
         font-size: 16px;
         left: 22%;
-        top: 3%;
+        top: 2.5%;
     }
 
     .icon {
-        margin-left: 73rem;
         margin-top: 0.3rem;
+        margin-left: 72rem;
     }
 
     .container {
         width: 1040px;
-        height: 590px;
+        height: 623px;
         top: 52px;
+        left: 16rem;
     }
 
     .tableContainer {
@@ -167,5 +168,14 @@
     .excel {
         top: 4.8%;
         left: 83.2%;
+    }
+
+    .boton {
+        width: 80px;
+        height: 28px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 16px;
+        font-size: 12px;
     }
 }

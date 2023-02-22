@@ -40,6 +40,9 @@ const getAllChoferNames = async (req, res) => {
             include: [
                 {
                     model: Rol,
+                    where: {
+                        name: 'Chofer'
+                    }
                 },
                 {
                     model: Chofer

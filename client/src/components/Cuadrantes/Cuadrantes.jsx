@@ -105,7 +105,8 @@ const Cuadrantes = () => {
                                                                 }}>Desactivar</Button>{' '}
                                                                 <Button color="secondary" onClick={toggleDesactive}>Cancelar</Button>
                                                             </ModalFooter>
-                                                        </Modal>                                                </>
+                                                        </Modal>                                                
+                                                    </>
                                                 ) : (
                                                     <>
                                                         <Button color="success" onClick={toggleActive}> Activar </Button>
@@ -167,9 +168,9 @@ const Cuadrantes = () => {
                         }
                         <Button color="secondary" onClick={
                             () => {
-                                toggle()
-                                setIdCuadrante('')
-                                setActivarCrear(false)
+                                toggle();
+                                setIdCuadrante('');
+                                setActivarCrear(false);
                             }
                         }>Cancelar</Button>
                     </ModalFooter>

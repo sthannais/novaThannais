@@ -18,7 +18,7 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
-const { conn, Rol, Chofer, Administrador, Cuadrante, Patentes, ListaDePrecios } = require('./src/db.js');
+const { conn, Rol, Chofer, Ayudante, Administrador, Cuadrante, Patentes, ListaDePrecios } = require('./src/db.js');
 const createRoles = require('./src/testingCreators/roles.js');
 const createPatentes = require('./src/testingCreators/patentes.js');
 const createCuadrantes = require('./src/testingCreators/cuadrante.js');
@@ -36,14 +36,13 @@ conn.sync({ force: true }).then(() => {
     const choferes = await Chofer.findAll();
     if (choferes.length < 1) {
       createChoferPeoeneta();
-      createPeonetaChofer();
     }
 
     // const auxiliares = await Auxiliar.findAll();
     // if (auxiliares.length < 1) createAuxiliares();
 
-    // const ayudantes = await Ayudante.findAll();
-    // if (ayudantes.length < 1) createAyudantes();
+    const ayudantes = await Ayudante.findAll();
+    if (ayudantes.length < 1) createPeonetaChofer();
 
     const administradores = await Administrador.findAll();
     if (administradores.length < 1) createAdministradores();

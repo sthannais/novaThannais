@@ -100,11 +100,10 @@ button {
 .logo {
     position: absolute;
     left: 2.8rem;
-    top: 93%;
+    top: 91%;
     width: 8rem;
     height: 2rem;
 }
-
 
 @media screen and (min-width: 1800px) {
     .grid1 {

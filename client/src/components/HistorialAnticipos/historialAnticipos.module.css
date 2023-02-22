@@ -25,9 +25,8 @@
 }
 
 .logo {
-    position: absolute;
-    left: 85%;
-    top: 2.5%;
+    margin-left: 82rem;
+    margin-top: 1rem;
 }
 
 .datePicker {
@@ -150,13 +149,12 @@
     }
 
     .text {
-        left: 17%;
+        left: 15%;
         top: 3%;
     }
 
     .logo {
-        left: 89%;
-        top: 2%;
+        margin-left: 105rem;
     }
 
     .textDatePicker {
@@ -201,13 +199,15 @@
     }
 
     .logo {
-        top: 0.5%;
+        margin-top: 0.3rem;
+        margin-left: 72rem;
     }
 
     .container {
         width: 1040px;
-        height: 600px;
+        height: 618px;
         top: 52px;
+        left: 16rem;
     }
 
     .textDatePicker {
@@ -242,7 +242,11 @@
     }
 
     .boton {
-        top: 34.5rem;
+        top: 35rem;
         left: 19.8rem;
+        width: 90px;
+        height: 28px;
+        font-weight: 500;
+        font-size: 14px;
     }
 }

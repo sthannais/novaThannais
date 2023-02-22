@@ -6,6 +6,7 @@ import {
         getOrdenById, 
         getPersonalById, 
         getPatentes, 
+        getAllPatentes,
         getCuadrantes,
         getChoferes,
         getAyudantes,
@@ -258,6 +259,29 @@ export const modifyLlenos = (ordenId, quantity) => async (dispatch) => {
     };
 };
 
+export const desactiveRecarga = (idOrden, idRecarga, fecha) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/orden/desactiveRecarga/${idOrden}/${idRecarga}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        Swal.fire({
+            title: 'Recarga desactivada',
+            text: 'La recarga se ha desactivado correctamente',
+            icon: 'success'
+        });
+        dispatch(getAllOrdenes(fecha));
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: `${error.message}`,
+            text: 'Something went wrong!',
+        });
+    };
+};
+
 export const finalizeOrden = (id, quantity, fecha) => async (dispatch) => {
     try {
         await fetch(`${process.env.REACT_APP_API}/orden/finalize/${id}`, {
@@ -311,6 +335,21 @@ export const cuadrarOrden =  (fecha, id, quantity) => async (dispatch) => {
     };
 };
 
+export const bringAllPatentes = () => async (dispatch) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_API}/patente/all`);
+        const data = await response.json();
+        dispatch(getAllPatentes(data));
+
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${error.message}`,
+        });
+    }
+};
+
 export const bringPatentes = () => async (dispatch) => {
     try {
         const response = await fetch(`${process.env.REACT_APP_API}/patente`);
@@ -324,6 +363,69 @@ export const bringPatentes = () => async (dispatch) => {
         });
     }
 };
+
+export const activePatente = (id) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/patente/habilitar/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        dispatch(bringPatentes());
+        dispatch(bringAllPatentes());
+        Swal.fire({
+            icon: 'success',
+            title: 'Patente activada',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    } catch (error) {
+        console.error(error.message);
+    }
+};
+
+export const desactivePatente = (id) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/patente/deshabilitar/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        dispatch(bringPatentes());
+        dispatch(bringAllPatentes());
+        Swal.fire({
+            icon: 'success',
+            title: 'Patente desactivada',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    } catch (error) {
+        console.error(error.message);
+    }
+};
+
+export const createPatente = (name) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/patente`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(name)
+        });
+        dispatch(bringPatentes());
+        Swal.fire({
+            icon: 'success',
+            title: 'Patente creada',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    } catch (error) {
+        console.error(error.message);
+    }
+}
 
 export const bringCuadrantesActive = () => async (dispatch) => {
     try {
@@ -700,24 +802,5 @@ export const switchLoading = () => async (dispatch) => {
     }
 }
 
-export const createPatente = (name) => async (dispatch) => {
-    try {
-        await fetch(`${process.env.REACT_APP_API}/patente`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(name)
-        });
-        dispatch(bringPatentes());
-        Swal.fire({
-            icon: 'success',
-            title: 'Patente creada',
-            showConfirmButton: false,
-            timer: 1500
-        });
-    } catch (error) {
-        console.error(error.message);
-    }
-}
+
 

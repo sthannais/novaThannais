@@ -31,6 +31,14 @@ margin: 0;
     padding: 0.5rem;
 }
 
+.tdclasDesactive {
+    border: 0.5px;
+    border-style: solid;
+    border-color: red;
+    padding: 0.5rem;
+    color: red;
+}
+
 .tabla {
     font-family: 'Roboto';
 }
