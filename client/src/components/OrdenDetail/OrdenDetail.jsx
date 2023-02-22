@@ -544,14 +544,16 @@ const OrdenDetail = (
                                 </ModalFooter>
                             </Modal>
                         </>
-                    ) : (
+                    ) : estado === "Activa" ? (
                         <Button color="danger" onClick={
                             () => {
                                 setDesactive(true);
                                 setIdRecargaDesactive(null);
                             }
-                        } >Eliminar recarga</Button>
-                    )
+                        }>
+                            Eliminar recarga
+                        </Button>
+                    ) : null
                 }
                 {
                     editRecarga === id ? (

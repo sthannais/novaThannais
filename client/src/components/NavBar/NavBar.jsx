@@ -44,7 +44,7 @@ const NavBar = () => {
                             } className={
                                 buttonSelected === 'rendicion' ? style.guideStyleSelected : style.guideStyle
                             }>
-                                Rendición Gastos
+                                Rendición de ventas
                             </button>
                         </Link>
                         <Link to="/rendicionGeneral">
@@ -101,7 +101,7 @@ const NavBar = () => {
                             } className={
                                 buttonSelected === 'rendicion' ? style.guideStyleSelected : style.guideStyle
                             }>
-                                Rendición Gastos
+                                Rendición de ventas
                             </button>
                         </Link>
                         <Link to="/rendicionGeneral">
