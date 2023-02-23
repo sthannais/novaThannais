@@ -24,11 +24,23 @@ const ChangeLog = () => {
                 () => {
                     toggle();
                 }
-            } >Ver. 1.0.0
+            } >Ver. 1.0.1
             </button>
             <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="md" backdrop="static" onKeyDown={handleKeydown}>
                 <ModalHeader toggle={toggle}>Cambios recientes</ModalHeader>
                 <ModalBody>
+                    <h5>Ver. 1.0.1</h5>
+                    <em style={{ color: 'red' }}>23/02/2023</em>
+                    <ul className={style.newli}>
+                        <li>Se corrigio bug al momento de cuadrar, que no mostraba el faltante real.</li>
+                        <li>Se agregó la funcionalidad de tabular hacia abajo en la cuadratura de los vales.</li>
+                        <li>Se implemento barra de busqueda al momento de descargar una orden para buscar por nombre de chofer</li>
+                        <li>Se implemento boton de anticipos si la orden tiene anticipos en la pantalla de rendicion de ventas</li>
+                        <li>Se agrego nombre y apellido de chofer y peoneta al momento de cuadrar una orden</li>
+                        <li>Se agrego cambiar el personal de una orden en la cuadratura, tanto chofer como peoneta se pueden cambiar ahora</li>
+                    </ul>
+                    <h5>Ver. 1.0.0</h5> 
+                    <em style={{ color: 'red' }}>22/02/2023</em>
                     <ul className={style.newli}>
                         <li>Se agregó separación numerica al momento de cuadrar una orden.</li>
                         <li>Se agregó la funcionalidad Chofer/Peoneta al momento de crear un usuario nuevo.</li>

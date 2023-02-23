@@ -1124,6 +1124,63 @@ const cuadrarOrden = async (req, res) => {
     }
 }
 
+const cambiarChoferDeOrden = async (req, res) => {
+    const { idOrden, idChofer } = req.params;
+    try {
+        const ordenDeReparto = await OrdenDeReparto.findByPk(idOrden);
+        const choferAnterior = await ordenDeReparto.getChofer();
+        const personalDeChofer = await choferAnterior.getPersonal();
+
+        await personalDeChofer.update({
+            activeForOrden: true
+        })
+
+        const chofer = await Chofer.findByPk(idChofer);
+        const personal = await chofer.getPersonal();
+
+        await personal.update({
+            activeForOrden: false
+        })
+
+        await ordenDeReparto.setChofer(chofer);
+
+        res.json({msg: "Chofer de orden cambiado correctamente"});
+    } catch (error) {
+        console.log(error.message);
+        res.status(400).json({error: error.message});
+    }
+};            
+
+const cambiarAyudanteDeOrden = async (req, res) => {
+    const { idOrden, idAyudante } = req.params;
+    try {
+        const ordenDeReparto = await OrdenDeReparto.findByPk(idOrden);
+        const ayudanteAnterior = await ordenDeReparto.getAyudante();
+        
+        if(ayudanteAnterior){
+            const personalDeAyudante = await ayudanteAnterior.getPersonal();
+
+            await personalDeAyudante.update({
+                activeForOrden: true
+            })
+        }
+
+        const ayudante = await Ayudante.findByPk(idAyudante);
+        const personal = await ayudante.getPersonal();
+
+        await personal.update({
+            activeForOrden: false
+        })
+
+        await ordenDeReparto.setAyudante(ayudante);
+
+        res.json({msg: "Ayudante de orden cambiado correctamente"});
+    } catch (error) {
+        console.log(error.message);
+        res.status(400).json({error: error.message});
+    }
+};
+
 module.exports = {
     getOrdenesDeReparto,
     getOrdenDeRepartoById,
@@ -1139,5 +1196,7 @@ module.exports = {
     getAllOrdenesByDate,
     getAllOrdenesWhereEstadoFalseByDate,
     changeLlenos,
-    desactiveRecarga
+    desactiveRecarga,
+    cambiarChoferDeOrden,
+    cambiarAyudanteDeOrden
 }

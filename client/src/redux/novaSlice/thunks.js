@@ -323,6 +323,10 @@ export const cuadrarOrden =  (fecha, id, quantity) => async (dispatch) => {
             title: 'Orden cuadrada',
             text: 'La orden se ha cuadrado correctamente',
             icon: 'success',
+            backdrop: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
             showConfirmButton: false,
             footer: '<a class="btn btn-primary" href="/rendicion">OK</a>'
         });
@@ -801,6 +805,52 @@ export const switchLoading = () => async (dispatch) => {
         console.error(error.message);
     }
 }
+
+export const changeChofer = (idOrden, idChofer, fecha) => async (dispatch) => {
+
+    try {
+        await fetch(`${process.env.REACT_APP_API}/orden/cambiarChoferOPeonetaDeOrden/${idOrden}/${idChofer}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        dispatch(bringOrdenById(idOrden));
+        dispatch(ordenesRendicion(fecha));
+        Swal.fire({
+            icon: 'success',
+            title: 'Chofer cambiado',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }
+    catch (error) {
+        console.error(error.message);
+    }
+};
+
+export const changePeoneta = (idOrden, idPeoneta, fecha) => async (dispatch) => {
+
+    try {
+        await fetch(`${process.env.REACT_APP_API}/orden/cambiarAyudanteOPeonetaDeOrden/${idOrden}/${idPeoneta}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        dispatch(bringOrdenById(idOrden));
+        dispatch(ordenesRendicion(fecha));
+        Swal.fire({
+            icon: 'success',
+            title: 'Peoneta cambiada',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }
+    catch (error) {
+        console.error(error.message);
+    }
+};
 
 
 

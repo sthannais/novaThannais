@@ -27,3 +27,8 @@
     font-size: 16px;
     line-height: 20px;
 }
+
+.scrolleable {
+    overflow-y: scroll;
+    height: 100%;
+}

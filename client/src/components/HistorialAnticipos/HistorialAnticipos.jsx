@@ -171,7 +171,7 @@ const HistorialAnticipos = () => {
                                                 }
                                             </td>
                                             <td>
-                                                Ayudante
+                                                Peoneta
                                             </td>
                                             <td>
                                                 {
