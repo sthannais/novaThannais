@@ -373,7 +373,7 @@ const choferPeoneta = [
         rut: '123456789',
     },
     {
-        name: 'Luis Atencio',
+        name: 'Luis Manuel',
         lastname: 'Coronado',
         email: 'luisCoronado@gmail.com',
         password: '123456789',

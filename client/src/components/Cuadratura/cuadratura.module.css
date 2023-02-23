@@ -76,12 +76,28 @@
     margin-left: 1.3rem;   
 }
 
+.gridOne {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
 .grid2 {
     display: grid;
-    grid-template-columns: 1fr 1fr ;
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
     margin: 0.5rem;
-    line-height: 5px;
+    line-height: 10px;
+    font-weight: lighter;
+    text-align: center;
+}
+
+.gridx {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    margin: 0.5rem;
+    line-height: 10px;
     font-weight: lighter;
     text-align: center;
 }

@@ -15,6 +15,7 @@ import TableVales from '../TablesPayments/TableVales/TableVales';
 import RecaudacionOrden from '../TablesPayments/RecaudacionOrden/RecaudacionOrden';
 import OrdenInfo from '../TablesPayments/OrdenInfo/OrdenInfo';
 import Cuadratura from '../Cuadratura/Cuadratura';
+import Anticipos from '../Anticipos/Anticipos';
 import { numberWithDots } from '../../helpers/numberWithDot';
 import ModifyOrden from '../ModifyOrden/ModifyOrden';
 import { RiFileExcel2Fill } from 'react-icons/ri';
@@ -345,6 +346,11 @@ const RendicionPage = () => {
                 {
                     novaOrdenById?.rendida === false ? (
                         <Cuadratura novaOrdenById={novaOrdenById} fecha={soloFecha}/>
+                    ) : null
+                }
+                {
+                    Number(novaOrdenById?.faltanteChofer) > 0 | Number(novaOrdenById?.faltantePeoneta) > 0 ? (
+                        <Anticipos novaOrdenById={novaOrdenById} />
                     ) : null
                 }
                 <RecaudacionOrden novaOrdenById={novaOrdenById} />

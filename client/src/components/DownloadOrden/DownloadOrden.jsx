@@ -4,6 +4,7 @@ import style from './downloadOrden.module.css';
 import descargar from '../../assetsOficial/descargar.svg';
 import { ordenesActivas, bringOrdenById, cleanOrden, finalizeOrden, switchLoading } from '../../redux/novaSlice/thunks';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Label, Table }  from 'reactstrap';
+import Select from 'react-select';
 import { handleKeydown } from '../../helpers/KeyDown';
 import { numberWithDots } from '../../helpers/numberWithDot';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -151,6 +152,28 @@ const DownloadOrden = ({ fecha }) => {
         setTotalRecaudacion(0);
     }
 
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    
+    const onMenuOpen = () => setIsMenuOpen(true);
+    const onMenuClose = () => setIsMenuOpen(false);
+
+    const optionsOrdenes = ordenesDisponibles?.map((orden) => {
+        return {
+            value: orden.id,
+            label: 
+                `#${orden.id} 
+                Patente: ${orden.patente.name} 
+                Cuadrante: ${orden.cuadrante.name} 
+                ${orden.chofer.personal.name} 
+                ${orden.chofer.personal.lastname}` + 
+                `${orden.ayudante? " y " + orden?.ayudante?.personal?.name + orden?.ayudante?.personal?.lastname : ""} `
+        }
+    })
+
+    const handleChangeOptions = (e) => {
+        setIdOrden(e.value);
+    }
+
     const modalStyles = {
         position: 'relative',
         left: '15%',
@@ -186,32 +209,15 @@ const DownloadOrden = ({ fecha }) => {
                                 <Label for="exampleSelect" style={{
                                     fontWeight: '700'
                                 }}>Seleccione una orden</Label>
-                                <select 
-                                    type="select" 
-                                    value={idOrden}
-                                    onChange={(e) => setIdOrden(e.target.value)}
-                                    className="form-select"
-                                >
-                                    <option hidden>Seleccione una orden</option>
-                                {
-                                    ordenesDisponibles?.map((orden) => (
-                                        <option id={orden.id} key={orden.id} value={orden.id}>
-                                            {
-                                                `#${orden.id} 
-                                                Patente: ${orden.patente.name} 
-                                                Cuadrante: ${orden.cuadrante.name} 
-                                                ${orden.chofer.personal.name} 
-                                                ${orden.chofer.personal.lastname}`   
-                                            }{
-                                                orden.ayudante ?  
-                                                ` y ${orden?.ayudante?.personal?.name} 
-                                                ${orden?.ayudante?.personal?.lastname}` :
-                                                null
-                                            }
-                                        </option>  
-                                ))
-                                }
-                                </select>
+                                <Select 
+                                    name='idOrden'
+                                    onChange={handleChangeOptions}
+                                    options={optionsOrdenes}
+                                    isMenuOpen={isMenuOpen}
+                                    onMenuOpen={onMenuOpen}
+                                    onMenuClose={onMenuClose}
+                                    placeholder="Ordenes"
+                                />
                                 <div className={style.tabla}>
                                 <Table
                                     bordered

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { cuadrarOrden, bringListaDePreciosActive } from '../../redux/novaSlice/thunks';
 import style from './cuadratura.module.css';
 import cuadratura from '../../assetsOficial/cuadratura.svg';
+import CambioDePersonal from '../CambioDePersonal/CambioDePersonal';
 import validateBilletes from '../../helpers/validateBilletes';
 import { handleKeydown } from '../../helpers/KeyDown';
 import { Modal, Button, ModalHeader, ModalBody, ModalFooter, Input, Form, FormGroup, Label } from 'reactstrap';
@@ -381,11 +382,19 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
         })
 
         setFaltanteChofer({
-            faltanteChofer : 0,
+            faltanteChofer : ""
         })
 
         setFaltantePeoneta({
-            faltantePeoneta : 0,
+            faltantePeoneta : ""
+        })
+
+        setFaltanteChoferNumber({
+            faltanteChofer : 0
+        })
+        
+        setFaltantePeonetaNumber({
+            faltantePeoneta : 0
         })
 
         setDisabled(true)
@@ -393,10 +402,18 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
 
     const cleanFaltantes = () => {
         setFaltanteChofer({
+            faltanteChofer : "",
+        })
+
+        setFaltanteChoferNumber({
             faltanteChofer : 0,
         })
 
         setFaltantePeoneta({
+            faltantePeoneta : "",
+        })
+
+        setFaltantePeonetaNumber({
             faltantePeoneta : 0,
         })
     }
@@ -446,7 +463,15 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
             </Button> 
             <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="lg" backdrop="static" onKeyDown={handleKeydown}>
                 <Form onSubmit={(e) => handleSubmit(e)}>
-                    <ModalHeader toggle={toggle}>Cuadratura</ModalHeader>
+                    <ModalHeader toggle={toggle}>Cuadratura de {" "}  
+                        {
+                            novaOrdenById?.chofer?.personal?.name + " " + 
+                            novaOrdenById?.chofer?.personal?.lastname
+                        }
+                        {
+                            novaOrdenById?.ayudante ? " y " + novaOrdenById?.ayudante?.personal?.name + " " + novaOrdenById?.ayudante?.personal?.lastname : ""
+                        }
+                    </ModalHeader>
                     <ModalBody>
                         <div className={style.containerGeneral}>
                             <div className={style.containerEfectivo}>
@@ -556,104 +581,108 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                 }}>
                                     VALES
                                 </p>
-                                <div className={style.grid2}>
-                                    <p style={{fontWeight: "bold", fontSize: "18px"}}>Fisicos</p>
-                                    <p style={{fontWeight: "bold", fontSize: "18px"}}>Digitales</p>
-                                    <div>
-                                    <p>5kg</p>
-                                    <Input
-                                        type="number"
-                                        name="fisico5kg"
-                                        id="fisico5kg"
-                                        value={vales.fisico5kg === 0 ? "" : vales.fisico5kg}
-                                        className={style.inputs3}
-                                        onChange={(e) => handleValesChange(e)}
-                                        min={0}
-                                    />
+                                <div className={style.gridOne} >
+                                    <div className={style.grid2}>
+                                        <p style={{fontWeight: "bold", fontSize: "18px"}}>Fisicos</p>
+                                        <div>
+                                            <p>5kg</p>
+                                            <Input
+                                                type="number"
+                                                name="fisico5kg"
+                                                id="fisico5kg"
+                                                value={vales.fisico5kg === 0 ? "" : vales.fisico5kg}
+                                                className={style.inputs3}
+                                                onChange={(e) => handleValesChange(e)}
+                                                min={0}
+                                            />
+                                        </div>
+                                        <div>
+                                            <p>11kg</p>
+                                            <Input
+                                                type="number"
+                                                name="fisico11kg"
+                                                id="fisico11kg"
+                                                value={vales.fisico11kg === 0 ? "" : vales.fisico11kg}
+                                                className={style.inputs3}
+                                                onChange={(e) => handleValesChange(e)}
+                                                min={0}
+                                            />
+                                        </div>
+                                        <div>
+                                            <p>15kg</p>
+                                            <Input
+                                                type="number"
+                                                name="fisico15kg"
+                                                id="fisico15kg"
+                                                value={vales.fisico15kg === 0 ? "" : vales.fisico15kg}
+                                                className={style.inputs3}
+                                                onChange={(e) => handleValesChange(e)}
+                                                min={0}
+                                            />
+                                        </div>
+                                        <div>
+                                        <p>45kg</p>
+                                            <Input
+                                                type="number"
+                                                name="fisico45kg"
+                                                id="fisico45kg"
+                                                value={vales.fisico45kg === 0 ? "" : vales.fisico45kg}
+                                                className={style.inputs3}
+                                                onChange={(e) => handleValesChange(e)}
+                                                min={0}
+                                            />
+                                        </div>
                                     </div>
-                                    <div>
-                                    <p>5kg</p>
-                                    <Input
-                                        type="number"
-                                        name="digital5kg"
-                                        id="digital5kg"
-                                        value={vales.digital5kg === 0 ? "" : vales.digital5kg}
-                                        className={style.inputs3}
-                                        onChange={(e) => handleValesChange(e)}
-                                        min={0}
-                                    />
-                                    </div>
-                                    <div>
-                                    <p>11kg</p>
-                                    <Input
-                                        type="number"
-                                        name="fisico11kg"
-                                        id="fisico11kg"
-                                        value={vales.fisico11kg === 0 ? "" : vales.fisico11kg}
-                                        className={style.inputs3}
-                                        onChange={(e) => handleValesChange(e)}
-                                        min={0}
-                                    />
-                                    </div>
-                                    <div>
-                                    <p>11kg</p>
-                                    <Input
-                                        type="number"
-                                        name="digital11kg"
-                                        id="digital11kg"
-                                        value={vales.digital11kg === 0 ? "" : vales.digital11kg}
-                                        className={style.inputs3}
-                                        onChange={(e) => handleValesChange(e)}
-                                        min={0}
-                                    />
-                                    </div>
-                                    <div>
-                                    <p>15kg</p>
-                                    <Input
-                                        type="number"
-                                        name="fisico15kg"
-                                        id="fisico15kg"
-                                        value={vales.fisico15kg === 0 ? "" : vales.fisico15kg}
-                                        className={style.inputs3}
-                                        onChange={(e) => handleValesChange(e)}
-                                        min={0}
-                                    />
-                                    </div>
-                                    <div>
-                                    <p>15kg</p>
-                                    <Input
-                                        type="number"
-                                        name="digital15kg"
-                                        id="digital15kg"
-                                        value={vales.digital15kg === 0 ? "" : vales.digital15kg}
-                                        className={style.inputs3}
-                                        onChange={(e) => handleValesChange(e)}
-                                        min={0}
-                                    />
-                                    </div>
-                                    <div>
-                                    <p>45kg</p>
-                                    <Input
-                                        type="number"
-                                        name="fisico45kg"
-                                        id="fisico45kg"
-                                        value={vales.fisico45kg === 0 ? "" : vales.fisico45kg}
-                                        className={style.inputs3}
-                                        onChange={(e) => handleValesChange(e)}
-                                        min={0}
-                                    />
-                                    </div>
-                                    <div>
-                                    <p>45kg</p>
-                                    <Input
-                                        type="number"
-                                        name="digital45kg"
-                                        id="digital45kg"
-                                        value={vales.digital45kg === 0 ? "" : vales.digital45kg}
-                                        className={style.inputs3}
-                                        onChange={(e) => handleValesChange(e)}
-                                        min={0}
-                                    />
+                                    <div className={style.gridx}>
+                                        <p style={{fontWeight: "bold", fontSize: "18px"}}>Digitales</p>
+                                        <div>
+                                            <p>5kg</p>
+                                            <Input
+                                                type="number"
+                                                name="digital5kg"
+                                                id="digital5kg"
+                                                value={vales.digital5kg === 0 ? "" : vales.digital5kg}
+                                                className={style.inputs3}
+                                                onChange={(e) => handleValesChange(e)}
+                                                min={0}
+                                            />
+                                        </div>
+                                        <div>
+                                            <p>11kg</p>
+                                            <Input
+                                                type="number"
+                                                name="digital11kg"
+                                                id="digital11kg"
+                                                value={vales.digital11kg === 0 ? "" : vales.digital11kg}
+                                                className={style.inputs3}
+                                                onChange={(e) => handleValesChange(e)}
+                                                min={0}
+                                            />
+                                        </div>
+                                        <div>
+                                            <p>15kg</p>
+                                            <Input
+                                                type="number"
+                                                name="digital15kg"
+                                                id="digital15kg"
+                                                value={vales.digital15kg === 0 ? "" : vales.digital15kg}
+                                                className={style.inputs3}
+                                                onChange={(e) => handleValesChange(e)}
+                                                min={0}
+                                            />
+                                        </div>
+                                        <div>
+                                        <p>45kg</p>
+                                            <Input
+                                                type="number"
+                                                name="digital45kg"
+                                                id="digital45kg"
+                                                value={vales.digital45kg === 0 ? "" : vales.digital45kg}
+                                                className={style.inputs3}
+                                                onChange={(e) => handleValesChange(e)}
+                                                min={0}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -687,6 +716,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                         className={style.inputs2}
                                         onChange={(e) => handleMetodoPagosChange(e)}
                                         min={0} 
+                                        autoComplete="off"
                                     />
                                 </div>
                                 <div style={{
@@ -707,6 +737,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                         className={style.inputs2}
                                         onChange={(e) => handleMetodoPagosChange(e)}
                                         min={0}
+                                        autoComplete="off"
                                     />
                                 </div>
                                 <div style={{
@@ -727,6 +758,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                         className={style.inputs2}
                                         onChange={(e) => handleMetodoPagosChange(e)}
                                         min={0}
+                                        autoComplete="off"
                                     />
                                 </div>
                                 <div style={{
@@ -747,6 +779,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                         className={style.inputs2}
                                         onChange={(e) => handleMetodoPagosChange(e)}
                                         min={0}
+                                        autoComplete="off"
                                     />
                                 </div>
                             </div>
@@ -837,6 +870,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                             :
                             null
                         }
+                        <CambioDePersonal novaOrdenById={novaOrdenById} />
                         <Button color='success' onClick={toggleNested} className={style.boton2}>Asignar Faltante</Button>
                         <Modal
                             isOpen={nestedModal}
