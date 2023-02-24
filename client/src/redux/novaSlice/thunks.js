@@ -12,6 +12,7 @@ import {
         getAyudantes,
         ordenesDisponibles,
         Rendidas,
+        RendidasDisponibles,
         clearOrdenById,
         getCuadratura,
         getOrdenesAyudanteById,
@@ -97,21 +98,6 @@ export const createPersonal = async (personal) => {
         });
     }
 };
-
-export const bringOrdenByAdminId = (id, date) => async (dispatch) => {
-    try {
-        const response = await fetch(`${process.env.REACT_APP_API}/orden/admin/${id}/${date}`);
-        const data = await response.json();
-        dispatch(getOrdenes(data));
-    } catch (error) {
-        Swal.fire({
-            icon: 'warning',
-            title: 'No hay ordenes en este dia',
-            showConfirmButton: true,
-        });
-    }
-}
-
 
 export const bringOrdenById = (id) => async (dispatch) => {
     try {
@@ -586,6 +572,22 @@ export const ordenesRendicion = (date) => async (dispatch) => {
         });
     }
 };
+
+export const ordenesRendicionBetween = (date1, date2) => async (dispatch) => {
+    try {
+        //fetch
+        const response = await fetch(`${process.env.REACT_APP_API}/orden/date/estado/${date1}/${date2}`);
+        const data = await response.json();
+        dispatch(RendidasDisponibles(data));
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${error.message}`,
+        });
+    }
+};
+
 
 
 export const cleanOrden = () => async (dispatch) => {

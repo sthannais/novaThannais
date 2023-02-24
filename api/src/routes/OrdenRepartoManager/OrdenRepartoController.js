@@ -15,7 +15,8 @@ const { OrdenDeReparto,
         Vales,
         Efectivo,
         Transferencias,
-        Transbank
+        Transbank,
+        Gastos
     } = require('../../db.js');
 
 const { Op } = require('sequelize');
@@ -90,6 +91,9 @@ const getOrdenesDeReparto = async (req, res) => {
                         {
                             model: Transbank,
                         },
+                        {
+                            model: Gastos,
+                        }
                     ]
                 }       
             ]
@@ -162,6 +166,9 @@ const getOrdenDeRepartoById = async (req, res) => {
                         },
                         {
                             model: Transbank,
+                        },
+                        {
+                            model: Gastos,
                         }
                     ]
                 },
@@ -180,77 +187,6 @@ const getOrdenDeRepartoById = async (req, res) => {
         res.status(400).json({error: error.message});
     }
 }
-
-const getOrdenDeRepartoByAdminIdAndDate = async (req, res) => {
-    const { id, date } = req.params;
-    try {
-        const AdminOrden = await Administrador.findByPk(id, {
-            include: [{
-                model: OrdenDeReparto,
-                where: {
-                    fecha: date
-                },
-                include: [{
-                    model: Patentes
-                },
-                {
-                    model: Recargas
-                },
-                {
-                    model: ContabilidadRecargas
-                },
-                {
-                    model: Cuadrante
-                }, {
-                    model: Chofer,
-                    include: [{
-                        model: Personal
-                    }]
-                }, {
-                    model: Ayudante,
-                    include: [{
-                        model: Personal
-                    }]
-                },
-                {
-                    model: ListaDePrecios,
-                },
-                {
-                    model: MetodoPagos,
-                    include: [
-                        {
-                            model: Abonos
-                        },
-                        {
-                            model: DescuentoRut
-                        },
-                        {
-                            model: Descuentos
-                        },
-                        {
-                            model: Vales
-                        },
-                        {
-                            model: Efectivo
-                        },
-                        {
-                            model: Transferencias
-                        },
-                        {
-                            model: Transbank
-                        },
-            ]
-                }]
-            }]
-        });
-
-        if(!AdminOrden) return res.status(200).json({error: "No se encontró el administrador"});
-
-        res.json(AdminOrden);
-    } catch (error) {
-        res.status(400).json({error: error.message});
-    }
-};
 
 const getAllOrdenesByDate = async (req, res) => {
     const { date } = req.params;
@@ -528,6 +464,112 @@ const getAllOrdenesWhereEstadoFalseByDate = async (req, res) => {
     }
 };
 
+const getAllOrdenesWhereEstadoFalseBetweenDates = async (req, res) => {
+    const { fechaInicio, fechaFin } = req.params;
+    try {
+        
+        let ordenesDeReparto 
+
+        if(!fechaFin || fechaFin === "undefined" || fechaFin === null) {
+            ordenesDeReparto = await OrdenDeReparto.findAll({
+                where: {
+                    fecha: fechaInicio,
+                    estado: false
+                },
+                order : [
+                    ['fecha', 'DESC']
+                ],
+                include: [
+                    {
+                        model: Recargas,
+                        where: {
+                            active: true
+                        }
+                    },
+                    {
+                        model: ContabilidadRecargas,
+                    },
+                    {
+                        model: Cuadrante,
+                    },
+                    {
+                        model: Chofer,
+                        include: [
+                            {
+                                model: Personal
+                            }
+                        ]
+                    },
+                    {
+                        model: ListaDePrecios,
+                    },
+                    {
+                        model: Ayudante,
+                        include: [
+                            {
+                                model: Personal
+                            }
+                        ]
+                    },
+                ]
+            });
+        } else {
+            ordenesDeReparto = await OrdenDeReparto.findAll({
+                where: {
+                    fecha: {
+                        [Op.between]: [fechaInicio, fechaFin]
+                    },
+                    estado: false
+                },
+                order : [
+                    ['fecha', 'DESC']
+                ],
+                include: [
+                    {
+                        model: Recargas,
+                        where: {
+                            active: true
+                        }
+                    },
+                    {
+                        model: ContabilidadRecargas,
+                    },
+                    {
+                        model: Cuadrante,
+                    },
+                    {
+                        model: Chofer,
+                        include: [
+                            {
+                                model: Personal
+                            }
+                        ]
+                    },
+                    {
+                        model: ListaDePrecios,
+                    },
+                    {
+                        model: Ayudante,
+                        include: [
+                            {
+                                model: Personal
+                            }
+                        ]
+                    },
+                ]
+            });
+        }
+        res.json(ordenesDeReparto);
+    } catch (error) {
+        console.log(error.message);
+        res.status(400).json({error: error.message});
+    }
+};
+
+
+
+
+
 //////////////// POST  //////////////////////
 
 const createOrden = async (req, res) => {
@@ -564,6 +606,7 @@ const createOrden = async (req, res) => {
         const vales = await Vales.create();
         const transbank = await Transbank.create();
         const transferencias = await Transferencias.create();
+        const gastos = await Gastos.create();
         await metodoPagos.setEfectivo(efectivo);
         await metodoPagos.setAbono(abonos);
         await metodoPagos.setDescuentoRut(descuentoRut);
@@ -571,6 +614,7 @@ const createOrden = async (req, res) => {
         await metodoPagos.setVale(vales);
         await metodoPagos.setTransbank(transbank);
         await metodoPagos.setTransferencia(transferencias);
+        await metodoPagos.setGasto(gastos);
         await ordenDeReparto.setMetodoPagos(metodoPagos);
 
         const patenteNew = await Patentes.findOne({
@@ -1043,6 +1087,8 @@ const cuadrarOrden = async (req, res) => {
         faltante,
         sobrante,
         idDeDecuadre,
+        montoGastos,
+        DescripcionGastos,
     } = req.body;
 
     try {
@@ -1057,6 +1103,7 @@ const cuadrarOrden = async (req, res) => {
         const transferencias = await metodoPagos[0].getTransferencia();
         const descuentos = await metodoPagos[0].getDescuento();
         const descuentoRut = await metodoPagos[0].getDescuentoRut();
+        const gastos = await metodoPagos[0].getGasto();
 
         await efectivo.update({
             totalBilletes1,
@@ -1107,6 +1154,11 @@ const cuadrarOrden = async (req, res) => {
 
         await descuentoRut.update({
             monto: porcentajeDescuentoRut
+        });
+
+        await gastos.update({
+            monto: montoGastos,
+            descripcion: DescripcionGastos
         });
 
         await ordenDeReparto.update({
@@ -1189,12 +1241,12 @@ module.exports = {
     changeRecharge,
     finalizeOrden,
     cuadrarOrden,
-    getOrdenDeRepartoByAdminIdAndDate,
     getAllChoferOrdenesDeRepartoBetweenDates,
     getAllAyudanteOrdenesDeRepartoBetweenDates,
     sendEmailWithCode,
     getAllOrdenesByDate,
     getAllOrdenesWhereEstadoFalseByDate,
+    getAllOrdenesWhereEstadoFalseBetweenDates,
     changeLlenos,
     desactiveRecarga,
     cambiarChoferDeOrden,

@@ -165,6 +165,12 @@ const OrdenDetail = (
         totalRecaudacion += recargas5kg + recargas11kg + recargas15kg + recargas45kg
     })
 
+    const handleKeyDown2 = (event) => {
+        if (event.keyCode === 38 || event.keyCode === 40) {
+            event.preventDefault();
+        }
+    };
+
     ////// MODAL //////
 
     const modalStyles = {
@@ -244,6 +250,8 @@ const OrdenDetail = (
                                                         className={style.inputs2}
                                                         min={0}
                                                         autoComplete="off"
+                                                        onKeyDown={handleKeyDown2}
+                                                        onWheel={(e) => e.target.blur()}
                                                     />
                                                 </td>
                                             ) :
@@ -276,6 +284,8 @@ const OrdenDetail = (
                                             className={style.inputs}
                                             min="0"
                                             autoComplete='off'
+                                            onKeyDown={handleKeyDown2}
+                                            onWheel={(e) => e.target.blur()}
                                         />
                                     </td>
                                     : null
@@ -299,6 +309,8 @@ const OrdenDetail = (
                                                         className={style.inputs2}
                                                         min={0}
                                                         autoComplete="off"
+                                                        onKeyDown={handleKeyDown2}
+                                                        onWheel={(e) => e.target.blur()}
                                                     />
                                                 </td>
                                             ) :
@@ -331,6 +343,8 @@ const OrdenDetail = (
                                             className={style.inputs}
                                             min="0"
                                             autoComplete='off'
+                                            onKeyDown={handleKeyDown2}
+                                            onWheel={(e) => e.target.blur()}
                                         />
                                     </td>
                                     : null
@@ -354,6 +368,8 @@ const OrdenDetail = (
                                                         className={style.inputs2}
                                                         min={0}
                                                         autoComplete="off"
+                                                        onKeyDown={handleKeyDown2}
+                                                        onWheel={(e) => e.target.blur()}
                                                     />
                                                 </td>
                                             ) :
@@ -386,6 +402,8 @@ const OrdenDetail = (
                                             className={style.inputs}
                                             min="0"
                                             autoComplete='off'
+                                            onKeyDown={handleKeyDown2}
+                                            onWheel={(e) => e.target.blur()}
                                         />
                                     </td>
                                     : null
@@ -409,6 +427,8 @@ const OrdenDetail = (
                                                         className={style.inputs2}
                                                         min={0}
                                                         autoComplete="off"
+                                                        onKeyDown={handleKeyDown2}
+                                                        onWheel={(e) => e.target.blur()}
                                                     />
                                                 </td>
                                             ) :
@@ -439,6 +459,8 @@ const OrdenDetail = (
                                             className={style.inputs}
                                             min="0"
                                             autoComplete='off'
+                                            onKeyDown={handleKeyDown2}
+                                            onWheel={(e) => e.target.blur()}
                                         />
                                     </td>
                                     : null
@@ -527,7 +549,7 @@ const OrdenDetail = (
                     desactive === true ? (
                         <>
                             <Button color="danger" onClick={toggleDesactive}>Eliminar</Button>
-                            <Button color="secondary" onClick={
+                            <Button color="dark" onClick={
                                 () => {
                                     setDesactive(false);
                                     setIdRecargaDesactive(null);
@@ -545,7 +567,9 @@ const OrdenDetail = (
                             </Modal>
                         </>
                     ) : estado === "Activa" ? (
-                        <Button color="danger" onClick={
+                        <Button color={
+                            editRecarga === id || editQuantity === id || editAbono === id ? "secondary" : "danger"
+                        } onClick={
                             () => {
                                 setDesactive(true);
                                 setIdRecargaDesactive(null);
@@ -559,7 +583,7 @@ const OrdenDetail = (
                     editRecarga === id ? (
                         <>
                             <Button color="success" onClick={handleUpdateRecarga}>Guardar</Button>
-                            <Button color="secondary" onClick={
+                            <Button color="dark" onClick={
                                 () => {
                                     cleanRecarga();
                                     setEditRecarga(null);
@@ -569,7 +593,9 @@ const OrdenDetail = (
                         </>
                     ) : estado === "Activa" ? (
                         <>
-                            <Button color="success" onClick={(e) => handleEditRecarga(e, id)}>Modificar recargas</Button>
+                            <Button color={
+                                desactive || editQuantity === id || editAbono === id ? "secondary" : "success"
+                            } onClick={(e) => handleEditRecarga(e, id)}>Modificar recargas</Button>
                         </>
                     ) : null
                 }
@@ -577,7 +603,7 @@ const OrdenDetail = (
                     editQuantity === id ? (
                         <>
                             <Button color="primary" onClick={handleUpdateQuantity}>Guardar Recarga</Button>
-                            <Button color="secondary" onClick={
+                            <Button color="dark" onClick={
                                 () => {
                                     cleanQuantity();
                                     setEditQuantity(null);
@@ -586,7 +612,9 @@ const OrdenDetail = (
                         </>
                     ) : estado === "Activa" ? (
                         <>
-                            <Button color="primary" onClick={(e) => handleEditQuantity(e, id)}>
+                            <Button color={
+                                desactive || editRecarga === id || editAbono === id ? "secondary" : "primary"
+                            } onClick={(e) => handleEditQuantity(e, id)}>
                                 Recargar</Button>
                         </>
                     ) : null
@@ -595,7 +623,7 @@ const OrdenDetail = (
                     editAbono === id ? (
                         <>
                             <Button color="warning" onClick={handleUpdateAbono}>Guardar abono</Button>
-                            <Button color="secondary" onClick={
+                            <Button color="dark" onClick={
                                 () => {
                                     cleanAbono();
                                     setEditAbono(null);
@@ -604,7 +632,9 @@ const OrdenDetail = (
                         </>
                     ) : estado === "Activa" ? (
                         <>
-                            <Button color="warning" onClick={(e) => handleEditAbono(e, id)}>
+                            <Button color={
+                                desactive || editRecarga === id || editQuantity === id ? "secondary" : "warning"
+                            } onClick={(e) => handleEditAbono(e, id)}>
                                 Abonar</Button>
                         </>
                     ) : null

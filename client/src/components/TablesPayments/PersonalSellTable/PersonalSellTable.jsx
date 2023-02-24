@@ -2,29 +2,39 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { Table } from 'reactstrap'
-import { bringOrdenByAdminId } from '../../../redux/novaSlice/thunks';
 import DatePicker, { registerLocale } from 'react-datepicker';
+import { ordenesRendicionBetween } from '../../../redux/novaSlice/thunks'
 import es from 'date-fns/locale/es';
 import { numberWithDots } from '../../../helpers/numberWithDot';
 import JorgeGas from '../../../assetsOficial/jorgegas.svg';
 import vectorDerecho from '../../../assetsOficial/vectorDerecho2.svg';
 import 'react-datepicker/dist/react-datepicker.css';
 import style from './personalSellTable.module.css'
+import moment from 'moment';
+import 'moment-timezone';
 
 registerLocale('es', es);
 
 const PersonalSellTable = ({id}) => {
 
-    const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const dispatch = useDispatch()
-    const [date , setDate] = useState(new Date())
-    const soloFecha = date.toISOString().slice(0, 10);
+    const [dateRange, setDateRange] = useState([null, null]);
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(null);
+    const soloFecha = startDate.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
+    const soloFechaFin = endDate?.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
+    
+    const onChangeDate = (dates) => {
+        const [start, end] = dates;
+        setStartDate(start);
+        setEndDate(end);
+    }
 
     useEffect(() => {
-        dispatch(bringOrdenByAdminId(usuario.administrador.id, soloFecha))
-    }, [dispatch, usuario.administrador.id, soloFecha])
+        dispatch(ordenesRendicionBetween(soloFecha, soloFechaFin))
+    }, [dispatch, soloFecha, soloFechaFin])
 
-    const { ordenDeRepartos } = useSelector(state => state.Nova.novaOrdenes)
+    const { ordenesRendidasDisponibles } = useSelector(state => state.Nova)
 
     return (
         <div>
@@ -36,13 +46,15 @@ const PersonalSellTable = ({id}) => {
                         Seleccione una fecha
                     </p>
                     <DatePicker
-                        selected={date}
-                        onChange={(date) => setDate(date)}
+                        selected={startDate}
+                        onChange={onChangeDate}
+                        startDate={startDate}
+                        endDate={endDate}
+                        selectsRange
                         locale="es"
                         dateFormat="dd/MM/yyyy"
-                        placeholderText='Seleccione una fecha'
-                        maxDate={new Date()}
                         className={style.classDatePicker}
+                        maxDate={new Date()}
                     />
                 </div>
                 <Link to="/rendicionGeneral">
@@ -74,7 +86,7 @@ const PersonalSellTable = ({id}) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {ordenDeRepartos?.map((orden, index) => (
+                            {ordenesRendidasDisponibles?.map((orden, index) => (
                                 <tr key={index}>
                                     <td>{orden.id}</td>
                                     <td>{orden.fecha}</td>

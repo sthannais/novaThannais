@@ -16,9 +16,11 @@ import RecaudacionOrden from '../TablesPayments/RecaudacionOrden/RecaudacionOrde
 import OrdenInfo from '../TablesPayments/OrdenInfo/OrdenInfo';
 import Cuadratura from '../Cuadratura/Cuadratura';
 import Anticipos from '../Anticipos/Anticipos';
+import ModalGastos from '../ModalGastos/ModalGastos';
 import { numberWithDots } from '../../helpers/numberWithDot';
 import ModifyOrden from '../ModifyOrden/ModifyOrden';
 import { RiFileExcel2Fill } from 'react-icons/ri';
+import Select from 'react-select';
 import XLSX from 'xlsx';
 import moment from 'moment';
 import 'moment-timezone';
@@ -86,12 +88,32 @@ const RendicionPage = () => {
         novaOrdenById?.contabilidadRecarga?.totalRecaudacion,
     ])
 
+    const isWithGastos = novaOrdenById?.metodoPagos?.map(
+        (metodo) => Number(metodo.gasto.monto) > 0
+    )
+
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    
+    const onMenuOpen = () => setIsMenuOpen(true);
+    const onMenuClose = () => setIsMenuOpen(false);
+
+    const optionsOrdenes = ordenesRendidas?.map((orden) => ({
+        value: orden.id,
+        label: 
+        `${orden?.rendida ? "✔️ " : "❌ "}` +
+        `#${orden.id} 
+        Patente: ${orden.patente.name} 
+        Cuadrante: ${orden.cuadrante.name} - 
+        ${orden.chofer.personal.name} ${orden.chofer.personal.lastname}` +
+        `${orden?.ayudante ? " y " + orden?.ayudante?.personal?.name + " " + orden?.ayudante?.personal?.lastname : ""}`
+    }));
+
     return (
         <div className={style.conenedor}>
             <p className={style.text}>Rendición de gastos</p>
             <img src={JorgeGas} alt="logo" className={style.logo} />
             <div className={style.container}>
-                <Input
+                {/* <Input
                     type="select"
                     value={ordenId}
                     onChange={(e) => setOrdenId(e.target.value)}
@@ -118,7 +140,17 @@ const RendicionPage = () => {
                             </option>
                         ))
                     }
-                </Input>
+                </Input> */}
+                <Select
+                    name="ordenId"
+                    placeholder="ordenes" 
+                    onChange={(e) => setOrdenId(e.value)}
+                    isMenuOpen={isMenuOpen}
+                    onMenuOpen={onMenuOpen}
+                    onMenuClose={onMenuClose}
+                    options={optionsOrdenes}
+                    className={style.inputs}
+                />
                 <div className={style.datePicker}>
                     <p  className={style.textDatePicker}>
                         Seleccione una fecha
@@ -351,6 +383,11 @@ const RendicionPage = () => {
                 {
                     Number(novaOrdenById?.faltanteChofer) > 0 | Number(novaOrdenById?.faltantePeoneta) > 0 ? (
                         <Anticipos novaOrdenById={novaOrdenById} />
+                    ) : null
+                }
+                {
+                    isWithGastos ? (
+                        <ModalGastos novaOrdenById={novaOrdenById} />
                     ) : null
                 }
                 <RecaudacionOrden novaOrdenById={novaOrdenById} />

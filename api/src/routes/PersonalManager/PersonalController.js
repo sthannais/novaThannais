@@ -317,9 +317,7 @@ const getAllFaltantesBetweenDates = async (req, res) => {
                                 }
                             }
                         ],
-                        fecha: {
-                            [Op.gte]: fechaInicio
-                        }
+                        fecha: fechaInicio
                     }
                 });
             } else {
@@ -360,10 +358,8 @@ const getAllFaltantesBetweenDates = async (req, res) => {
                                 }
                             }
                         ],
-                        fecha: {
-                            [Op.gte]: fechaInicio
-                        },
-                        administradorId
+                        fecha: fechaInicio,
+                        cuadradoPor: administradorId
                     }
                 });
             } else {
@@ -385,7 +381,7 @@ const getAllFaltantesBetweenDates = async (req, res) => {
                         fecha: {
                             [Op.between]: [fechaInicio, fechaFin]
                         },
-                        administradorId
+                        cuadradoPor: administradorId
                     }
                 });
             }

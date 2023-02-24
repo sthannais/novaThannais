@@ -7,6 +7,7 @@ const {
     Transbank,
     Transferencias,
     Vales,
+    Gastos
     } = require('../../db.js');
 
 const { Op } = require('sequelize');
@@ -275,9 +276,7 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
             if(!fechaFin || fechaFin === 'undefined' || fechaFin === null){
                 ordenesDeReparto = await OrdenDeReparto.findAll({
                     where: {
-                        fecha: {
-                            [Op.gte]: fechaInicio
-                        },
+                        fecha: fechaInicio,
                         rendida : true
                     }
                 })
@@ -295,9 +294,7 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
             if(!fechaFin || fechaFin === 'undefined' || fechaFin === null){
                 ordenesDeReparto = await OrdenDeReparto.findAll({
                     where: {
-                        fecha: {
-                            [Op.gte]: fechaInicio
-                        },
+                        fecha: fechaInicio,
                         cuadradoPor: administradorId,
                         rendida : true
                     }
@@ -362,6 +359,12 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
                 }
             })
 
+            const gastos = await Gastos.findOne({
+                where: {
+                    fk_MetodoPagosID: metodoPago[0].id
+                }
+            })
+
             return {
                 sumaAbonos,
                 contabilidadRecargas,
@@ -370,7 +373,8 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
                 descuentoRut,
                 descuentos,
                 transbank,
-                transferencias
+                transferencias,
+                gastos
             }
         }))
 
@@ -488,6 +492,10 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
             return acc + Number(curr.transferencias.monto)
         }, 0)
 
+        const sumaGastos = ordenesWithMetodoPagos.reduce((acc, curr) => {
+            return acc + Number(curr.gastos.monto)
+        }, 0)
+
         //funcion para sumar todos los metodos de pago
         const sumaTotalDeTodo = 
         (
@@ -497,7 +505,8 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
             sumaTotalDescuentosRut +
             sumaTotalDescuentos +
             sumaTotalTransbank +
-            sumaTotalTransferencia
+            sumaTotalTransferencia +
+            sumaGastos
         )
 
         res.json({
@@ -511,7 +520,8 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
             totalTransbank: sumaTotalTransbank,
             totalTransferencia: sumaTotalTransferencia,
             totalGeneral: sumaTotalDeTodo,
-            sobrante: sumaSobrantes
+            sobrante: sumaSobrantes,
+            gastos: sumaGastos
         })
 
     } catch (error) {
