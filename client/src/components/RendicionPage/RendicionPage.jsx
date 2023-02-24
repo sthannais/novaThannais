@@ -88,10 +88,8 @@ const RendicionPage = () => {
         novaOrdenById?.contabilidadRecarga?.totalRecaudacion,
     ])
 
-    const isWithGastos = novaOrdenById?.metodoPagos?.map(
-        (metodo) => Number(metodo.gasto.monto) > 0
-    )
-
+    //me devuelve un booleano si hay gastos o no
+    const isWithGastos = novaOrdenById?.metodoPagos?.some(metodo => Number(metodo.gasto.monto) > 0)
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     
     const onMenuOpen = () => setIsMenuOpen(true);
@@ -113,34 +111,6 @@ const RendicionPage = () => {
             <p className={style.text}>Rendición de gastos</p>
             <img src={JorgeGas} alt="logo" className={style.logo} />
             <div className={style.container}>
-                {/* <Input
-                    type="select"
-                    value={ordenId}
-                    onChange={(e) => setOrdenId(e.target.value)}
-                    className={style.inputs}
-                >
-                    <option hidden>Seleccione una orden :</option>
-                    {
-                        ordenesRendidas?.map((orden) => (
-                            <option key={orden.id} value={orden.id}>
-                                {
-                                    `#${orden.id} Patente: ${orden.patente.name} 
-                                    Cuadrante: ${orden.cuadrante.name} - 
-                                    ${orden.chofer.personal.name} ${orden.chofer.personal.lastname}`
-                                }
-                                {
-                                    orden.ayudante ?
-                                    ` y ${orden?.ayudante?.personal?.name} ${orden?.ayudante?.personal?.lastname}` :
-                                    null
-                                }
-                                &nbsp;&nbsp;
-                                {
-                                    orden?.rendida === true ? <p>✔️</p> : <p>❌</p>
-                                }
-                            </option>
-                        ))
-                    }
-                </Input> */}
                 <Select
                     name="ordenId"
                     placeholder="ordenes" 
