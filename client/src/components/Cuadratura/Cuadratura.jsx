@@ -4,6 +4,7 @@ import { cuadrarOrden, bringListaDePreciosActive } from '../../redux/novaSlice/t
 import style from './cuadratura.module.css';
 import cuadratura from '../../assetsOficial/cuadratura.svg';
 import CambioDePersonal from '../CambioDePersonal/CambioDePersonal';
+import Gastos from '../Gastos/Gastos';
 import validateBilletes from '../../helpers/validateBilletes';
 import { handleKeydown } from '../../helpers/KeyDown';
 import { Modal, Button, ModalHeader, ModalBody, ModalFooter, Input, Form, FormGroup, Label } from 'reactstrap';
@@ -117,6 +118,18 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
         sobrante : 0,
     })
 
+    ///////// GASTOS /////////
+
+    const [gastos, setGastos] = useState({
+        montoGastos: '',
+        DescripcionGastos: ''
+    })
+
+    const [gastosNumber, setGastosNumber] = useState({
+        montoGastos: 0,
+        DescripcionGastos: ''
+    })
+
     useEffect(() => {
         dispatch(bringListaDePreciosActive());
     }, [dispatch])
@@ -171,6 +184,8 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                 Number(faltanteChoferNumber.faltanteChofer) 
             ) - (
                 Number(faltantePeonetaNumber.faltantePeoneta)
+            ) - (
+                Number(gastosNumber.montoGastos)
             ) + (
                 Number(sobrante.sobrante)
             )
@@ -226,7 +241,8 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
         novaOrdenById?.listaDePrecio?.precio15kg,
         novaOrdenById?.listaDePrecio?.precio45kg,
         usuario.administrador.id,
-        sobrante.sobrante
+        sobrante.sobrante,
+        gastosNumber.montoGastos
     ])
 
     useEffect(() => {
@@ -323,6 +339,33 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
         })
     }
 
+    const handleGastosChange = (e) => {
+        const inputValue = e.target.value
+        const formatted = inputValue.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ',')
+        
+        if(e.target.name === 'DescripcionGastos') {
+            setGastos({
+                ...gastos,
+                [e.target.name] : e.target.value
+            })
+            
+            setGastosNumber({
+                ...gastosNumber,
+                [e.target.name] : e.target.value
+            })
+        } else {
+            setGastos({
+                ...gastos,
+                [e.target.name] : formatted
+            })
+            
+            setGastosNumber({
+                ...gastosNumber,
+                [e.target.name] : formatted ? parseInt(formatted.replace(/,/g, '')) : 0
+            })
+        }
+    }
+
 
     const cleanStates = () => {
         setEfectivo({
@@ -397,6 +440,20 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
             faltantePeoneta : 0
         })
 
+        setSobrante({
+            sobrante : 0
+        })
+
+        setGastos({
+            monto : "",
+            descripcion : ""
+        })
+
+        setGastosNumber({
+            monto : 0,
+            descripcion : ""
+        })
+
         setDisabled(true)
     }
 
@@ -428,7 +485,8 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
             ...faltanteChoferNumber,
             ...faltantePeonetaNumber,
             ...sobrante,
-            ...idDeDecuadre
+            ...idDeDecuadre,
+            ...gastosNumber,
         }))
         cleanStates();
         toggle();
@@ -870,6 +928,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                             :
                             null
                         }
+                        <Gastos novaOrdenById={novaOrdenById} handleGastosChange={handleGastosChange} gastos={gastos} setGastos={setGastos} setGastosNumber={setGastosNumber}/>
                         <CambioDePersonal novaOrdenById={novaOrdenById} />
                         <Button color='success' onClick={toggleNested} className={style.boton2}>Asignar Faltante</Button>
                         <Modal

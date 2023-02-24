@@ -9,6 +9,7 @@ export const NovaSlice = createSlice({
         ordenesParaFiltrar : [],
         ordenesDisponibles: [],
         ordenesRendidas: [],
+        ordenesRendidasDisponibles: [],
         novaOrdenById: {},
         patentes: [],
         allPatentes: [],
@@ -45,6 +46,9 @@ export const NovaSlice = createSlice({
         },
         Rendidas: (state, {payload}) => {
             state.ordenesRendidas = payload;
+        },
+        RendidasDisponibles : (state, {payload}) => {
+            state.ordenesRendidasDisponibles = payload;
         },
         getOrdenById: (state, {payload}) => {
             state.novaOrdenById = payload;
@@ -129,6 +133,7 @@ export const {  getPersonal,
                 getAyudantes,
                 ordenesDisponibles,
                 Rendidas,
+                RendidasDisponibles,
                 clearOrdenById,
                 getCuadratura,
                 getOrdenesChoferById,

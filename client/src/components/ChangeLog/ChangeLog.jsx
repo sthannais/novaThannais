@@ -24,11 +24,22 @@ const ChangeLog = () => {
                 () => {
                     toggle();
                 }
-            } >Ver. 1.0.1
+            } >Ver. 1.0.2
             </button>
             <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="md" backdrop="static" onKeyDown={handleKeydown}>
                 <ModalHeader toggle={toggle}>Cambios recientes</ModalHeader>
                 <ModalBody>
+                    <h5>Ver. 1.0.2</h5>
+                    <em style={{ color: 'red' }}>24/02/2023</em>
+                    <ul className={style.newli}>
+                        <li>Se corrigio bug al momento de traer por fechas las rendiciones, en la pantalla de rendicion general.</li>
+                        <li>Se reestructuro componente de rendicion de personal(ahora se puede buscar por rango de fecha y las fechas aparecen en orden descendente)</li>
+                        <li>Se añadio el poder introducir los gastos de una orden al momento de cuadrarla, con su respectivo monto y descripcion</li>
+                        <li>Se habilito un boton para poder observar los gastos de una orden en la pantalla de rendicion de ventas, solo si la orden tiene gastos</li>
+                        <li>Se deshabilito el poder subir valores con flechas y rueda de raton al momento de recargar o descargar una orden</li>
+                        <li>Se cambiaron los colores de los botones al momento de eliminar, modificar, recargar o abonar una orden</li>
+                        <li>Se agrego barra de busquedad en la pantalla de rendicion de ventas para buscar una orden por nombre de chofer o Peoneta</li>
+                    </ul>
                     <h5>Ver. 1.0.1</h5>
                     <em style={{ color: 'red' }}>23/02/2023</em>
                     <ul className={style.newli}>

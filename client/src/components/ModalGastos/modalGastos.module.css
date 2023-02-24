@@ -1,6 +1,6 @@
 .boton {
     position: absolute;
-    left: 86%;
+    left: 75%;
     top: 94%;
     width: 7rem;
     height: 2.3rem;
@@ -20,12 +20,12 @@
 
 @media screen and (min-width: 1800px) {
     .boton {
-        left: 89%;
+        left: 81%;
     }
 }
 
 @media screen and ( max-width: 1366px ) {
     .boton {
-        left: 85%;
+        left: 73%;
     }
 }

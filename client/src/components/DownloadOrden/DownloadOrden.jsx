@@ -174,6 +174,13 @@ const DownloadOrden = ({ fecha }) => {
         setIdOrden(e.value);
     }
 
+    const handleKeyDown2 = (event) => {
+        if (event.keyCode === 38 || event.keyCode === 40) {
+            event.preventDefault();
+        }
+    };
+
+
     const modalStyles = {
         position: 'relative',
         left: '15%',
@@ -264,6 +271,8 @@ const DownloadOrden = ({ fecha }) => {
                                                             onChange={handleChange}
                                                             className={style.inputs}
                                                             min={0}
+                                                            onKeyDown={handleKeyDown2}
+                                                            onWheel={(e) => e.target.blur()}
                                                         />
                                                 </FormGroup>
                                             </td>
@@ -324,6 +333,8 @@ const DownloadOrden = ({ fecha }) => {
                                                             onChange={handleChange}
                                                             className={style.inputs}
                                                             min={0}
+                                                            onKeyDown={handleKeyDown2}
+                                                            onWheel={(e) => e.target.blur()}
                                                         />
                                                 </FormGroup>
                                             </td>
@@ -386,6 +397,8 @@ const DownloadOrden = ({ fecha }) => {
                                                             onChange={handleChange}
                                                             className={style.inputs}
                                                             min={0}
+                                                            onKeyDown={handleKeyDown2}
+                                                            onWheel={(e) => e.target.blur()}
                                                         />
                                                 </FormGroup>
                                             </td>
@@ -448,6 +461,8 @@ const DownloadOrden = ({ fecha }) => {
                                                             onChange={handleChange}
                                                             className={style.inputs}
                                                             min={0}
+                                                            onKeyDown={handleKeyDown2}
+                                                            onWheel={(e) => e.target.blur()}
                                                         />
                                                 </FormGroup>
                                             </td>

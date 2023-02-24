@@ -67,6 +67,10 @@ const ResumenTable = ({ cuadratura, faltantes, tablaRef }) => {
                             <td>{cuadratura?.sobrante ? numberWithDots(cuadratura?.sobrante) : 0}</td>
                         </tr>
                         <tr>
+                            <td>Gastos</td>
+                            <td>{cuadratura?.gastos ? numberWithDots(cuadratura?.gastos) : 0}</td>
+                        </tr>
+                        <tr>
                             <th>Total</th>
                             <th>{sumaDeTodo ? numberWithDots(sumaDeTodo) : 0}</th>
                         </tr>

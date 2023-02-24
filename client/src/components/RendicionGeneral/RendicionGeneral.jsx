@@ -43,17 +43,17 @@ const RendicionGeneral = () => {
     const tabla5Ref = useRef(null);
 
     const handleExportExcel = () => {
-        const tabla1 = tabla1Ref.current;
-        const tabla2 = tabla2Ref.current;
-        const tabla3 = tabla3Ref.current;
-        const tabla4 = tabla4Ref.current;
-        const tabla5 = tabla5Ref.current;
+        const tabla1 = [...tabla1Ref.current.querySelectorAll("tr")].map(row => [...row.querySelectorAll("td,th")].map(cell => cell.innerText));
+        const tabla2 = [...tabla2Ref.current.querySelectorAll("tr")].map(row => [...row.querySelectorAll("td,th")].map(cell => cell.innerText));
+        const tabla3 = [...tabla3Ref.current.querySelectorAll("tr")].map(row => [...row.querySelectorAll("td,th")].map(cell => cell.innerText));
+        const tabla4 = [...tabla4Ref.current.querySelectorAll("tr")].map(row => [...row.querySelectorAll("td,th")].map(cell => cell.innerText));
+        const tabla5 = [...tabla5Ref.current.querySelectorAll("tr")].map(row => [...row.querySelectorAll("td,th")].map(cell => cell.innerText));
 
-        const ws1 = XLSX.utils.table_to_sheet(tabla1);
-        const ws2 = XLSX.utils.table_to_sheet(tabla2);
-        const ws3 = XLSX.utils.table_to_sheet(tabla3);
-        const ws4 = XLSX.utils.table_to_sheet(tabla4);
-        const ws5 = XLSX.utils.table_to_sheet(tabla5);
+        const ws1 = XLSX.utils.aoa_to_sheet(tabla1);
+        const ws2 = XLSX.utils.aoa_to_sheet(tabla2);
+        const ws3 = XLSX.utils.aoa_to_sheet(tabla3);
+        const ws4 = XLSX.utils.aoa_to_sheet(tabla4);
+        const ws5 = XLSX.utils.aoa_to_sheet(tabla5);
 
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws1, 'Efectivo');
@@ -62,7 +62,7 @@ const RendicionGeneral = () => {
         XLSX.utils.book_append_sheet(wb, ws4, 'Metodos');
         XLSX.utils.book_append_sheet(wb, ws5, 'Resumen');
 
-        XLSX.writeFile(wb, `Rendicion de gastos ${soloFecha} al ${soloFechaFin}.xlsx`);
+        XLSX.writeFile(wb, `Rendicion de gastos ${soloFecha} ${soloFechaFin ? "al " + soloFechaFin : ""}.xlsx`);
     }
 
     useEffect(() => {
