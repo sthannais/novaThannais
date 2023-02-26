@@ -739,21 +739,26 @@ const createOrden = async (req, res) => {
 };
 
 const sendEmailWithCode = async (req, res) => {
-    const { id, name, lastname, email } = req.body;
-    //genero un codigo random de 6 digitos
-    const code = Math.floor(100000 + Math.random() * 900000);
-    
-    await transporter.sendMail({
-        from: '"modificación de orden 👻" <mdfdevelopers@gmail.com>', // sender address
-        to: `${email}`, // list of receivers
-        subject: "modificación de orden", // Subject line
-        html: `<h1>Codigo de verificación</h1>
-                <p>codigo: ${code}</p>
-                <p>para modificar la orden #${id}</p>
-                <p>del usuario: ${name} ${lastname}</p>`, // html body
-    });
+    try {
+        const { id, name, lastname, email } = req.body;
+        //genero un codigo random de 6 digitos
+        const code = Math.floor(100000 + Math.random() * 900000);
+        
+        await transporter.sendMail({
+            from: '"modificación de orden 👻" <mdfdevelopers@gmail.com>', // sender address
+            to: `${email}`, // list of receivers
+            subject: "modificación de orden", // Subject line
+            html: `<h1>Codigo de verificación</h1>
+                    <p>codigo: ${code}</p>
+                    <p>para modificar la orden #${id}</p>
+                    <p>del usuario: ${name} ${lastname}</p>`, // html body
+        });
 
-    res.json({code});
+        res.json({code});
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({error: error.message});
+    }
 }
 
 ///////////////////////////// PUT /////////////////////////////

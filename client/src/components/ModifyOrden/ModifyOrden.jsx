@@ -17,6 +17,7 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
     const [disabled2, setDisabled2] = useState(false);
     const [disabled3, setDisabled3] = useState(false);
     const [disabled4, setDisabled4] = useState(false);
+    const [disabled5, setDisabled5] = useState(false);
     const [idRecarga, setIdRecarga] = useState(null);
     const [isLleno, setIsLleno] = useState(false);
 
@@ -108,14 +109,6 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
     };
 
     useEffect(() => {
-        setInfo({
-            ...info,
-            id: novaOrdenById?.id,
-            name: usuario?.name,
-            lastname: usuario?.lastname,
-            email: usuario?.email,
-        });
-
         if(codigoDeModificar?.code !== codigo ) {
             setDisabled(true);
         } else {
@@ -163,6 +156,15 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
         llenos.llenos45kg,
     ]);
 
+    useEffect(() => {
+        if(info.email !== "") {
+            setDisabled5(false);
+        } else {
+            setDisabled5(true);
+        }
+    }, [info.email, disabled5]);
+
+
     const modalStyles = {
         position: 'relative',
         left: '15%',
@@ -176,7 +178,17 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
         <div>
             {
                 novaOrdenById?.rendida === false ? (
-                    <Button onClick={toggle} className={style.boton} disabled={disabled3}>Modificar Orden</Button>
+                    <Button onClick={
+                        () => {
+                            toggle();
+                            setInfo({
+                                ...info,
+                                id: novaOrdenById?.id,
+                                name: usuario?.name,
+                                lastname: usuario?.lastname
+                            });
+                        }
+                    } className={style.boton} disabled={disabled3}>Modificar Orden</Button>
                 ) : null
             }
             <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="lg" backdrop="static" onKeyDown={handleKeydown}>
@@ -593,7 +605,7 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                                                         dispatch(bringCodigoParaModificar(info));
                                                         cleanState();
                                                     }
-                                                } className={style.tamaño}>
+                                                } className={style.tamaño} disabled={disabled5}>
                                                     Enviar codigo
                                                 </Button>
                                                 &nbsp;
