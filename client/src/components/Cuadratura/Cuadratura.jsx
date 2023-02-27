@@ -477,7 +477,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(cuadrarOrden(fecha, novaOrdenById.id, {
+        dispatch(cuadrarOrden(novaOrdenById.id, {
             ...efectivoNumber,
             ...vales,
             ...metodoPagosNumber,

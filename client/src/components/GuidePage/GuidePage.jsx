@@ -13,7 +13,8 @@ import style from './guidePage.module.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import es from 'date-fns/locale/es';
 import { RiFileExcel2Fill } from 'react-icons/ri';
-import XLSX from 'xlsx';
+import * as XLSX from 'xlsx';
+import * as XLSXPopulate from 'xlsx-populate/browser/xlsx-populate';
 import InfiniteScroll from 'react-infinite-scroller';
 import moment from 'moment';
 import 'moment-timezone';
@@ -59,10 +60,66 @@ const GuidePage = () => {
 
     const handleExportExcel = () => {
         const ws = XLSX.utils.table_to_sheet(tablaRef.current);
+        
+          // Definir formato para las columnas
+        const columnWidths = [
+            { wch: 20 }, // Columna 1
+            { wch: 10 }, // Columna 2
+            { wch: 16 }, // Columna 3
+            { wch: 15 }, // Columna 4
+            { wch: 20 }, // Columna 5
+            { wch: 20 }, // Columna 6
+            { wch: 15 }, // Columna 7
+            { wch: 15 }, // Columna 8
+        ];
+        ws['!cols'] = columnWidths;
+
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, `Guia de reparto`);
         XLSX.writeFile(wb, `Guia de reparto ${usuario.name} ${usuario.lastname} ${soloFecha}.xlsx`);
     };
+
+    // const handleExportExcelPopulate = async () => {
+    //     const data = currentPosts?.map((post) => {
+    //         return {
+    //             'Numero de orden': post.id,
+    //             'Fecha': post.fecha,
+    //             'Cantidad de tarros': post.contabilidadRecarga.totalCantidad,
+    //             'Patente': post.patente.name,
+    //             'chofer': post?.chofer?.personal?.name + ' ' + post.chofer?.personal?.lastname,
+    //             'peoneta': post?.ayudante?.personal?.name && post?.ayudante?.personal?.lastname ? 
+    //             post?.ayudante?.personal?.name + ' ' + post?.ayudante?.personal?.lastname : 
+    //             'Sin peoneta',
+    //             'comuna': post?.cuadrante?.name,
+    //             'estado': post?.estado === true ? 'Activa' : 'Descargada',
+    //         };
+    //     });
+        
+    //     const wb = await XLSXPopulate.fromBlankAsync();
+
+    //     const sheet = wb.sheet("Sheet1");
+
+    //     // introduzco la data en la hoja
+    //     sheet.cell("A1").value(data);
+
+    //     // Definir formato para las celdas
+    //     const cellStyle = {
+    //         "fontSize": 12,
+    //         "bold": true,
+    //     }
+
+    //     sheet.range("A1:H1").style(cellStyle);
+
+    //     // exporto el archivo excel
+
+    //     await wb.outputAsync("blob").then(woorkbook => {
+    //         const link = document.createElement("a");
+    //         link.href = window.URL.createObjectURL(woorkbook);
+    //         link.download = `Guia de reparto ${usuario.name} ${usuario.lastname} ${soloFecha}.xlsx`;
+    //         link.click();
+    //     });
+
+    // };
 
     return (
         <div>

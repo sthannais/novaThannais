@@ -16,6 +16,7 @@ const Cuadrantes = () => {
     const [activarCrear, setActivarCrear] = useState(false)
     const [idCuadrante, setIdCuadrante] = useState('')
     const [cuadranteActivo, setCuadranteActivo] = useState('')
+    const [disabled, setDisabled] = useState(false)
     const toggle = () => setModal(!modal);
     const toggleActive = () => setModalActive(!modalActive);
     const toggleDesactive = () => setModalDesactive(!modalDesactive);
@@ -44,6 +45,14 @@ const Cuadrantes = () => {
     useEffect(() => {
         dispatch(bringAllCuadrantes())
     }, [dispatch])
+
+    useEffect(() => {
+        if(nameCuadrante.name !== '') {
+            setDisabled(false)
+        } else {
+            setDisabled(true)
+        }
+    }, [nameCuadrante.name])
 
     return (
         <div>
@@ -154,6 +163,7 @@ const Cuadrantes = () => {
                                 <Button
                                     color="success"
                                     type='submit'
+                                    disabled={disabled}
                                 >
                                     Guardar Cuadrante
                                 </Button>
@@ -171,6 +181,9 @@ const Cuadrantes = () => {
                                 toggle();
                                 setIdCuadrante('');
                                 setActivarCrear(false);
+                                setNameCuadrante({
+                                    name: ''
+                                })
                             }
                         }>Cancelar</Button>
                     </ModalFooter>
