@@ -16,6 +16,7 @@ const Patentes = () => {
     const [activarCrear, setActivarCrear] = useState(false)
     const [idPatente, setIdPatente] = useState('')
     const [patenteActiva, setPatenteActiva] = useState('')
+    const [disabled, setDisabled] = useState(false)
 
     const toggle = () => setModal(!modal);
     const toggleActive = () => setModalActive(!modalActive);
@@ -45,6 +46,14 @@ const Patentes = () => {
     useEffect(() => {
         dispatch(bringAllPatentes())
     }, [dispatch])
+
+    useEffect(() => {
+        if (patente.name !== '') {
+            setDisabled(false)
+        } else {
+            setDisabled(true)
+        }
+    }, [patente.name])
 
     return (
         <div>
@@ -170,6 +179,7 @@ const Patentes = () => {
                                 <Button
                                     color="success"
                                     type='submit'
+                                    disabled={disabled}
                                 >
                                     Crear patente
                                 </Button>

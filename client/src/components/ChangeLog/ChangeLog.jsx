@@ -24,11 +24,18 @@ const ChangeLog = () => {
                 () => {
                     toggle();
                 }
-            } >Ver. 1.0.2
+            } >Ver. 1.0.3
             </button>
             <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="md" backdrop="static" onKeyDown={handleKeydown}>
                 <ModalHeader toggle={toggle}>Cambios recientes</ModalHeader>
                 <ModalBody>
+                    <h5>Ver. 1.0.3</h5>
+                    <em style={{ color: 'red' }}>27/02/2023</em>
+                    <ul className={style.newli}>
+                        <li>Se corrigio bug al momento de crear un cuadrante, cuando se dejaba el campo en blanco creaba el cuadrante en vacio.</li>
+                        <li>Se corrigio bug al momento de crear una patente, cuando se dejaba el campo en blanco creaba la patente en vacio.</li>
+                        <li>Se corrigio cuando se cuadren una orden en pantallas diferentes, que la segunda vez que se intente no se pueda cuadrar</li>
+                    </ul>
                     <h5>Ver. 1.0.2</h5>
                     <em style={{ color: 'red' }}>24/02/2023</em>
                     <ul className={style.newli}>
