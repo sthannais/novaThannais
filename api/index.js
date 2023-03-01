@@ -18,12 +18,13 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
-const { conn, Rol, Chofer, Ayudante, Administrador, Cuadrante, Patentes, ListaDePrecios } = require('./src/db.js');
+const { conn, Rol, Chofer, Ayudante, Administrador, Cuadrante, Patentes, ListaDePrecios, InventarioVales } = require('./src/db.js');
 const createRoles = require('./src/testingCreators/roles.js');
 const createPatentes = require('./src/testingCreators/patentes.js');
 const createCuadrantes = require('./src/testingCreators/cuadrante.js');
 const createListaDePrecios = require('./src/testingCreators/listaDePrecios.js');
 const { createAdministradores, createChoferPeoeneta, createPeonetaChofer} = require('./src/testingCreators/usuarios.js');
+const createInventarioVales = require('./src/testingCreators/inventarioVales.js');
 const PORT = process.env.PORT || 3001;
 
 conn.sync({ force: false }).then(() => {
@@ -38,8 +39,8 @@ conn.sync({ force: false }).then(() => {
       createChoferPeoeneta();
     }
 
-    // const auxiliares = await Auxiliar.findAll();
-    // if (auxiliares.length < 1) createAuxiliares();
+    const inventarioVales = await InventarioVales.findAll();
+    if (inventarioVales.length < 1) createInventarioVales();
 
     const ayudantes = await Ayudante.findAll();
     if (ayudantes.length < 1) createPeonetaChofer();

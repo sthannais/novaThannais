@@ -58,68 +58,124 @@ const GuidePage = () => {
     /////// EXCEL ///////
     const tablaRef = useRef(null);
 
-    const handleExportExcel = () => {
-        const ws = XLSX.utils.table_to_sheet(tablaRef.current);
+    // const handleExportExcel = () => {
+    //     const ws = XLSX.utils.table_to_sheet(tablaRef.current);
         
-          // Definir formato para las columnas
-        const columnWidths = [
-            { wch: 20 }, // Columna 1
-            { wch: 10 }, // Columna 2
-            { wch: 16 }, // Columna 3
-            { wch: 15 }, // Columna 4
-            { wch: 20 }, // Columna 5
-            { wch: 20 }, // Columna 6
-            { wch: 15 }, // Columna 7
-            { wch: 15 }, // Columna 8
-        ];
-        ws['!cols'] = columnWidths;
+    //       // Definir formato para las columnas
+    //     const columnWidths = [
+    //         { wch: 20 }, // Columna 1
+    //         { wch: 10 }, // Columna 2
+    //         { wch: 16 }, // Columna 3
+    //         { wch: 15 }, // Columna 4
+    //         { wch: 20 }, // Columna 5
+    //         { wch: 20 }, // Columna 6
+    //         { wch: 15 }, // Columna 7
+    //         { wch: 15 }, // Columna 8
+    //     ];
+    //     ws['!cols'] = columnWidths;
 
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, `Guia de reparto`);
-        XLSX.writeFile(wb, `Guia de reparto ${usuario.name} ${usuario.lastname} ${soloFecha}.xlsx`);
-    };
-
-    // const handleExportExcelPopulate = async () => {
-    //     const data = currentPosts?.map((post) => {
-    //         return {
-    //             'Numero de orden': post.id,
-    //             'Fecha': post.fecha,
-    //             'Cantidad de tarros': post.contabilidadRecarga.totalCantidad,
-    //             'Patente': post.patente.name,
-    //             'chofer': post?.chofer?.personal?.name + ' ' + post.chofer?.personal?.lastname,
-    //             'peoneta': post?.ayudante?.personal?.name && post?.ayudante?.personal?.lastname ? 
-    //             post?.ayudante?.personal?.name + ' ' + post?.ayudante?.personal?.lastname : 
-    //             'Sin peoneta',
-    //             'comuna': post?.cuadrante?.name,
-    //             'estado': post?.estado === true ? 'Activa' : 'Descargada',
-    //         };
-    //     });
-        
-    //     const wb = await XLSXPopulate.fromBlankAsync();
-
-    //     const sheet = wb.sheet("Sheet1");
-
-    //     // introduzco la data en la hoja
-    //     sheet.cell("A1").value(data);
-
-    //     // Definir formato para las celdas
-    //     const cellStyle = {
-    //         "fontSize": 12,
-    //         "bold": true,
-    //     }
-
-    //     sheet.range("A1:H1").style(cellStyle);
-
-    //     // exporto el archivo excel
-
-    //     await wb.outputAsync("blob").then(woorkbook => {
-    //         const link = document.createElement("a");
-    //         link.href = window.URL.createObjectURL(woorkbook);
-    //         link.download = `Guia de reparto ${usuario.name} ${usuario.lastname} ${soloFecha}.xlsx`;
-    //         link.click();
-    //     });
-
+    //     const wb = XLSX.utils.book_new();
+    //     XLSX.utils.book_append_sheet(wb, ws, `Guia de reparto`);
+    //     XLSX.writeFile(wb, `Guia de reparto ${usuario.name} ${usuario.lastname} ${soloFecha}.xlsx`);
     // };
+
+    const handleExportExcelPopulate = async () => {
+        const data = currentPosts?.map((post) => {
+            return {
+                'Numero de orden': post.id,
+                'Fecha': post.fecha,
+                'Cantidad de tarros': post.contabilidadRecarga.totalCantidad,
+                'Patente': post.patente.name,
+                'chofer': post?.chofer?.personal?.name + ' ' + post.chofer?.personal?.lastname,
+                'peoneta': post?.ayudante?.personal?.name && post?.ayudante?.personal?.lastname ? 
+                post?.ayudante?.personal?.name + ' ' + post?.ayudante?.personal?.lastname : 
+                'Sin peoneta',
+                'comuna': post?.cuadrante?.name,
+                'estado': post?.estado === true ? 'Activa' : 'Descargada',
+            };
+        });
+        const saveAs = function (blob, fileName) {
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = fileName;
+            link.click();
+        }
+
+        const wb = await XLSXPopulate.fromBlankAsync();
+        const ws = wb.sheet(0);
+        ws.name('Guia de reparto');
+
+        //dejo la fila 1 en blanco
+        ws.row(2).height(20);
+
+        //le agrego width a las columnas 
+
+        ws.column(1).width(20);
+        ws.column(2).width(10);
+        ws.column(3).width(20);
+        ws.column(4).width(15);
+        ws.column(5).width(20);
+        ws.column(6).width(20);
+        ws.column(7).width(15);
+        ws.column(8).width(15);
+
+        ws.row(2).cell(1).value('Numero de orden').style({
+            border: true,
+            fill: '8d99ae',
+            bold : true
+        })
+        ws.row(2).cell(2).value('Fecha').style({
+            border: true,
+            fill: '8d99ae',
+            bold : true
+        })
+        ws.row(2).cell(3).value('Cantidad de tarros').style({
+            border: true,
+            fill: '8d99ae',
+            bold : true
+        })
+        ws.row(2).cell(4).value('Patente').style({
+            border: true,
+            fill: '8d99ae',
+            bold : true
+        })
+        ws.row(2).cell(5).value('Chofer').style({
+            border: true,
+            fill: '8d99ae',
+            bold : true
+        })
+        ws.row(2).cell(6).value('Peoneta').style({
+            border: true,
+            fill: '8d99ae',
+            bold : true
+        })
+        ws.row(2).cell(7).value('Comuna').style({
+            border: true,
+            fill: '8d99ae',
+            bold : true
+        })
+        ws.row(2).cell(8).value('Estado').style({
+            border: true,
+            fill: '8d99ae',
+            bold : true
+        })
+        
+        for(let i = 0; i < data.length; i++) {
+            ws.row(i + 3).cell(1).value(data[i]['Numero de orden']);
+            ws.row(i + 3).cell(2).value(data[i]['Fecha']);
+            ws.row(i + 3).cell(3).value(Number(data[i]['Cantidad de tarros']));
+            ws.row(i + 3).cell(4).value(data[i]['Patente']);
+            ws.row(i + 3).cell(5).value(data[i]['chofer']);
+            ws.row(i + 3).cell(6).value(data[i]['peoneta']);
+            ws.row(i + 3).cell(7).value(data[i]['comuna']);
+            ws.row(i + 3).cell(8).value(data[i]['estado']);
+        }
+
+        wb.outputAsync().then(function (blob) {
+            saveAs(blob, `Guia de reparto ${usuario.name} ${usuario.lastname} ${soloFecha}.xlsx`);
+        });
+
+    };
 
     return (
         <div>
@@ -146,7 +202,7 @@ const GuidePage = () => {
                         className={style.classDatePicker}
                     />
                 </div>
-                <button onClick={handleExportExcel} className={style.excel}>
+                <button onClick={handleExportExcelPopulate} className={style.excel}>
                     <RiFileExcel2Fill className={style.icon3} />
                     <p>Exportar a excel</p>
                 </button>
