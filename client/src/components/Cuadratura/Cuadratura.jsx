@@ -445,13 +445,13 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
         })
 
         setGastos({
-            monto : "",
-            descripcion : ""
+            montoGastos : "",
+            DescripcionGastos : ""
         })
 
         setGastosNumber({
-            monto : 0,
-            descripcion : ""
+            montoGastos : 0,
+            DescripcionGastos : ""
         })
 
         setDisabled(true)

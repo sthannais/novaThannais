@@ -1,5 +1,7 @@
 
-const { InventarioVales } = require('../../db.js');
+const { InventarioVales, RegistroVales } = require('../../db.js');
+
+//////////// GET ///////////////
 
 const getInventarioVales = async (req, res) => {
     try { 
@@ -10,6 +12,94 @@ const getInventarioVales = async (req, res) => {
         console.log(error);
     }
 };
+
+const getRegistroVales = async (req, res) => {
+    try {
+        const registroVales = await RegistroVales.findAll();
+        res.json(registroVales);
+    }
+    catch (error) {
+        console.log(error);
+    }
+};
+
+//////////// POST ///////////////
+
+const descargarVales = async (req, res) => {
+    const { 
+            fecha,
+            hora,
+            numeroGuia,
+            numeroFactura,
+            nombreEntrega,
+            nombreRecibe,
+            vale5kgFisico,
+            vale11kgFisico,
+            vale15kgFisico,
+            vale45kgFisico,
+            vale5kgDigital,
+            vale11kgDigital,
+            vale15kgDigital,
+            vale45kgDigital
+    } = req.body;
+
+    try {
+        const inventario = await InventarioVales.findByPk(1);
+        const registroVales = await RegistroVales.create({
+            fecha,
+            hora,
+            numeroGuia,
+            numeroFactura,
+            nombreEntrega,
+            nombreRecibe,
+            vale5kgFisico,
+            vale11kgFisico,
+            vale15kgFisico,
+            vale45kgFisico,
+            vale5kgDigital,
+            vale11kgDigital,
+            vale15kgDigital,
+            vale45kgDigital
+        });
+
+        const fisico5kgTotal = Number(inventario.fisico5kg) - Number(vale5kgFisico);
+        const fisico11kgTotal = Number(inventario.fisico11kg) - Number(vale11kgFisico);
+        const fisico15kgTotal = Number(inventario.fisico15kg) - Number(vale15kgFisico);
+        const fisico45kgTotal = Number(inventario.fisico45kg) - Number(vale45kgFisico);
+        const digital5kgTotal = Number(inventario.digital5kg) - Number(vale5kgDigital);
+        const digital11kgTotal = Number(inventario.digital11kg) - Number(vale11kgDigital);
+        const digital15kgTotal = Number(inventario.digital15kg) - Number(vale15kgDigital);
+        const digital45kgTotal = Number(inventario.digital45kg) - Number(vale45kgDigital);
+
+        const valeFisicos = fisico5kgTotal + fisico11kgTotal + fisico15kgTotal + fisico45kgTotal;
+        const valeDigitales = digital5kgTotal + digital11kgTotal + digital15kgTotal + digital45kgTotal;
+        const totalVales = valeFisicos + valeDigitales;
+
+        const inventarioUpdated = await inventario.update({
+            fisico5kg: fisico5kgTotal,
+            fisico11kg: fisico11kgTotal,
+            fisico15kg: fisico15kgTotal,
+            fisico45kg: fisico45kgTotal,
+            digital5kg: digital5kgTotal,
+            digital11kg: digital11kgTotal,
+            digital15kg: digital15kgTotal,
+            digital45kg: digital45kgTotal,
+            totalValesFisicos: valeFisicos,
+            totalValesDigitales: valeDigitales,
+            totalValesAmbos: totalVales
+        });
+
+        res.json({
+            message: 'Vales descargados correctamente',
+            registroVales,
+            inventario: inventarioUpdated
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+//////////// PUT ///////////////
 
 const modificarInventarioVales = async (req, res) => {
     const { id } = req.params;
@@ -107,10 +197,10 @@ const sumarInventarioVales = async (req, res) => {
     }
 };
 
-
-
 module.exports = {
     getInventarioVales,
     sumarInventarioVales,
-    modificarInventarioVales
+    modificarInventarioVales,
+    descargarVales,
+    getRegistroVales
 }
