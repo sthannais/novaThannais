@@ -35,7 +35,7 @@ router.put('/cuadrar/:id', cuadrarOrden);
 router.put('/desactiveRecarga/:idOrden/:idRecarga', desactiveRecarga);
 router.put('/cambiarChoferOPeonetaDeOrden/:idOrden/:idChofer', cambiarChoferDeOrden);
 router.put('/cambiarAyudanteOPeonetaDeOrden/:idOrden/:idAyudante', cambiarAyudanteDeOrden);
-router.put('/changeContabilidadOrdenById/:idOrden', changeContabilidadOrdenById);
+router.put('/changeContabilidadOrdenById/:idContabilidad', changeContabilidadOrdenById);
 router.get('/chofer/:id/:fechaInicio/:fechaFin?', getAllChoferOrdenesDeRepartoBetweenDates);
 router.get('/ayudante/:id/:fechaInicio/:fechaFin?', getAllAyudanteOrdenesDeRepartoBetweenDates);
 router.post('/sendEmail', sendEmailWithCode);
