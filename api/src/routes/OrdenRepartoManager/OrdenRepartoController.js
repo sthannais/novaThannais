@@ -826,10 +826,10 @@ const changeRecharge = async (req, res) => {
         const ordenDeReparto = await OrdenDeReparto.findByPk(idOrden);
         const contabilidad = await ordenDeReparto.getContabilidadRecarga();
 
-        const total5kg = actual5kg * Number(contabilidad.precio5kg);
-        const total11kg = actual11kg * Number(contabilidad.precio11kg);
-        const total15kg = actual15kg * Number(contabilidad.precio15kg);
-        const total45kg = actual45kg * Number(contabilidad.precio45kg);
+        const total5kg = Number(actual5kg) * Number(contabilidad.precio5kg);
+        const total11kg = Number(actual11kg) * Number(contabilidad.precio11kg);
+        const total15kg = Number(actual15kg) * Number(contabilidad.precio15kg);
+        const total45kg = Number(actual45kg) * Number(contabilidad.precio45kg);
         const total = total5kg + total11kg + total15kg + total45kg;
         const totalCantidad = actual5kg + actual11kg + actual15kg + actual45kg;
 
@@ -1218,11 +1218,6 @@ const cambiarChoferDeOrden = async (req, res) => {
         })
 
         const chofer = await Chofer.findByPk(idChofer);
-        const personal = await chofer.getPersonal();
-
-        await personal.update({
-            activeForOrden: false
-        })
 
         await ordenDeReparto.setChofer(chofer);
 

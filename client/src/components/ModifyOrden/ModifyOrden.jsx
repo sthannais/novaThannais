@@ -69,32 +69,33 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
     //////// ESTADO PARA MODIFICAR RECARGAS ////////
 
     const [recarga, setRecarga] = useState({
-        actual5kg: 0,
-        actual11kg: 0,
-        actual15kg: 0,
-        actual45kg: 0,
+        actual5kg: "",
+        actual11kg: "",
+        actual15kg: "",
+        actual45kg: "",
     });
 
     const handleRecarga = (e) => {
         e.preventDefault();
         setRecarga({
             ...recarga,
-            [e.target.name]: Number(e.target.value)
+            [e.target.name]: e.target.value
         });
     };
 
     const cleanRecarga = () => {
         setRecarga({
-            actual5kg: 0,
-            actual11kg: 0,
-            actual15kg: 0,
-            actual45kg: 0,
+            actual5kg: "",
+            actual11kg: "",
+            actual15kg: "",
+            actual45kg: "",
         });
     };
 
     const handleRecargaSubmit = (e) => {
         e.preventDefault();
         dispatch(modifyRecargaOrdenQuantity2(novaOrdenById?.id, idRecarga, recarga, ordenId));
+        setIdRecarga(null);
         cleanRecarga();
         toggle();
     };
@@ -115,10 +116,10 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
             setDisabled(false);
         }
 
-        if( recarga.actual11kg === 0 || 
-            recarga.actual15kg === 0 || 
-            recarga.actual45kg === 0 || 
-            recarga.actual5kg === 0
+        if( recarga.actual11kg === "" || 
+            recarga.actual15kg === "" || 
+            recarga.actual45kg === "" || 
+            recarga.actual5kg === ""
         ) {
             setDisabled2(true);
         } else {

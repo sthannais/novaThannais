@@ -17,15 +17,17 @@ let sequelize =
         },
         keepAlive: true,
       },
+      operatorsAliases,
       ssl: true,
       logging: false,
       native: false,
       pool: {
         max: 5,
         min: 0,
-        acquire: 30000,
-        idle: 10000,
+        acquire: 300000,
+        idle: 300000,
       },
+      port: 5432,
   });
 
 const basename = path.basename(__filename);
