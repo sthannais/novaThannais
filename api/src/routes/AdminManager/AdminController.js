@@ -34,6 +34,29 @@ const getAdminById = async (req, res) => {
     res.json(admin);
 }
 
+const changeOnlineStatus = async (req, res) => {
+    try{
+        const { id } = req.params;
+
+        const admin = await Administrador.findByPk(id);
+        const personal = await admin.getPersonal();
+
+        await personal.update({
+            online: !personal.online
+        });
+
+        res.json({
+            msg: 'Estado de conexión actualizado'
+        });
+    }catch(error){
+        res.status(500).json({
+            msg: 'Error al actualizar el estado de conexión',
+            error: error.message
+        });
+    }
+}
+
+
 module.exports = {
     getAdmins,
     getAdminById,
