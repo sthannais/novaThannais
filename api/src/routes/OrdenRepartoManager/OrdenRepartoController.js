@@ -1243,11 +1243,6 @@ const cambiarAyudanteDeOrden = async (req, res) => {
         }
 
         const ayudante = await Ayudante.findByPk(idAyudante);
-        const personal = await ayudante.getPersonal();
-
-        await personal.update({
-            activeForOrden: false
-        })
 
         await ordenDeReparto.setAyudante(ayudante);
 

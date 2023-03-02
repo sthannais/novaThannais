@@ -38,8 +38,7 @@ const changeOnlineStatus = async (req, res) => {
     try{
         const { id } = req.params;
 
-        const admin = await Administrador.findByPk(id);
-        const personal = await admin.getPersonal();
+        const personal = await Personal.findByPk(id);
 
         await personal.update({
             online: !personal.online
