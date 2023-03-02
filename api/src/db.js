@@ -17,7 +17,6 @@ let sequelize =
         },
         keepAlive: true,
       },
-      operatorsAliases,
       ssl: true,
       logging: false,
       native: false,
