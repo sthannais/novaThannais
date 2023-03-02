@@ -187,7 +187,8 @@ const RendicionPage = () => {
                                             <span key={recarga.id} className={style.tdclas}>
                                                 {recarga.cantidad5kg} &nbsp;
                                             </span>
-                                        ))
+                                            //sort por id
+                                        )).sort((a, b) => a.key - b.key)
                                     }  
                                 </td>
                                 <td>
@@ -229,7 +230,7 @@ const RendicionPage = () => {
                                             <p key={recarga.id} className={style.tdclas}>
                                                 {recarga.cantidad11kg} &nbsp;
                                             </p>
-                                        ))
+                                        )).sort((a, b) => a.key - b.key)
                                     }
                                 </td>
                                 <td>
@@ -271,7 +272,7 @@ const RendicionPage = () => {
                                             <p key={recarga.id} className={style.tdclas}>
                                                     {recarga.cantidad15kg} &nbsp;
                                             </p>
-                                        ))
+                                        )).sort((a, b) => a.key - b.key)
                                     }
                                 </td>
                                 <td>
@@ -313,7 +314,7 @@ const RendicionPage = () => {
                                             <p key={recarga.id} className={style.tdclas}>
                                                 {recarga.cantidad45kg} &nbsp;
                                             </p>
-                                        ))
+                                        )).sort((a, b) => a.key - b.key)
                                     }
                                 </td>
                                 <td>
