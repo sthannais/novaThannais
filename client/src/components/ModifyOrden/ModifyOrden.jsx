@@ -248,7 +248,7 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                                                                     {recarga.cantidad5kg}
                                                                 </th>
                                                             )   
-                                                        ))
+                                                        )).sort((a, b) => a.key - b.key)
                                                     }
                                                 </td>
                                                 <td>
@@ -321,7 +321,7 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                                                                     {recarga.cantidad11kg}
                                                                 </th>
                                                             )
-                                                        ))
+                                                        )).sort((a, b) => a.key - b.key)
                                                     }
                                                 </td>
                                                 <td>
@@ -394,7 +394,7 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                                                                     {recarga.cantidad15kg}
                                                                 </th>
                                                             )
-                                                        ))
+                                                        )).sort((a, b) => a.key - b.key)
                                                     }
                                                 </td>
                                                 <td>
@@ -467,7 +467,7 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                                                                     {recarga.cantidad45kg}
                                                                 </th>
                                                             )
-                                                        ))
+                                                        )).sort((a, b) => a.key - b.key)
                                                     }
                                                 </td>
                                                 <td>
@@ -529,7 +529,7 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                                                                 }}>
                                                                     <img src={vectorDerecho} alt="flechita" className={style.flechita} />
                                                                 </button>
-                                                        ))
+                                                        )).sort((a, b) => a.key - b.key)
                                                     }
                                                 </th>
                                                 <th>

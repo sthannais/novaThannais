@@ -264,7 +264,7 @@ const OrdenDetail = (
                                                     {recarga?.cantidad5kg}
                                                 </th>
                                             )   
-                                        ))
+                                        )).sort((a, b) => a.key - b.key)
                                     }
                                 </td>
                                 <td>
@@ -323,7 +323,7 @@ const OrdenDetail = (
                                                     {recarga?.cantidad11kg}
                                                 </th>
                                             )
-                                        ))
+                                        )).sort((a, b) => a.key - b.key)
                                     }
                                 </td>
                                 <td>
@@ -382,7 +382,7 @@ const OrdenDetail = (
                                                     {recarga?.cantidad15kg}
                                                 </th>
                                             )
-                                        ))
+                                        )).sort((a, b) => a.key - b.key)
                                     }
                                 </td>
                                 <td>
@@ -439,7 +439,7 @@ const OrdenDetail = (
                                                     {recarga?.cantidad45kg}
                                                 </th>
                                             )
-                                        ))
+                                        )).sort((a, b) => a.key - b.key)
                                     }
                                 </td>
                                 <td>
@@ -486,7 +486,7 @@ const OrdenDetail = (
                                                     }}>
                                                         <img src={vectorDerecho} alt="flechita" className={style.flechita} />
                                                     </button>
-                                                ))
+                                                )).sort((a, b) => a.key - b.key)
                                             }
                                         </th>
                                     </tr>    
@@ -512,7 +512,7 @@ const OrdenDetail = (
                                                     }}>
                                                         <img src={vectorDerecho} alt="flechita" className={style.flechita} />
                                                     </button>
-                                                ))
+                                                )).sort((a, b) => a.key - b.key)
                                             }
                                         </th>
                                     </tr>
