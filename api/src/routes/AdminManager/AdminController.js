@@ -60,4 +60,5 @@ const changeOnlineStatus = async (req, res) => {
 module.exports = {
     getAdmins,
     getAdminById,
+    changeOnlineStatus
 }
