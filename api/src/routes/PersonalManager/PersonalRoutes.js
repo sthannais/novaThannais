@@ -8,7 +8,8 @@ const { getPersonals,
         createPersonal, 
         getOnlyChofercWithFaltantesBetweenDates, 
         getOnlyAyudantesWithFaltantesBetweenDates,
-        getAllFaltantesBetweenDates
+        getAllFaltantesBetweenDates,
+        changeActiveForOrdenById
     } = require('./PersonalController');
 
 router.get('/', getPersonals);
@@ -30,6 +31,8 @@ router.post('/', [
     check('rol', 'El rol no es válido').isIn(['Administrador', 'Auxiliar', 'Ayudante', 'Chofer', 'Chofer/Peoneta']),
     validateFields
 ], createPersonal);
+
+router.put('/orden/:personalId', changeActiveForOrdenById);
 
 
 module.exports = router;

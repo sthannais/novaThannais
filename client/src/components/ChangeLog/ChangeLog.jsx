@@ -29,6 +29,12 @@ const ChangeLog = () => {
             <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="md" backdrop="static" onKeyDown={handleKeydown}>
                 <ModalHeader toggle={toggle}>Cambios recientes</ModalHeader>
                 <ModalBody>
+                    <h5>Ver. 1.0.4</h5>
+                    <em style={{ color: 'red' }}>27/02/2023</em>
+                    <ul className={style.newli}>
+                        <li>Se empezo a desarrollar funcionalidades que permiten personalizar documentos excel al exportarlos</li>
+                        <li>Se corrigio bug al momento de cancelar una cuadratura, se perdia la referencia del faltante</li>
+                    </ul>
                     <h5>Ver. 1.0.3</h5>
                     <em style={{ color: 'red' }}>27/02/2023</em>
                     <ul className={style.newli}>

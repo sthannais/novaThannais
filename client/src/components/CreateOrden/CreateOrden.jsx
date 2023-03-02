@@ -60,7 +60,7 @@ const CreateOrden = () => {
         cuadranteId: '',
         idChofer: 0,
         idPeoneta: 0,
-        idAdmin: usuario.administrador.id,
+        idAdmin: usuario?.administrador?.id,
     });
 
     useEffect(() => {
@@ -149,7 +149,7 @@ const CreateOrden = () => {
             cuadranteId: '',
             idChofer:0,
             idPeoneta: 0,
-            idAdmin: usuario.administrador.id,
+            idAdmin: usuario?.administrador?.id,
         })
     };
 

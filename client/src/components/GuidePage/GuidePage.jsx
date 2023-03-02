@@ -13,7 +13,7 @@ import style from './guidePage.module.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import es from 'date-fns/locale/es';
 import { RiFileExcel2Fill } from 'react-icons/ri';
-import * as XLSX from 'xlsx';
+import SinAcceso from '../SinAcceso/SinAcceso';
 import * as XLSXPopulate from 'xlsx-populate/browser/xlsx-populate';
 import InfiniteScroll from 'react-infinite-scroller';
 import moment from 'moment';
@@ -57,27 +57,6 @@ const GuidePage = () => {
     
     /////// EXCEL ///////
     const tablaRef = useRef(null);
-
-    // const handleExportExcel = () => {
-    //     const ws = XLSX.utils.table_to_sheet(tablaRef.current);
-        
-    //       // Definir formato para las columnas
-    //     const columnWidths = [
-    //         { wch: 20 }, // Columna 1
-    //         { wch: 10 }, // Columna 2
-    //         { wch: 16 }, // Columna 3
-    //         { wch: 15 }, // Columna 4
-    //         { wch: 20 }, // Columna 5
-    //         { wch: 20 }, // Columna 6
-    //         { wch: 15 }, // Columna 7
-    //         { wch: 15 }, // Columna 8
-    //     ];
-    //     ws['!cols'] = columnWidths;
-
-    //     const wb = XLSX.utils.book_new();
-    //     XLSX.utils.book_append_sheet(wb, ws, `Guia de reparto`);
-    //     XLSX.writeFile(wb, `Guia de reparto ${usuario.name} ${usuario.lastname} ${soloFecha}.xlsx`);
-    // };
 
     const handleExportExcelPopulate = async () => {
         const data = currentPosts?.map((post) => {

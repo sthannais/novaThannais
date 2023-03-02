@@ -20,6 +20,12 @@ let sequelize =
       ssl: true,
       logging: false,
       native: false,
+      pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000,
+      },
   });
 
 const basename = path.basename(__filename);

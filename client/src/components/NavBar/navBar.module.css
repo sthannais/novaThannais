@@ -105,6 +105,11 @@ button {
     height: 2rem;
 }
 
+.access {
+    color: #F0F0F0;
+    font-size: 18px;
+}
+
 @media screen and (min-width: 1800px) {
     .grid1 {
         top: 33%;

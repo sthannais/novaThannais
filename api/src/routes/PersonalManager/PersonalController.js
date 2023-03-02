@@ -396,11 +396,32 @@ const getAllFaltantesBetweenDates = async (req, res) => {
     }
 };
 
+const changeActiveForOrdenById = async (req, res) => {
+    const { personalId } = req.params;
+
+    try {
+        const personal = await Personal.findByPk(personalId);
+
+        if(!personal) {
+            return res.status(404).json({error: 'Personal no encontrado'});
+        }
+
+        await personal.update({
+            activeForOrden: true
+        });
+
+        res.json(personal);
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+}
+
 
 module.exports = {
     getPersonals,
     createPersonal,
     getOnlyChofercWithFaltantesBetweenDates,
     getOnlyAyudantesWithFaltantesBetweenDates,
-    getAllFaltantesBetweenDates
+    getAllFaltantesBetweenDates,
+    changeActiveForOrdenById
 }
