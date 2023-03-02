@@ -831,14 +831,14 @@ const changeRecharge = async (req, res) => {
         const total15kg = Number(actual15kg) * Number(contabilidad.precio15kg);
         const total45kg = Number(actual45kg) * Number(contabilidad.precio45kg);
         const total = total5kg + total11kg + total15kg + total45kg;
-        const totalCantidad = actual5kg + actual11kg + actual15kg + actual45kg;
+        const totalCantidad = Number(actual5kg) + Number(actual11kg) + Number(actual15kg) + Number(actual45kg);
 
         const recarga = await Recargas.findByPk(idRecarga);
         
         //le resto los valores actuales de la recarga en la orden de reparto
         await contabilidad.update({
-            total5kg:  Number(contabilidad.total5kg)  - Number(recarga.cantidad5kg),
-            ventas5kg:  Number(contabilidad.ventas5kg)  - Number(recarga.cantidad5kg),
+            total5kg:  Number(contabilidad.total5kg) - Number(recarga.cantidad5kg),
+            ventas5kg:  Number(contabilidad.ventas5kg) - Number(recarga.cantidad5kg),
             recaudacion5kg: Number(contabilidad.recaudacion5kg) - Number(recarga.cantidad5kg * Number(contabilidad.precio5kg)),
             total11kg: Number(contabilidad.total11kg) - Number(recarga.cantidad11kg),
             ventas11kg: Number(contabilidad.ventas11kg) - Number(recarga.cantidad11kg),
@@ -855,8 +855,8 @@ const changeRecharge = async (req, res) => {
 
         //le sumo los valores nuevos de la recarga en la orden de reparto
         await contabilidad.update({
-            total5kg:  Number(contabilidad.total5kg)  + Number(actual5kg),
-            ventas5kg:  Number(contabilidad.ventas5kg)  + Number(actual5kg),
+            total5kg:  Number(contabilidad.total5kg) + Number(actual5kg),
+            ventas5kg:  Number(contabilidad.ventas5kg) + Number(actual5kg),
             recaudacion5kg: Number(contabilidad.recaudacion5kg) + Number(total5kg),
             total11kg: Number(contabilidad.total11kg) + Number(actual11kg),
             ventas11kg: Number(contabilidad.ventas11kg) + Number(actual11kg),
@@ -1258,6 +1258,64 @@ const cambiarAyudanteDeOrden = async (req, res) => {
     }
 };
 
+const changeContabilidadOrdenById = async (req, res) => {
+    const { idContabilidad } = req.params;
+    const {
+        total5kg,
+        llenos5kg,
+        precio5kg,
+        recaudacion5kg,
+        total11kg,
+        llenos11kg,
+        precio11kg,
+        recaudacion11kg,
+        total15kg,
+        llenos15kg,
+        precio15kg,
+        recaudacion15kg,
+        total45kg,
+        llenos45kg,
+        precio45kg,
+        recaudacion45kg,
+        totalCantidad,
+        totalRecaudacion,
+    } = req.body;
+
+    try {
+        const contabilidad = await ContabilidadRecargas.findByPk(idContabilidad);
+
+        await contabilidad.update({
+            total5kg,
+            llenos5kg,
+            ventas5kg,
+            precio5kg,
+            recaudacion5kg,
+            total11kg,
+            llenos11kg,
+            ventas11kg,
+            precio11kg,
+            recaudacion11kg,
+            total15kg,
+            llenos15kg,
+            ventas15kg,
+            precio15kg,
+            recaudacion15kg,
+            total45kg,
+            llenos45kg,
+            ventas45kg,
+            precio45kg,
+            recaudacion45kg,
+            totalCantidad,
+            totalRecaudacion,
+        });
+
+        res.json({msg: "Contabilidad de recargas actualizada correctamente"});
+    } catch (error) {
+        console.log(error.message);
+        res.status(400).json({error: error.message});
+    }
+}
+
 module.exports = {
     getOrdenesDeReparto,
     getOrdenDeRepartoById,
@@ -1275,5 +1333,6 @@ module.exports = {
     changeLlenos,
     desactiveRecarga,
     cambiarChoferDeOrden,
-    cambiarAyudanteDeOrden
+    cambiarAyudanteDeOrden,
+    changeContabilidadOrdenById
 }

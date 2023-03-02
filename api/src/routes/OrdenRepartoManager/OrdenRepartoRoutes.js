@@ -4,7 +4,6 @@ const {
         getOrdenesDeReparto, 
         getOrdenDeRepartoById, 
         createOrden, 
-        getOrdenDeRepartoByAdminIdAndDate,
         RechargeOrden,
         changeRecharge,
         finalizeOrden,
@@ -18,7 +17,8 @@ const {
         changeLlenos,
         desactiveRecarga,
         cambiarChoferDeOrden,
-        cambiarAyudanteDeOrden
+        cambiarAyudanteDeOrden,
+        changeContabilidadOrdenById
     } = require('./OrdenRepartoController');
 
 router.get('/', getOrdenesDeReparto);
@@ -35,6 +35,7 @@ router.put('/cuadrar/:id', cuadrarOrden);
 router.put('/desactiveRecarga/:idOrden/:idRecarga', desactiveRecarga);
 router.put('/cambiarChoferOPeonetaDeOrden/:idOrden/:idChofer', cambiarChoferDeOrden);
 router.put('/cambiarAyudanteOPeonetaDeOrden/:idOrden/:idAyudante', cambiarAyudanteDeOrden);
+router.put('/changeContabilidadOrdenById/:idOrden', changeContabilidadOrdenById);
 router.get('/chofer/:id/:fechaInicio/:fechaFin?', getAllChoferOrdenesDeRepartoBetweenDates);
 router.get('/ayudante/:id/:fechaInicio/:fechaFin?', getAllAyudanteOrdenesDeRepartoBetweenDates);
 router.post('/sendEmail', sendEmailWithCode);
