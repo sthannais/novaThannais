@@ -407,7 +407,7 @@ const changeActiveForOrdenById = async (req, res) => {
         }
 
         await personal.update({
-            activeForOrden: true
+            activeForOrden: !personal.activeForOrden
         });
 
         res.json(personal);
