@@ -7,6 +7,7 @@ import es from 'date-fns/locale/es';
 import 'react-datepicker/dist/react-datepicker.css';
 import style from './historialAnticipos.module.css'
 import JorgeGas from '../../assetsOficial/jorgegas.svg';
+import SinAcceso from '../SinAcceso/SinAcceso';
 import { numberWithDots } from '../../helpers/numberWithDot';
 import InfiniteScroll from 'react-infinite-scroller';
 
@@ -16,6 +17,7 @@ const HistorialAnticipos = () => {
 
     const dispatch = useDispatch()
 
+    const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const { ordenesChoferById, ordenesAyudanteById, ordenesChofer, ordenesAyudante } = useSelector(state => state.Nova)
     const [paginaActual, setPaginaActual] = useState(1)
     const [porPagina, setPorPagina] = useState(0)
@@ -60,6 +62,8 @@ const HistorialAnticipos = () => {
         fechaInicio,
         fechaFin
     ])
+
+    if(usuario.administrador === null) return <SinAcceso />
 
     return (
         <div>

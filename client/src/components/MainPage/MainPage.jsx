@@ -7,6 +7,7 @@ import CreatePersonal from '../CreatePersonal/CreatePersonal';
 import { RiFileExcel2Fill } from 'react-icons/ri';
 import XLSX from 'xlsx';
 import InfiniteScroll from 'react-infinite-scroller';
+import SinAcceso from '../SinAcceso/SinAcceso';
 
 const MainPage = () => {
 
@@ -14,6 +15,7 @@ const MainPage = () => {
     const personal = useSelector((state) => state.Nova.novaPersonals)
     const dispatch = useDispatch()
 
+    const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const [paginaActual, setPaginaActual] = useState(1)
     const [porPagina, setPorPagina] = useState(0)
     const [hasMore, setHasMore] = useState(true)
@@ -49,6 +51,8 @@ const MainPage = () => {
         dispatch(getPersonals())
         setPorPagina(width > 1800 ? 12 : 9)
     }, [dispatch, width])
+
+    if(usuario.administrador === null ) return <SinAcceso />
 
     return (
         <div className={style.margin}>

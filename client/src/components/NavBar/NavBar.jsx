@@ -23,50 +23,11 @@ const NavBar = () => {
             <img src={monito} alt="monito" className={style.styleMonito} />
             {rolId && rolId === 1 ? (
                 email === 'irmaperez.gea@gmail.com'  ? (
-                    <div>
-                        <p className={style.completeName}>{name + " " + lastname}</p>
-                        <p className={style.rolStyle}>Administrador</p>
-
-                        <div className={style.grid1}>
-                            <Link to="/home" >
-                                <button
-                                className={
-                                    buttonSelected === 'home' ? style.guideStyleSelected : style.guideStyle
-                                } onClick={() => setButtonSelected('home')}>
-                                    Lista de Personal
-                                </button>  
-                            </Link>
-                            <Link to="/rendicion">
-                                <button onClick={
-                                    () => setButtonSelected('rendicion')
-                                } className={
-                                    buttonSelected === 'rendicion' ? style.guideStyleSelected : style.guideStyle
-                                }>
-                                    Rendición de ventas
-                                </button>
-                            </Link>
-                            <Link to="/rendicionGeneral">
-                                <button onClick={
-                                    () => setButtonSelected('rendicionGeneral')
-                                } className={
-                                    buttonSelected === 'rendicionGeneral' ? style.guideStyleSelected : style.guideStyle
-                                }>
-                                    Rendición General
-                                </button>
-                            </Link>
-                            <Link to="/historialAnticipos">
-                                <button onClick={
-                                    () => setButtonSelected('historialAnticipos')
-                                } className={
-                                    buttonSelected === 'historialAnticipos' ? style.guideStyleSelected : style.guideStyle
-                                }>
-                                    Historial Anticipos
-                                </button>
-                            </Link>
-                            <button className={style.guideStyle} onClick={handleLogout}>
-                                Cerrar sesión
-                            </button>
-                        </div>
+                    <div className={style.grid1}>
+                        <p className={style.access}>¡No tienes acceso!</p>
+                        <button className={style.guideStyle} onClick={handleLogout}>
+                            Cerrar sesión
+                        </button>
                     </div>
                 ) : email === "maicol.nieto@jorgegas.cl" || 
                     email === "jorgetalento@outlook.es" || 
