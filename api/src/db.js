@@ -27,6 +27,7 @@ let sequelize =
         idle: 300000,
       },
       port: 5432,
+      queryCache : true,
   });
 
 const basename = path.basename(__filename);
