@@ -7,6 +7,7 @@ import { bringAllFaltantes, bringCuadratura2, bringAllAdministradores } from '..
 import { Input } from 'reactstrap';
 import style from './rendicionGeneral.module.css'
 import JorgeGas from '../../assetsOficial/jorgegas.svg';
+import SinAcceso from '../SinAcceso/SinAcceso';
 import 'react-datepicker/dist/react-datepicker.css';
 import EfectivoTable from '../RendicionTables/EfectivoTable/EfectivoTable';
 import TarrosTable from '../RendicionTables/TarrosTable/TarrosTable';
@@ -69,7 +70,9 @@ const RendicionGeneral = () => {
         dispatch(bringAllAdministradores())
         dispatch(bringCuadratura2(soloFecha, soloFechaFin, id))
         dispatch(bringAllFaltantes(soloFecha, soloFechaFin, id))
-    }, [dispatch, soloFecha, soloFechaFin, id, usuario.administrador.id])
+    }, [dispatch, soloFecha, soloFechaFin, id])
+
+    if(usuario.administrador === null) return <SinAcceso />
 
     return (
         <div>

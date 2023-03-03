@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import DatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
-import { Input }  from 'reactstrap';
 import { bringOrdenById, ordenesRendicion, bringAllAdministradores, bringListaDePreciosActive } from '../../redux/novaSlice/thunks';
 import 'bootstrap/dist/css/bootstrap.css';
 import style from './rendicionPage.module.css';
@@ -16,6 +15,7 @@ import RecaudacionOrden from '../TablesPayments/RecaudacionOrden/RecaudacionOrde
 import OrdenInfo from '../TablesPayments/OrdenInfo/OrdenInfo';
 import Cuadratura from '../Cuadratura/Cuadratura';
 import Anticipos from '../Anticipos/Anticipos';
+import SinAcceso from '../SinAcceso/SinAcceso';
 import ModalGastos from '../ModalGastos/ModalGastos';
 import { numberWithDots } from '../../helpers/numberWithDot';
 import ModifyOrden from '../ModifyOrden/ModifyOrden';
@@ -82,7 +82,6 @@ const RendicionPage = () => {
         dispatch(ordenesRendicion(soloFecha))
     }, [
         dispatch,
-        usuario.administrador.id,
         ordenId,
         soloFecha,
         novaOrdenById?.contabilidadRecarga?.totalRecaudacion,
@@ -105,6 +104,8 @@ const RendicionPage = () => {
         ${orden.chofer.personal.name} ${orden.chofer.personal.lastname}` +
         `${orden?.ayudante ? " y " + orden?.ayudante?.personal?.name + " " + orden?.ayudante?.personal?.lastname : ""}`
     }));
+
+    if(usuario.administrador === null) return <SinAcceso />
 
     return (
         <div className={style.conenedor}>

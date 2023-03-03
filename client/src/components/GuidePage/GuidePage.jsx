@@ -156,6 +156,10 @@ const GuidePage = () => {
 
     };
 
+    if(usuario.administrador === null) {
+        return <SinAcceso />
+    }
+
     return (
         <div>
             <p className={style.text}>Guia de reparto</p>
