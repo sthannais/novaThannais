@@ -728,6 +728,22 @@ export const setAutorizacion = () => async (dispatch) => {
     };
 }
 
+export const setNoAutorizacion = () => async (dispatch) => {
+    try {
+        dispatch(setNoAutorizado());
+    } catch (error) {
+        console.log(error.message);
+    };
+};
+
+export const limpiarCodigos = () => async (dispatch) => {
+    try {
+        dispatch(limpiarCodigo());
+    } catch (error) {
+        console.log(error.message);
+    };
+};
+
 export const bringListaDePreciosActive = () => async (dispatch) => {
     try {
         const response = await fetch(`${process.env.REACT_APP_API}/listaDePrecios/active`);

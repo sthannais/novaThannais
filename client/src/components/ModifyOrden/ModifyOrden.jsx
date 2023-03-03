@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { bringCodigoParaModificar, setAutorizacion, modifyRecargaOrdenQuantity2, modifyLlenos } from '../../redux/novaSlice/thunks';
+import { bringCodigoParaModificar, setAutorizacion, modifyRecargaOrdenQuantity2, modifyLlenos, setNoAutorizacion, limpiarCodigos } from '../../redux/novaSlice/thunks';
 import style from './modifyOrden.module.css';
 import { numberWithDots } from '../../helpers/numberWithDot';
 import vectorDerecho from "../../assetsOficial/vectorDerecho.svg"
@@ -642,10 +642,13 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                                                     () => {
                                                         toggle();
                                                         cleanState();
+                                                        dispatch(limpiarCodigos());
+                                                        dispatch(setNoAutorizacion());
+                                                        setCodigo(null);
                                                     }
                                                 } className={style.tamaño}>
                                                     Cancelar
-                                                </Button >
+                                                </Button>
                                             </div>
                                         )
                                     }

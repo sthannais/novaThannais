@@ -273,6 +273,9 @@ const DownloadOrden = ({ fecha }) => {
                                                             min={0}
                                                             onKeyDown={handleKeyDown2}
                                                             onWheel={(e) => e.target.blur()}
+                                                            disabled={
+                                                                novaOrdenById ? false : true
+                                                            }
                                                         />
                                                 </FormGroup>
                                             </td>
@@ -335,6 +338,9 @@ const DownloadOrden = ({ fecha }) => {
                                                             min={0}
                                                             onKeyDown={handleKeyDown2}
                                                             onWheel={(e) => e.target.blur()}
+                                                            disabled={
+                                                                novaOrdenById ? false : true
+                                                            }
                                                         />
                                                 </FormGroup>
                                             </td>
@@ -399,6 +405,9 @@ const DownloadOrden = ({ fecha }) => {
                                                             min={0}
                                                             onKeyDown={handleKeyDown2}
                                                             onWheel={(e) => e.target.blur()}
+                                                            disabled={
+                                                                novaOrdenById ? false : true
+                                                            }
                                                         />
                                                 </FormGroup>
                                             </td>
@@ -463,6 +472,9 @@ const DownloadOrden = ({ fecha }) => {
                                                             min={0}
                                                             onKeyDown={handleKeyDown2}
                                                             onWheel={(e) => e.target.blur()}
+                                                            disabled={
+                                                                novaOrdenById ? false : true
+                                                            }
                                                         />
                                                 </FormGroup>
                                             </td>
