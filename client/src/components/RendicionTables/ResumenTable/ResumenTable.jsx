@@ -11,7 +11,8 @@ const ResumenTable = ({ cuadratura, faltantes, tablaRef }) => {
                         Number(cuadratura?.totalDescuentos) + 
                         Number(cuadratura?.totalTransbank) +
                         Number(cuadratura?.sobrante) + 
-                        Number(faltantes)
+                        Number(faltantes) +
+                        Number(cuadratura?.gastos)
                         
 
     return (
