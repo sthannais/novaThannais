@@ -1,4 +1,4 @@
-const { ListaDePrecios } = require('../../db.js');
+const { ListaDePrecios, OrdenDeReparto } = require('../../db.js');
 
 const getListaDePrecios = async (req, res) => {
     try {
@@ -45,6 +45,7 @@ const activeListaDePrecios = async (req, res) => {
             where: { id }
         });
         await listaDePrecios.update({ active: true });
+
         res.json(listaDePrecios);
     } catch (error) {
         console.log(error);

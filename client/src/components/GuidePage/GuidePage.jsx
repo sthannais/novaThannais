@@ -233,7 +233,6 @@ const GuidePage = () => {
                                         key={orden?.id}
                                         id={orden?.id}
                                         fecha={orden?.fecha}
-                                        totalCantidad={orden?.contabilidadRecarga?.totalCantidad}
                                         patente={orden?.patente?.name}
                                         chofer={orden?.chofer?.personal?.name + ' ' + orden.chofer?.personal?.lastname }
                                         ayudante= {

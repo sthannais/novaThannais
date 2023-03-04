@@ -680,8 +680,7 @@ const createOrden = async (req, res) => {
             where: {
                 active: true
             }
-        })
-        await ordenDeReparto.setListaDePrecio(listaDePrecios);
+        });
 
         const precio5kg = listaDePrecios.get('precio5kg');
         const precio11kg = listaDePrecios.get('precio11kg');
@@ -1001,6 +1000,8 @@ const finalizeOrden = async (req, res) => {
             estado: false,
         });
 
+        
+
         //busco la patente de la orden de reparto y la actualizo
         const patente = await ordenDeReparto.getPatente();
         await patente.update({active: false})
@@ -1017,15 +1018,22 @@ const finalizeOrden = async (req, res) => {
         
         const contabilidad = await ordenDeReparto.getContabilidadRecarga();
 
+        const listaDePrecios = await ListaDePrecios.findOne({
+            where: {
+                active: true
+            }
+        });
+
+        await ordenDeReparto.setListaDePrecio(listaDePrecios);
         const ventas5kg = Number(contabilidad.total5kg) - Number(llenos5kg);
         const ventas11kg = Number(contabilidad.total11kg) - Number(llenos11kg);
         const ventas15kg = Number(contabilidad.total15kg) - Number(llenos15kg);
         const ventas45kg = Number(contabilidad.total45kg) - Number(llenos45kg);
         const totalCantidad = Number(contabilidad.totalCantidad) - Number(llenos5kg) - Number(llenos11kg) - Number(llenos15kg) - Number(llenos45kg);
-        const recaudacion5kg = ventas5kg * Number(contabilidad.precio5kg);
-        const recaudacion11kg = ventas11kg *  Number(contabilidad.precio11kg);
-        const recaudacion15kg = ventas15kg *  Number(contabilidad.precio15kg);
-        const recaudacion45kg = ventas45kg *  Number(contabilidad.precio45kg);
+        const recaudacion5kg = ventas5kg * Number(listaDePrecios.precio5kg);
+        const recaudacion11kg = ventas11kg *  Number(listaDePrecios.precio11kg);
+        const recaudacion15kg = ventas15kg *  Number(listaDePrecios.precio15kg);
+        const recaudacion45kg = ventas45kg *  Number(listaDePrecios.precio45kg);
         const totalRecaudacion = recaudacion5kg + recaudacion11kg + recaudacion15kg + recaudacion45kg;
 
         await contabilidad.update({
