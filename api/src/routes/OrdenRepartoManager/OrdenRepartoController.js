@@ -1109,9 +1109,9 @@ const cuadrarOrden = async (req, res) => {
         const ordenDeReparto = await OrdenDeReparto.findByPk(id);
         const inventario = await InventarioVales.findByPk(1);
 
-        if(ordenDeReparto.rendida === true){
-            return res.status(400).send({error: "La orden de reparto ya fue rendida"})
-        }
+        // if(ordenDeReparto.rendida === true){
+        //     return res.status(400).send({error: "La orden de reparto ya fue rendida"})
+        // }
 
         await ordenDeReparto.update({
             cuadradoPor: idDeDecuadre
