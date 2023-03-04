@@ -31,7 +31,7 @@ const RendicionPage = () => {
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const dispatch = useDispatch()
     const [ordenId , setOrdenId] = useState(0)
-    const { ordenesRendidas, novaOrdenById } = useSelector(state => state.Nova)
+    const { ordenesRendidas, novaOrdenById, listaDePrecios } = useSelector(state => state.Nova)
     const [date, setDate] = useState(new Date());
     const soloFecha = moment(date).tz('America/Santiago').format('YYYY-MM-DD');
 

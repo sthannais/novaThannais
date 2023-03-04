@@ -4,8 +4,7 @@ import OrdenDetail from '../OrdenDetail/OrdenDetail';
 
 const OrdenList = ({
         id, 
-        fecha, 
-        totalCantidad, 
+        fecha,
         patente, 
         chofer, 
         ayudante, 
@@ -18,6 +17,11 @@ const OrdenList = ({
 
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
+    let totalCantidad =  0
+    
+    recargas?.forEach((recarga) => {
+        totalCantidad += Number(recarga.cantidad5kg) + Number(recarga.cantidad11kg) + Number(recarga.cantidad15kg) + Number(recarga.cantidad45kg)
+    })
 
     return (
         <>
