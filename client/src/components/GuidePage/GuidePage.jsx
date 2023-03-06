@@ -26,7 +26,6 @@ const GuidePage = () => {
 
     const dispatch = useDispatch();
     const { novaOrdenes } = useSelector((state) => state.Nova);
-    console.log(novaOrdenes?.ordenDeRepartos?.length);
     const { email } = useSelector(state => state.Autenticacion.autBack)
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     
