@@ -1,6 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DatePicker, { registerLocale } from 'react-datepicker';
+import { RiFileExcel2Fill } from 'react-icons/ri';
+import moment from 'moment';
+import 'moment-timezone';
+import 'react-datepicker/dist/react-datepicker.css';
+import es from 'date-fns/locale/es';
+import { Input } from 'reactstrap';
+import InfiniteScroll from 'react-infinite-scroller';
+import * as XLSXPopulate from 'xlsx-populate/browser/xlsx-populate';
 import { getAllOrdenes } from '../../redux/novaSlice/thunks';
 import JorgeGas from '../../assetsOficial/jorgegas.svg';
 import CreateOrden from '../CreateOrden/CreateOrden';
@@ -10,14 +18,8 @@ import ListaDePrecios from '../ListaDePrecios/ListaDePrecios';
 import Patentes from '../Patentes/Patentes';
 import Cuadrantes from '../Cuadrantes/Cuadrantes';
 import style from './guidePage.module.css';
-import 'react-datepicker/dist/react-datepicker.css';
-import es from 'date-fns/locale/es';
-import { RiFileExcel2Fill } from 'react-icons/ri';
 import SinAcceso from '../SinAcceso/SinAcceso';
-import * as XLSXPopulate from 'xlsx-populate/browser/xlsx-populate';
-import InfiniteScroll from 'react-infinite-scroller';
-import moment from 'moment';
-import 'moment-timezone';
+
 
 registerLocale('es', es);
 const GuidePage = () => {
@@ -184,6 +186,16 @@ const GuidePage = () => {
                         maxDate={new Date()}
                         className={style.classDatePicker}
                     />
+                    <div className={style.infoOrdenes}>
+                        <p>Ordenes creadas</p>
+                        <Input
+                            type="number"
+                            value={novaOrdenes?.ordenDeRepartos?.length}
+                            disabled
+                            className={style.inputOrdenes}
+                        >
+                        </Input>
+                    </div>
                 </div>
                 <button onClick={handleExportExcelPopulate} className={style.excel}>
                     <RiFileExcel2Fill className={style.icon3} />

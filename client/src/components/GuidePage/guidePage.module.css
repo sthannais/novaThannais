@@ -112,6 +112,29 @@
     border: 1px solid #5E5F5F;
 }
 
+.infoOrdenes {
+    width: 10rem;
+    position: absolute;
+    left: 9rem;
+    top: 0rem;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 13px;
+    line-height: 23px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.inputOrdenes {
+    width: 7rem;
+    height: 1.5rem;
+    margin-top: -0.2rem;
+    margin-left: 1.5rem;
+    text-align: center;
+}
+
 @media screen and (min-width: 1800px) {
     .container {
         width: 1590px;

@@ -21,7 +21,7 @@ let sequelize =
       logging: false,
       native: false,
       pool: {
-        max: 5,
+        max: 10,
         min: 0,
         acquire: 300000,
         idle: 300000,
