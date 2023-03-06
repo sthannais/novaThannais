@@ -489,9 +489,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
             ...gastosNumber,
         }))
         cleanStates();
-        toggle();
         cleanFaltantes();
-
     }
 
     const modalStyles = {
@@ -520,7 +518,10 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                 <img src={cuadratura} alt="cuadratura" className={style.icono} />
             </Button> 
             <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="lg" backdrop="static" onKeyDown={handleKeydown}>
-                <Form onSubmit={(e) => handleSubmit(e)}>
+                <Form onSubmit={(e) => {
+                    handleSubmit(e)
+                    toggle()
+                }}>
                     <ModalHeader toggle={toggle}>Cuadratura de {" "}  
                         {
                             novaOrdenById?.chofer?.personal?.name + " " + 

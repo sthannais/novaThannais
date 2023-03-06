@@ -395,6 +395,9 @@ const getAllOrdenesWhereEstadoFalseByDate = async (req, res) => {
                 fecha: date,
                 estado: false
             },
+            order: [
+                ['id', 'ASC']
+            ],
             include: [
                 {
                     model: Patentes,
