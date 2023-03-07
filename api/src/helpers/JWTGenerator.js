@@ -5,7 +5,7 @@ const JWTGenerator = (id) => {
     return new Promise((resolve, reject) => {
         const payload = { id };
         JWT.sign(payload, process.env.JWT_SECRET, {
-            expiresIn: '1m'
+            expiresIn: '4h'
         }, (err, token) => {
             if (err) {
                 console.log(err);
