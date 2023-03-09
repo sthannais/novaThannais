@@ -34,10 +34,25 @@ export const fetchLoginThunk = (email, password) => {
 
 export const logoutAction = (id) => async (dispatch) => {
     try {
-        await axios.post(`/auth/logout`, {id})
-        localStorage.removeItem('usuario');
+        await axios.post(`/auth/logout`, {id});
         dispatch(logout());
+        localStorage.removeItem('usuario');
         window.location.href = '/';
+        return
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${error.message}`,
+        });
+    }
+};
+
+export const logoutAction2 = (id) => async (dispatch) => {
+    try {
+        await axios.post(`/auth/logout`, {id});
+        dispatch(logout());
+        return
     } catch (error) {
         Swal.fire({
             icon: 'error',

@@ -9,6 +9,8 @@ const LoginPage = () => {
 
     const { status } = useSelector((state) => state.Autenticacion.autBack);
     const { error } = useSelector((state) => state.Autenticacion.autBack);
+    const channel = new BroadcastChannel('auth');
+    localStorage.setItem('channel', JSON.stringify(channel));
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')

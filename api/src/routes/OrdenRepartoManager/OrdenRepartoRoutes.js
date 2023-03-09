@@ -1,5 +1,7 @@
 const Router = require('express');
 const router = Router();
+const { authMiddleware } = require('../../helpers/JWTGenerator');
+
 const { 
         getOrdenesDeReparto, 
         getOrdenDeRepartoById, 
@@ -22,7 +24,7 @@ const {
     } = require('./OrdenRepartoController');
 
 router.get('/', getOrdenesDeReparto);
-router.get('/date/:date', getAllOrdenesByDate);
+router.get('/date/:date', authMiddleware, getAllOrdenesByDate);
 router.get('/date/estado/:date', getAllOrdenesWhereEstadoFalseByDate);
 router.get('/date/estado/:fechaInicio/:fechaFin?', getAllOrdenesWhereEstadoFalseBetweenDates);
 router.get('/:id', getOrdenDeRepartoById);

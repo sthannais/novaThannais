@@ -5,7 +5,7 @@ const JWTGenerator = (id) => {
     return new Promise((resolve, reject) => {
         const payload = { id };
         JWT.sign(payload, process.env.JWT_SECRET, {
-            expiresIn: '4h'
+            expiresIn: '8h'
         }, (err, token) => {
             if (err) {
                 console.log(err);
@@ -60,8 +60,46 @@ const JWTVerify = async (req = request, res = response, next) => {
     }
 };
 
+const authMiddleware = async (req, res, next) => {
+    const token = req.headers['token'];
+
+    if (!token) {
+        return res.status(401).json({ message: 'Token no proporcionado' });
+    }
+    try {
+        const { id } = JWT.verify(token, process.env.JWT_SECRET)
+
+        const user = await Personal.findByPk(id, {
+            include: {
+                model: Rol,
+                attributes: ["name"],
+            },
+        });
+
+        if (!user.online) {
+            return res.status(401).json({
+            msg: "usuario no esta online",
+            });
+        };
+
+        req.user = user;
+        next();
+    } catch (err) {
+        if (err.name === 'TokenExpiredError') {
+            const userId = JWT.decode(token).id;
+            const user = await Personal.findByPk(userId);
+            if (user) {
+                await user.update({ online: false });
+            }
+            return res.status(401).json({ message: 'Token ha expirado' });
+        }
+        res.status(500).json({ message: err.message });
+    }
+};
+
 
 module.exports = {
     JWTGenerator,
-    JWTVerify
+    JWTVerify,
+    authMiddleware
 }

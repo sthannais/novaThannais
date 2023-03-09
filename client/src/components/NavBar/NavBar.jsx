@@ -36,8 +36,8 @@ const NavBar = () => {
                     email === "constanza.velasco@jorgegas.cl" || 
                     email === "jeniffer.moreno@jorgegas.cl" ||
                     email === "linda.donaire@jorgegas.cl" || 
-                    email === "ariel.rojas@jorgegas.cl" ||
-                    email === "jhoskartoro@gmail.com"
+                    email === "jhoskartoro@gmail.com" ||
+                    email === "francisca.rodriguez@jorgegas.cl" 
                     ? (
                         <div>
                             <p className={style.completeName}>{name + " " + lastname}</p>
@@ -102,7 +102,27 @@ const NavBar = () => {
                                 </button>
                             </div>
                         </div>
-                    ) : (
+                    ) : email === "ariel.rojas@jorgegas.cl" ? (
+                        <div>
+                            <p className={style.completeName}>{name + " " + lastname}</p>
+                            <p className={style.rolStyle}>Administrador</p>
+
+                            <div className={style.grid1}>
+                                <Link to="/rendicionGeneral">
+                                    <button onClick={
+                                        () => setButtonSelected('rendicionGeneral')
+                                    } className={
+                                        buttonSelected === 'rendicionGeneral' ? style.guideStyleSelected : style.guideStyle
+                                    }>
+                                        Rendición General
+                                    </button>
+                                </Link>
+                                <button className={style.guideStyle} onClick={handleLogout}>
+                                    Cerrar sesión
+                                </button>
+                            </div>
+                        </div>
+                    ): (
                         <div>
                             <p className={style.completeName}>{name + " " + lastname}</p>
                             <p className={style.rolStyle}>Administrador</p>

@@ -33,8 +33,17 @@ import {
     } from './novaSlice';
 
 export const getAllOrdenes = (date) => async (dispatch) => {
+
+    const { token } = JSON.parse(localStorage.getItem('usuario'));
+
     try {
-        const response = await fetch(`${process.env.REACT_APP_API}/orden/date/${date}`);
+        const response = await fetch(`${process.env.REACT_APP_API}/orden/date/${date}`,{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': token
+            }
+        });
         const data = await response.json();
         dispatch(getOrdenes(data));
     } catch (error) {

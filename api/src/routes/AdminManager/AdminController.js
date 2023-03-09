@@ -1,6 +1,6 @@
 const { Administrador, Personal, Rol } = require('../../db')
 
-const getAdmins = (req, res) => {
+const getAdmins = (req, res, next) => {
     Administrador.findAll({
         include: [{
             model: Personal,
@@ -11,9 +11,7 @@ const getAdmins = (req, res) => {
     }).then(administradores => {
         res.json(administradores);
     }).catch(error => {
-        res.status(500).json({
-            msg: 'Error al obtener los administradores'
-        });
+        next(error);
     });
 }
 

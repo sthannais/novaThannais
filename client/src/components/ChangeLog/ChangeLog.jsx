@@ -26,11 +26,29 @@ const ChangeLog = () => {
                 () => {
                     toggle();
                 }
-            } >Ver. 1.0.5
+            } >Ver. 1.0.6
             </button>
             <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="md" backdrop="static" onKeyDown={handleKeydown}>
                 <ModalHeader toggle={toggle}>Cambios recientes</ModalHeader>
                 <ModalBody>
+                    <h5>Ver. 1.0.6</h5>
+                    <em style={{ color: 'red' }}>09/03/2023</em>
+                    {
+                        verMas && name === 'Ver. 1.0.6' ? (
+                            <ul className={style.newli}>
+                                <li>Ahora las sesiones tienen una duracion de ocho horas, luego de pasar ocho horas, se cerrara automaticamente la sesion cuando el usuario ingrese y se lo llevara a iniciar sesion de nuevo</li>
+                            </ul>
+                        ) : null
+                    }
+                    <br />
+                    <button onClick={
+                        () => {
+                            setVerMas(!verMas);
+                            setName('Ver. 1.0.6')
+                        }
+                    } className={style.verMas}>
+                        { verMas && name === 'Ver. 1.0.6' ? 'Ver menos...' : 'Ver mas...'}
+                    </button>
                     <h5>Ver. 1.0.5</h5>
                     <em style={{ color: 'red' }}>06/03/2023</em>
                     {
