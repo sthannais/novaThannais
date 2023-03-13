@@ -25,7 +25,7 @@ const {
 
 router.get('/', getOrdenesDeReparto);
 router.get('/date/:date', authMiddleware, getAllOrdenesByDate);
-router.get('/date/estado/:date', getAllOrdenesWhereEstadoFalseByDate);
+router.get('/date/estado/:date', authMiddleware, getAllOrdenesWhereEstadoFalseByDate);
 router.get('/date/estado/:fechaInicio/:fechaFin?', getAllOrdenesWhereEstadoFalseBetweenDates);
 router.get('/:id', getOrdenDeRepartoById);
 router.post('/', createOrden);

@@ -3,6 +3,7 @@ const router = Router();
 const { check } = require('express-validator');
 const {emailVerify} = require('../../helpers/DBValidators');
 const {validateFields} = require('../../helpers/FieldValidators');
+const { authMiddleware } = require('../../helpers/JWTGenerator');
 
 const { getPersonals,
         createPersonal, 
@@ -19,7 +20,7 @@ router.get('/chofer/faltantes/:fechaInicio/:fechaFin?', getOnlyChofercWithFaltan
 
 router.get('/ayudante/faltantes/:fechaInicio/:fechaFin?', getOnlyAyudantesWithFaltantesBetweenDates);
 
-router.get('/faltantes/:administradorId/:fechaInicio/:fechaFin?', getAllFaltantesBetweenDates);
+router.get('/faltantes/:administradorId/:fechaInicio/:fechaFin?', authMiddleware, getAllFaltantesBetweenDates);
 
 router.post('/', [
     check('name', 'El nombre es obligatorio').not().isEmpty(),

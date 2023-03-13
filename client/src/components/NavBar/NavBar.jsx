@@ -117,6 +117,15 @@ const NavBar = () => {
                                         Rendición General
                                     </button>
                                 </Link>
+                                <Link to="/guide">
+                                    <button onClick={
+                                        () => setButtonSelected('guide')
+                                    } className={
+                                        buttonSelected === 'guide' ? style.guideStyleSelected : style.guideStyle
+                                    }>
+                                        Guia de Reparto
+                                    </button>
+                                </Link>
                                 <button className={style.guideStyle} onClick={handleLogout}>
                                     Cerrar sesión
                                 </button>

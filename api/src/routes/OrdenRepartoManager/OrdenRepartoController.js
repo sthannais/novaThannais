@@ -262,6 +262,7 @@ const getAllOrdenesByDate = async (req, res) => {
         });
         res.json({ordenDeRepartos});
     } catch (error) {
+        console.log(error.message);
         res.status(400).json({error: error.message});
     }
 }
@@ -463,7 +464,6 @@ const getAllOrdenesWhereEstadoFalseByDate = async (req, res) => {
         });
         res.json(ordenesDeReparto);
     } catch (error) {
-        console.log(error.message);
         res.status(400).json({error: error.message});
     }
 };

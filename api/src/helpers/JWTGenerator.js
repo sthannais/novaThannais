@@ -76,7 +76,7 @@ const authMiddleware = async (req, res, next) => {
             },
         });
 
-        if (!user.online) {
+        if (user.online === false) {
             return res.status(401).json({
             msg: "usuario no esta online",
             });
