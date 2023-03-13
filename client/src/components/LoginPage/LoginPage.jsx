@@ -4,6 +4,7 @@ import RealImg from '../../assetsOficial/benjanova.svg';
 import './loginPage.css';
 import Monito from '../../assetsOficial/jorgito.svg';
 import { fetchLoginThunk } from '../../redux/autenticacionSlice/thunks';
+import CierreDeSesion from '../CierreDeSesion/CierreDeSesion';
 
 const LoginPage = () => {
 
@@ -53,7 +54,7 @@ const LoginPage = () => {
                     <button className="boton-1" type="submit" 
                     disabled={isDisabled}>Entrar</button>
                 </form>
-                <p className="texto-auxiliar">¿Olvidaste tu contraseña?</p>
+                <CierreDeSesion className={"texto-auxiliar"}/>
             </div>
         </div>
     )

@@ -119,6 +119,10 @@
     color: #000000;
 }
 
+.texto-auxiliar:hover {
+    color: #FFA500;
+}
+
 
 @media screen and (min-width: 1800px) {
     .margin-image-1 {

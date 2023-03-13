@@ -37,6 +37,7 @@ const ChangeLog = () => {
                         verMas && name === 'Ver. 1.0.6' ? (
                             <ul className={style.newli}>
                                 <li>Ahora las sesiones tienen una duracion de ocho horas, luego de pasar ocho horas, se cerrara automaticamente la sesion cuando el usuario ingrese y se lo llevara a iniciar sesion de nuevo</li>
+                                <li>En la pantalla del login, al darle click a "problemas para iniciar sesion", puedes cerrar las sesiones en dispositivos anteriores y abrir en un nuevo dispositivo</li>
                             </ul>
                         ) : null
                     }

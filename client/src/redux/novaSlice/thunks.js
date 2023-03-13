@@ -45,6 +45,17 @@ export const getAllOrdenes = (date) => async (dispatch) => {
             }
         });
         const data = await response.json();
+        if(data.msg === 'usuario no esta online'){
+            localStorage.removeItem('usuario');
+            localStorage.removeItem('channel');
+            window.location.href = '/';
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `${data.msg}`,
+            });
+            return
+        }
         dispatch(getOrdenes(data));
     } catch (error) {
         Swal.fire({
@@ -579,9 +590,27 @@ export const ordenesActivas = () => async (dispatch) => {
 
 export const ordenesRendicion = (date) => async (dispatch) => {
     try {
-        //fetch
-        const response = await fetch(`${process.env.REACT_APP_API}/orden/date/estado/${date}`);
+        const { token } = JSON.parse(localStorage.getItem('usuario'));
+
+        const response = await fetch(`${process.env.REACT_APP_API}/orden/date/estado/${date}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': token
+            },
+        });
         const data = await response.json();
+        if(data.msg === 'usuario no esta online'){
+            localStorage.removeItem('usuario');
+            localStorage.removeItem('channel');
+            window.location.href = '/';
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `${data.msg}`,
+            });
+            return
+        }
         dispatch(Rendidas(data));
     } catch (error) {
         Swal.fire({
@@ -764,9 +793,29 @@ export const bringListaDePreciosActive = () => async (dispatch) => {
 };
 
 export const bringAllFaltantes = (fechaInicio, fechaFin, administradorId) => async (dispatch) => {
+
+    const { token } = JSON.parse(localStorage.getItem('usuario'));
+
     try {
-        const response = await fetch(`${process.env.REACT_APP_API}/personal/faltantes/${administradorId}/${fechaInicio}/${fechaFin}`);
+        const response = await fetch(`${process.env.REACT_APP_API}/personal/faltantes/${administradorId}/${fechaInicio}/${fechaFin}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': token
+            }
+        });
         const data = await response.json();
+        if(data.msg === 'usuario no esta online'){
+            localStorage.removeItem('usuario');
+            localStorage.removeItem('channel');
+            window.location.href = '/';
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `${data.msg}`,
+            });
+            return
+        }
         dispatch(getAllFaltantes(data));
     } catch (error) {
         console.error(error.message);
