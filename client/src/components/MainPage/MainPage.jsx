@@ -71,7 +71,7 @@ const MainPage = () => {
                         hasMore={hasMore}
                     >
                         <table
-                            className="table-sm table table-bordered table-hover"
+                            className="table-sm table table-bordered table-hover responsive"
                             ref={tablaRef}
                         >
                             <thead>

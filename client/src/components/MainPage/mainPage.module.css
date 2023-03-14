@@ -156,3 +156,47 @@
     }
 }
 
+/* responsive de telefono */
+
+@media screen and ( max-width: 768px ) {
+
+    .text {
+        font-size: 16px;
+        left: 22%;
+        top: 2.5%;
+    }
+
+    .logo {
+        margin-top: 0.3rem;
+        margin-left: 72rem;
+    }
+
+    .container {
+        width: 1040px;
+        height: 80rem;
+        top: 52px;
+        left: 16rem;
+    }
+
+    .tableContainer {
+        height: 30.5rem;
+    }
+
+    .tabla {
+        font-size: 12px;
+    }
+
+    .excel{
+        width: 135px;
+        height: 33px;
+        font-size: 14px;
+        top: 1.3rem;
+        left: 82%;
+    }
+
+    .boton {
+        width: 80px;
+        height: 30px;
+        font-size: 14px;
+    }
+}

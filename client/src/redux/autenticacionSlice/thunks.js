@@ -36,8 +36,8 @@ export const logoutAction = (id) => async (dispatch) => {
     try {
         await axios.post(`/auth/logout`, {id});
         dispatch(logout());
-        const channel = new BroadcastChannel('auth');
-        channel.postMessage({ type: 'logout' });
+        // const channel = new BroadcastChannel('auth');
+        // channel.postMessage({ type: 'logout' });
         localStorage.removeItem('usuario');
         window.location.href = '/';
         return
