@@ -4,6 +4,7 @@ import { getPersonals } from '../../redux/novaSlice/thunks';
 import JorgeGas from '../../assetsOficial/jorgegas.svg';
 import style from './mainPage.module.css';
 import CreatePersonal from '../CreatePersonal/CreatePersonal';
+import ModifyPersonal from '../ModififyPersonal/ModifyPersonal';
 import { RiFileExcel2Fill } from 'react-icons/ri';
 import XLSX from 'xlsx';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -60,6 +61,7 @@ const MainPage = () => {
             <img src={JorgeGas} alt="logo" className={style.logo} />
             <div className={style.container}>
                 <CreatePersonal />
+                <ModifyPersonal />
                 <button onClick={handleExportExcel} className={style.excel}>
                     <RiFileExcel2Fill className={style.icon3} />
                     <p>Exportar a excel</p>
@@ -90,7 +92,7 @@ const MainPage = () => {
                                         <td className="px-4 py-3">{personal?.lastname}</td>
                                         <td className="px-4 py-3">{personal?.rut}</td>
                                         <td className="px-4 py-3">{personal?.email}</td>
-                                        <td className="px-4 py-3">{personal?.rols[0]?.name === "Ayudante" ? "Peoneta" : personal?.rols[0].name}</td>
+                                        <td className="px-4 py-3">{personal?.rols[0]?.name === "Ayudante" ? "Peoneta" : personal?.rols[0]?.name}</td>
                                     </tr>
                                 ))}
                             </tbody>

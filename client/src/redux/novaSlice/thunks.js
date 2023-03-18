@@ -938,5 +938,26 @@ export const changePeoneta = (idOrden, idPeoneta, fecha) => async (dispatch) => 
     }
 };
 
+export const modifyPersonal = (id, personal) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/personal/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(personal)
+        });
+        dispatch(getPersonals());
+        Swal.fire({
+            icon: 'success',
+            title: 'Personal modificado',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
 
 
