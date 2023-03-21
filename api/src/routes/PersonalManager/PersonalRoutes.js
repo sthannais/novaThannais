@@ -10,11 +10,14 @@ const { getPersonals,
         getOnlyChofercWithFaltantesBetweenDates, 
         getOnlyAyudantesWithFaltantesBetweenDates,
         getAllFaltantesBetweenDates,
-        changeActiveForOrdenById
+        changeActiveForOrdenById,
+        modifyPersonal,
+        getPersonalById
     } = require('./PersonalController');
 
 router.get('/', getPersonals);
 
+router.get('/:personalId', getPersonalById);
 
 router.get('/chofer/faltantes/:fechaInicio/:fechaFin?', getOnlyChofercWithFaltantesBetweenDates);
 
@@ -34,6 +37,9 @@ router.post('/', [
 ], createPersonal);
 
 router.put('/orden/:personalId', changeActiveForOrdenById);
+
+router.put('/:personalId', modifyPersonal);
+
 
 
 module.exports = router;

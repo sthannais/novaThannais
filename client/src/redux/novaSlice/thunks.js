@@ -80,9 +80,9 @@ export const getPersonals = () => async (dispatch) => {
     }
 }
 
-export const gePersonalId = (id) => async (dispatch) => {
+export const getPersonalId = (idPersonal) => async (dispatch) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_API}/personal/${id}`);
+        const response = await fetch(`${process.env.REACT_APP_API}/personal/${idPersonal}`);
         const data = await response.json();
         dispatch(getPersonalById(data));
     } catch (error) {
@@ -937,6 +937,27 @@ export const changePeoneta = (idOrden, idPeoneta, fecha) => async (dispatch) => 
         console.error(error.message);
     }
 };
+
+export const modifyPersonal = (id, personal) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/personal/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(personal)
+        });
+        dispatch(getPersonals());
+        Swal.fire({
+            icon: 'success',
+            title: 'Personal modificado',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    } catch (error) {
+        console.error(error.message);
+    }
+}
 
 
 

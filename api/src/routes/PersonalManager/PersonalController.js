@@ -28,6 +28,17 @@ const getPersonals = async (req, res) => {
     }
 }
 
+const getPersonalById = async (req, res) => {
+    const { personalId } = req.params;
+    
+    try {
+        const personal = await Personal.findByPk(personalId)
+        res.json(personal);
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+};
+
 const createPersonal = async (req, res) => {
     const { name, lastname, email, password, rut, rol } = req.body;
     
@@ -416,6 +427,50 @@ const changeActiveForOrdenById = async (req, res) => {
     }
 }
 
+const modifyPersonal = async (req, res, next) => {
+    const { personalId } = req.params;
+    const { name, lastname, email, rut, lastPassword, password } = req.body;
+
+    try {
+
+        const personal = await Personal.findByPk(personalId);
+
+        if(!personal) {
+            return res.status(404).json({error: 'Personal no encontrado'});
+        }
+
+        if(lastPassword && password) {
+            const isPasswordCorrect = await bcrypt.compare(lastPassword, personal.password);
+
+            if(!isPasswordCorrect) {
+                return res.status(400).json({error: 'Contraseña incorrecta'});
+            }
+
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(password, salt);
+            
+            await personal.update({
+                name,
+                lastname,
+                email,
+                rut,
+                password: hashedPassword
+            });
+        } else {
+            await personal.update({
+                name,
+                lastname,
+                email,
+                rut
+            });
+        }
+        
+        res.json(personal);
+    } catch (error) {
+        next(error);
+    }
+}
+
 
 module.exports = {
     getPersonals,
@@ -423,5 +478,7 @@ module.exports = {
     getOnlyChofercWithFaltantesBetweenDates,
     getOnlyAyudantesWithFaltantesBetweenDates,
     getAllFaltantesBetweenDates,
-    changeActiveForOrdenById
+    changeActiveForOrdenById,
+    modifyPersonal,
+    getPersonalById
 }

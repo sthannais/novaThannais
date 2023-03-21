@@ -7,6 +7,7 @@ import monito from '../../assets/JORGITO.svg';
 import logo from '../../assets/nova-blanco-2.png';
 import ChangeLog from '../ChangeLog/ChangeLog';
 
+
 const NavBar = () => {
 
     const dispatch = useDispatch()
@@ -37,7 +38,8 @@ const NavBar = () => {
                     email === "jeniffer.moreno@jorgegas.cl" ||
                     email === "linda.donaire@jorgegas.cl" || 
                     email === "jhoskartoro@gmail.com" ||
-                    email === "francisca.rodrigez@jorgegas.cl" 
+                    email === "francisca.rodrigez@jorgegas.cl" ||
+                    email === "constanza@gmail.com"  
                     ? (
                         <div>
                             <p className={style.completeName}>{name + " " + lastname}</p>
@@ -88,15 +90,19 @@ const NavBar = () => {
                                         Historial Anticipos
                                     </button>
                                 </Link>
-                                {/* <Link to="/metricas">
-                                    <button onClick={
-                                        () => setButtonSelected('metricas')
-                                    } className={
-                                        buttonSelected === 'metricas' ? style.guideStyleSelected : style.guideStyle
-                                    }>
-                                        Metricas
-                                    </button>
-                                </Link> */}
+                                {
+                                    email === "benjaminsotoro@gmail.com" ? (
+                                        <Link to="/inventarioVales">
+                                            <button onClick={
+                                                () => setButtonSelected('inventarioVales')
+                                            } className={
+                                                buttonSelected === 'inventarioVales' ? style.guideStyleSelected : style.guideStyle
+                                            }>
+                                                Vales
+                                            </button>
+                                        </Link>
+                                    ) : null
+                                }
                                 <button className={style.guideStyle} onClick={handleLogout}>
                                     Cerrar sesión
                                 </button>
