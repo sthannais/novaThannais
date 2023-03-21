@@ -836,7 +836,7 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                                         </td>
                                         <td>
                                             {
-                                                listaDePrecios ? numberWithDots(listaDePrecios.precio11kg) : 0
+                                                listaDePrecios?.precio11kg ? numberWithDots(listaDePrecios.precio11kg) : 0
                                             }
                                         </td>
                                         <td>
@@ -909,7 +909,7 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                                         </td>
                                         <td>
                                             {
-                                                listaDePrecios ? numberWithDots(listaDePrecios.precio15kg) : 0
+                                                listaDePrecios?.precio15kg ? numberWithDots(listaDePrecios?.precio15kg) : 0
                                             }
                                         </td>
                                         <td>
@@ -982,7 +982,7 @@ const ModifyOrden = ({ novaOrdenById, ordenId }) => {
                                         </td>
                                         <td>
                                             {
-                                                listaDePrecios ? numberWithDots(listaDePrecios.precio45kg) : 0
+                                                listaDePrecios?.precio45kg ? numberWithDots(listaDePrecios?.precio45kg) : 0
                                             }
                                         </td>
                                         <td>
