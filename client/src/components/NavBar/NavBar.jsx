@@ -38,7 +38,8 @@ const NavBar = () => {
                     email === "jeniffer.moreno@jorgegas.cl" ||
                     email === "linda.donaire@jorgegas.cl" || 
                     email === "jhoskartoro@gmail.com" ||
-                    email === "francisca.rodrigez@jorgegas.cl" 
+                    email === "francisca.rodrigez@jorgegas.cl" ||
+                    email === "constanza@gmail.com"  
                     ? (
                         <div>
                             <p className={style.completeName}>{name + " " + lastname}</p>

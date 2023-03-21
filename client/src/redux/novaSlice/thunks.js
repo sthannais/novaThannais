@@ -80,10 +80,11 @@ export const getPersonals = () => async (dispatch) => {
     }
 }
 
-export const gePersonalId = (id) => async (dispatch) => {
+export const getPersonalId = (idPersonal) => async (dispatch) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_API}/personal/${id}`);
+        const response = await fetch(`${process.env.REACT_APP_API}/personal/${idPersonal}`);
         const data = await response.json();
+        console.log(data);
         dispatch(getPersonalById(data));
     } catch (error) {
         Swal.fire({

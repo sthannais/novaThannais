@@ -11,11 +11,13 @@ const { getPersonals,
         getOnlyAyudantesWithFaltantesBetweenDates,
         getAllFaltantesBetweenDates,
         changeActiveForOrdenById,
-        modifyPersonal
+        modifyPersonal,
+        getPersonalById
     } = require('./PersonalController');
 
 router.get('/', getPersonals);
 
+router.get('/:personalId', getPersonalById);
 
 router.get('/chofer/faltantes/:fechaInicio/:fechaFin?', getOnlyChofercWithFaltantesBetweenDates);
 

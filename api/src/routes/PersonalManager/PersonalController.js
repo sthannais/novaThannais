@@ -28,6 +28,17 @@ const getPersonals = async (req, res) => {
     }
 }
 
+const getPersonalById = async (req, res) => {
+    const { personalId } = req.params;
+    
+    try {
+        const personal = await Personal.findByPk(personalId)
+        res.json(personal);
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+};
+
 const createPersonal = async (req, res) => {
     const { name, lastname, email, password, rut, rol } = req.body;
     
@@ -468,5 +479,6 @@ module.exports = {
     getOnlyAyudantesWithFaltantesBetweenDates,
     getAllFaltantesBetweenDates,
     changeActiveForOrdenById,
-    modifyPersonal
+    modifyPersonal,
+    getPersonalById
 }
