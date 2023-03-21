@@ -26,11 +26,30 @@ const ChangeLog = () => {
                 () => {
                     toggle();
                 }
-            } >Ver. 1.0.6
+            } >Ver. 1.0.7
             </button>
             <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="md" backdrop="static" onKeyDown={handleKeydown}>
                 <ModalHeader toggle={toggle}>Cambios recientes</ModalHeader>
                 <ModalBody>
+                    <h5>Ver. 1.0.7</h5>
+                    <em style={{ color: 'red' }}>21/03/2023</em>
+                    {
+                        verMas && name === 'Ver. 1.0.7' ? (
+                            <ul className={style.newli}>
+                                <li>Componente de cambiar informacion del personal habilitado, de igual forma para cambiarle la contraseña</li>
+                                <li>Logica de inventario de vales implementada en el backend, se comienza el diseño en el frontend</li>
+                            </ul>
+                        ) : null
+                    }
+                    <br />
+                    <button onClick={
+                        () => {
+                            setVerMas(!verMas);
+                            setName('Ver. 1.0.7')
+                        }
+                    } className={style.verMas}>
+                        { verMas && name === 'Ver. 1.0.7' ? 'Ver menos...' : 'Ver mas...'}
+                    </button>
                     <h5>Ver. 1.0.6</h5>
                     <em style={{ color: 'red' }}>09/03/2023</em>
                     {
