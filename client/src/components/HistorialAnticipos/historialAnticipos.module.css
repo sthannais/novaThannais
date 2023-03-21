@@ -60,7 +60,7 @@
     border: 1px solid #3C3C3C;
     border-radius: 15px;
     background: #FFFFFF;
-    overflow: hidden;
+    overflow-y: scroll;
     text-align: center;
     font-size: 15px;
     margin-left: 0.1rem;
@@ -96,7 +96,7 @@
     border: 1px solid #3C3C3C;
     border-radius: 15px;
     background: #FFFFFF;
-    overflow: hidden;
+    overflow-y: scroll;
     text-align: center;
     font-size: 15px;
     margin-left: 1rem;
