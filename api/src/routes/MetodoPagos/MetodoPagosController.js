@@ -625,7 +625,7 @@ const getAllOrdenesEstructuradas = async (req, res, next) => {
         }
 
         // respondo con solo las fechas, los metodos de pago y los vales
-        const ordenesWithMetodoPagos = ordenes.map(orden => {
+        const ordenesWithMetodoPagos = await ordenes.map(orden => {
             return {
                 fecha: orden.fecha,
                 sumaAnticipos: Number(orden.faltanteChofer) + Number(orden.faltantePeoneta),
