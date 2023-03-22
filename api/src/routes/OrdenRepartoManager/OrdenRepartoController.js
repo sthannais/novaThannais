@@ -274,7 +274,10 @@ const getAllChoferOrdenesDeRepartoBetweenDates = async (req, res) => {
             const ordenesDeRepartoChofer = await OrdenDeReparto.findAll({
                 where: {
                     fk_choferID: id,
-                    fecha: fechaInicio
+                    fecha: fechaInicio,
+                    faltanteChofer: {
+                        [Op.ne]: 0
+                    }
                 },
                 include: [
                     {
@@ -300,6 +303,9 @@ const getAllChoferOrdenesDeRepartoBetweenDates = async (req, res) => {
                     fk_choferID: id,
                     fecha: {
                         [Op.between]: [fechaInicio, fechaFin]
+                    },
+                    faltanteChofer: {
+                        [Op.ne]: 0
                     }
                 },
                 include: [
@@ -334,7 +340,10 @@ const getAllAyudanteOrdenesDeRepartoBetweenDates = async (req, res) => {
             const ordenesDeRepartoAyudante = await OrdenDeReparto.findAll({
                 where: {
                     fk_ayudanteID: id,
-                    fecha: fechaInicio
+                    fecha: fechaInicio,
+                    faltantePeoneta: {
+                        [Op.gt]: 0
+                    }
                 },
                 include: [
                     {
@@ -360,6 +369,9 @@ const getAllAyudanteOrdenesDeRepartoBetweenDates = async (req, res) => {
                     fk_ayudanteID: id,
                     fecha: {
                         [Op.between]: [fechaInicio, fechaFin]
+                    },
+                    faltantePeoneta: {
+                        [Op.gt]: 0
                     }
                 },
                 include: [

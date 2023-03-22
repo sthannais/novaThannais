@@ -34,7 +34,7 @@ const HistorialAnticipos = () => {
             return
         }
         setPorPagina(
-            porPagina + 5
+            porPagina + 6
         )
     }
 
@@ -117,7 +117,7 @@ const HistorialAnticipos = () => {
                             </thead>
                             <tbody>
                                 {
-                                    currentPosts?.map((chofer, index) => (
+                                    ordenesChofer?.map((chofer, index) => (
                                         <tr key={index} onClick={
                                             () => {
                                                 setSelected({
@@ -152,7 +152,7 @@ const HistorialAnticipos = () => {
                                     ))
                                 }
                                 {
-                                    currentPostsAyudante?.map((ayudante, index) => (
+                                    ordenesAyudante?.map((ayudante, index) => (
                                         <tr key={index} onClick={
                                             () => {
                                                 setSelected({
@@ -189,9 +189,9 @@ const HistorialAnticipos = () => {
                         </table>
                     </InfiniteScroll>
                 </div>
-                <button onClick={loadMore} className={style.boton}>
+                {/* <button onClick={loadMore} className={style.boton}>
                     Cargar mas
-                </button>
+                </button> */}
                 <div className={style.tabla2}>
                     <Table
                         bordered
