@@ -29,7 +29,8 @@ import {
         getAdministradores,
         getTodosLosPrecios,
         changeLoading,
-        getAllCuadrantes
+        getAllCuadrantes,
+        getInventarioVales
     } from './novaSlice';
 
 export const getAllOrdenes = (date) => async (dispatch) => {
@@ -959,5 +960,15 @@ export const modifyPersonal = (id, personal) => async (dispatch) => {
     }
 }
 
+// Inventario Vales //
 
+export const brinInventarioVales = () => async (dispatch) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_API}/inventarioVales`);
+        const data = await response.json();
+        dispatch(getInventarioVales(data));
+    } catch (error) {
+        console.error(error.message);
+    }
+}
 

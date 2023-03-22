@@ -7,7 +7,9 @@ const {
     Transbank,
     Transferencias,
     Vales,
-    Gastos
+    Gastos,
+    MetodoPagos,
+    ContabilidadRecargas
     } = require('../../db.js');
 
 const { Op } = require('sequelize');
@@ -529,8 +531,141 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
     }
 }
 
+const getAllOrdenesEstructuradas = async (req, res, next) => {
+    const { date1, date2 } = req.params;
+
+    try {
+
+        let ordenes
+
+        if( !date2 || date2 === 'undefined' || date2 === 'null' ) {
+
+            ordenes = await OrdenDeReparto.findAll({
+                where: {
+                    fecha: date1
+                },
+                include: [
+                    {
+                        model: MetodoPagos,
+                        include: [
+                            {
+                                model: Abonos,
+                            },
+                            {
+                                model: DescuentoRut,
+                            },
+                            {
+                                model: Descuentos,
+                            },
+                            {
+                                model: Vales,
+                            },
+                            {
+                                model: Efectivo,
+                            },
+                            {
+                                model: Transferencias,
+                            },
+                            {
+                                model: Transbank,
+                            },
+                            {
+                                model: Gastos,
+                            }
+                        ]
+                    },
+                    {
+                        model: ContabilidadRecargas,
+                    }        
+                ]
+            })
+        } else {
+            ordenes = await OrdenDeReparto.findAll({
+                where: {
+                    fecha: {
+                        [Op.between]: [date1, date2]
+                    }
+                },
+                include: [
+                    {
+                        model: MetodoPagos,
+                        include: [
+                            {
+                                model: Abonos,
+                            },
+                            {
+                                model: DescuentoRut,
+                            },
+                            {
+                                model: Descuentos,
+                            },
+                            {
+                                model: Vales,
+                            },
+                            {
+                                model: Efectivo,
+                            },
+                            {
+                                model: Transferencias,
+                            },
+                            {
+                                model: Transbank,
+                            },
+                            {
+                                model: Gastos,
+                            }
+                        ]
+                    },
+                    {
+                        model: ContabilidadRecargas
+                    }       
+                ],
+                
+            })
+        }
+
+        // respondo con solo las fechas, los metodos de pago y los vales
+        const ordenesWithMetodoPagos = ordenes.map(orden => {
+            return {
+                fecha: orden.fecha,
+                sumaAnticipos: Number(orden.faltanteChofer) + Number(orden.faltantePeoneta),
+                ventas5kg: orden.contabilidadRecarga.ventas5kg,
+                ventas11kg: orden.contabilidadRecarga.ventas11kg,
+                ventas15kg: orden.contabilidadRecarga.ventas15kg,
+                ventas45kg: orden.contabilidadRecarga.ventas45kg,
+                totalRecaudacion: orden.contabilidadRecarga.totalRecaudacion,
+                valefisico5kg: orden.metodoPagos[0].vale.fisico5kg,
+                valefisico11kg: orden.metodoPagos[0].vale.fisico11kg,
+                valefisico15kg: orden.metodoPagos[0].vale.fisico15kg,
+                valefisico45kg: orden.metodoPagos[0].vale.fisico45kg,
+                valedigital5kg: orden.metodoPagos[0].vale.digital5kg,
+                valedigital11kg: orden.metodoPagos[0].vale.digital11kg,
+                valedigital15kg: orden.metodoPagos[0].vale.digital15kg,
+                valedigital45kg: orden.metodoPagos[0].vale.digital45kg,
+                totalSuma: orden.metodoPagos[0].vale.totalSumaVales,
+                efectivo: orden.metodoPagos[0].efectivo.totalGeneral,
+                transferencias: orden.metodoPagos[0].transferencia.monto,
+                transbank: orden.metodoPagos[0].transbank.monto,
+                descuentoRut: orden.metodoPagos[0].descuentoRut.monto,
+                descuentos: orden.metodoPagos[0].descuento.monto,
+                gastos: orden.metodoPagos[0].gasto.monto,
+            }
+        })
+
+        res.json({
+            message: 'Ordenes de reparto con metodo de pago',
+            ordenes: ordenesWithMetodoPagos
+        })
+
+    }
+        catch (error) {
+        next(error);
+        }
+    }
+
 module.exports = {
     updateAbono,
     getAllMetodoPagosInOrdenDeRepartoBetweenDates,
-    getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates
+    getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates,
+    getAllOrdenesEstructuradas
 }

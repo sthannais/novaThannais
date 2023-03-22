@@ -29,6 +29,7 @@ export const NovaSlice = createSlice({
         faltantes: [],
         administradores: [],
         loading: false,
+        inventarioVales: [],
     },
     reducers: {
         getPersonal: (state, {payload}) => {
@@ -118,6 +119,9 @@ export const NovaSlice = createSlice({
         },
         changeLoading: (state) => {
             state.loading = !state.loading;
+        },
+        getInventarioVales: (state, {payload}) => {
+            state.inventarioVales = payload;
         }
     }
 });
@@ -150,6 +154,7 @@ export const {  getPersonal,
                 getAdministradores,
                 getTodosLosPrecios,
                 changeLoading,
-                getAllCuadrantes
+                getAllCuadrantes,
+                getInventarioVales
             } = NovaSlice.actions;
             
