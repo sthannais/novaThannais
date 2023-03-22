@@ -631,7 +631,6 @@ const getAllOrdenesEstructuradas = async (req, res, next) => {
             return {
                 fecha: orden.fecha,
                 sumaAnticipos: Number(orden.faltanteChofer) + Number(orden.faltantePeoneta),
-                contabilidadRecarga: orden.contabilidadRecarga,
                 ventas5kg: orden.contabilidadRecarga.ventas5kg,
                 ventas11kg: orden.contabilidadRecarga.ventas11kg,
                 ventas15kg: orden.contabilidadRecarga.ventas15kg,
