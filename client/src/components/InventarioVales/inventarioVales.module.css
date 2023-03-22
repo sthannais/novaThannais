@@ -96,3 +96,10 @@
     line-height: 23px;
     color: #3C3C3C;
 }
+
+.text2 {
+    text-align: center;
+    font-family: 'Roboto';
+    vertical-align: middle;
+    height: 3.4rem;
+}

@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Label, Table }  from 'reactstrap';
+import { useEffect, useState } from 'react';
 
 const ModificarAuxOrden = () => {
+
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
+
     return (
         <div>
-            <h1>Modificar Aux Orden</h1>
+            <Button color="primary" onClick={toggle}>
+                Modificar Orden
+            </Button>
         </div>
     )
 }

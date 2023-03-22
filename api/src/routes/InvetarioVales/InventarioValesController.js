@@ -1,5 +1,6 @@
 
-const { InventarioVales, RegistroVales } = require('../../db.js');
+const { Model } = require('sequelize');
+const { InventarioVales, RegistroVales, OrdenDeReparto, MetodoPagos, Vales } = require('../../db.js');
 
 //////////// GET ///////////////
 
@@ -197,10 +198,36 @@ const sumarInventarioVales = async (req, res) => {
     }
 };
 
+const getAllValesByDate = async (req, res) => {
+    const { date } = req.params;
+    try {
+        const ordenes = await OrdenDeReparto.findAll({
+            where: {
+                fecha: date
+            },
+            include: [
+                {
+                    model: MetodoPagos,
+                    include: [
+                        {
+                            model: Vales
+                        }
+                    ]
+                }
+            ]
+        });
+
+    } catch (error) {
+        console.log(error);
+    }
+};
+            
+
 module.exports = {
     getInventarioVales,
     sumarInventarioVales,
     modificarInventarioVales,
     descargarVales,
-    getRegistroVales
+    getRegistroVales,
+    getAllValesByDate
 }
