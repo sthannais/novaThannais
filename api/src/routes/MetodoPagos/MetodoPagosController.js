@@ -655,8 +655,6 @@ const getAllOrdenesEstructuradas = async (req, res, next) => {
             }
         })
 
-        console.log(ordenesWithMetodoPagos)
-
         res.json({
             message: 'Ordenes de reparto con metodo de pago',
             ordenes: ordenesWithMetodoPagos
