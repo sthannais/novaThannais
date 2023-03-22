@@ -542,7 +542,8 @@ const getAllOrdenesEstructuradas = async (req, res, next) => {
 
             ordenes = await OrdenDeReparto.findAll({
                 where: {
-                    fecha: date1
+                    fecha: date1,
+                    rendida: true
                 },
                 include: [
                     {
@@ -584,7 +585,8 @@ const getAllOrdenesEstructuradas = async (req, res, next) => {
                 where: {
                     fecha: {
                         [Op.between]: [date1, date2]
-                    }
+                    },
+                    rendida: true
                 },
                 include: [
                     {
@@ -625,7 +627,7 @@ const getAllOrdenesEstructuradas = async (req, res, next) => {
         }
 
         // respondo con solo las fechas, los metodos de pago y los vales
-        const ordenesWithMetodoPagos = await ordenes.map(orden => {
+        const ordenesWithMetodoPagos = ordenes.map(orden => {
             return {
                 fecha: orden.fecha,
                 sumaAnticipos: Number(orden.faltanteChofer) + Number(orden.faltantePeoneta),
