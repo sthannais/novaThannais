@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Label, Table }  from 'reactstrap';
-import { useEffect, useState } from 'react';
 
 const ModificarAuxOrden = () => {
 

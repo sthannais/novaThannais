@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import JorgeGas from '../../assetsOficial/jorgegas.svg';
 import { brinInventarioVales } from '../../redux/novaSlice/thunks';
+import ContabilidadVales from '../ContabilidadVales/ContabilidadVales';
 import style from './inventarioVales.module.css'
 
 const InventarioVales = () => {
@@ -15,6 +16,7 @@ const InventarioVales = () => {
 
     return (
         <div className={style.margin}>
+            <ContabilidadVales />
             <p className={style.text}>Inventario de vales</p>
             <img src={JorgeGas} alt="logo" className={style.logo} />
             <div className={style.container}>
@@ -83,7 +85,7 @@ const InventarioVales = () => {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td className={style.text2}>Vale fisico 5kg</td>
+                                    <td className={style.text2}>Vale digital 5kg</td>
                                     <td className={style.text2}>
                                         {
                                             inventarioVales.map((vale) => {
@@ -93,7 +95,7 @@ const InventarioVales = () => {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className={style.text2}>Vale fisico 11kg</td>
+                                    <td className={style.text2}>Vale digital 11kg</td>
                                     <td className={style.text2}>
                                         {
                                             inventarioVales.map((vale) => {
@@ -103,7 +105,7 @@ const InventarioVales = () => {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className={style.text2}>Vale fisico 15kg</td>
+                                    <td className={style.text2}>Vale digital 15kg</td>
                                     <td className={style.text2}>
                                         {
                                             inventarioVales.map((vale) => {
@@ -113,7 +115,7 @@ const InventarioVales = () => {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className={style.text2}>Vale fisico 45kg</td>
+                                    <td className={style.text2}>Vale digital 45kg</td>
                                     <td className={style.text2}>
                                         {
                                             inventarioVales.map((vale) => {
