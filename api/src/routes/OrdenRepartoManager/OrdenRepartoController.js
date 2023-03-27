@@ -1099,7 +1099,7 @@ const finalizeOrdenAux = async (req, res) => {
         const ventas11kg = Number(contabilidad.total11kg) - Number(llenos11kg);
         const ventas15kg = Number(contabilidad.total15kg) - Number(llenos15kg);
         const ventas45kg = Number(contabilidad.total45kg) - Number(llenos45kg);
-        const totalCantidad =  Number(ventas5kg) + Number(ventas11kg) + Number(ventas45kg) + Number(ventas45kg);
+        const totalCantidad =  Number(ventas5kg) + Number(ventas11kg) + Number(ventas15kg) + Number(ventas45kg);
         const recaudacion5kg = ventas5kg * Number(listaDePrecios.precio5kg);
         const recaudacion11kg = ventas11kg *  Number(listaDePrecios.precio11kg);
         const recaudacion15kg = ventas15kg *  Number(listaDePrecios.precio15kg);
