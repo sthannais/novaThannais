@@ -1075,6 +1075,61 @@ const finalizeOrden = async (req, res) => {
     }
 }
 
+const finalizeOrdenAux = async (req, res) => {
+    const { id } = req.params;
+    const {
+        llenos5kg,
+        llenos11kg,
+        llenos15kg,
+        llenos45kg,
+    } = req.body;
+
+    try {
+        const ordenDeReparto = await OrdenDeReparto.findByPk(Number(id));
+        const contabilidad = await ordenDeReparto.getContabilidadRecarga();
+
+        const listaDePrecios = await ListaDePrecios.findOne({
+            where: {
+                active: true
+            }
+        });
+
+        await ordenDeReparto.setListaDePrecio(listaDePrecios);
+        const ventas5kg = Number(contabilidad.total5kg) - Number(llenos5kg);
+        const ventas11kg = Number(contabilidad.total11kg) - Number(llenos11kg);
+        const ventas15kg = Number(contabilidad.total15kg) - Number(llenos15kg);
+        const ventas45kg = Number(contabilidad.total45kg) - Number(llenos45kg);
+        const totalCantidad = Number(contabilidad.totalCantidad) - Number(llenos5kg) - Number(llenos11kg) - Number(llenos15kg) - Number(llenos45kg);
+        const recaudacion5kg = ventas5kg * Number(listaDePrecios.precio5kg);
+        const recaudacion11kg = ventas11kg *  Number(listaDePrecios.precio11kg);
+        const recaudacion15kg = ventas15kg *  Number(listaDePrecios.precio15kg);
+        const recaudacion45kg = ventas45kg *  Number(listaDePrecios.precio45kg);
+        const totalRecaudacion = recaudacion5kg + recaudacion11kg + recaudacion15kg + recaudacion45kg;
+
+        await contabilidad.update({
+            llenos5kg,
+            ventas5kg,
+            recaudacion5kg,
+            llenos11kg,
+            ventas11kg,
+            recaudacion11kg,
+            llenos15kg,
+            ventas15kg,
+            recaudacion15kg,
+            llenos45kg,
+            ventas45kg,
+            recaudacion45kg,
+            totalCantidad,
+            totalRecaudacion
+        });
+
+        res.json({msg: "Orden de reparto finalizada correctamente"});
+    } catch (error) {
+        console.log(error.message);
+        res.status(400).json({error: error.message});
+    }
+}
+
 const cuadrarOrden = async (req, res) => {
     const { id } = req.params;
     const {
@@ -1345,6 +1400,7 @@ module.exports = {
     RechargeOrden,
     changeRecharge,
     finalizeOrden,
+    finalizeOrdenAux,
     cuadrarOrden,
     getAllChoferOrdenesDeRepartoBetweenDates,
     getAllAyudanteOrdenesDeRepartoBetweenDates,

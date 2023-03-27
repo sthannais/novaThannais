@@ -894,31 +894,25 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                     className={style.inputs4}
                                     disabled
                                 />
-                                {
-                                    //si faltante es menor a 0, se habilita el input de sobrante
-                                    faltante?.faltante < 0 ? (
-                                        <>
-                                            <p style={{
-                                                fontSize: '18px',
-                                                fontWeight: 'bold',
-                                                fontFamily: 'Roboto',
-                                            }}>
-                                                Sobrante
-                                            </p>
-                                            <Input
-                                                type="number"
-                                                name="sobrante"
-                                                id="sobrante"
-                                                placeholder="Sobrante"
-                                                value={sobrante.sobrante === 0 ? "" : sobrante.sobrante}
-                                                className={style.inputs4}
-                                                min={0}
-                                                onChange={(e) => handleSobranteChange(e)}
-                                            />
-                                        </>
-                                    ) : null
-                                }
-                                
+                                <>
+                                    <p style={{
+                                        fontSize: '18px',
+                                        fontWeight: 'bold',
+                                        fontFamily: 'Roboto',
+                                    }}>
+                                        Sobrante
+                                    </p>
+                                    <Input
+                                        type="number"
+                                        name="sobrante"
+                                        id="sobrante"
+                                        placeholder="Sobrante"
+                                        value={sobrante.sobrante === 0 ? "" : sobrante.sobrante}
+                                        className={style.inputs4}
+                                        min={0}
+                                        onChange={(e) => handleSobranteChange(e)}
+                                    />
+                                </>
                             </div>
                         </div>
                         {

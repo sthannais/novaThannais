@@ -9,7 +9,11 @@ module.exports = (sequelize)=>{
         hora : {
             type: DataTypes.TIME
         },
-        vale5kgFisico : {
+        vale5kgFisicoAnterior : {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        vale5kgFisicoActual : {
             type: DataTypes.INTEGER,
             defaultValue: 0
         },
@@ -21,7 +25,11 @@ module.exports = (sequelize)=>{
             type: DataTypes.STRING,
             defaultValue: ''
         },
-        vale11kgFisico : {
+        vale11kgFisicoAnterior : {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        vale11kgFisicoActual : {
             type: DataTypes.INTEGER,
             defaultValue: 0
         },
@@ -33,7 +41,11 @@ module.exports = (sequelize)=>{
             type: DataTypes.STRING,
             defaultValue: ''
         },
-        vale15kgFisico : {
+        vale15kgFisicoAnterior : {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        vale15kgFisicoActual : {
             type: DataTypes.INTEGER,
             defaultValue: 0
         },
@@ -45,7 +57,11 @@ module.exports = (sequelize)=>{
             type: DataTypes.STRING,
             defaultValue: ''
         },
-        vale45kgFisico : {
+        vale45kgFisicoAnterior : {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        vale45kgFisicoActual : {
             type: DataTypes.INTEGER,
             defaultValue: 0
         },
@@ -57,7 +73,11 @@ module.exports = (sequelize)=>{
             type: DataTypes.STRING,
             defaultValue: ''
         },
-        vale5kgDigital : {
+        vale5kgDigitalAnterior : {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        vale5kgDigitalActual : {
             type: DataTypes.INTEGER,
             defaultValue: 0
         },
@@ -69,7 +89,11 @@ module.exports = (sequelize)=>{
             type: DataTypes.STRING,
             defaultValue: ''
         },
-        vale11kgDigital : {
+        vale11kgDigitalAnterior : {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        vale11kgDigitalActual : {
             type: DataTypes.INTEGER,
             defaultValue: 0
         },
@@ -81,7 +105,11 @@ module.exports = (sequelize)=>{
             type: DataTypes.STRING,
             defaultValue: ''
         },
-        vale15kgDigital : {
+        vale15kgDigitalAnterior : {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        vale15kgDigitalActual : {
             type: DataTypes.INTEGER,
             defaultValue: 0
         },
@@ -93,7 +121,11 @@ module.exports = (sequelize)=>{
             type: DataTypes.STRING,
             defaultValue: ''
         },
-        vale45kgDigital : {
+        vale45kgDigitalAnterior : {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        vale45kgDigitalActual : {
             type: DataTypes.INTEGER,
             defaultValue: 0
         },

@@ -1,6 +1,6 @@
 
 const { Model } = require('sequelize');
-const { InventarioVales, RegistroVales, OrdenDeReparto, MetodoPagos, Vales } = require('../../db.js');
+const { InventarioVales, RegistroVales, OrdenDeReparto, MetodoPagos, Vales, RegistroCambiosVales } = require('../../db.js');
 
 //////////// GET ///////////////
 
@@ -104,18 +104,74 @@ const descargarVales = async (req, res) => {
 
 const modificarInventarioVales = async (req, res) => {
     const { id } = req.params;
-    const { fisico5kg,
+    const { 
+            date,
+            hora,
+            fisico5kg,
+            diferencia5kgFisico,
+            comentario5kgFisico,
             fisico11kg,
+            diferencia11kgFisico,
+            comentario11kgFisico,
             fisico15kg,
+            diferencia15kgFisico,
+            comentario15kgFisico,
             fisico45kg,
+            diferencia45kgFisico,
+            comentario45kgFisico,
             digital5kg,
+            diferencia5kgDigital,
+            comentario5kgDigital,
             digital11kg,
+            diferencia11kgDigital,
+            comentario11kgDigital,
             digital15kg,
+            diferencia15kgDigital,
+            comentario15kgDigital,
             digital45kg,
+            diferencia45kgDigital,
+            comentario45kgDigital,
         } = req.body;
 
     try {
         const inventario = await InventarioVales.findByPk(id);
+        console.log(inventario)
+        await RegistroCambiosVales.create({
+            fecha: date,
+            hora,
+            vale5kgFisicoAnterior: Number(inventario.fisico5kg),
+            vale5kgFisicoActual: fisico5kg,
+            diferencia5kgFisico: diferencia5kgFisico,
+            comentario5kgFisico: comentario5kgFisico,
+            vale11kgFisicoAnterior: Number(inventario.fisico11kg),
+            vale11kgFisicoActual: fisico11kg,
+            diferencia11kgFisico: diferencia11kgFisico,
+            comentario11kgFisico: comentario11kgFisico,
+            vale15kgFisicoAnterior: Number(inventario.fisico15kg),
+            vale15kgFisicoActual: fisico15kg,
+            diferencia15kgFisico: diferencia15kgFisico,
+            comentario15kgFisico: comentario15kgFisico,
+            vale45kgFisicoAnterior: Number(inventario.fisico45kg),
+            vale45kgFisicoActual: fisico45kg,
+            diferencia45kgFisico: diferencia45kgFisico,
+            comentario45kgFisico: comentario45kgFisico,
+            vale5kgDigitalAnterior: Number(inventario.digital5kg),
+            vale5kgDigitalActual: digital5kg,
+            diferencia5kgDigital: diferencia5kgDigital,
+            comentario5kgDigital: comentario5kgDigital,
+            vale11kgDigitalAnterior: Number(inventario.digital11kg),
+            vale11kgDigitalActual: digital11kg,
+            diferencia11kgDigital: diferencia11kgDigital,
+            comentario11kgDigital: comentario11kgDigital,
+            vale15kgDigitalAnterior: Number(inventario.digital15kg),
+            vale15kgDigitalActual: digital15kg,
+            diferencia15kgDigital: diferencia15kgDigital,
+            comentario15kgDigital: comentario15kgDigital,
+            vale45kgDigitalAnterior: Number(inventario.digital45kg),
+            vale45kgDigitalActual: digital45kg,
+            diferencia45kgDigital: diferencia45kgDigital,
+            comentario45kgDigital: comentario45kgDigital,
+        });
 
         const totalValesFisicos = Number(fisico5kg) + Number(fisico11kg) + Number(fisico15kg) + Number(fisico45kg);
         const totalValesDigitales = Number(digital5kg) + Number(digital11kg) + Number(digital15kg) + Number(digital45kg);
