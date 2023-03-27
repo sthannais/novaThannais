@@ -9,6 +9,7 @@ const {
         RechargeOrden,
         changeRecharge,
         finalizeOrden,
+        finalizeOrdenAux,
         cuadrarOrden,
         getAllChoferOrdenesDeRepartoBetweenDates,
         getAllAyudanteOrdenesDeRepartoBetweenDates,
@@ -33,6 +34,7 @@ router.put('/:id', RechargeOrden);
 router.put('/changeRecharge/:idOrden/:idRecarga', changeRecharge);
 router.put('/changeLlenos/:idOrden', changeLlenos);
 router.put('/finalize/:id', finalizeOrden);
+router.put('/finalizeAux/:id', finalizeOrdenAux);
 router.put('/cuadrar/:id', cuadrarOrden);
 router.put('/desactiveRecarga/:idOrden/:idRecarga', desactiveRecarga);
 router.put('/cambiarChoferOPeonetaDeOrden/:idOrden/:idChofer', cambiarChoferDeOrden);
