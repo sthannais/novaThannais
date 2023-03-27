@@ -27,7 +27,20 @@
     cursor: pointer;
 }
 
+.icono2 {
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+}
+
 .title2 {
+    font-family: 'Roboto';
+    font-weight: 800;
+    color: #3C3C3C;
+}
+
+.title3 {
+    margin-top: 5rem;
     font-family: 'Roboto';
     font-weight: 800;
     color: #3C3C3C;
@@ -43,4 +56,30 @@
     width: 47rem;
     height: 12rem;
     text-align: center;
+}
+
+.inputsito {
+    width: 3rem;
+    margin-left: 3rem;
+}
+
+.inputsito2 {
+    margin-left: 2rem;
+    width: 7rem;
+    height: 5rem;
+    font-size: 13px;
+    resize: none;
+}
+
+.botonsito {
+    background-color: transparent;
+    cursor: pointer;
+    font-family: 'Roboto';
+    font-size: 14px;
+    font-weight: 800;
+    color: #3C3C3C;
+}
+
+.modalFooter {
+    margin-top: 2rem;
 }
