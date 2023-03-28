@@ -30,6 +30,7 @@ export const NovaSlice = createSlice({
         administradores: [],
         loading: false,
         inventarioVales: [],
+        RegistroCambiosVales: []
     },
     reducers: {
         getPersonal: (state, {payload}) => {
@@ -122,6 +123,9 @@ export const NovaSlice = createSlice({
         },
         getInventarioVales: (state, {payload}) => {
             state.inventarioVales = payload;
+        },
+        getRegistroCambiosVales: (state, {payload}) => {
+            state.RegistroCambiosVales = payload;
         }
     }
 });
@@ -155,6 +159,7 @@ export const {  getPersonal,
                 getTodosLosPrecios,
                 changeLoading,
                 getAllCuadrantes,
-                getInventarioVales
+                getInventarioVales,
+                getRegistroCambiosVales
             } = NovaSlice.actions;
             

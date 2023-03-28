@@ -12,7 +12,8 @@ const { getPersonals,
         getAllFaltantesBetweenDates,
         changeActiveForOrdenById,
         modifyPersonal,
-        getPersonalById
+        getPersonalById,
+        changePasswordManual
     } = require('./PersonalController');
 
 router.get('/', getPersonals);
@@ -40,6 +41,7 @@ router.put('/orden/:personalId', changeActiveForOrdenById);
 
 router.put('/:personalId', modifyPersonal);
 
+router.put('/password/:personalId', changePasswordManual);
 
 
 module.exports = router;

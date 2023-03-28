@@ -471,6 +471,31 @@ const modifyPersonal = async (req, res, next) => {
     }
 }
 
+const changePasswordManual = async (req, res, next) => {
+    const { personalId } = req.params;
+    const { password } = req.body;
+
+    try {
+
+        const personal = await Personal.findByPk(personalId);
+
+        if(!personal) {
+            return res.status(404).json({error: 'Personal no encontrado'});
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        await personal.update({
+            password: hashedPassword
+        });
+
+        res.json(personal);
+
+    } catch (error) {
+        next(error);
+    }
+};
 
 module.exports = {
     getPersonals,
@@ -480,5 +505,6 @@ module.exports = {
     getAllFaltantesBetweenDates,
     changeActiveForOrdenById,
     modifyPersonal,
-    getPersonalById
+    getPersonalById,
+    changePasswordManual
 }

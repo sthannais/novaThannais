@@ -1,0 +1,42 @@
+.iconContainer2 {
+    position: absolute;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-items: center;
+    cursor: pointer;
+    margin-top: 6rem;
+    margin-left: 52rem;
+    font-size: 24px;
+    width: 5rem;
+    height: 4rem;
+}
+
+.botonsito {
+    background-color: transparent;
+    cursor: pointer;
+    font-family: 'Roboto';
+    font-size: 14px;
+    font-weight: 800;
+    color: #3C3C3C;
+}
+
+.icono {
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+}
+
+.datepicker2 {
+    color: #E43B4E;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.tableContainer {
+    margin-top: 1rem;
+    width: 47rem;
+    height: 12rem;
+    text-align: center;
+    font-size: 10px;
+}
