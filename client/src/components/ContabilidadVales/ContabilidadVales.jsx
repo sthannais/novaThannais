@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Label, Table }  from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Form }  from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { contabilidadVales } from '../../redux/novaSlice/thunks';
 import { IoChatbubbleEllipsesOutline, IoChatbubbleEllipses } from 'react-icons/io5';

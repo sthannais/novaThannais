@@ -5,12 +5,14 @@ const { getInventarioVales,
         modificarInventarioVales, 
         descargarVales,
         getRegistroVales,
-        getAllValesByDate
+        getAllValesByDate,
+        getAllRegistroCambiosVales
     } = require('./InventarioValesController.js');
 
 router.get('/', getInventarioVales);
 router.get('/registro', getRegistroVales);
 router.get('/vales/:date', getAllValesByDate);
+router.get('/registroVales', getAllRegistroCambiosVales);
 router.post('/descargar', descargarVales);
 router.put('/modificar/:id', modificarInventarioVales);
 router.put('/:id', sumarInventarioVales);

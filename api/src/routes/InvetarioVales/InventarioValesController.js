@@ -135,7 +135,6 @@ const modificarInventarioVales = async (req, res) => {
 
     try {
         const inventario = await InventarioVales.findByPk(id);
-        console.log(inventario)
         await RegistroCambiosVales.create({
             fecha: date,
             hora,
@@ -278,6 +277,16 @@ const getAllValesByDate = async (req, res) => {
     }
 };
             
+const getAllRegistroCambiosVales = async (req, res) => {
+    try {
+        const registroCambiosVales = await RegistroCambiosVales.findAll()
+        res.json({
+            registroCambiosVales
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 module.exports = {
     getInventarioVales,
@@ -285,5 +294,6 @@ module.exports = {
     modificarInventarioVales,
     descargarVales,
     getRegistroVales,
-    getAllValesByDate
+    getAllValesByDate,
+    getAllRegistroCambiosVales
 }

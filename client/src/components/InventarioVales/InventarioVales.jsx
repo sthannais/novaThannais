@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import JorgeGas from '../../assetsOficial/jorgegas.svg';
 import { brinInventarioVales } from '../../redux/novaSlice/thunks';
 import ContabilidadVales from '../ContabilidadVales/ContabilidadVales';
+import HistorialCambiosVales from '../HistorialCambiosVales/HistorialCambiosVales';
 import style from './inventarioVales.module.css'
 
 const InventarioVales = () => {
@@ -17,6 +18,7 @@ const InventarioVales = () => {
     return (
         <div className={style.margin}>
             <ContabilidadVales />
+            <HistorialCambiosVales />
             <p className={style.text}>Inventario de vales</p>
             <img src={JorgeGas} alt="logo" className={style.logo} />
             <div className={style.container}>
