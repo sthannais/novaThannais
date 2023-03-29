@@ -110,6 +110,10 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
         faltante : 0,
     })
 
+    const [sumaTotal, setSumaTotal] = useState({
+        sumaTotal : 0,
+    })
+
     const [totalRecaudacion, setTotalRecaudacion] = useState({
         totalRecaudacion : 0,
     })
@@ -186,8 +190,6 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                 Number(faltantePeonetaNumber.faltantePeoneta)
             ) - (
                 Number(gastosNumber.montoGastos)
-            ) + (
-                Number(sobrante.sobrante)
             )
         })
 
@@ -196,6 +198,79 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
             idDeDecuadre : usuario.administrador.id
         })
 
+    }, [
+        efectivoNumber.totalBilletes1,
+        efectivoNumber.totalBilletes2,
+        efectivoNumber.totalBilletes5,
+        efectivoNumber.totalBilletes10,
+        efectivoNumber.totalBilletes20,
+        efectivoNumber.monedas,
+        efectivoNumber.totalGeneral,
+        vales.fisico5kg,
+        vales.totalFisico5kg,
+        vales.fisico11kg,
+        vales.totalFisico11kg,
+        vales.fisico15kg,
+        vales.totalFisico15kg,
+        vales.fisico45kg,
+        vales.totalFisico45kg,
+        vales.digital5kg,
+        vales.totalDigital5kg,
+        vales.digital11kg,
+        vales.totalDigital11kg,
+        vales.digital15kg,
+        vales.totalDigital15kg,
+        vales.digital45kg,
+        vales.totalDigital45kg,
+        vales.sumaTotalDigitalYFisico5kg,
+        vales.sumaTotalDigitalYFisico11kg,
+        vales.sumaTotalDigitalYFisico15kg,
+        vales.sumaTotalDigitalYFisico45kg,
+        vales.totalVales,
+        vales.totalSumaVales,
+        metodoPagos.montoTransbank,
+        metodoPagos.montoTransferencias,
+        metodoPagos.porcentajeDescuentoRut,
+        metodoPagos.porcentajeDescuento,
+        totalRecaudacion.totalRecaudacion,
+        novaOrdenById?.contabilidadRecarga?.totalRecaudacion,
+        novaOrdenById?.metodoPagos[0]?.abono?.monto,
+        disabled,
+        faltanteChoferNumber.faltanteChofer,
+        faltantePeonetaNumber.faltantePeoneta,
+        novaOrdenById?.listaDePrecio?.precio5kg,
+        novaOrdenById?.listaDePrecio?.precio11kg,
+        novaOrdenById?.listaDePrecio?.precio15kg,
+        novaOrdenById?.listaDePrecio?.precio45kg,
+        usuario.administrador.id,
+        sobrante.sobrante,
+        gastosNumber.montoGastos
+    ])
+
+    useEffect(() => {
+        setSumaTotal({
+            ...sumaTotal,
+            sumaTotal:
+            (   Number(efectivoNumber.totalGeneral) +
+                Number(vales.totalSumaVales) 
+            ) + (
+                Number(metodoPagosNumber.montoTransbank)
+            ) + (
+                Number(metodoPagosNumber.montoTransferencias) 
+            ) + (
+                Number(metodoPagosNumber.porcentajeDescuentoRut) 
+            ) + (
+                Number(metodoPagosNumber.porcentajeDescuento)
+            ) + (
+                Number(novaOrdenById?.metodoPagos[0]?.abono?.monto)
+            ) + (
+                Number(faltanteChoferNumber.faltanteChofer) 
+            ) + (
+                Number(faltantePeonetaNumber.faltantePeoneta)
+            ) + (
+                Number(gastosNumber.montoGastos)
+            )
+        })
     }, [
         efectivoNumber.totalBilletes1,
         efectivoNumber.totalBilletes2,
@@ -259,7 +334,6 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
             setDisabled(true)
         }
     }, [error, faltante.faltante,])
-    
 
     const handleEfectivoChange = (e) => {
 
@@ -860,6 +934,23 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                     value={totalRecaudacion.totalRecaudacion ? numberWithDots(totalRecaudacion.totalRecaudacion) : ""}
                                     className={style.inputs4}
                                     disabled
+                                />
+                                <p style={{
+                                    fontSize: '18px',
+                                    fontWeight: 'bold',
+                                    fontFamily: 'Roboto',
+                                }}>
+                                    Suma total
+                                </p>
+                                <Input
+                                    type="text"
+                                    name="sumaTotal"
+                                    id="sumaTotal"
+                                    placeholder="Suma Total"
+                                    value={sumaTotal.sumaTotal ? numberWithDots(sumaTotal.sumaTotal) : "0"}
+                                    className={style.inputs4}
+                                    disabled
+                                    min={0}
                                 />
                                 <p style={{
                                     fontSize: '18px',
