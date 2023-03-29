@@ -46,7 +46,7 @@ const HistorialCambiosVales = () => {
                 </button>
             </div>
             <Modal isOpen={modal} toggle={toggle} style={modalStyles}>
-                <ModalHeader toggle={toggle} className={style.modalHeader}>Historial de cambios</ModalHeader>
+                <ModalHeader toggle={toggle} className={style.modalHeader}>Historial de contabilidad</ModalHeader>
                 <ModalBody className={style.modalBody}>
                     <p>Seleccione una fecha disponible</p>
                     <DatePicker
@@ -94,7 +94,7 @@ const HistorialCambiosVales = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {registroCambiosVales.map((registro) => {
+                                {registroCambiosVales?.map((registro) => {
                                     if (registro.fecha === soloFecha) {
                                         return (
                                             <tr key={registro.id}>
@@ -114,6 +114,56 @@ const HistorialCambiosVales = () => {
                                                 <td className="px-4 py-3">{registro.vale45kgFisicoActual}</td>
                                                 <td className="px-4 py-3">{registro.diferencia45kgFisico}</td>
                                                 <td className="px-4 py-3">{registro.comentario45kgFisico}</td>
+                                            </tr>
+                                        )
+                                    }
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className={style.tableContainer2}>
+                        <table className="table-sm table table-bordered table-hover responsive">
+                            <thead>
+                                <tr>
+                                    <th className="px-4 py-3">Vale digital 5kg Anterior</th>
+                                    <th className="px-4 py-3">Vale digital 5kg Actual</th>
+                                    <th className="px-4 py-3">Diferencia 5kg</th>
+                                    <th className="px-4 py-3">comentario</th>
+                                    <th className="px-4 py-3">Vale digital 11kg Anterior</th>
+                                    <th className="px-4 py-3">Vale digital 11kg Actual</th>
+                                    <th className="px-4 py-3">Diferencia 11kg</th>
+                                    <th className="px-4 py-3">comentario</th>
+                                    <th className="px-4 py-3">Vale digital 15kg Anterior</th>
+                                    <th className="px-4 py-3">Vale digital 15kg Actual</th>
+                                    <th className="px-4 py-3">Diferencia 15kg</th>
+                                    <th className="px-4 py-3">comentario</th>
+                                    <th className="px-4 py-3">Vale digital 45kg Anterior</th>
+                                    <th className="px-4 py-3">Vale digital 45kg Actual</th>
+                                    <th className="px-4 py-3">Diferencia 45kg</th>
+                                    <th className="px-4 py-3">comentario</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {registroCambiosVales?.map((registro) => {
+                                    if (registro.fecha === soloFecha) {
+                                        return (
+                                            <tr key={registro.id}>
+                                                <td className="px-4 py-3">{registro.vale5kgDigitalAnterior}</td>
+                                                <td className="px-4 py-3">{registro.vale5kgDigitalActual}</td>
+                                                <td className="px-4 py-3">{registro.diferencia5kgDigital}</td>
+                                                <td className="px-4 py-3">{registro.comentario5kgDigital}</td>
+                                                <td className="px-4 py-3">{registro.vale11kgDigitalAnterior}</td>
+                                                <td className="px-4 py-3">{registro.vale11kgDigitalActual}</td>
+                                                <td className="px-4 py-3">{registro.diferencia11kgDigital}</td>
+                                                <td className="px-4 py-3">{registro.comentario11kgDigital}</td>
+                                                <td className="px-4 py-3">{registro.vale15kgDigitalAnterior}</td>
+                                                <td className="px-4 py-3">{registro.vale15kgDigitalActual}</td>
+                                                <td className="px-4 py-3">{registro.diferencia15kgDigital}</td>
+                                                <td className="px-4 py-3">{registro.comentario15kgDigital}</td>
+                                                <td className="px-4 py-3">{registro.vale45kgDigitalAnterior}</td>
+                                                <td className="px-4 py-3">{registro.vale45kgDigitalActual}</td>
+                                                <td className="px-4 py-3">{registro.diferencia45kgDigital}</td>
+                                                <td className="px-4 py-3">{registro.comentario45kgDigital}</td>
                                             </tr>
                                         )
                                     }
