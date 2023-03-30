@@ -109,10 +109,13 @@ const HistorialCambiosVales = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {registroCambiosVales?.map((registro) => {
-                                    if (registro.fecha === soloFecha) {
+                                {
+                                    // mapeo el registro de cambios y devuelvo solo si la fecha es igual a la seleccionada y de todos los registro que coincidan con el dia solo devuelvo el ultimo
+                                    registroCambiosVales.filter((registro) => registro.fecha === soloFecha && 
+                                    registro.hora === registroCambiosVales.filter((registro) => registro.fecha === soloFecha).pop().hora
+                                    ).map((registro, index) => {
                                         return (
-                                            <tr key={registro.id}>
+                                            <tr key={index}>
                                                 <td className="px-4 py-3">{registro.vale5kgFisicoAnterior}</td>
                                                 <td className="px-4 py-3">{registro.vale5kgFisicoActual}</td>
                                                 <td className="px-4 py-3">{registro.diferencia5kgFisico}</td>
@@ -132,7 +135,8 @@ const HistorialCambiosVales = () => {
                                             </tr>
                                         )
                                     }
-                                })}
+                                    )
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -161,10 +165,13 @@ const HistorialCambiosVales = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {registroCambiosVales?.map((registro) => {
-                                    if (registro.fecha === soloFecha) {
+                                {
+                                    // mapeo el registro de cambios y devuelvo solo si la fecha es igual a la seleccionada y de todos los registro que coincidan con el dia solo devuelvo el ultimo
+                                    registroCambiosVales.filter((registro) => registro.fecha === soloFecha &&
+                                    registro.hora === registroCambiosVales.filter((registro) => registro.fecha === soloFecha).pop().hora
+                                    ).map((registro, index) => {
                                         return (
-                                            <tr key={registro.id}>
+                                            <tr key={index}>
                                                 <td className="px-4 py-3">{registro.vale5kgDigitalAnterior}</td>
                                                 <td className="px-4 py-3">{registro.vale5kgDigitalActual}</td>
                                                 <td className="px-4 py-3">{registro.diferencia5kgDigital}</td>
@@ -182,9 +189,8 @@ const HistorialCambiosVales = () => {
                                                 <td className="px-4 py-3">{registro.diferencia45kgDigital}</td>
                                                 <td className="px-4 py-3">{registro.comentario45kgDigital}</td>
                                             </tr>
-                                        )
-                                    }
-                                })}
+                                    )})
+                                }
                             </tbody>
                         </table>
                     </div>

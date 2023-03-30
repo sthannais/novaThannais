@@ -103,7 +103,7 @@ const descargarVales = async (req, res) => {
 //////////// PUT ///////////////
 
 const modificarInventarioVales = async (req, res) => {
-    const { id } = req.params;
+
     const { 
             date,
             hora,
@@ -134,7 +134,7 @@ const modificarInventarioVales = async (req, res) => {
         } = req.body;
 
     try {
-        const inventario = await InventarioVales.findByPk(id);
+        const inventario = await InventarioVales.findByPk(1);
         await RegistroCambiosVales.create({
             fecha: date,
             hora,
@@ -188,8 +188,6 @@ const modificarInventarioVales = async (req, res) => {
             totalValesFisicos: totalValesFisicos,
             totalValesDigitales: totalValesDigitales,
             totalValesAmbos: totalValesAmbos
-        }, {
-            where: { id }
         });
         res.json({
             message: 'Inventario de vales modificado correctamente',

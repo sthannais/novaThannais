@@ -14,7 +14,7 @@ router.get('/registro', getRegistroVales);
 router.get('/vales/:date', getAllValesByDate);
 router.get('/registroVales', getAllRegistroCambiosVales);
 router.post('/descargar', descargarVales);
-router.put('/modificar/:id', modificarInventarioVales);
+router.put('/modificar', modificarInventarioVales);
 router.put('/:id', sumarInventarioVales);
 
 
