@@ -103,3 +103,112 @@
     vertical-align: middle;
     height: 3.4rem;
 }
+
+@media screen and (min-width: 1800px) {
+    .container {
+        width: 1590px;
+        height: 860px;
+    }
+
+    .text {
+        left: 15%;
+        top: 3%;
+    }
+
+    .logo {
+        margin-left: 105rem;
+    }
+
+    .textDatePicker {
+        font-size: 18px;
+    }
+
+    .tabla {
+        left: 24rem;
+        top: 9rem; 
+        height: 40rem;
+        width: 30rem;
+    }
+
+    .tabla2 {
+        left: 55rem;
+        top: 9rem;
+        height: 40rem;
+        width: 40rem;
+    }
+
+    .text1 {
+        margin-top: 6.5rem;
+        margin-right: 21rem;
+    }
+
+    .text2 {
+        margin-top: -2.5rem;
+        margin-left: 54rem;
+    }
+
+    .boton {
+        top: 50rem;
+        left: 24rem;
+    }
+}
+
+@media screen and ( max-width: 1366px ) {
+    .text {
+        font-size: 16px;
+        left: 22%;
+        top: 2.5%;
+    }
+
+    .logo {
+        margin-top: 0.3rem;
+        margin-left: 72rem;
+    }
+
+    .container {
+        width: 1040px;
+        height: 618px;
+        top: 52px;
+        left: 16rem;
+    }
+
+    .textDatePicker {
+        font-size: 15px;
+    }
+
+    .tabla {
+        left: 19.5rem;
+        top: 6.8rem; 
+        font-size: 14px;
+        width: 17.5rem;
+        height: 27rem;
+    }
+
+    .tabla2 {
+        left: 37.5rem;
+        top: 7rem; 
+        width: 24rem;
+        height: 27rem;
+    }
+
+    .text1 {
+        margin-top: 4.5rem;
+        margin-right: 9rem;
+        font-size: 15px;
+    }
+
+    .text2 {
+        margin-top: -2.5rem;
+        margin-left: 35rem;
+        font-size: 15px;
+    }
+
+    .boton {
+        top: 35rem;
+        left: 19.8rem;
+        width: 90px;
+        height: 28px;
+        font-weight: 500;
+        font-size: 14px;
+    }
+}

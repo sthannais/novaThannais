@@ -13,6 +13,7 @@ const {
     } = require('../../db.js');
 
 const { Op } = require('sequelize');
+const moment = require('moment');
 
 const updateAbono = async (req, res, next) => {
     const { id } = req.params;
@@ -673,11 +674,149 @@ const getAllOrdenesEstructuradas = async (req, res, next) => {
         catch (error) {
         next(error);
         }
+    };
+
+const getUltimosValesPorFecha = async (req, res, next) => {
+    const { date } = req.params;
+    
+    try {
+        const vales = await OrdenDeReparto.findAll({
+            where: {
+                fecha: date,
+                rendida: true
+            },
+            include: [
+                {
+                    model: MetodoPagos,
+                    include: [
+                        {
+                            model: Vales,
+                        }
+                    ]
+                }
+            ]
+        })
+
+        if(vales) {
+            const valesOrdenados = vales.map(vale => {
+                return {
+                    fisico5kg: vale.metodoPagos[0].vale.fisico5kg,
+                    fisico11kg: vale.metodoPagos[0].vale.fisico11kg,
+                    fisico15kg: vale.metodoPagos[0].vale.fisico15kg,
+                    fisico45kg: vale.metodoPagos[0].vale.fisico45kg,
+                    digital5kg: vale.metodoPagos[0].vale.digital5kg,
+                    digital11kg: vale.metodoPagos[0].vale.digital11kg,
+                    digital15kg: vale.metodoPagos[0].vale.digital15kg,
+                    digital45kg: vale.metodoPagos[0].vale.digital45kg,
+                }
+            })
+
+            //sumo todos los vales de cada tipo
+            const sumaVales = valesOrdenados.reduce((acumulador, valorActual) => {
+                return {
+                    fisico5kg: Number(acumulador.fisico5kg) + Number(valorActual.fisico5kg),
+                    fisico11kg: Number(acumulador.fisico11kg) + Number(valorActual.fisico11kg),
+                    fisico15kg: Number(acumulador.fisico15kg) + Number(valorActual.fisico15kg),
+                    fisico45kg: Number(acumulador.fisico45kg) + Number(valorActual.fisico45kg),
+                    digital5kg: Number(acumulador.digital5kg) + Number(valorActual.digital5kg),
+                    digital11kg: Number(acumulador.digital11kg) + Number(valorActual.digital11kg),
+                    digital15kg: Number(acumulador.digital15kg) + Number(valorActual.digital15kg),
+                    digital45kg: Number(acumulador.digital45kg) + Number(valorActual.digital45kg),
+                }
+            })
+
+            res.json({
+                fecha: date,
+                vales: sumaVales
+            })
+        } else {
+            res.json({
+                message: 'No hay vales para esa fecha'
+            })
+        }
+
+    } catch (error) {
+        res.json({
+            message: 'Todavia no hay vales en esta fecha',
+            error: error
+        })
     }
+};
+
+const getUltimosValesDeAyer = async (req, res, next) => {
+    
+    const fechaDeAyer = moment().subtract(1, 'days').format('YYYY-MM-DD');
+
+    try {
+        const vales = await OrdenDeReparto.findAll({
+            where: {
+                fecha: fechaDeAyer,
+                rendida: true
+            },
+            include: [
+                {
+                    model: MetodoPagos,
+                    include: [
+                        {
+                            model: Vales,
+                        }
+                    ]
+                }
+            ]
+        })
+
+        if(vales) {
+            const valesOrdenados = vales.map(vale => {
+                return {
+                    fisico5kg: vale.metodoPagos[0].vale.fisico5kg,
+                    fisico11kg: vale.metodoPagos[0].vale.fisico11kg,
+                    fisico15kg: vale.metodoPagos[0].vale.fisico15kg,
+                    fisico45kg: vale.metodoPagos[0].vale.fisico45kg,
+                    digital5kg: vale.metodoPagos[0].vale.digital5kg,
+                    digital11kg: vale.metodoPagos[0].vale.digital11kg,
+                    digital15kg: vale.metodoPagos[0].vale.digital15kg,
+                    digital45kg: vale.metodoPagos[0].vale.digital45kg,
+                }
+            })
+
+            //sumo todos los vales de cada tipo
+            const sumaVales = valesOrdenados.reduce((acumulador, valorActual) => {
+                return {
+                    fisico5kg: Number(acumulador.fisico5kg) + Number(valorActual.fisico5kg),
+                    fisico11kg: Number(acumulador.fisico11kg) + Number(valorActual.fisico11kg),
+                    fisico15kg: Number(acumulador.fisico15kg) + Number(valorActual.fisico15kg),
+                    fisico45kg: Number(acumulador.fisico45kg) + Number(valorActual.fisico45kg),
+                    digital5kg: Number(acumulador.digital5kg) + Number(valorActual.digital5kg),
+                    digital11kg: Number(acumulador.digital11kg) + Number(valorActual.digital11kg),
+                    digital15kg: Number(acumulador.digital15kg) + Number(valorActual.digital15kg),
+                    digital45kg: Number(acumulador.digital45kg) + Number(valorActual.digital45kg),
+                }
+            })
+
+            res.json({
+                fecha: fechaDeAyer,
+                vales: sumaVales
+            })
+        } else {
+            res.json({
+                message: 'No hay vales para esa fecha'
+            })
+        }
+
+    } catch (error) {
+        res.json({
+            message: 'Todavia no hay vales en esta fecha',
+            error: error
+        })
+    }
+};
+        
 
 module.exports = {
     updateAbono,
     getAllMetodoPagosInOrdenDeRepartoBetweenDates,
     getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates,
-    getAllOrdenesEstructuradas
+    getAllOrdenesEstructuradas,
+    getUltimosValesPorFecha,
+    getUltimosValesDeAyer
 }

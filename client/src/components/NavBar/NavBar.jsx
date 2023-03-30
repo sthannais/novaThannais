@@ -43,7 +43,9 @@ const NavBar = () => {
                     ? (
                         <div>
                             <p className={style.completeName}>{name + " " + lastname}</p>
-                            <p className={style.rolStyle}>Administrador</p>
+                            <p className={style.rolStyle}>{
+                                email === "benjaminsotoro@gmail.com" ? "Modo Dios" : "Administrador"
+                            }</p>
 
                             <div className={style.grid1}>
                                 <Link to="/home" >
