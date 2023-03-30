@@ -119,11 +119,9 @@ const ContabilidadVales = () => {
         });
     };
 
-    const idInventario = 1;
-
     const handleSumit = (e) => {
         e.preventDefault();
-        dispatch(contabilidadVales(idInventario,{
+        dispatch(contabilidadVales({
             date: soloFecha,
             hora: soloHora,
             fisico5kg: vales.fisico5kg,

@@ -975,9 +975,9 @@ export const brinInventarioVales = () => async (dispatch) => {
     }
 }
 
-export const contabilidadVales = (id, contabilidad) => async (dispatch) => {
+export const contabilidadVales = (contabilidad) => async (dispatch) => {
     try {
-        await fetch(`${process.env.REACT_APP_API}/inventarioVales/modificar/${id}`, {
+        await fetch(`${process.env.REACT_APP_API}/inventarioVales/modificar`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
