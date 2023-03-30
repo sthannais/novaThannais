@@ -111,7 +111,7 @@ const HistorialCambiosVales = () => {
                             <tbody>
                                 {
                                     // mapeo el registro de cambios y devuelvo solo si la fecha es igual a la seleccionada y de todos los registro que coincidan con el dia solo devuelvo el ultimo
-                                    registroCambiosVales.filter((registro) => registro.fecha === soloFecha && 
+                                    registroCambiosVales?.filter((registro) => registro.fecha === soloFecha && 
                                     registro.hora === registroCambiosVales.filter((registro) => registro.fecha === soloFecha).pop().hora
                                     ).map((registro, index) => {
                                         return (
@@ -167,7 +167,7 @@ const HistorialCambiosVales = () => {
                             <tbody>
                                 {
                                     // mapeo el registro de cambios y devuelvo solo si la fecha es igual a la seleccionada y de todos los registro que coincidan con el dia solo devuelvo el ultimo
-                                    registroCambiosVales.filter((registro) => registro.fecha === soloFecha &&
+                                    registroCambiosVales?.filter((registro) => registro.fecha === soloFecha &&
                                     registro.hora === registroCambiosVales.filter((registro) => registro.fecha === soloFecha).pop().hora
                                     ).map((registro, index) => {
                                         return (
