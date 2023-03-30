@@ -1,0 +1,14 @@
+.grafica {
+    position: absolute;
+    width: 23rem;
+    height: 23rem;
+    left: 38rem;
+    top:16rem
+}
+
+.text {
+    text-align: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+}

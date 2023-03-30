@@ -31,7 +31,9 @@ import {
         changeLoading,
         getAllCuadrantes,
         getInventarioVales,
-        getRegistroCambiosVales
+        getRegistroCambiosVales,
+        getValesPorFecha,
+        getUltimosVales
     } from './novaSlice';
 
 export const getAllOrdenes = (date) => async (dispatch) => {
@@ -1003,4 +1005,25 @@ export const getAllRegistroCambioVales = () => async (dispatch) => {
         console.error(error.message);
     }
 }
+
+export const bringValesPorFecha = (fecha) => async (dispatch) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_API}/metodoPago/ultimosVales/${fecha}`);
+        const data = await response.json();
+        dispatch(getValesPorFecha(data));
+    } catch (error) {
+        console.error(error.message);
+    }
+};
+
+export const bringUltimosVales = () => async (dispatch) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_API}/metodoPago/ultimosValesDeAyer`);
+        const data = await response.json();
+        dispatch(getUltimosVales(data));
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
 

@@ -6,7 +6,7 @@
     justify-items: center;
     cursor: pointer;
     margin-top: 6rem;
-    margin-left: 52rem;
+    margin-left: 58rem;
     font-size: 24px;
     width: 5rem;
     height: 4rem;
@@ -38,29 +38,5 @@
     width: 47rem;
     height: 12rem;
     text-align: center;
-    font-size: 10px;
-}
-
-.tableContainerAux {
-    margin-top: 1rem;
-    width: 47rem;
-    height: 12rem;
-    text-align: center;
-    font-size: 16px;
-}
-
-.tableContainer2 {
-    margin-top: 1rem;
-    width: 47rem;
-    height: 12rem;
-    text-align: center;
-    font-size: 10px;
-}
-
-.tableContainer2Aux {
-    margin-top: 3rem;
-    width: 47rem;
-    height: 12rem;
-    text-align: center;
-    font-size: 16px;
+    font-size: 13px;
 }

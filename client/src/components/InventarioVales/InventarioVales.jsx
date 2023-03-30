@@ -4,6 +4,8 @@ import JorgeGas from '../../assetsOficial/jorgegas.svg';
 import { brinInventarioVales } from '../../redux/novaSlice/thunks';
 import ContabilidadVales from '../ContabilidadVales/ContabilidadVales';
 import HistorialCambiosVales from '../HistorialCambiosVales/HistorialCambiosVales';
+import ValesPorFecha from '../ValesPorFecha/ValesPorFecha';
+import MetricaVales from '../MetricaVales/MetricaVales';
 import style from './inventarioVales.module.css'
 
 const InventarioVales = () => {
@@ -19,6 +21,8 @@ const InventarioVales = () => {
         <div className={style.margin}>
             <ContabilidadVales />
             <HistorialCambiosVales />
+            <ValesPorFecha />
+            <MetricaVales />
             <p className={style.text}>Inventario de vales</p>
             <img src={JorgeGas} alt="logo" className={style.logo} />
             <div className={style.container}>

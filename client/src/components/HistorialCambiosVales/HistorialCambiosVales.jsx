@@ -17,7 +17,8 @@ const HistorialCambiosVales = () => {
     const dispatch = useDispatch();
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
-
+    const width = window.innerWidth;
+    
     useEffect(() => {
         dispatch(getAllRegistroCambioVales());
     }, [dispatch]);
@@ -37,6 +38,16 @@ const HistorialCambiosVales = () => {
         "--bs-modal-width": "90rem",
     };
 
+    const modalStylesAux = {
+        position: 'relative',
+        left: '15%',
+        top: '3%',
+        transform: 'translate(-16%, -2%)',
+        fontFamily: 'Roboto, sans-serif',
+        "--bs-modal-bg": "#F5F5F5",
+        "--bs-modal-width": "115rem",
+    };
+
     return (
         <div>
             <div className={style.iconContainer2}>
@@ -45,7 +56,9 @@ const HistorialCambiosVales = () => {
                     <p>Historial de cambios</p>
                 </button>
             </div>
-            <Modal isOpen={modal} toggle={toggle} style={modalStyles}>
+            <Modal isOpen={modal} toggle={toggle} style={
+                width < 1600 ? modalStyles : width > 1900 ? modalStylesAux : modalStyles
+            }>
                 <ModalHeader toggle={toggle} className={style.modalHeader}>Historial de contabilidad</ModalHeader>
                 <ModalBody className={style.modalBody}>
                     <p>Seleccione una fecha disponible</p>
@@ -71,7 +84,9 @@ const HistorialCambiosVales = () => {
                             }
                         }}
                     />
-                    <div className={style.tableContainer}>
+                    <div className={
+                        width < 1600 ? style.tableContainer : width > 1900 ? style.tableContainerAux : style.tableContainer
+                    }>
                         <table className="table-sm table table-bordered table-hover responsive">
                             <thead>
                                 <tr>
@@ -121,7 +136,9 @@ const HistorialCambiosVales = () => {
                             </tbody>
                         </table>
                     </div>
-                    <div className={style.tableContainer2}>
+                    <div className={
+                        width < 1600 ? style.tableContainer2 : width > 1900 ? style.tableContainer2Aux : style.tableContainer2
+                    }>
                         <table className="table-sm table table-bordered table-hover responsive">
                             <thead>
                                 <tr>
