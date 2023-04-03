@@ -1419,7 +1419,7 @@ const changeContabilidadRecargaById = async (req, res) => {
     try {
         const orden = await OrdenDeReparto.findByPk(idOrden);
 
-        const contabilidad = await orden.getContabilidadRecargas();
+        const contabilidad = await orden.getContabilidadRecarga();
 
         await contabilidad.update({
             total5kg,
