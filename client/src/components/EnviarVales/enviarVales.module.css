@@ -1,0 +1,78 @@
+.iconContainer2 {
+    position: absolute;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-items: center;
+    cursor: pointer;
+    margin-top: 6rem;
+    margin-left: 64rem;
+    font-size: 24px;
+    width: 5rem;
+    height: 4rem;
+}
+
+.botonsito {
+    background-color: transparent;
+    cursor: pointer;
+    font-family: 'Roboto';
+    font-size: 14px;
+    font-weight: 800;
+    color: #3C3C3C;
+}
+
+.icono {
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+}
+
+.inputsitos {
+    width: 15rem;
+}
+
+.containerVales{
+    position: relative;
+    width: 15rem;
+    height: 20rem;
+    font-family: 'Roboto';
+    font-weight: bold;
+    border-radius: 30px;
+    box-shadow: 0.1rem 0.1rem 0.6rem 0 #bebaba;
+    background-color: #F1F2F2;
+    margin-left: 1.3rem;   
+}
+
+.gridOne {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.grid2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    margin: 0.5rem;
+    line-height: 10px;
+    font-weight: lighter;
+    text-align: center;
+}
+
+.gridx {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    margin: 0.5rem;
+    line-height: 10px;
+    font-weight: lighter;
+    text-align: center;
+}
+
+.inputs3 {
+    width: 3.5rem;
+    height: 1.3rem;
+    margin-top: -0.3rem;
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}

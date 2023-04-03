@@ -582,10 +582,6 @@ const getAllOrdenesWhereEstadoFalseBetweenDates = async (req, res) => {
     }
 };
 
-
-
-
-
 //////////////// POST  //////////////////////
 
 const createOrden = async (req, res) => {
@@ -1393,6 +1389,71 @@ const changeContabilidadOrdenById = async (req, res) => {
     }
 }
 
+const changeContabilidadRecargaById = async (req, res) => {
+    const { idOrden } = req.params;
+    const {
+        total5kg,
+        llenos5kg,
+        ventas5kg,
+        precio5kg,
+        recaudacion5kg,
+        total11kg,
+        llenos11kg,
+        ventas11kg,
+        precio11kg,
+        recaudacion11kg,
+        total15kg,
+        llenos15kg,
+        ventas15kg,
+        precio15kg,
+        recaudacion15kg,
+        total45kg,
+        llenos45kg,
+        ventas45kg,
+        precio45kg,
+        recaudacion45kg,
+        totalCantidad,
+        totalRecaudacion,
+    } = req.body;
+
+    try {
+        const orden = await OrdenDeReparto.findByPk(idOrden);
+
+        const contabilidad = await orden.getContabilidadRecargas();
+
+        await contabilidad.update({
+            total5kg,
+            llenos5kg,
+            ventas5kg,
+            precio5kg,
+            recaudacion5kg,
+            total11kg,
+            llenos11kg,
+            ventas11kg,
+            precio11kg,
+            recaudacion11kg,
+            total15kg,
+            llenos15kg,
+            ventas15kg,
+            precio15kg,
+            recaudacion15kg,
+            total45kg,
+            llenos45kg,
+            ventas45kg,
+            precio45kg,
+            recaudacion45kg,
+            totalCantidad,
+            totalRecaudacion,
+        });
+
+        res.json({msg: "Contabilidad de recargas actualizada correctamente"});
+    }   catch (error) {
+        console.log(error.message);
+        res.status(400).json({error: error.message});
+    }
+};
+    
+
 module.exports = {
     getOrdenesDeReparto,
     getOrdenDeRepartoById,
@@ -1412,5 +1473,6 @@ module.exports = {
     desactiveRecarga,
     cambiarChoferDeOrden,
     cambiarAyudanteDeOrden,
-    changeContabilidadOrdenById
+    changeContabilidadOrdenById,
+    changeContabilidadRecargaById,
 }

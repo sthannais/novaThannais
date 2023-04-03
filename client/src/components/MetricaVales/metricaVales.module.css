@@ -12,3 +12,43 @@
     font-style: normal;
     font-weight: bold;
 }
+
+.grafica2 {
+    position: absolute;
+    width: 23rem;
+    height: 23rem;
+    left:65rem;
+    top:16rem
+}
+
+@media screen and (min-width: 1800px) {
+    .grafica {
+        width: 30rem;
+        height: 30rem;
+        left: 45rem;
+        top:16rem
+    }
+    
+    .grafica2 {
+        width: 30rem;
+        height: 30rem;
+        left:80rem;
+        top:16rem
+    }
+}
+
+@media screen and ( max-width: 1366px ) {
+    .grafica {
+        width: 20rem;
+        height: 20rem;
+        left: 35rem;
+        top:16rem
+    }
+    
+    .grafica2 {
+        width: 20rem;
+        height: 20rem;
+        left:58rem;
+        top:16rem
+    }
+}

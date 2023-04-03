@@ -21,7 +21,8 @@ const {
         desactiveRecarga,
         cambiarChoferDeOrden,
         cambiarAyudanteDeOrden,
-        changeContabilidadOrdenById
+        changeContabilidadOrdenById,
+        changeContabilidadRecargaById
     } = require('./OrdenRepartoController');
 
 router.get('/', getOrdenesDeReparto);
@@ -43,5 +44,6 @@ router.put('/changeContabilidadOrdenById/:idContabilidad', changeContabilidadOrd
 router.get('/chofer/:id/:fechaInicio/:fechaFin?', getAllChoferOrdenesDeRepartoBetweenDates);
 router.get('/ayudante/:id/:fechaInicio/:fechaFin?', getAllAyudanteOrdenesDeRepartoBetweenDates);
 router.post('/sendEmail', sendEmailWithCode);
+router.put('/changeContabilidadRecargaById/:idOrden', changeContabilidadRecargaById);
 
 module.exports = router;
