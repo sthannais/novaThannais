@@ -33,7 +33,8 @@ import {
         getInventarioVales,
         getRegistroCambiosVales,
         getValesPorFecha,
-        getUltimosVales
+        getUltimosVales,
+        getRegistroDescargaVales
     } from './novaSlice';
 
 export const getAllOrdenes = (date) => async (dispatch) => {
@@ -1021,6 +1022,38 @@ export const bringUltimosVales = () => async (dispatch) => {
         const response = await fetch(`${process.env.REACT_APP_API}/metodoPago/ultimosValesDeAyer`);
         const data = await response.json();
         dispatch(getUltimosVales(data));
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+export const bringRegistroDeDescargaVales = () => async (dispatch) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_API}/inventarioVales/registro`);
+        const data = await response.json();
+        dispatch(getRegistroDescargaVales(data));
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+export const descargarVales = (descarga) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/inventarioVales/descargar`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(descarga)
+        });
+        dispatch(brinInventarioVales());
+        dispatch(bringRegistroDeDescargaVales());
+        Swal.fire({
+            icon: 'success',
+            title: 'Vales descargados',
+            showConfirmButton: false,
+            timer: 1500
+        });
     } catch (error) {
         console.error(error.message);
     }

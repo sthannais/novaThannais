@@ -6,6 +6,7 @@ import ContabilidadVales from '../ContabilidadVales/ContabilidadVales';
 import HistorialCambiosVales from '../HistorialCambiosVales/HistorialCambiosVales';
 import ValesPorFecha from '../ValesPorFecha/ValesPorFecha';
 import MetricaVales from '../MetricaVales/MetricaVales';
+import EnviarVales from '../EnviarVales/EnviarVales';
 import style from './inventarioVales.module.css'
 
 const InventarioVales = () => {
@@ -23,6 +24,7 @@ const InventarioVales = () => {
             <HistorialCambiosVales />
             <ValesPorFecha />
             <MetricaVales />
+            <EnviarVales />
             <p className={style.text}>Inventario de vales</p>
             <img src={JorgeGas} alt="logo" className={style.logo} />
             <div className={style.container}>
@@ -31,8 +33,8 @@ const InventarioVales = () => {
                 <table className="table-sm table table-bordered table-hover responsive">
                     <thead>
                         <tr>
-                            <th className="px-4 py-3">Vales</th>
-                            <th className="px-4 py-3">Cantidad</th>
+                            <th className={style.text2}>Vales</th>
+                            <th className={style.text2}>Cantidad</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -85,8 +87,8 @@ const InventarioVales = () => {
                         <table className="table-sm table table-bordered table-hover responsive">
                             <thead>
                                 <tr>
-                                    <th className="px-4 py-3">Vales</th>
-                                    <th className="px-4 py-3">Cantidad</th>
+                                    <th className={style.text2}>Vales</th>
+                                    <th className={style.text2}>Cantidad</th>
                                 </tr>
                             </thead>
                             <tbody>

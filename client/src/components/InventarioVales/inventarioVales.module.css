@@ -119,37 +119,34 @@
         margin-left: 105rem;
     }
 
-    .textDatePicker {
+    .tableContainer {
+        top: 7rem;
+        width: 20rem;
+        height: 17.1rem;
+    }
+
+    .tableContainer2 {
+        top: 36rem;
+        width: 20rem;
+        height: 17.1rem;
+    }
+
+    .title {
+        left: 9.5rem;
+        top: 4rem;
         font-size: 18px;
     }
 
-    .tabla {
-        left: 24rem;
-        top: 9rem; 
-        height: 40rem;
-        width: 30rem;
-    }
-
-    .tabla2 {
-        left: 55rem;
-        top: 9rem;
-        height: 40rem;
-        width: 40rem;
-    }
-
-    .text1 {
-        margin-top: 6.5rem;
-        margin-right: 21rem;
+    .title2 {
+        left: 26rem;
+        top: 33rem;
+        font-size: 18px;
     }
 
     .text2 {
         margin-top: -2.5rem;
-        margin-left: 54rem;
-    }
-
-    .boton {
-        top: 50rem;
-        left: 24rem;
+        margin-left: 35rem;
+        font-size: 18px;
     }
 }
 
@@ -172,43 +169,35 @@
         left: 16rem;
     }
 
-    .textDatePicker {
-        font-size: 15px;
+    .tableContainer {
+        top: 2.5rem;
+        left: 2.5rem;
+        width: 16rem;
+        height: 16.8rem;
     }
 
-    .tabla {
-        left: 19.5rem;
-        top: 6.8rem; 
+    .tableContainer2 {
+        top: 24.5rem;
+        left: 18.5rem;
+        width: 16rem;
+        height: 16.8rem;
+    }
+
+    .title {
+        left: 7.5rem;
+        top: 0.5rem;
         font-size: 14px;
-        width: 17.5rem;
-        height: 27rem;
     }
 
-    .tabla2 {
-        left: 37.5rem;
-        top: 7rem; 
-        width: 24rem;
-        height: 27rem;
-    }
-
-    .text1 {
-        margin-top: 4.5rem;
-        margin-right: 9rem;
-        font-size: 15px;
+    .title2 {
+        left: 24rem;
+        top: 22.8rem;
+        font-size: 14px;
     }
 
     .text2 {
         margin-top: -2.5rem;
         margin-left: 35rem;
-        font-size: 15px;
-    }
-
-    .boton {
-        top: 35rem;
-        left: 19.8rem;
-        width: 90px;
-        height: 28px;
-        font-weight: 500;
         font-size: 14px;
     }
 }
