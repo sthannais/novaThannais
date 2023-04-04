@@ -7,6 +7,7 @@ import HistorialCambiosVales from '../HistorialCambiosVales/HistorialCambiosVale
 import ValesPorFecha from '../ValesPorFecha/ValesPorFecha';
 import MetricaVales from '../MetricaVales/MetricaVales';
 import EnviarVales from '../EnviarVales/EnviarVales';
+import HistorialSalidaVales from '../HistorialSalidaVales/HistorialSalidaVales';
 import style from './inventarioVales.module.css'
 
 const InventarioVales = () => {
@@ -25,6 +26,7 @@ const InventarioVales = () => {
             <ValesPorFecha />
             <MetricaVales />
             <EnviarVales />
+            <HistorialSalidaVales />
             <p className={style.text}>Inventario de vales</p>
             <img src={JorgeGas} alt="logo" className={style.logo} />
             <div className={style.container}>
