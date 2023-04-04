@@ -29,14 +29,10 @@ const MetricaVales = () => {
                 fill: false,
                 lineTension: 0.1,
                 data: [
-                    // vales?.fisico5kg,
-                    // vales?.fisico11kg,
-                    // vales?.fisico15kg,
-                    // vales?.fisico45kg
-                    1,
-                    2,
-                    3,
-                    4
+                    vales?.fisico5kg,
+                    vales?.fisico11kg,
+                    vales?.fisico15kg,
+                    vales?.fisico45kg
                 ],
                 backgroundColor: [
                     'rgb(255, 99, 132)',
@@ -62,14 +58,10 @@ const MetricaVales = () => {
                 fill: false,
                 lineTension: 0.1,
                 data: [
-                    // vales?.digital5kg,
-                    // vales?.digital11kg,
-                    // vales?.digital15kg,
-                    // vales?.digital45kg
-                    1,
-                    2,
-                    3,
-                    4
+                    vales?.digital5kg,
+                    vales?.digital11kg,
+                    vales?.digital15kg,
+                    vales?.digital45kg
                 ],
                 backgroundColor: [
                     'rgb(255, 99, 132)',
