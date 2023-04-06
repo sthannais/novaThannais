@@ -109,14 +109,14 @@ const InventarioVales = () => {
                                     <td className={style.text2}>Vale digital 5kg</td>
                                     <td className={style.text2}>
                                         {
-                                            inventarioVales.map((vale) => {
+                                            inventarioVales?.map((vale) => {
                                                 return <>{vale.digital5kg}</>
                                             })
                                         }
                                     </td>
                                     <td className={style.text2}>
                                         {
-                                            ValesDigitalesRegalados.map((vale) => {
+                                            ValesDigitalesRegalados?.map((vale) => {
                                                 return <>{vale.digital5kg}</>
                                             })
                                         }
@@ -129,14 +129,14 @@ const InventarioVales = () => {
                                     <td className={style.text2}>Vale digital 11kg</td>
                                     <td className={style.text2}>
                                         {
-                                            inventarioVales.map((vale) => {
+                                            inventarioVales?.map((vale) => {
                                                 return <>{vale.digital11kg}</>
                                             })
                                         }
                                     </td>
                                     <td className={style.text2}>
                                         {
-                                            ValesDigitalesRegalados.map((vale) => {
+                                            ValesDigitalesRegalados?.map((vale) => {
                                                 return <>{vale.digital11kg}</>
                                             })
                                         }
@@ -149,14 +149,14 @@ const InventarioVales = () => {
                                     <td className={style.text2}>Vale digital 15kg</td>
                                     <td className={style.text2}>
                                         {
-                                            inventarioVales.map((vale) => {
+                                            inventarioVales?.map((vale) => {
                                                 return <>{vale.digital15kg}</>
                                             })
                                         }
                                     </td>
                                     <td className={style.text2}>
                                         {
-                                            ValesDigitalesRegalados.map((vale) => {
+                                            ValesDigitalesRegalados?.map((vale) => {
                                                 return <>{vale.digital15kg}</>
                                             })
                                         }
@@ -169,14 +169,14 @@ const InventarioVales = () => {
                                     <td className={style.text2}>Vale digital 45kg</td>
                                     <td className={style.text2}>
                                         {
-                                            inventarioVales.map((vale) => {
+                                            inventarioVales?.map((vale) => {
                                                 return <>{vale.digital45kg}</>
                                             })
                                         }
                                     </td>
                                     <td className={style.text2}>
                                         {
-                                            ValesDigitalesRegalados.map((vale) => {
+                                            ValesDigitalesRegalados?.map((vale) => {
                                                 return <>{vale.digital45kg}</>
                                             })
                                         }
