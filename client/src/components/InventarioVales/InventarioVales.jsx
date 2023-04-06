@@ -117,7 +117,7 @@ const InventarioVales = () => {
                                     <td className={style.text2}>
                                         {
                                             ValesDigitalesRegalados?.map((vale) => {
-                                                return <>{vale.digital5kg}</>
+                                                return <>{vale?.digital5kg}</>
                                             })
                                         }
                                     </td>
@@ -137,7 +137,7 @@ const InventarioVales = () => {
                                     <td className={style.text2}>
                                         {
                                             ValesDigitalesRegalados?.map((vale) => {
-                                                return <>{vale.digital11kg}</>
+                                                return <>{vale?.digital11kg}</>
                                             })
                                         }
                                     </td>
@@ -157,7 +157,7 @@ const InventarioVales = () => {
                                     <td className={style.text2}>
                                         {
                                             ValesDigitalesRegalados?.map((vale) => {
-                                                return <>{vale.digital15kg}</>
+                                                return <>{vale?.digital15kg}</>
                                             })
                                         }
                                     </td>
@@ -177,7 +177,7 @@ const InventarioVales = () => {
                                     <td className={style.text2}>
                                         {
                                             ValesDigitalesRegalados?.map((vale) => {
-                                                return <>{vale.digital45kg}</>
+                                                return <>{vale?.digital45kg}</>
                                             })
                                         }
                                     </td>
