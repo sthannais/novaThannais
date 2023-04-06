@@ -13,11 +13,14 @@ const { OrdenDeReparto,
         DescuentoRut,
         Descuentos,
         Vales,
+        ValesDigiRegalados,
         Efectivo,
         Transferencias,
         Transbank,
         Gastos,
-        InventarioVales
+        InventarioVales, 
+        InventarioValesDigitalesRegalados,
+        NumeroDeMaquina
     } = require('../../db.js');
 
 const { Op } = require('sequelize');
@@ -114,6 +117,9 @@ const getOrdenDeRepartoById = async (req, res) => {
                     model: Patentes,
                 },
                 {
+                    model: NumeroDeMaquina
+                },
+                {
                     model: Recargas,
                     where: {
                         active: true
@@ -158,6 +164,9 @@ const getOrdenDeRepartoById = async (req, res) => {
                         },
                         {
                             model: Vales,
+                        },
+                        {
+                            model: ValesDigiRegalados
                         },
                         {
                             model: Efectivo,
@@ -416,6 +425,9 @@ const getAllOrdenesWhereEstadoFalseByDate = async (req, res) => {
                     model: Patentes,
                 },
                 {
+                    model: NumeroDeMaquina
+                },
+                {
                     model: Recargas,
                     where: {
                         active: true
@@ -616,6 +628,7 @@ const createOrden = async (req, res) => {
         const descuentoRut = await DescuentoRut.create();
         const descuentos = await Descuentos.create();
         const vales = await Vales.create();
+        const valesDigiRegalados = await ValesDigiRegalados.create();
         const transbank = await Transbank.create();
         const transferencias = await Transferencias.create();
         const gastos = await Gastos.create();
@@ -624,6 +637,7 @@ const createOrden = async (req, res) => {
         await metodoPagos.setDescuentoRut(descuentoRut);
         await metodoPagos.setDescuento(descuentos);
         await metodoPagos.setVale(vales);
+        await metodoPagos.setValesDigiRegalado(valesDigiRegalados);
         await metodoPagos.setTransbank(transbank);
         await metodoPagos.setTransferencia(transferencias);
         await metodoPagos.setGasto(gastos);
@@ -1169,6 +1183,16 @@ const cuadrarOrden = async (req, res) => {
         idDeDecuadre,
         montoGastos,
         DescripcionGastos,
+        digitalRegalado5kg,
+        totalDigitalRegalado5kg,
+        digitalRegalado11kg,
+        totalDigitalRegalado11kg,
+        digitalRegalado15kg,
+        totalDigitalRegalado15kg,
+        digitalRegalado45kg,
+        totalDigitalRegalado45kg,
+        totalValesDigitalesRegalados,
+        numeroDeMaquina
     } = req.body;
 
     try {
@@ -1178,6 +1202,12 @@ const cuadrarOrden = async (req, res) => {
         // if(ordenDeReparto.rendida === true){
         //     return res.status(400).send({error: "La orden de reparto ya fue rendida"})
         // }
+
+        const nuevoNumeroDeMaquina = await NumeroDeMaquina.create({
+            Numero: numeroDeMaquina
+        })
+
+        await ordenDeReparto.setNumeroDeMaquina(nuevoNumeroDeMaquina);
 
         await ordenDeReparto.update({
             cuadradoPor: idDeDecuadre
@@ -1190,6 +1220,7 @@ const cuadrarOrden = async (req, res) => {
         const descuentos = await metodoPagos[0].getDescuento();
         const descuentoRut = await metodoPagos[0].getDescuentoRut();
         const gastos = await metodoPagos[0].getGasto();
+        const valesRegalados = await metodoPagos[0].getValesDigiRegalado();
 
         await efectivo.update({
             totalBilletes1,
@@ -1226,6 +1257,18 @@ const cuadrarOrden = async (req, res) => {
                 totalSumaVales
         });
 
+        await valesRegalados.update({
+            digital5kg: digitalRegalado5kg,
+            totalDigital5kg: totalDigitalRegalado5kg,
+            digital11kg: digitalRegalado11kg,
+            totalDigital11kg: totalDigitalRegalado11kg,
+            digital15kg: digitalRegalado15kg,
+            totalDigital15kg: totalDigitalRegalado15kg,
+            digital45kg: digitalRegalado45kg,
+            totalDigital45kg: totalDigitalRegalado45kg,
+            totalValesDigitales: totalValesDigitalesRegalados
+        }) 
+
         const totalValesFisicos = Number(fisico5kg) + Number(fisico11kg) + Number(fisico15kg) + Number(fisico45kg);
         const totalValesDigitales = Number(digital5kg) + Number(digital11kg) + Number(digital15kg) + Number(digital45kg);
         const totalValesDigitalesYFisicos = Number(totalValesFisicos) + Number(totalValesDigitales);
@@ -1243,6 +1286,18 @@ const cuadrarOrden = async (req, res) => {
             totalValesDigitales: Number(inventario.totalValesDigitales) + Number(totalValesDigitales),
             totalValesAmbos: Number(inventario.totalValesAmbos) + Number(totalValesDigitalesYFisicos)
         });
+
+        if(digitalRegalado11kg && digitalRegalado15kg && digitalRegalado45kg && digitalRegalado5kg && totalValesDigitalesRegalados){
+            const inventarioRegalados = await InventarioValesDigitalesRegalados.findByPk(1);
+
+            await inventarioRegalados.update({
+                digital5kg: Number(inventarioRegalados.digital5kg) + Number(digitalRegalado5kg),
+                digital11kg: Number(inventarioRegalados.digital11kg) + Number(digitalRegalado11kg),
+                digital15kg: Number(inventarioRegalados.digital15kg) + Number(digitalRegalado15kg),
+                digital45kg: Number(inventarioRegalados.digital45kg) + Number(digitalRegalado45kg),
+                totalValesDigitales : Number(inventarioRegalados.totalValesDigitales) + Number(totalValesDigitalesRegalados)
+            });
+        }
 
         await transbank.update({
             monto: montoTransbank

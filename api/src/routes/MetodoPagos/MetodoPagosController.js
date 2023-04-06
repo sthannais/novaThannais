@@ -9,7 +9,8 @@ const {
     Vales,
     Gastos,
     MetodoPagos,
-    ContabilidadRecargas
+    ContabilidadRecargas,
+    ValesDigiRegalados
     } = require('../../db.js');
 
 const { Op } = require('sequelize');
@@ -362,6 +363,12 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
                 }
             })
 
+            const valesRegalados = await ValesDigiRegalados.findOne({
+                where: {
+                    fk_MetodoPagosID: metodoPago[0].id
+                }
+            })
+
             const gastos = await Gastos.findOne({
                 where: {
                     fk_MetodoPagosID: metodoPago[0].id
@@ -373,6 +380,7 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
                 contabilidadRecargas,
                 efectivo,
                 vales,
+                valesRegalados,
                 descuentoRut,
                 descuentos,
                 transbank,
@@ -380,7 +388,7 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
                 gastos
             }
         }))
-
+        
         const sumaSobrantes = ordenesDeReparto.reduce((acc, curr) => {
             return Number(acc) + Number(curr.sobrante)
         }, 0)
@@ -479,6 +487,44 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
             totalSumaVales: 0
         })
 
+        //si hay ordenes con valesRegalados se suman los montos y si no se deja en 0
+        const sumaTotalValesRegalados = ordenesWithMetodoPagos.reduce((acc, curr) => {
+
+            const valesRegalados5kg = curr.valesRegalados === null ? 0 : curr.valesRegalados?.digital5kg
+            const totalMontoVales5kg = curr.valesRegalados === null ? 0 : curr.valesRegalados?.totalDigital5kg
+            const valesRegalados11kg = curr.valesRegalados === null ? 0 : curr.valesRegalados?.digital11kg
+            const totalMontoVales11kg = curr.valesRegalados === null ? 0 : curr.valesRegalados?.totalDigital11kg
+            const valesRegalados15kg = curr.valesRegalados === null ? 0 : curr.valesRegalados?.digital15kg
+            const totalMontoVales15kg = curr.valesRegalados === null ? 0 : curr.valesRegalados?.totalDigital15kg
+            const valesRegalados45kg = curr.valesRegalados === null ? 0 : curr.valesRegalados?.digital45kg
+            const totalMontoVales45kg = curr.valesRegalados === null ? 0 : curr.valesRegalados?.totalDigital45kg
+            const totalValesDigitales = curr.valesRegalados === null ? 0 : curr.valesRegalados?.totalValesDigitales
+
+            return {
+                digital5kg: Number(acc.digital5kg) + Number(valesRegalados5kg),
+                totalDigital5kg: Number(acc.totalDigital5kg) + Number(totalMontoVales5kg),
+                digital11kg: Number(acc.digital11kg) + Number(valesRegalados11kg),
+                totalDigital11kg: Number(acc.totalDigital11kg) + Number(totalMontoVales11kg),
+                digital15kg: Number(acc.digital15kg) + Number(valesRegalados15kg),
+                totalDigital15kg: Number(acc.totalDigital15kg) + Number(totalMontoVales15kg),
+                digital45kg: Number(acc.digital45kg) + Number(valesRegalados45kg),
+                totalDigital45kg: Number(acc.totalDigital45kg) + Number(totalMontoVales45kg),
+                totalDigital: Number(acc.digital5kg) + Number(valesRegalados5kg) + Number(acc.digital11kg) + Number(valesRegalados11kg) + Number(acc.digital15kg) + Number(valesRegalados15kg) + Number(acc.digital45kg) + Number(valesRegalados45kg),
+                totalSumaValesRegalados: Number(acc.totalSumaValesRegalados) + Number(totalValesDigitales)
+            }
+        }, {
+            digital5kg: 0,
+            totalDigital5kg: 0,
+            digital11kg: 0,
+            totalDigital11kg: 0,
+            digital15kg: 0,
+            totalDigital15kg: 0,
+            digital45kg: 0,
+            totalDigital45kg: 0,
+            totalDigital: 0,
+            totalSumaValesRegalados: 0
+        })
+        
         const sumaTotalDescuentosRut = ordenesWithMetodoPagos.reduce((acc, curr) => {
             return acc + Number(curr.descuentoRut.monto)
         }, 0)
@@ -509,7 +555,7 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
             sumaTotalDescuentos +
             sumaTotalTransbank +
             sumaTotalTransferencia +
-            sumaGastos
+            sumaGastos 
         )
 
         res.json({
@@ -518,6 +564,7 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
             ventaTotalTarros: sumaTotalRecargas,
             totalEfectivo: sumaTotalEfectivo,
             totalVales: sumaTotalVales,
+            totalValesRegalados: sumaTotalValesRegalados,
             totalDescuentosRut: sumaTotalDescuentosRut,
             totalDescuentos: sumaTotalDescuentos,
             totalTransbank: sumaTotalTransbank,

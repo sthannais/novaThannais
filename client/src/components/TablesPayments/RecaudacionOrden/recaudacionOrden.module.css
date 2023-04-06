@@ -1,11 +1,12 @@
 .container {
     position: absolute;
-    left: 76%;
+    left: 84%;
     top: 51%;
     background-color: #FFFFFF;
     border: 1px solid #3C3C3C;
     border-radius: 15px;
-    width: 200px;
+    width: 145px;
+    height: 315px;
     padding-top: 1rem;
 }
 
@@ -20,7 +21,7 @@
 
 .input2 {
     margin-bottom: 0.8rem;
-    width: 138px;
+    width: 100px;
     height: 28px;
     border: 1px solid #3C3C3C;
     border-radius: 5px;
@@ -37,6 +38,7 @@
         left: 80.5%;
         top: 52.5%;
         width: 250px;
+        height: 328px;
     }
 
     .texto2 {
@@ -52,9 +54,9 @@
     
 @media screen and ( max-width: 1366px ) {
     .container {
-        left: 76%;
-        top: 51%;
-        width: 200px;
+        left: 84%;
+        top: 50.5%;
+        width: 150px;
     }
 
     .texto2 {

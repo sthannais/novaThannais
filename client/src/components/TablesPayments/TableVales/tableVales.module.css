@@ -1,5 +1,5 @@
 .tabla {
-    width: 35rem;
+    width: 45rem;
     height: 15rem;
     border: 1px solid #3C3C3C;
     border-radius: 30px;
@@ -19,8 +19,8 @@
     
 @media screen and ( max-width: 1366px ) {
     .tabla {
-        width: 30rem;
-        height: 16.8rem;
+        width: 40rem;
+        height: 14.4rem;
         font-size: 14px;
     }
 }

@@ -34,7 +34,8 @@ import {
         getRegistroCambiosVales,
         getValesPorFecha,
         getUltimosVales,
-        getRegistroDescargaVales
+        getRegistroDescargaVales,
+        getValesDigitalesRegalados
     } from './novaSlice';
 
 export const getAllOrdenes = (date) => async (dispatch) => {
@@ -322,6 +323,7 @@ export const finalizeOrden = (id, quantity, fecha) => async (dispatch) => {
 };
 
 export const cuadrarOrden = async (id, quantity) => {
+    console.log(quantity)
     try {
         await fetch(`${process.env.REACT_APP_API}/orden/cuadrar/${id}`, {
             method: 'PUT',
@@ -329,15 +331,16 @@ export const cuadrarOrden = async (id, quantity) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(quantity)
-        }).then(response => {
-            console.log(response)
-            if (response.status === 400) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Esta orden ya fue rendida',
-                });
-            } else {
+        })
+        // .then(response => {
+        //     console.log(response)
+        //     if (response.status === 400) {
+        //         Swal.fire({
+        //             icon: 'error',
+        //             title: 'Error',
+        //             text: 'Esta orden ya fue rendida',
+        //         });
+        //     } else {
                 Swal.fire({
                     title: 'Orden cuadrada',
                     text: 'La orden se ha cuadrado correctamente',
@@ -349,8 +352,8 @@ export const cuadrarOrden = async (id, quantity) => {
                     showConfirmButton: false,
                     footer: '<a class="btn btn-primary" href="/rendicion">OK</a>'
                 });
-            }
-        });
+        //     }
+        // });
     } catch (error) {
         Swal.fire({
             icon: 'error',
@@ -1059,4 +1062,34 @@ export const descargarVales = (descarga) => async (dispatch) => {
     }
 }
 
+export const bringValesDigitalesRegalados = () => async (dispatch) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_API}/inventarioValesRegalados`);
+        const data = await response.json();
+        dispatch(getValesDigitalesRegalados(data));
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+export const editarValesDigitalesRegalados = (vales) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/inventarioValesRegalados`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(vales)
+        });
+        dispatch(bringValesDigitalesRegalados());
+        Swal.fire({
+            icon: 'success',
+            title: 'Vales digitales regalados',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    } catch (error) {
+        console.error(error.message);
+    }
+}
 
