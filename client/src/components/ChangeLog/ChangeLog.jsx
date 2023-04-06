@@ -26,7 +26,7 @@ const ChangeLog = () => {
                 () => {
                     toggle();
                 }
-            } >Ver. 1.0.7
+            } >Ver. 1.1.0
             </button>
             <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="md" backdrop="static" onKeyDown={handleKeydown}>
                 <ModalHeader toggle={toggle}>Cambios recientes</ModalHeader>
