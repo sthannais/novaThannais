@@ -1257,17 +1257,19 @@ const cuadrarOrden = async (req, res) => {
                 totalSumaVales
         });
 
-        await valesRegalados.update({
-            digital5kg: digitalRegalado5kg,
-            totalDigital5kg: totalDigitalRegalado5kg,
-            digital11kg: digitalRegalado11kg,
-            totalDigital11kg: totalDigitalRegalado11kg,
-            digital15kg: digitalRegalado15kg,
-            totalDigital15kg: totalDigitalRegalado15kg,
-            digital45kg: digitalRegalado45kg,
-            totalDigital45kg: totalDigitalRegalado45kg,
-            totalValesDigitales: totalValesDigitalesRegalados
-        }) 
+        if(valesRegalados) {
+            await valesRegalados.update({
+                digital5kg: digitalRegalado5kg,
+                totalDigital5kg: totalDigitalRegalado5kg,
+                digital11kg: digitalRegalado11kg,
+                totalDigital11kg: totalDigitalRegalado11kg,
+                digital15kg: digitalRegalado15kg,
+                totalDigital15kg: totalDigitalRegalado15kg,
+                digital45kg: digitalRegalado45kg,
+                totalDigital45kg: totalDigitalRegalado45kg,
+                totalValesDigitales: totalValesDigitalesRegalados
+            }) 
+        }
 
         const totalValesFisicos = Number(fisico5kg) + Number(fisico11kg) + Number(fisico15kg) + Number(fisico45kg);
         const totalValesDigitales = Number(digital5kg) + Number(digital11kg) + Number(digital15kg) + Number(digital45kg);
