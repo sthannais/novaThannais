@@ -31,6 +31,26 @@ const ChangeLog = () => {
             <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="md" backdrop="static" onKeyDown={handleKeydown}>
                 <ModalHeader toggle={toggle}>Cambios recientes</ModalHeader>
                 <ModalBody>
+                    <h5>Ver. 1.1.0</h5>
+                    <em style={{ color: 'red' }}>4/06/2023</em>
+                    {
+                        verMas && name === 'Ver. 1.1.0' ? (
+                            <ul className={style.newli}>
+                                <li>Se habilita modulo de numero de maquina al momento de cuadrar una orden</li>
+                                <li>Modulo para inventario de vales completo(solo para cuenta Benjamin)</li>
+                                <li>Se habilita modulo de vales regalados como metodo de pago</li>
+                            </ul>
+                        ) : null
+                    }
+                    <br />
+                    <button onClick={
+                        () => {
+                            setVerMas(!verMas);
+                            setName('Ver. 1.1.0')
+                        }
+                    } className={style.verMas}>
+                        { verMas && name === 'Ver. 1.1.0' ? 'Ver menos...' : 'Ver mas...'}
+                    </button>
                     <h5>Ver. 1.0.7</h5>
                     <em style={{ color: 'red' }}>21/03/2023</em>
                     {
