@@ -298,7 +298,7 @@ const TableVales = ({ novaOrdenById, tabla3Ref }) => {
                             const sumaVale11 = metodo.valesDigiRegalado?.totalDigital11kg ? Number(metodo.vale.sumaTotalDigitalYFisico11kg) + Number(metodo.valesDigiRegalado?.totalDigital11kg) : metodo.vale.sumaTotalDigitalYFisico11kg
                             const sumaVale15 = metodo.valesDigiRegalado?.totalDigital15kg ? Number(metodo.vale.sumaTotalDigitalYFisico15kg) + Number(metodo.valesDigiRegalado?.totalDigital15kg) : metodo.vale.sumaTotalDigitalYFisico15kg
                             const sumaVale45 = metodo.valesDigiRegalado?.totalDigital45kg ? Number(metodo.vale.sumaTotalDigitalYFisico45kg) + Number(metodo.valesDigiRegalado?.totalDigital45kg) : metodo.vale.sumaTotalDigitalYFisico45kg
-                            const sumaVale = sumaVale5 + sumaVale11 + sumaVale15 + sumaVale45
+                            const sumaVale = Number(sumaVale5) + Number(sumaVale11) + Number(sumaVale15) + Number(sumaVale45)
 
                             return (
                                 <React.Fragment key={metodo.id}>
