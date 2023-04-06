@@ -13,6 +13,7 @@ const cuadranteRoutes = require('./CuadranteManager/CuadranteRoutes');
 const metodoPagoRoutes = require('./MetodoPagos/MetodoPagosRoutes');
 const listaDePreciosRoutes = require('./ListaDePreciosManager/ListaDePreciosRoutes');
 const inventarioValesRoutes = require('./InvetarioVales/InventarioValesRoutes');
+const inventarioValesRegaladosRoutes = require('./InventarioValesRegalados/InventarioValesRegaladosRoutes');
 
 router.use('/chofer', choferRoutes);
 router.use('/admin', adminRoutes);
@@ -26,6 +27,7 @@ router.use('/cuadrante', cuadranteRoutes);
 router.use('/metodoPago', metodoPagoRoutes);
 router.use('/listaDePrecios', listaDePreciosRoutes);
 router.use('/inventarioVales', inventarioValesRoutes);
+router.use('/inventarioValesRegalados', inventarioValesRegaladosRoutes);
 
 
 module.exports = router;

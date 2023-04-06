@@ -34,6 +34,7 @@ export const NovaSlice = createSlice({
         valesPorFecha: [],
         ultimosVales: [],
         registroDescargaVales: [],
+        ValesDigitalesRegalados: [],
     },
     reducers: {
         getPersonal: (state, {payload}) => {
@@ -138,6 +139,9 @@ export const NovaSlice = createSlice({
         },
         getRegistroDescargaVales: (state, {payload}) => {
             state.registroDescargaVales = payload;
+        },
+        getValesDigitalesRegalados: (state, {payload}) => {
+            state.ValesDigitalesRegalados = payload;
         }
     }
 });
@@ -175,6 +179,7 @@ export const {  getPersonal,
                 getRegistroCambiosVales,
                 getValesPorFecha,
                 getUltimosVales,
-                getRegistroDescargaVales
+                getRegistroDescargaVales,
+                getValesDigitalesRegalados
             } = NovaSlice.actions;
             

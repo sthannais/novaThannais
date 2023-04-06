@@ -1,9 +1,9 @@
 .boton {
     position: absolute;
     left: 133%;
-    top: 131%;
+    top: 133%;
     width: 11rem;
-    height: 2.5rem;
+    height: 2.3rem;
     background-color: #F65108;
     border: none;
     display: grid;
@@ -66,8 +66,8 @@
 
 .containerVales{
     position: relative;
-    width: 15rem;
-    height: 20rem;
+    width: 20rem;
+    height: 24rem;
     font-family: 'Roboto';
     font-weight: bold;
     border-radius: 30px;
@@ -78,8 +78,8 @@
 
 .gridOne {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
 }
 
 .grid2 {
@@ -93,6 +93,16 @@
 }
 
 .gridx {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    margin: 0.5rem;
+    line-height: 10px;
+    font-weight: lighter;
+    text-align: center;
+}
+
+.gridz {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
@@ -119,11 +129,11 @@
 .containerMetodoPagos {
     position: relative;
     width: 15rem;
-    height: 20rem;
+    height: 24rem;
     font-family: 'Roboto';
     font-weight: bold;
     box-shadow: 0.1rem 0.1rem 0.6rem 0 #bebaba;
-    margin: -26rem 0 0 31.6rem;
+    margin: -26rem 0 0 36.5rem;
     border-radius: 30px;
     padding: 1rem;
     background-color: #F1F2F2;    
@@ -145,7 +155,7 @@
     height: 15rem;
     border-radius: 30px;
     box-shadow: 0.1rem 0.1rem 0.6rem 0 #bebaba;
-    margin: 1rem 0 0 14.8rem;
+    margin: 1rem 0 0 19.5rem;
     background-color: #F1F2F2; 
     padding-top: 25px;
 }
@@ -165,7 +175,7 @@
 
 .boton2 {
     margin-top: 1rem;
-    margin-left: 36.8rem;
+    margin-left: 41.5rem;
     width: 10rem;
 }
 

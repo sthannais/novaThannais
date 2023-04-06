@@ -85,7 +85,9 @@ const {
     DescuentoRut,
     Descuentos,
     Vales,
-    Gastos
+    Gastos,
+    NumeroDeMaquina,
+    ValesDigiRegalados
     } = sequelize.models;
 
 // Relaciones entre los modelos
@@ -157,6 +159,13 @@ OrdenDeReparto.hasOne(ContabilidadRecargas, { foreignKey: 'fk_ordenDeRepartoID',
   });
 ContabilidadRecargas.belongsTo(OrdenDeReparto, { foreignKey: 'fk_ordenDeRepartoID', targetKey: 'id' });
 
+//Relacion entre orden de reparto y numero de maquina
+OrdenDeReparto.hasOne(NumeroDeMaquina, { foreignKey: 'fk_ordenDeRepartoID', targetKey: 'id' }, {
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE'
+  });
+NumeroDeMaquina.belongsTo(OrdenDeReparto, { foreignKey: 'fk_ordenDeRepartoID', targetKey: 'id' });
+
 /////// METODOS DE PAGO ///////
 
 //Relacion entre orden de reparto y metodo de pago
@@ -218,6 +227,13 @@ MetodoPagos.hasOne(Gastos, { foreignKey: 'fk_MetodoPagosID', targetKey: 'id' }, 
   onUpdate: 'CASCADE'
 });
 Gastos.belongsTo(MetodoPagos, { foreignKey: 'fk_MetodoPagosID', targetKey: 'id' });
+
+//Relacion entre metodo de pago y vales regalados
+MetodoPagos.hasOne(ValesDigiRegalados, { foreignKey: 'fk_MetodoPagosID', targetKey: 'id' }, {
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE'
+});
+ValesDigiRegalados.belongsTo(MetodoPagos, { foreignKey: 'fk_MetodoPagosID', targetKey: 'id' });
 
 //Relacion entre lista de precios y orden de reparto
 ListaDePrecios.hasMany(OrdenDeReparto, { foreignKey: 'fk_listaPreciosID', targetKey: 'id' });

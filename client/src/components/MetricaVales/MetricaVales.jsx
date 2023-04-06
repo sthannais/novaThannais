@@ -33,6 +33,10 @@ const MetricaVales = () => {
                     vales?.fisico11kg,
                     vales?.fisico15kg,
                     vales?.fisico45kg
+                    // 1,
+                    // 2,
+                    // 3,
+                    // 4
                 ],
                 backgroundColor: [
                     'rgb(255, 99, 132)',
@@ -62,6 +66,10 @@ const MetricaVales = () => {
                     vales?.digital11kg,
                     vales?.digital15kg,
                     vales?.digital45kg
+                    // 1,
+                    // 2,
+                    // 3,
+                    // 4
                 ],
                 backgroundColor: [
                     'rgb(255, 99, 132)',

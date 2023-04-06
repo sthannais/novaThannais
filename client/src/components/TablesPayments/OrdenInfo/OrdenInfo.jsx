@@ -19,6 +19,7 @@ const OrdenInfo = ({ novaOrdenById }) => {
                 <p>Lista de precios: {novaOrdenById?.listaDePrecio?.name}</p>
                 { novaOrdenById?.chofer?.personal?.name ? <p>Chofer: {novaOrdenById?.chofer?.personal?.name + " " + novaOrdenById?.chofer?.personal?.lastname}</p> : <p>Chofer: No asignado</p> }
                 { novaOrdenById?.ayudante?.personal?.name ? <p>Peoneta: {novaOrdenById?.ayudante?.personal?.name + " " + novaOrdenById?.ayudante?.personal?.lastname}</p> : <p>Peoneta: No asignado</p> }
+                { novaOrdenById?.numeroDeMaquina?.Numero ? <p>Numero de maquina: {novaOrdenById?.numeroDeMaquina?.Numero}</p> : <p>Numero de maquina: No asignado</p> }
             </div>
         </div>
     )

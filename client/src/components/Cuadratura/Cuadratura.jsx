@@ -92,6 +92,22 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
         totalSumaVales : 0
     })
 
+    const [valesDigitalesRegalados, setValesDigitalesRegalados] = useState({
+        digitalRegalado5kg: 0,
+        totalDigitalRegalado5kg: 0,
+        digitalRegalado11kg: 0,
+        totalDigitalRegalado11kg: 0,
+        digitalRegalado15kg: 0,
+        totalDigitalRegalado15kg: 0,
+        digitalRegalado45kg: 0,
+        totalDigitalRegalado45kg: 0,
+        totalValesDigitalesRegalados: 0
+    })
+
+    const [numeroDeMaquina, setNumeroDeMaquina] = useState({
+        numeroDeMaquina : "",
+    })
+
     const [metodoPagos, setMetodoPagos] = useState({
         montoTransbank : "",
         montoTransferencias : "",
@@ -167,6 +183,15 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
             totalVales : (vales.fisico5kg + vales.fisico11kg + vales.fisico15kg + vales.fisico45kg + vales.digital5kg + vales.digital11kg + vales.digital15kg + vales.digital45kg),
             totalSumaVales : (vales.sumaTotalDigitalYFisico5kg + vales.sumaTotalDigitalYFisico11kg + vales.sumaTotalDigitalYFisico15kg + vales.sumaTotalDigitalYFisico45kg)
         })
+
+        setValesDigitalesRegalados({
+            ...valesDigitalesRegalados,
+            totalDigitalRegalado5kg: (valesDigitalesRegalados.digitalRegalado5kg * Number(novaOrdenById?.listaDePrecio?.precio5kg)),
+            totalDigitalRegalado11kg: (valesDigitalesRegalados.digitalRegalado11kg * Number(novaOrdenById?.listaDePrecio?.precio11kg)),
+            totalDigitalRegalado15kg: (valesDigitalesRegalados.digitalRegalado15kg * Number(novaOrdenById?.listaDePrecio?.precio15kg)),
+            totalDigitalRegalado45kg: (valesDigitalesRegalados.digitalRegalado45kg * Number(novaOrdenById?.listaDePrecio?.precio45kg)),
+            totalValesDigitalesRegalados: (valesDigitalesRegalados.totalDigitalRegalado5kg + valesDigitalesRegalados.totalDigitalRegalado11kg + valesDigitalesRegalados.totalDigitalRegalado15kg + valesDigitalesRegalados.totalDigitalRegalado45kg)
+        })
         
         // se setea el faltante con cada billete y moneda
         setFaltante({
@@ -190,7 +215,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                 Number(faltantePeonetaNumber.faltantePeoneta)
             ) - (
                 Number(gastosNumber.montoGastos)
-            )
+            ) - Number(valesDigitalesRegalados.totalValesDigitalesRegalados)
         })
 
         setIdDeDecuadre({
@@ -244,7 +269,16 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
         novaOrdenById?.listaDePrecio?.precio45kg,
         usuario.administrador.id,
         sobrante.sobrante,
-        gastosNumber.montoGastos
+        gastosNumber.montoGastos,
+        valesDigitalesRegalados.digitalRegalado5kg,
+        valesDigitalesRegalados.digitalRegalado11kg,
+        valesDigitalesRegalados.digitalRegalado15kg,
+        valesDigitalesRegalados.digitalRegalado45kg,
+        valesDigitalesRegalados.totalDigitalRegalado5kg,
+        valesDigitalesRegalados.totalDigitalRegalado11kg,
+        valesDigitalesRegalados.totalDigitalRegalado15kg,
+        valesDigitalesRegalados.totalDigitalRegalado45kg,
+        valesDigitalesRegalados.totalValesDigitalesRegalados
     ])
 
     useEffect(() => {
@@ -269,7 +303,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                 Number(faltantePeonetaNumber.faltantePeoneta)
             ) + (
                 Number(gastosNumber.montoGastos)
-            )
+            ) + Number(valesDigitalesRegalados.totalValesDigitalesRegalados)
         })
     }, [
         efectivoNumber.totalBilletes1,
@@ -317,7 +351,16 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
         novaOrdenById?.listaDePrecio?.precio45kg,
         usuario.administrador.id,
         sobrante.sobrante,
-        gastosNumber.montoGastos
+        gastosNumber.montoGastos,
+        valesDigitalesRegalados.digitalRegalado5kg,
+        valesDigitalesRegalados.digitalRegalado11kg,
+        valesDigitalesRegalados.digitalRegalado15kg,
+        valesDigitalesRegalados.digitalRegalado45kg,
+        valesDigitalesRegalados.totalDigitalRegalado5kg,
+        valesDigitalesRegalados.totalDigitalRegalado11kg,
+        valesDigitalesRegalados.totalDigitalRegalado15kg,
+        valesDigitalesRegalados.totalDigitalRegalado45kg,
+        valesDigitalesRegalados.totalValesDigitalesRegalados
     ])
 
     useEffect(() => {
@@ -364,6 +407,13 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
         })
     }
 
+    const handleValesDigitalesRegaladosChange = (e) => {
+        setValesDigitalesRegalados({
+            ...valesDigitalesRegalados,
+            [e.target.name] : Number(e.target.value)
+        })
+    }
+
     const handleMetodoPagosChange = (e) => {
         const inputValue = e.target.value
         const formatted = inputValue.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ',')
@@ -374,6 +424,13 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
         setMetodoPagosNumber({
             ...metodoPagosNumber,
             [e.target.name] : formatted ? parseInt(formatted.replace(/,/g, '')) : 0
+        })
+    }
+
+    const handleNumeroDeMaquinaChange = (e) => {
+        setNumeroDeMaquina({
+            ...numeroDeMaquina,
+            [e.target.name] : e.target.value
         })
     }
 
@@ -482,6 +539,17 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
             sumaTotalDigitalYFisico15kg : 0,
             sumaTotalDigitalYFisico45kg : 0,
         })
+        setValesDigitalesRegalados({
+            digital5kg : 0,
+            totalDigitalRegalado5kg : 0,
+            digital11kg : 0,
+            totalDigitalRegalado11kg : 0,
+            digital15kg : 0,
+            totalDigitalRegalado15kg : 0,
+            digital45kg : 0,
+            totalDigitalRegalado45kg : 0,
+            totalValesDigitalesRegalados : 0,
+        })
         setMetodoPagos({
             montoTransbank : "",
             montoTransferencias : "",
@@ -494,6 +562,11 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
             porcentajeDescuentoRut : 0,
             porcentajeDescuento : 0,
         })
+
+        setNumeroDeMaquina({
+            numeroDeMaquina : ""
+        })
+
         setTotalRecaudacion({
             totalRecaudacion : novaOrdenById?.contabilidadRecarga?.totalRecaudacion,
         })
@@ -561,6 +634,8 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
             ...sobrante,
             ...idDeDecuadre,
             ...gastosNumber,
+            ...numeroDeMaquina,
+            ...valesDigitalesRegalados
         }))
         cleanStates();
         cleanFaltantes();
@@ -571,7 +646,8 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
         left: '15%',
         top: '3%',
         transform: 'translate(-28%, -3%)',
-        "--bs-modal-padding": "1.5rem"
+        "--bs-modal-padding": "1.5rem",
+        "--bs-modal-width": "55rem",
     };
 
     return (
@@ -591,7 +667,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                 <p>Cuadratura</p>
                 <img src={cuadratura} alt="cuadratura" className={style.icono} />
             </Button> 
-            <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="lg" backdrop="static" onKeyDown={handleKeydown}>
+            <Modal isOpen={modal} toggle={toggle} style={modalStyles} backdrop="static" onKeyDown={handleKeydown}>
                 <Form onSubmit={(e) => {
                     handleSubmit(e)
                     toggle()
@@ -817,6 +893,57 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                             />
                                         </div>
                                     </div>
+                                    <div className={style.gridz}>
+                                        <p style={{fontWeight: "bold", fontSize: "18px"}}>Regalado</p>
+                                        <div>
+                                            <p>5kg</p>
+                                            <Input
+                                                type="number"
+                                                name="digitalRegalado5kg"
+                                                id="digitalRegalado5kg"
+                                                value={vales.digitalRegalado5kg === 0 ? "" : vales.digitalRegalado5kg}
+                                                className={style.inputs3}
+                                                onChange={(e) => handleValesDigitalesRegaladosChange(e)}
+                                                min={0}
+                                            />
+                                        </div>
+                                        <div>
+                                            <p>11kg</p>
+                                            <Input
+                                                type="number"
+                                                name="digitalRegalado11kg"
+                                                id="digitalRegalado11kg"
+                                                value={vales.digitalRegalado11kg === 0 ? "" : vales.digitalRegalado11kg}
+                                                className={style.inputs3}
+                                                onChange={(e) => handleValesDigitalesRegaladosChange(e)}
+                                                min={0}
+                                            />
+                                        </div>
+                                        <div>
+                                            <p>15kg</p>
+                                            <Input
+                                                type="number"
+                                                name="digitalRegalado15kg"
+                                                id="digitalRegalado15kg"
+                                                value={vales.digitalRegalado15kg === 0 ? "" : vales.digitalRegalado15kg}
+                                                className={style.inputs3}
+                                                onChange={(e) => handleValesDigitalesRegaladosChange(e)}
+                                                min={0}
+                                            />
+                                        </div>
+                                        <div>
+                                        <p>45kg</p>
+                                            <Input
+                                                type="number"
+                                                name="digitalRegalado45kg"
+                                                id="digitalRegalado45kg"
+                                                value={vales.digitalRegalado45kg === 0 ? "" : vales.digitalRegalado45kg}
+                                                className={style.inputs3}
+                                                onChange={(e) => handleValesDigitalesRegaladosChange(e)}
+                                                min={0}
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -911,6 +1038,27 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                         value={metodoPagos.porcentajeDescuentoRut === 0 ? "" : metodoPagos.porcentajeDescuentoRut}
                                         className={style.inputs2}
                                         onChange={(e) => handleMetodoPagosChange(e)}
+                                        min={0}
+                                        autoComplete="off"
+                                    />
+                                </div>
+                                <div style={{
+                                    paddingBlock: '0.5rem'
+                                }}>
+                                    <p style={{
+                                        fontSize: '18px',
+                                        fontWeight: 'bold',
+                                        fontFamily: 'Roboto',
+                                    }}>
+                                        Numero de maquina
+                                    </p>
+                                    <Input
+                                        type="text"
+                                        name="numeroDeMaquina"
+                                        id="numeroDeMaquina"
+                                        value={numeroDeMaquina.numeroDeMaquina}
+                                        className={style.inputs2}
+                                        onChange={(e) => handleNumeroDeMaquinaChange(e)}
                                         min={0}
                                         autoComplete="off"
                                     />
