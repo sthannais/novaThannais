@@ -38,10 +38,7 @@ const LoginPage = () => {
 
     return (
         <div> 
-            <div> 
-                <img
-                className="margin-image-1"
-                src={RealImg} alt="RealImg" />
+            <div className="background"> 
             </div>
             <div className="input-container">
                 <form onSubmit={handleLogin} id='formulario'>
