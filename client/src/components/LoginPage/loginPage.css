@@ -1,10 +1,13 @@
-
-.margin-image-1 {
+.background {
     position: absolute;
     left: 13rem;
     top: 10rem;
-    filter: drop-shadow(0px 8px 8px rgba(0, 0, 0, 0.25));
+    background-image: url(../../assetsOficial/benjanova.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
     width: 28.6rem;
+    height: 28.6rem;
+    filter: drop-shadow(0px 8px 8px rgba(0, 0, 0, 0.25));
 }
 
 .input-container {
@@ -125,7 +128,7 @@
 
 
 @media screen and (min-width: 1800px) {
-    .margin-image-1 {
+    .background {
         position: absolute;
         left: 28rem;
         top: 15rem;
@@ -140,7 +143,7 @@
 }
 
 @media screen and (max-width: 1366px) {
-    .margin-image-1 {
+    .background {
         position: absolute;
         left: 6.4rem;
         top: 6.6rem;
@@ -152,5 +155,99 @@
         top: 6.6rem;
     }
     
+}
+
+/* Responsive mobile */
+@media screen and (max-width: 768px) {
+    .background {
+        background-image: url(../../assetsOficial/DiseñoMovil/loginImg.svg);
+        left: -2rem;
+        top: 0rem;
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 28rem;
+        height: 28rem;
+    }
+    
+    .input-container {
+        left: 0rem;
+        top: 22.2rem;
+        width: 26rem;
+        height: 34.2rem;
+    }
+    
+    .monito {
+        width: 75px;
+        height: 75px;
+        margin-top: 1rem;
+        margin-left: 10rem;
+    }
+    
+    .texto-1 {
+        left: 8.5rem;
+        top: 6rem;
+        font-size: 23px;
+    }
+    
+    .cajita-1 {
+        /*input con el nombre arriba y el espacio en blanco en una linea*/
+        position: absolute;
+        left: 3rem;
+        top: 11rem;
+        width: 18rem;
+        height: 2rem;
+        font-size: 16px;
+    }
+    
+    .cajita-2 {
+        /*input con el nombre arriba y el espacio en blanco en una linea*/
+        position: absolute;
+        left: 3rem;
+        top: 15rem;
+        width: 18rem;
+        height: 2rem;
+        font-size: 16px;
+    }
+    
+    .error-texto{
+        left: 13rem;
+        top: 18rem;
+    }
+
+    .boton-1 {
+        /* boton pequeño con borde naranja */
+        position: absolute;
+        left: 3rem;
+        top: 20rem;
+        width: 18.5rem;
+        height: 3rem;
+        background: #FFA500;
+        border: 1px solid #FFFFFF;
+        box-sizing: border-box;
+        border-radius: 4px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: "Roboto";
+        font-size: 15px;
+        color: #FFFFFF;
+    }
+
+    .boton-1:hover {
+        background-color: #FFFFFF;
+        color: #000000;
+        border: 1px solid #FFA500;
+    }
+
+    .texto-auxiliar {
+        left: 3rem;
+        top: 25rem;
+        font-size: 14px;
+        background: none;
+    }
+
+    .texto-auxiliar:hover {
+        color: #FFA500;
+    }
+
 }
 
