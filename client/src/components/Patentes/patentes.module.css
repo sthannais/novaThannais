@@ -43,3 +43,9 @@
         left: 31rem;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .iconContainer2 {
+        display: none;
+    }
+}

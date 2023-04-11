@@ -15,6 +15,21 @@
     color: #FFFFFF;
 }
 
+.container {
+    position: absolute;
+    top: 70px;
+    left: 17rem;
+    width: 1200px;
+    height: 660px;
+    background: #F5F5F5;
+    overflow: hidden;
+    z-index: -1;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    font-family: 'Roboto';
+    padding: 1rem 2.5rem 0 2.5rem;
+}
+
 .icon3 {
     width: 2rem;
     height: 2rem;
@@ -50,6 +65,13 @@
     font-size: 13px;
 }
 
+.textFecha {
+    color: #000000;
+    font-size: 0.8rem;
+    font-weight: bold;
+    font-family: Roboto;
+}
+
 .excel{
     position: absolute;
     left: 84.5%;
@@ -65,21 +87,6 @@
     font-weight: 800;
     width: 164px;
     height: 37px;
-}
-
-.container {
-    position: absolute;
-    top: 70px;
-    left: 17rem;
-    width: 1200px;
-    height: 660px;
-    background: #F5F5F5;
-    overflow: hidden;
-    z-index: -1;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
-    font-family: 'Roboto';
-    padding: 1rem 2.5rem 0 2.5rem;
 }
 
 .inline {
@@ -200,5 +207,73 @@
         font-weight: 500;
         line-height: 16px;
         font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .icon {
+        position: absolute;
+        right: 8.5rem;
+        top: 0rem;
+    }
+    
+    .text {
+        left: 17%;
+        top: 10.5%;
+    }
+    
+    .container {
+        top: 5rem;
+        left: 1.5rem;
+        width: 21.3rem;
+        height: 46.3rem;
+        padding: 5rem 2.5rem 0 2.5rem;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 20px;
+        padding: 4rem 1.5rem 0 1.5rem;
+    }
+
+    .datePicker {
+        position: absolute;
+        left: 9%;
+        top: 7.3%;
+        font-family: "Roboto";
+    }
+    
+    .classDatePicker {
+        border-radius: 3px;
+        border: 1px solid #000000;
+        background: #ffffff;
+        width: 7rem;
+        height: 1.5rem;
+        text-align: center;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .textFecha {
+        color: #FFFFFF;
+        font-weight: 500;
+    }
+
+    .textInfo {
+        color: #FFFFFF;
+        font-weight: 500;
+    }
+
+    .inputOrdenes {
+        background: #FFFFFF !important;
+    }
+
+    .tableContainer {
+        border-radius: 10px;
+        overflow-y: scroll;
+        background: #FFFFFF;
+        height: 37.5rem;
+        font-size: 14px;
+    }
+
+    .excel {
+        display: none;
     }
 }

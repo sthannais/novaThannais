@@ -160,43 +160,43 @@
 
 @media screen and ( max-width: 768px ) {
 
-    .text {
-        font-size: 16px;
-        left: 22%;
-        top: 2.5%;
-    }
-
     .logo {
-        margin-top: 0.3rem;
-        margin-left: 72rem;
+        position: absolute;
+        right: 8.5rem;
+        top: 0rem;
     }
 
     .container {
-        width: 1040px;
-        height: 80rem;
-        top: 52px;
-        left: 16rem;
+        top: 5rem;
+        left: 1.5rem;
+        width: 21.3rem;
+        height: 46.3rem;
+        padding: 5rem 2.5rem 0 2.5rem;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 20px;
+        padding: 2.5rem 1.5rem 0 1.5rem;
     }
 
     .tableContainer {
-        height: 30.5rem;
-    }
-
-    .tabla {
-        font-size: 12px;
-    }
-
-    .excel{
-        width: 135px;
-        height: 33px;
-        font-size: 14px;
-        top: 1.3rem;
-        left: 82%;
-    }
-
-    .boton {
-        width: 80px;
-        height: 30px;
+        /*centrada en el centro de la pantalla*/
+        border-radius: 10px;
+        overflow-y: scroll;
+        background: #FFFFFF;
+        height: 42.5rem;
         font-size: 14px;
     }
+
+    .text {
+        left: 17%;
+        top: 10.5%;
+    }
+
+    .marginInfo {
+        position: absolutes;
+        display: grid;
+        grid-template-columns: 1fr;
+        padding-left: 1.5rem !important;
+        width: 10rem;
+    }
+
 }

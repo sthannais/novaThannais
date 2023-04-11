@@ -110,6 +110,23 @@ button {
     font-size: 18px;
 }
 
+.hamburgerMenu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.hamburgerMenu div {
+    width: 24px;
+    height: 3px;
+    background: #ffffff;
+}
+
 @media screen and (min-width: 1800px) {
     .grid1 {
         top: 33%;
@@ -150,6 +167,31 @@ button {
 
     
 
+}
+
+@media screen and (max-width: 768px) {
+    .hamburgerMenu {
+        position: relative;
+        display: flex;
+        margin-left: 1rem;
+        margin-top: 1rem;
+        z-index: 2;
+    }
+
+    .navBarContainer {
+        background-image: url(../../assetsOficial/DiseñoMovil/navBar.svg);
+        background-repeat: no-repeat;
+        background-size: cover; 
+        display: flex;
+        width: 217px;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        /* z-index: 1; */
+        overflow-x: hidden;
+        transition: 0.5s;
+    }
 }
 
 

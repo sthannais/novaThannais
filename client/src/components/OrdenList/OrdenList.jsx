@@ -15,6 +15,7 @@ const OrdenList = ({
         metodoPagos
     }) => {
 
+    const width = window.innerWidth;
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
     let totalCantidad =  0
@@ -25,20 +26,35 @@ const OrdenList = ({
 
     return (
         <>
-            <tr key={id} onClick={toggle} className={style.tabla}>
-                <td>#{id}</td>
-                <td>{fecha}</td>
-                <td>{totalCantidad}</td>
-                <td>{patente}</td>
-                <td>{chofer}</td>
-                <td>{ayudante}</td>
-                <td>{cuadrante}</td>
-                <td style={{
-                    color: estado === 'Activa' ? '#00FF0C' : '#FF0000'
-                }}>
-                    <span >{estado}</span>
-                    </td>
-            </tr>
+            {
+                width > 768 ? (
+                    <tr key={id} onClick={toggle} className={style.tabla}>
+                        <td>#{id}</td>
+                        <td>{fecha}</td>
+                        <td>{totalCantidad}</td>
+                        <td>{patente}</td>
+                        <td>{chofer}</td>
+                        <td>{ayudante}</td>
+                        <td>{cuadrante}</td>
+                        <td style={{
+                            color: estado === 'Activa' ? '#00FF0C' : '#FF0000'
+                        }}>
+                            <span>{estado}</span>
+                        </td>
+                    </tr>
+                ) : (
+                    <tr key={id} onClick={toggle} className={style.tabla}>
+                        <td className="px-4 py-3">#{id}</td>
+                        <td>{chofer}</td>
+                        <td>{ayudante}</td>
+                        <td style={{
+                            color: estado === 'Activa' ? '#00FF0C' : '#FF0000'
+                        }} className="px-4 py-3">
+                            <span>{estado}</span>
+                        </td>
+                    </tr>
+                )
+            }
             <OrdenDetail 
                 modal={modal} 
                 toggle={toggle} 

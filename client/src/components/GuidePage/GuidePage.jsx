@@ -168,13 +168,7 @@ const GuidePage = () => {
             <img src={JorgeGas} alt="jorgeGas" className={style.icon}/>
             <div className={style.container}>
                 <div className={style.datePicker}>
-                    <p style={{
-                        color: '#000000',
-                        fontSize: '0.8rem',
-                        fontWeight: 'bold',
-                        fontFamily: 'Roboto',
-                    }}
-                    >
+                    <p className={style.textFecha}>
                         Seleccione una fecha
                     </p>
                     <DatePicker
@@ -187,7 +181,7 @@ const GuidePage = () => {
                         className={style.classDatePicker}
                     />
                     <div className={style.infoOrdenes}>
-                        <p>Ordenes creadas</p>
+                        <p className={style.textInfo}>Ordenes creadas</p>
                         <Input
                             type="number"
                             value={novaOrdenes?.ordenDeRepartos?.length}
@@ -225,14 +219,27 @@ const GuidePage = () => {
                         >
                             <thead>
                                 <tr>
-                                    <th>Numero de orden</th>
-                                    <th>Fecha</th>
-                                    <th>Cantidad de tarros</th>
-                                    <th>Patente</th>
-                                    <th>Chofer</th>
-                                    <th>Peoneta</th>
-                                    <th>Comuna</th>
-                                    <th>Estado</th>
+                                    {
+                                        width > 768 ? (
+                                            <>
+                                                <th>Numero de orden</th>
+                                                <th>Fecha</th>
+                                                <th>Cantidad de tarros</th>
+                                                <th>Patente</th>
+                                                <th>Chofer</th>
+                                                <th>Peoneta</th>
+                                                <th>Comuna</th>
+                                                <th>Estado</th>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <th>Numero de orden</th>
+                                                <th>Chofer</th>
+                                                <th>Peoneta</th>
+                                                <th>Estado</th>
+                                            </>
+                                        )
+                                    }
                                 </tr>
                             </thead>
                             <tbody
@@ -264,9 +271,13 @@ const GuidePage = () => {
                         </table>
                     </InfiniteScroll>
                 </div>
-                <button onClick={loadMore} className={style.boton}>
-                    Cargar mas
-                </button>
+                {
+                    width > 768 ? (
+                        <button onClick={loadMore} className={style.boton}>
+                            Cargar mas
+                        </button>
+                    ) : null
+                }
             </div>
         </div>
     )
