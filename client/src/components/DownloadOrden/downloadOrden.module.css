@@ -100,6 +100,36 @@
     }
 }
 
+@media screen and ( max-width: 768px ) {
+    .iconContainer {
+        position: absolute;
+        right: 3.5rem;
+        top: 4.5rem;
+    }
+
+    .descargarText {
+        color: #FFFFFF;
+        font-weight: 500;
+    }
+
+    .icon {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    .grid3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin-top: 1rem;
+        padding-left: 0rem;
+    }
+
+    .inputs3{
+        width: 140px;
+        height: 37px;
+    }
+}
+
 
 
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logoutAction } from '../../redux/autenticacionSlice/thunks';
@@ -10,6 +10,7 @@ import ChangeLog from '../ChangeLog/ChangeLog';
 
 const NavBar = () => {
 
+    const width = window.innerWidth;
     const dispatch = useDispatch()
     const { id, rolId, name, lastname, email } = useSelector((state) => state.Autenticacion.autBack)
 
@@ -19,10 +20,52 @@ const NavBar = () => {
 
     const [buttonSelected, setButtonSelected] = useState('')
 
+    ////// Estados para navbar version movil //////
+
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const isDesktop = width >= 768;
+    const toggleMenu = () => {
+        if(!isDesktop) setIsMenuOpen(!isMenuOpen);
+    };
+
+    const navBarRef = useRef(null);
+
+    const handleClickOutside = (event) => {
+        if (navBarRef.current && !navBarRef.current.contains(event.target)) {
+            setIsMenuOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('click', handleClickOutside, true);
+        return () => {
+            document.removeEventListener('click', handleClickOutside, true);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (isDesktop) setIsMenuOpen(false);
+    }, [isDesktop]);
+
     return (
-        <div className={style.navBarContainer} id="navbar">
-            <img src={monito} alt="monito" className={style.styleMonito} />
-            {rolId && rolId === 1 ? (
+        <div>
+            {
+                !isMenuOpen && !isDesktop ? (
+                <div className={style.hamburgerMenu} onClick={toggleMenu}>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                ) : null
+            }
+    
+            { isMenuOpen || isDesktop ? (
+                    <>
+                <div className={style.navBarContainer} id="navbar" ref={navBarRef}>
+                <img src={monito} alt="monito" className={style.styleMonito} />
+                { 
+                rolId && rolId === 1 ? (
                 email === 'irmaperez.gea@gmail.com'  ? (
                     <div className={style.grid1}>
                         <p className={style.access}>¡No tienes acceso!</p>
@@ -178,6 +221,9 @@ const NavBar = () => {
                 )}
             <img src={logo} alt="logo" className={style.logo} />
             <ChangeLog />
+            </div>
+            </>
+            ) : null}
         </div>
     )
 }

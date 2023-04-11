@@ -21,7 +21,9 @@ const OrdenDetail = (
         contabilidadRecarga,
         metodoPagos
     }) => {
-    
+
+
+    const width = window.innerWidth;
     ////// MODIFICAR PRODUCTOS, CANTIDADTOTAL Y PRECIO TOTAL DE LA ORDEN //////
     const [editQuantity, setEditQuantity] = useState(null);
     const [editRecarga, setEditRecarga] = useState(null);
@@ -182,8 +184,18 @@ const OrdenDetail = (
         "--bs-modal-width": "580px",
     };
 
+    const modalStylesMobile = {
+        position: 'relative',
+        transform: 'translate(-1%, -2%)',
+        "--bs-modal-bg": "#F5F5F5",
+        "--bs-modal-margin": "2rem",
+        fontFamily: 'Roboto'
+    };
+
     return (    
-        <Modal isOpen={modal} toggle={toggle} style={modalStyles} >
+        <Modal isOpen={modal} toggle={toggle} style={
+            width > 768 ? modalStyles : modalStylesMobile
+        } >
             <ModalHeader toggle={toggle}>Detalle de orden #{id}</ModalHeader>
             <ModalBody>
                 <Form>

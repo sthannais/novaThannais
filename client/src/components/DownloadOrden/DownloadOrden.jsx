@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import style from './downloadOrden.module.css';
 import descargar from '../../assetsOficial/descargar.svg';
+import descargarMobile from '../../assetsOficial/DiseñoMovil/descargar.svg';
 import { ordenesActivas, bringOrdenById, cleanOrden, finalizeOrden, switchLoading } from '../../redux/novaSlice/thunks';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Label, Table }  from 'reactstrap';
 import Select from 'react-select';
@@ -11,6 +12,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 const DownloadOrden = ({ fecha }) => {
     
+    const width = window.innerWidth;
     const dispatch = useDispatch();
 
     const { ordenesDisponibles, novaOrdenById, listaDePrecios } = useSelector((state) => state.Nova);
@@ -191,6 +193,15 @@ const DownloadOrden = ({ fecha }) => {
         "--bs-modal-width": "580px",
     };
 
+    const modalStylesMobile = {
+        position: 'relative',
+        transform: 'translate(0%, 5%)',
+        "--bs-modal-bg": "#F5F5F5",
+        "--bs-modal-margin": "0.5rem",
+        fontFamily: 'Roboto',
+        fontSize: '14px',
+    };
+
     return (    
         <div>
             <div className={style.iconContainer}>
@@ -199,11 +210,15 @@ const DownloadOrden = ({ fecha }) => {
                         dispatch(ordenesActivas());
                         toggle();
                     }} className={style.botonsito}>
-                    <img src={descargar} alt="descargar" className={style.icon} />
-                    <p>Descargar</p>
+                    <img src={
+                        width > 768 ? descargar : descargarMobile
+                    } alt="descargar" className={style.icon} />
+                    <p className={style.descargarText}>Descargar</p>
                 </button>
             </div>
-            <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="md" backdrop="static" onKeyDown={handleKeydown}>
+            <Modal isOpen={modal} toggle={toggle} style={
+                width > 768 ? modalStyles : modalStylesMobile
+            } backdrop="static" onKeyDown={handleKeydown}>
                 <ModalHeader toggle={toggle}>Descargar orden</ModalHeader>
                 <Form onSubmit={(e) =>{
                     e.preventDefault()
@@ -229,12 +244,10 @@ const DownloadOrden = ({ fecha }) => {
                                 <Table
                                     bordered
                                     hover
-                                    size="lg"
-                                    className="
-                                        table-md
-                                        table-responsive
-                                        mt-3
-                                    "
+                                    responsive
+                                    className={
+                                        width > 768 ? "table-md table-responsive mt-3" : "table-sm table-responsive mt-3 w-5"
+                                    }
                                 >
                                     <thead>
                                         <tr style={{

@@ -6,6 +6,7 @@ import { handleKeydown } from '../../helpers/KeyDown';
 
 const CierreDeSesion = ({ className }) => {
 
+    const width = window.innerWidth;
     const dispatch = useDispatch()
     const [modal, setModal] = React.useState(false);
     const [modal2, setModal2] = React.useState(false);
@@ -60,12 +61,22 @@ const CierreDeSesion = ({ className }) => {
         fontFamily: 'Roboto'
     };
 
+    const modalStylesMobile = {
+        position: 'relative',
+        transform: 'translate(-5%, 20%)',
+        "--bs-modal-bg": "#F5F5F5",
+        "--bs-modal-margin": "2rem",
+        fontFamily: 'Roboto'
+    };
+
     return (
         <div>
             <button className={className} onClick={toggle}>
                 ¿Problemas para iniciar sesión?
             </button>
-            <Modal isOpen={modal} toggle={toggle} style={modalStyles} onKeyDown={handleKeydown}>
+            <Modal isOpen={modal} toggle={toggle} style={
+                width > 768 ? modalStyles : modalStylesMobile
+            } onKeyDown={handleKeydown}>
                 <ModalHeader toggle={toggle}>Problemas para iniciar sesión</ModalHeader>
                 <ModalBody>
                     {/* <p>Si no recuerdas tu contraseña, puedes restablecerla haciendo click en el boton de abajo.</p> */}
