@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import RealImg from '../../assetsOficial/benjanova.svg';
+import RealImg2 from '../../assetsOficial/DiseñoMovil/loginImg.svg';
 import './loginPage.css';
 import Monito from '../../assetsOficial/jorgito.svg';
 import { fetchLoginThunk } from '../../redux/autenticacionSlice/thunks';
@@ -8,6 +9,7 @@ import CierreDeSesion from '../CierreDeSesion/CierreDeSesion';
 
 const LoginPage = () => {
 
+    const width = window.innerWidth;
     const { status } = useSelector((state) => state.Autenticacion.autBack);
     const { error } = useSelector((state) => state.Autenticacion.autBack);
     const channel = new BroadcastChannel('auth');
@@ -37,8 +39,11 @@ const LoginPage = () => {
     const isDisabled = useMemo(() => status === 'checking', [status])
 
     return (
-        <div> 
-            <div className="background"> 
+        <div className="containerMaster"> 
+            <div className="containerBackground">
+                <img src={
+                    width > 768 ? RealImg : RealImg2
+                } alt="imagen" className='background' />
             </div>
             <div className="input-container">
                 <form onSubmit={handleLogin} id='formulario'>

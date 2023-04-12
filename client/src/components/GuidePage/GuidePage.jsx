@@ -41,7 +41,7 @@ const GuidePage = () => {
     const maximo = novaOrdenes?.ordenDeRepartos?.length / porPagina
     const primerIndice = (paginaActual - 1) * porPagina
     const ultimoIndice = (paginaActual - 1) * porPagina + porPagina
-    const currentPosts = novaOrdenes?.ordenDeRepartos?.slice(primerIndice, ultimoIndice)
+    const currentPosts = width > 768 ? novaOrdenes?.ordenDeRepartos?.slice(primerIndice, ultimoIndice) : novaOrdenes?.ordenDeRepartos
 
     const loadMore = () => {
         if (paginaActual >= maximo) {
