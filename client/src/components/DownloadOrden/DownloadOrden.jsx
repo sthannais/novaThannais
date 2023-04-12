@@ -195,9 +195,9 @@ const DownloadOrden = ({ fecha }) => {
 
     const modalStylesMobile = {
         position: 'relative',
-        transform: 'translate(0%, 5%)',
+        transform: 'translate(0%, 0.5%)',
         "--bs-modal-bg": "#F5F5F5",
-        "--bs-modal-margin": "0.5rem",
+        "--bs-modal-margin": "1rem",
         fontFamily: 'Roboto',
         fontSize: '14px',
     };
