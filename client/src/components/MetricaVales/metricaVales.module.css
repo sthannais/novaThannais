@@ -2,8 +2,8 @@
     position: absolute;
     width: 23rem;
     height: 23rem;
-    left: 42rem;
-    top:16rem
+    left: 25rem;
+    top:20rem;
 }
 
 .text {
@@ -17,23 +17,23 @@
     position: absolute;
     width: 23rem;
     height: 23rem;
-    left:68rem;
-    top:16rem
+    left:52rem;
+    top:20rem
 }
 
 @media screen and (min-width: 1800px) {
     .grafica {
         width: 30rem;
         height: 30rem;
-        left: 52rem;
-        top:16rem
+        left: 22rem;
+        top:23rem
     }
     
     .grafica2 {
         width: 30rem;
         height: 30rem;
-        left:84rem;
-        top:16rem
+        left:62rem;
+        top:23rem
     }
 }
 
@@ -41,14 +41,14 @@
     .grafica {
         width: 20rem;
         height: 20rem;
-        left: 35rem;
-        top:16rem
+        left: 23rem;
+        top:18.5rem
     }
     
     .grafica2 {
         width: 20rem;
         height: 20rem;
-        left:58rem;
-        top:16rem
+        left:48rem;
+        top:18.5rem
     }
 }
