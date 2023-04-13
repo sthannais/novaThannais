@@ -31,28 +31,30 @@ const NavBar = () => {
 
     const navBarRef = useRef(null);
 
-    const handleClickOutside = (event) => {
-        if (navBarRef.current && !navBarRef.current.contains(event.target)) {
-            setIsMenuOpen(false);
-        }
-    };
+    // const handleClickOutside = (event) => {
+    //     if (navBarRef.current && !navBarRef.current.contains(event.target)) {
+    //         setIsMenuOpen(false);
+    //     }
+    // };
 
-    useEffect(() => {
-        document.addEventListener('click', handleClickOutside, true);
-        return () => {
-            document.removeEventListener('click', handleClickOutside, true);
-        };
-    }, []);
+    // useEffect(() => {
+    //     document.addEventListener('click', handleClickOutside, true);
+    //     return () => {
+    //         document.removeEventListener('click', handleClickOutside, true);
+    //     };
+    // }, []);
 
     useEffect(() => {
         if (isDesktop) setIsMenuOpen(false);
-    }, [isDesktop]);
+    }, []);
 
     return (
         <div>
             {
-                !isMenuOpen && !isDesktop ? (
-                <div className={style.hamburgerMenu} onClick={toggleMenu}>
+                !isDesktop ? (
+                <div className={
+                    isMenuOpen ? style.closeMenu : style.hamburgerMenu
+                } onClick={toggleMenu} id='hamburguesa'>
                     <div></div>
                     <div></div>
                     <div></div>
