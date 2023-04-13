@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Doughnut } from 'react-chartjs-2'
+import { Bar } from 'react-chartjs-2'
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js/auto';
 import { useSelector, useDispatch } from 'react-redux';
 import { bringUltimosVales } from '../../redux/novaSlice/thunks';
@@ -100,7 +100,7 @@ const MetricaVales = () => {
     <div>
         <div className={style.grafica}>
             <p className={style.text}>Ultimos vales entrantes fisicos</p>
-            <Doughnut 
+            <Bar 
                 data={data} 
                 options={options}
                 height={10}
@@ -109,7 +109,7 @@ const MetricaVales = () => {
         </div>
         <div className={style.grafica2}>
             <p className={style.text}>Ultimos vales entrantes digitales</p>
-            <Doughnut
+            <Bar
                 data={data2}
                 options={options}
                 height={10}

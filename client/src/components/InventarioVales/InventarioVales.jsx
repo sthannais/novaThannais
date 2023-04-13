@@ -22,10 +22,12 @@ const InventarioVales = () => {
     }, [dispatch]);
 
     //suma de vales digitales con vales digitales regalados
-    const valesDigitalesTotales5kg = Number(inventarioVales[0]?.digital5kg) + Number(ValesDigitalesRegalados[0]?.digital5kg);
-    const valesDigitalesTotales11kg = Number(inventarioVales[0]?.digital11kg) + Number(ValesDigitalesRegalados[0]?.digital11kg);
-    const valesDigitalesTotales15kg = Number(inventarioVales[0]?.digital15kg) + Number(ValesDigitalesRegalados[0]?.digital15kg);
-    const valesDigitalesTotales45kg = Number(inventarioVales[0]?.digital45kg) + Number(ValesDigitalesRegalados[0]?.digital45kg);
+    const valesDigitalesTotales5kg = Number(inventarioVales[0]?.digital5kg) + Number(inventarioVales[0]?.fisico5kg) + Number(ValesDigitalesRegalados[0]?.digital5kg);
+    const valesDigitalesTotales11kg = Number(inventarioVales[0]?.digital11kg) + Number(inventarioVales[0]?.fisico11kg) + Number(ValesDigitalesRegalados[0]?.digital11kg);
+    const valesDigitalesTotales15kg = Number(inventarioVales[0]?.digital15kg) + Number(inventarioVales[0]?.fisico15kg) + Number(ValesDigitalesRegalados[0]?.digital15kg);
+    const valesDigitalesTotales45kg = Number(inventarioVales[0]?.digital45kg) + Number(inventarioVales[0]?.fisico45kg) + Number(ValesDigitalesRegalados[0]?.digital45kg);
+    const sumaValesDigitalesRegalados = Number(ValesDigitalesRegalados[0]?.digital5kg) + Number(ValesDigitalesRegalados[0]?.digital11kg) + Number(ValesDigitalesRegalados[0]?.digital15kg) + Number(ValesDigitalesRegalados[0]?.digital45kg);
+    const totalDeVales = Number(inventarioVales[0]?.totalValesAmbos) + Number(ValesDigitalesRegalados[0]?.digital5kg) + Number(ValesDigitalesRegalados[0]?.digital11kg) + Number(ValesDigitalesRegalados[0]?.digital15kg) + Number(ValesDigitalesRegalados[0]?.digital45kg);
 
     return (
         <div className={style.margin}>
@@ -39,18 +41,21 @@ const InventarioVales = () => {
             <p className={style.text}>Inventario de vales</p>
             <img src={JorgeGas} alt="logo" className={style.logo} />
             <div className={style.container}>
-            <p className={style.title}>Vales fisicos</p>
+            {/* <p className={style.title}>Vales fisicos</p> */}
             <div className={style.tableContainer}>
                 <table className="table-sm table table-bordered table-hover responsive">
                     <thead>
                         <tr>
                             <th className={style.text2}>Vales</th>
-                            <th className={style.text2}>Cantidad</th>
+                            <th className={style.text2}>Cantidad fisicos</th>
+                            <th className={style.text2}>Cantidad Digitales</th>
+                            <th className={style.text2}>Cantidad Regalados</th>
+                            <th className={style.text2}>Total</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td className={style.text2}>Vale fisico 5kg</td>
+                            <td className={style.text2}>Vale 5kg</td>
                             <td className={style.text2}>
                                 {
                                     inventarioVales.map((vale) => {
@@ -58,9 +63,26 @@ const InventarioVales = () => {
                                     })
                                 }
                             </td>
+                            <td className={style.text2}>
+                                {
+                                    inventarioVales?.map((vale) => {
+                                        return <>{vale.digital5kg}</>
+                                    })
+                                }
+                            </td>
+                            <td className={style.text2}>
+                                {
+                                    ValesDigitalesRegalados?.map((vale) => {
+                                        return <>{vale?.digital5kg}</>
+                                    })
+                                }
+                            </td>
+                            <td className={style.text2}>
+                                {valesDigitalesTotales5kg}
+                            </td>
                         </tr>
                         <tr>
-                            <td className={style.text2}>Vale fisico 11kg</td>
+                            <td className={style.text2}>Vale 11kg</td>
                             <td className={style.text2}>
                                 {
                                     inventarioVales.map((vale) => {
@@ -68,9 +90,26 @@ const InventarioVales = () => {
                                     })
                                 }
                             </td>
+                            <td className={style.text2}>
+                                {
+                                    inventarioVales?.map((vale) => {
+                                        return <>{vale.digital11kg}</>
+                                    })
+                                }
+                            </td>
+                            <td className={style.text2}>
+                                {
+                                    ValesDigitalesRegalados?.map((vale) => {
+                                        return <>{vale?.digital11kg}</>
+                                    })
+                                }
+                            </td>
+                            <td className={style.text2}>
+                                {valesDigitalesTotales11kg}
+                            </td>
                         </tr>
                         <tr>
-                            <td className={style.text2}>Vale fisico 15kg</td>
+                            <td className={style.text2}>Vale 15kg</td>
                             <td className={style.text2}>
                                 {
                                     inventarioVales.map((vale) => {
@@ -78,9 +117,26 @@ const InventarioVales = () => {
                                     })
                                 }
                             </td>
+                            <td className={style.text2}>
+                                {
+                                    inventarioVales?.map((vale) => {
+                                        return <>{vale.digital15kg}</>
+                                    })
+                                }
+                            </td>
+                            <td className={style.text2}>
+                                {
+                                    ValesDigitalesRegalados?.map((vale) => {
+                                        return <>{vale?.digital15kg}</>
+                                    })
+                                }
+                            </td>
+                            <td className={style.text2}>
+                                {valesDigitalesTotales15kg}
+                            </td>
                         </tr>
                         <tr>
-                            <td className={style.text2}>Vale fisico 45kg</td>
+                            <td className={style.text2}>Vale 45kg</td>
                             <td className={style.text2}>
                                 {
                                     inventarioVales.map((vale) => {
@@ -88,106 +144,51 @@ const InventarioVales = () => {
                                     })
                                 }
                             </td>
+                            <td className={style.text2}>
+                                {
+                                    inventarioVales?.map((vale) => {
+                                        return <>{vale.digital45kg}</>
+                                    })
+                                }
+                            </td>
+                            <td className={style.text2}>
+                                {
+                                    ValesDigitalesRegalados?.map((vale) => {
+                                        return <>{vale?.digital45kg}</>
+                                    })
+                                }
+                            </td>
+                            <td className={style.text2}>
+                                {valesDigitalesTotales45kg}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className={style.text2}>Total</td>
+                            <td className={style.text2}>
+                                {
+                                    inventarioVales.map((vale) => {
+                                        return <>{vale.totalValesFisicos}</>
+                                    })
+                                }
+                            </td>
+                            <td className={style.text2}>
+                                {
+                                    inventarioVales?.map((vale) => {
+                                        return <>{vale.totalValesDigitales}</>
+                                    })
+                                }
+                            </td>
+                            <td className={style.text2}>
+                                {sumaValesDigitalesRegalados}
+                            </td>
+                            <td className={style.text2}>
+                                {totalDeVales}
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div> 
             </div>
-            <p className={style.title2}>Vales digitales</p>
-            <div className={style.tableContainer2}>
-                        <table className="table-sm table table-bordered table-hover responsive">
-                            <thead>
-                                <tr>
-                                    <th className={style.text2}>Vales</th>
-                                    <th className={style.text2}>Cantidad Digitales</th>
-                                    <th className={style.text2}>Cantidad Regalados</th>
-                                    <th className={style.text2}>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td className={style.text2}>Vale digital 5kg</td>
-                                    <td className={style.text2}>
-                                        {
-                                            inventarioVales?.map((vale) => {
-                                                return <>{vale.digital5kg}</>
-                                            })
-                                        }
-                                    </td>
-                                    <td className={style.text2}>
-                                        {
-                                            ValesDigitalesRegalados?.map((vale) => {
-                                                return <>{vale?.digital5kg}</>
-                                            })
-                                        }
-                                    </td>
-                                    <td className={style.text2}>
-                                        {valesDigitalesTotales5kg}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className={style.text2}>Vale digital 11kg</td>
-                                    <td className={style.text2}>
-                                        {
-                                            inventarioVales?.map((vale) => {
-                                                return <>{vale.digital11kg}</>
-                                            })
-                                        }
-                                    </td>
-                                    <td className={style.text2}>
-                                        {
-                                            ValesDigitalesRegalados?.map((vale) => {
-                                                return <>{vale?.digital11kg}</>
-                                            })
-                                        }
-                                    </td>
-                                    <td className={style.text2}>
-                                        {valesDigitalesTotales11kg}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className={style.text2}>Vale digital 15kg</td>
-                                    <td className={style.text2}>
-                                        {
-                                            inventarioVales?.map((vale) => {
-                                                return <>{vale.digital15kg}</>
-                                            })
-                                        }
-                                    </td>
-                                    <td className={style.text2}>
-                                        {
-                                            ValesDigitalesRegalados?.map((vale) => {
-                                                return <>{vale?.digital15kg}</>
-                                            })
-                                        }
-                                    </td>
-                                    <td className={style.text2}>
-                                        {valesDigitalesTotales15kg}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className={style.text2}>Vale digital 45kg</td>
-                                    <td className={style.text2}>
-                                        {
-                                            inventarioVales?.map((vale) => {
-                                                return <>{vale.digital45kg}</>
-                                            })
-                                        }
-                                    </td>
-                                    <td className={style.text2}>
-                                        {
-                                            ValesDigitalesRegalados?.map((vale) => {
-                                                return <>{vale?.digital45kg}</>
-                                            })
-                                        }
-                                    </td>
-                                    <td className={style.text2}>
-                                        {valesDigitalesTotales45kg}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                </div> 
         </div>
     )
 }

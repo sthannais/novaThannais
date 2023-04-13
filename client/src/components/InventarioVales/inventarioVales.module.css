@@ -49,25 +49,12 @@
 
 .tableContainer {
     position: absolute;
-    top: 3.5rem;
+    top: 1.5rem;
     left: 2.5rem;
     border-radius: 30px;
     background: #FFFFFF;
-    width: 16rem;
-    height: 16.8rem;
-    font-size: 14px;
-    border: none;
-    overflow: hidden;
-}
-
-.tableContainer2 {
-    position: absolute;
-    top: 27.5rem;
-    left: 19.5rem;
-    border-radius: 30px;
-    background: #FFFFFF;
-    width: 20rem;
-    height: 16.8rem;
+    width: 80%;
+    height: 33.5%;
     font-size: 14px;
     border: none;
     overflow: hidden;
@@ -85,23 +72,15 @@
     color: #3C3C3C;
 }
 
-.title2 {
-    position: absolute;
-    left: 24rem;
-    top: 25.5rem;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 800;
-    font-size: 16px;
-    line-height: 23px;
-    color: #3C3C3C;
-}
-
 .text2 {
     text-align: center;
     font-family: 'Roboto';
     vertical-align: middle;
-    height: 3.4rem;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 14px;
+    height: 2.3rem;
+    width: 1rem;
 }
 
 @media screen and (min-width: 1800px) {
@@ -120,26 +99,14 @@
     }
 
     .tableContainer {
-        top: 7rem;
-        width: 20rem;
-        height: 17.1rem;
-    }
-
-    .tableContainer2 {
-        top: 36rem;
-        width: 30rem;
-        height: 19rem;
+        top: 3rem;
+        width: 80rem;
+        height: 14rem;
     }
 
     .title {
         left: 9.5rem;
         top: 4rem;
-        font-size: 18px;
-    }
-
-    .title2 {
-        left: 26rem;
-        top: 33rem;
         font-size: 18px;
     }
 
@@ -170,28 +137,15 @@
     }
 
     .tableContainer {
-        top: 2.5rem;
+        top: 1.3rem;
         left: 2.5rem;
-        width: 16rem;
-        height: 16.8rem;
-    }
-
-    .tableContainer2 {
-        top: 24.5rem;
-        left: 18.5rem;
-        width: 16rem;
-        height: 16.8rem;
+        width: 52rem;
+        height: 13.5rem;
     }
 
     .title {
         left: 7.5rem;
         top: 0.5rem;
-        font-size: 14px;
-    }
-
-    .title2 {
-        left: 24rem;
-        top: 22.8rem;
         font-size: 14px;
     }
 
