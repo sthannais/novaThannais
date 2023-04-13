@@ -125,7 +125,29 @@ button {
     width: 24px;
     height: 3px;
     background: #ffffff;
+    transition: all 400ms ease;
 }
+
+.closeMenu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+}
+
+.closeMenu div {
+    width: 24px;
+    height: 3px;
+    background: #ffffff;
+    transition: all 400ms ease;
+}
+
+
 
 @media screen and (min-width: 1800px) {
     .grid1 {
@@ -176,6 +198,26 @@ button {
         margin-left: 1rem;
         margin-top: 1rem;
         z-index: 2;
+    }
+    
+    .closeMenu {
+        position: relative;
+        display: flex;
+        margin-left: 1rem;
+        margin-top: 1rem;
+        z-index: 2;
+    }
+
+    .closeMenu div:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .closeMenu div:nth-child(2) {
+        opacity: 0;
+    }
+
+    .closeMenu div:nth-child(3) {
+        transform: rotate(-45deg) translate(6.5px, -6px);
     }
 
     .navBarContainer {
