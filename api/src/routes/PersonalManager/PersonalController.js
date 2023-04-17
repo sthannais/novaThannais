@@ -497,6 +497,28 @@ const changePasswordManual = async (req, res, next) => {
     }
 };
 
+const modifyPersonalRut = async (req, res, next) => {
+    const { personalId } = req.params;
+    const { rut } = req.body;
+
+    try {
+
+        const personal = await Personal.findByPk(personalId);
+
+        if(!personal) {
+            return res.status(404).json({error: 'Personal no encontrado'});
+        }
+
+        await personal.update({
+            rut
+        });
+
+        res.json(personal);
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
     getPersonals,
     createPersonal,
@@ -506,5 +528,6 @@ module.exports = {
     changeActiveForOrdenById,
     modifyPersonal,
     getPersonalById,
-    changePasswordManual
+    changePasswordManual,
+    modifyPersonalRut
 }
