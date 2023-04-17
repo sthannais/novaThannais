@@ -569,10 +569,10 @@ const OrdenDetail = (
                 }
             </ModalBody>
             <ModalFooter>
-                <CambioDePersonal novaOrdenById={novaOrdenById} guideValidator={guideValidator}/>
                 {
                     desactive === true ? (
                         <>
+                            <CambioDePersonal novaOrdenById={novaOrdenById} guideValidator={guideValidator}/>
                             <Button color="danger" onClick={toggleDesactive}>Eliminar</Button>
                             <Button color="dark" onClick={
                                 () => {

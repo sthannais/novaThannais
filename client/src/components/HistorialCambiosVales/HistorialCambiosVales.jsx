@@ -18,7 +18,7 @@ const HistorialCambiosVales = () => {
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
     const width = window.innerWidth;
-    console.log(width);
+
     useEffect(() => {
         dispatch(getAllRegistroCambioVales());
     }, [dispatch]);
