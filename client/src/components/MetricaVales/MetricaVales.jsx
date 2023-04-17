@@ -44,7 +44,7 @@ const MetricaVales = () => {
                     'rgb(255, 205, 86)',
                     'rgb(75, 192, 192)',
                 ],
-                hoverOffset: 4
+                hoverOffset: 1
             }
         ]
     };

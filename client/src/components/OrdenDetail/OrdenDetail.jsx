@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateOrdenQuantity, updateAbono, modifyRecargaOrdenQuantity, desactiveRecarga } from '../../redux/novaSlice/thunks';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Form, Label, Table }  from 'reactstrap';
 import { numberWithDots } from '../../helpers/numberWithDot';
+import { bringOrdenById } from '../../redux/novaSlice/thunks';
+import CambioDePersonal from '../CambioDePersonal/CambioDePersonal';
 import vectorDerecho from "../../assetsOficial/vectorDerecho.svg"
 import style from './ordenDetail.module.css';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -21,7 +23,7 @@ const OrdenDetail = (
         contabilidadRecarga,
         metodoPagos
     }) => {
-
+    
 
     const width = window.innerWidth;
     ////// MODIFICAR PRODUCTOS, CANTIDADTOTAL Y PRECIO TOTAL DE LA ORDEN //////
@@ -36,6 +38,14 @@ const OrdenDetail = (
 
     const [editAbono, setEditAbono] = useState(null);
     const dispatch = useDispatch();
+    const { novaOrdenById } = useSelector(state => state.Nova);
+
+    ////////// SE CARGA LA ORDEN POR ID //////////
+    useEffect(() => {
+        if(modal === true) {
+            dispatch(bringOrdenById(id));
+        }
+    }, [modal, id, dispatch])
 
     /////// ELIMINAR UNA RECARGA DE LA ORDEN //////////////
 
@@ -173,6 +183,8 @@ const OrdenDetail = (
         }
     };
 
+    const guideValidator = true
+
     ////// MODAL //////
 
     const modalStyles = {
@@ -181,7 +193,7 @@ const OrdenDetail = (
         top: '3%',
         transform: 'translate(-38%, -3%)',
         fontFamily: 'Roboto',
-        "--bs-modal-width": "580px",
+        "--bs-modal-width": "695px",
     };
 
     const modalStylesMobile = {
@@ -557,6 +569,7 @@ const OrdenDetail = (
                 }
             </ModalBody>
             <ModalFooter>
+                <CambioDePersonal novaOrdenById={novaOrdenById} guideValidator={guideValidator}/>
                 {
                     desactive === true ? (
                         <>

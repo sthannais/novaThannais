@@ -15,7 +15,6 @@ button {
     left: 0;
     z-index: 1;
     overflow-x: hidden;
-    transition: 0.5s;
 }
 
 .styleMonito { 
@@ -192,6 +191,7 @@ button {
 }
 
 @media screen and (max-width: 768px) {
+
     .hamburgerMenu {
         position: relative;
         display: flex;
@@ -227,13 +227,18 @@ button {
         display: flex;
         width: 217px;
         height: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        /* z-index: 1; */
         overflow-x: hidden;
-        transition: 0.5s;
+        position: fixed;
+        border-radius: 0px 30px 30px 0px;
+        z-index: 1;
+        transition: transform 0.5s ease-in-out;
+        transform: translateX(-100%);
     }
+
+    .navBarContainerOpen {
+        transform: translateX(0);
+    }
+
 }
 
 

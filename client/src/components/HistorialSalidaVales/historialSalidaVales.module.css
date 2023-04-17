@@ -26,3 +26,31 @@
     height: 3rem;
     cursor: pointer;
 }
+
+@media screen and (max-width: 1920px) {
+    .iconContainer2 {
+        left: 88%;
+        top: 68%;
+    }
+}
+
+@media screen and (max-width: 1700px) {
+    .iconContainer2 {
+        left:82%;
+        top: 50%;
+    }
+}
+
+@media screen and (max-width: 1600px) {
+    .iconContainer2 {
+        left: 88%;
+        top: 68%;
+    }
+}
+
+@media screen and (max-width: 1366px) {
+    .iconContainer2 {
+        left: 88%;
+        top: 68%;
+    }
+}

@@ -597,7 +597,7 @@ const getAllOrdenesWhereEstadoFalseBetweenDates = async (req, res) => {
 //////////////// POST  //////////////////////
 
 const createOrden = async (req, res) => {
-    const { fecha, patente, cuadranteId, idChofer, idPeoneta, idAdmin, productos, totalCantidad, totalRecaudacion} = req.body;
+    const { fecha, patente, cuadranteId, idChofer, idPeoneta, idAdmin, productos, totalCantidad, totalRecaudacion, numeroDeMaquina} = req.body;
     try {
 
         //Validaciones si ya existe una orden con esa patente, chofer o peoneta
@@ -622,6 +622,11 @@ const createOrden = async (req, res) => {
         const ordenDeReparto = await OrdenDeReparto.create({
             fecha
         });
+        const nuevoNumeroDeMaquina = await NumeroDeMaquina.create({
+            Numero: numeroDeMaquina
+        })
+
+        await ordenDeReparto.setNumeroDeMaquina(nuevoNumeroDeMaquina);
         const metodoPagos = await MetodoPagos.create();
         const efectivo = await Efectivo.create();
         const abonos = await Abonos.create();
@@ -1192,7 +1197,6 @@ const cuadrarOrden = async (req, res) => {
         digitalRegalado45kg,
         totalDigitalRegalado45kg,
         totalValesDigitalesRegalados,
-        numeroDeMaquina
     } = req.body;
 
     try {
@@ -1202,12 +1206,6 @@ const cuadrarOrden = async (req, res) => {
         // if(ordenDeReparto.rendida === true){
         //     return res.status(400).send({error: "La orden de reparto ya fue rendida"})
         // }
-
-        const nuevoNumeroDeMaquina = await NumeroDeMaquina.create({
-            Numero: numeroDeMaquina
-        })
-
-        await ordenDeReparto.setNumeroDeMaquina(nuevoNumeroDeMaquina);
 
         await ordenDeReparto.update({
             cuadradoPor: idDeDecuadre
@@ -1339,6 +1337,7 @@ const cuadrarOrden = async (req, res) => {
 
 const cambiarChoferDeOrden = async (req, res) => {
     const { idOrden, idChofer } = req.params;
+    const { guideValidator } = req.body;
     try {
         const ordenDeReparto = await OrdenDeReparto.findByPk(idOrden);
         const choferAnterior = await ordenDeReparto.getChofer();
@@ -1352,6 +1351,14 @@ const cambiarChoferDeOrden = async (req, res) => {
 
         await ordenDeReparto.setChofer(chofer);
 
+        if(guideValidator){
+            const choferActualPersonal = await chofer.getPersonal();
+
+            await choferActualPersonal.update({
+                activeForOrden: false
+            })
+        }
+
         res.json({msg: "Chofer de orden cambiado correctamente"});
     } catch (error) {
         console.log(error.message);
@@ -1361,6 +1368,7 @@ const cambiarChoferDeOrden = async (req, res) => {
 
 const cambiarAyudanteDeOrden = async (req, res) => {
     const { idOrden, idAyudante } = req.params;
+    const { guideValidator } = req.body;
     try {
         const ordenDeReparto = await OrdenDeReparto.findByPk(idOrden);
         const ayudanteAnterior = await ordenDeReparto.getAyudante();
@@ -1376,6 +1384,14 @@ const cambiarAyudanteDeOrden = async (req, res) => {
         const ayudante = await Ayudante.findByPk(idAyudante);
 
         await ordenDeReparto.setAyudante(ayudante);
+
+        if(guideValidator){
+            const ayudanteActualPersonal = await ayudante.getPersonal();
+
+            await ayudanteActualPersonal.update({
+                activeForOrden: false
+            })
+        }
 
         res.json({msg: "Ayudante de orden cambiado correctamente"});
     } catch (error) {

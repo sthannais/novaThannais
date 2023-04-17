@@ -30,3 +30,31 @@
 .inputsito {
     width: 15rem;
 }
+
+@media screen and (max-width: 1920px) {
+    .iconContainer2 {
+        left: 88%;
+        top: 82%;
+    }
+}
+
+@media screen and (max-width: 1700px) {
+    .iconContainer2 {
+        left:82%;
+        top: 61%;
+    }
+}
+
+@media screen and (max-width: 1600px) {
+    .iconContainer2 {
+        left: 88%;
+        top: 82%;
+    }
+}
+
+@media screen and (max-width: 1366px) {
+    .iconContainer2 {
+        left: 88%;
+        top: 82%;
+    }
+}

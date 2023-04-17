@@ -61,6 +61,7 @@ const CreateOrden = () => {
         idChofer: 0,
         idPeoneta: 0,
         idAdmin: usuario?.administrador?.id,
+        numeroDeMaquina: ""
     });
 
     useEffect(() => {
@@ -104,7 +105,8 @@ const CreateOrden = () => {
     useEffect(() => {
         if( orden.patente !== '' &&
             orden.cuadranteId !== '' && 
-            orden.idChofer !== 0
+            orden.idChofer !== 0 &&
+            orden.numeroDeMaquina !== ""
         ){
             setDisabled(false);
         } else {
@@ -114,6 +116,7 @@ const CreateOrden = () => {
         orden.patente,
         orden.cuadranteId,
         orden.idChofer,
+        orden.numeroDeMaquina
     ]);
 
     const handleProductsChange = (e, index) => {
@@ -143,6 +146,7 @@ const CreateOrden = () => {
         });
         setOrden({
             ...orden,
+            numeroDeMaquina: "",
             totalCantidad: 0,
             totalRecaudacion: 0,
             patente: '',
@@ -278,6 +282,15 @@ const CreateOrden = () => {
                                         onMenuOpen={onMenuOpen}
                                         onMenuClose={onMenuClose}
                                         onChange={(e) => setOrden({ ...orden, idPeoneta: Number(e.value) })}
+                                    />
+                                    <Input 
+                                        type="text"
+                                        name="numeroDeMaquina"
+                                        onChange={(e) => setOrden({ ...orden, numeroDeMaquina: e.target.value })}
+                                        placeholder="Numero de maquina"
+                                        className={style.inpusito}
+                                        value={orden.numeroDeMaquina}
+                                        autoComplete='off'
                                     />
                                 </div>
                                 <div className={style.containerProductos}>
