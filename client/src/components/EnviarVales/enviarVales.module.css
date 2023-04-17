@@ -72,3 +72,31 @@
     margin-left: 1.5rem;
     margin-bottom: 1rem;
 }
+
+@media screen and (max-width: 1920px) {
+    .iconContainer2 {
+        left: 88%;
+        top: 55%;
+    }
+}
+
+@media screen and (max-width: 1700px) {
+    .iconContainer2 {
+        left:82%;
+        top: 39%;
+    }
+}
+
+@media screen and (max-width: 1600px) {
+    .iconContainer2 {
+        left: 88%;
+        top: 55%;
+    }
+}
+
+@media screen and (max-width: 1366px) {
+    .iconContainer2 {
+        left: 88%;
+        top: 55%;
+    }
+}

@@ -5,6 +5,7 @@ import { handleKeydown } from '../../helpers/KeyDown';
 
 const ChangeLog = () => {
 
+    const width = window.innerWidth;
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
     const [verMas, setVerMas] = useState(false);
@@ -20,19 +21,50 @@ const ChangeLog = () => {
         "--bs-modal-width": "580px",
     };
 
+    const modalStylesMobile = {
+        position: 'relative',
+        transform: 'translate(0%, 0.5%)',
+        "--bs-modal-bg": "#F5F5F5",
+        "--bs-modal-margin": "1rem",
+        fontFamily: 'Roboto',
+        fontSize: '14px',
+    };
+
     return (
         <div>
             <button className={style.changelog} onClick={
                 () => {
                     toggle();
                 }
-            } >Ver. 1.1.0
+            } >Ver. 1.2.0
             </button>
-            <Modal isOpen={modal} toggle={toggle} style={modalStyles} size="md" backdrop="static" onKeyDown={handleKeydown}>
+            <Modal isOpen={modal} toggle={toggle} style={
+                width > 768 ? modalStyles : modalStylesMobile
+            } size="md" backdrop="static" onKeyDown={handleKeydown}>
                 <ModalHeader toggle={toggle}>Cambios recientes</ModalHeader>
                 <ModalBody>
+                    <h5>Ver. 1.2.0</h5>
+                    <em style={{ color: 'red' }}>17/06/2023</em>
+                    {
+                        verMas && name === 'Ver. 1.2.0' ? (
+                            <ul className={style.newli}>
+                                <li>Se habilita la opcion de cambiar de personal de una orden en la pagina de guia de reparto al darle click a una orden</li>
+                                <li>Se mejora el diseño y el responsive de la version mobile</li>
+                                <li>Se cambia el campo de numero de maquina de la pantalla de cuadrar, a la pantalla de crear una orden</li>
+                            </ul>
+                        ) : null
+                    }
+                    <br />
+                    <button onClick={
+                        () => {
+                            setVerMas(!verMas);
+                            setName('Ver. 1.2.0')
+                        }
+                    } className={style.verMas}>
+                        { verMas && name === 'Ver. 1.2.0' ? 'Ver menos...' : 'Ver mas...'}
+                    </button>
                     <h5>Ver. 1.1.0</h5>
-                    <em style={{ color: 'red' }}>4/06/2023</em>
+                    <em style={{ color: 'red' }}>6/04/2023</em>
                     {
                         verMas && name === 'Ver. 1.1.0' ? (
                             <ul className={style.newli}>

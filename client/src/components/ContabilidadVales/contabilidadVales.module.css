@@ -83,3 +83,31 @@
 .modalFooter {
     margin-top: 2rem;
 }
+
+@media screen and (max-width: 1920px) {
+    .iconContainer2 {
+        left: 88%;
+        top: 13%;
+    }
+}
+
+@media screen and (max-width: 1700px) {
+    .iconContainer2 {
+        left:82%;
+        top: 8.5%;
+    }
+}
+
+@media screen and (max-width: 1600px) {
+    .iconContainer2 {
+        left: 88%;
+        top: 13%;
+    }
+}
+
+@media screen and (max-width: 1366px) {
+    .iconContainer2 {
+        left: 88%;
+        top: 13%;
+    }
+}

@@ -11,7 +11,7 @@ import { Modal, Button, ModalHeader, ModalBody, ModalFooter, Input, Form, FormGr
 import { numberWithDots } from '../../helpers/numberWithDot';
 import 'bootstrap/dist/css/bootstrap.css';
 
-const Cuadratura = ({ novaOrdenById, fecha }) => {
+const Cuadratura = ({ novaOrdenById }) => {
 
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const dispatch = useDispatch();
@@ -102,10 +102,6 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
         digitalRegalado45kg: 0,
         totalDigitalRegalado45kg: 0,
         totalValesDigitalesRegalados: 0
-    })
-
-    const [numeroDeMaquina, setNumeroDeMaquina] = useState({
-        numeroDeMaquina : "",
     })
 
     const [metodoPagos, setMetodoPagos] = useState({
@@ -426,14 +422,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
             [e.target.name] : formatted ? parseInt(formatted.replace(/,/g, '')) : 0
         })
     }
-
-    const handleNumeroDeMaquinaChange = (e) => {
-        setNumeroDeMaquina({
-            ...numeroDeMaquina,
-            [e.target.name] : e.target.value
-        })
-    }
-
+    
     const handleFaltanteChoferChange = (e) => {
         
         const inputValue = e.target.value
@@ -563,10 +552,6 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
             porcentajeDescuento : 0,
         })
 
-        setNumeroDeMaquina({
-            numeroDeMaquina : ""
-        })
-
         setTotalRecaudacion({
             totalRecaudacion : novaOrdenById?.contabilidadRecarga?.totalRecaudacion,
         })
@@ -634,7 +619,6 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
             ...sobrante,
             ...idDeDecuadre,
             ...gastosNumber,
-            ...numeroDeMaquina,
             ...valesDigitalesRegalados
         }))
         cleanStates();
@@ -1042,27 +1026,6 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                                         autoComplete="off"
                                     />
                                 </div>
-                                <div style={{
-                                    paddingBlock: '0.5rem'
-                                }}>
-                                    <p style={{
-                                        fontSize: '18px',
-                                        fontWeight: 'bold',
-                                        fontFamily: 'Roboto',
-                                    }}>
-                                        Numero de maquina
-                                    </p>
-                                    <Input
-                                        type="text"
-                                        name="numeroDeMaquina"
-                                        id="numeroDeMaquina"
-                                        value={numeroDeMaquina.numeroDeMaquina}
-                                        className={style.inputs2}
-                                        onChange={(e) => handleNumeroDeMaquinaChange(e)}
-                                        min={0}
-                                        autoComplete="off"
-                                    />
-                                </div>
                             </div>
                         </div>
                         <div className={style.containerRecaudacion}>
@@ -1163,7 +1126,7 @@ const Cuadratura = ({ novaOrdenById, fecha }) => {
                             null
                         }
                         <Gastos novaOrdenById={novaOrdenById} handleGastosChange={handleGastosChange} gastos={gastos} setGastos={setGastos} setGastosNumber={setGastosNumber}/>
-                        <CambioDePersonal novaOrdenById={novaOrdenById} />
+                        <CambioDePersonal novaOrdenById={novaOrdenById} style={style.botonCambioPersonal}/>
                         <Button color='success' onClick={toggleNested} className={style.boton2}>Asignar Faltante</Button>
                         <Modal
                             isOpen={nestedModal}

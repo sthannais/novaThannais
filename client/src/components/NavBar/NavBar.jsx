@@ -23,12 +23,18 @@ const NavBar = () => {
     ////// Estados para navbar version movil //////
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [timeToDesplegate, setTimeToDesplegate] = useState(false);
 
     const isDesktop = width >= 768;
     const toggleMenu = () => {
-        if(!isDesktop) setIsMenuOpen(!isMenuOpen);
+        if(!isDesktop) {
+            setIsMenuOpen(!isMenuOpen);
+            setTimeout(() => {
+                setTimeToDesplegate(!timeToDesplegate)
+            }, 100)
+        }
     };
-
+    console.log('isMenuOpen', isMenuOpen)
     const navBarRef = useRef(null);
 
     // const handleClickOutside = (event) => {
@@ -64,7 +70,7 @@ const NavBar = () => {
     
             { isMenuOpen || isDesktop ? (
                     <>
-                <div className={style.navBarContainer} id="navbar" ref={navBarRef}>
+                <div className={`${style.navBarContainer} ${isMenuOpen && timeToDesplegate ? style.navBarContainerOpen : ""}`} id="navbar" ref={navBarRef}>
                 <img src={monito} alt="monito" className={style.styleMonito} />
                 { 
                 rolId && rolId === 1 ? (

@@ -3,9 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { bringChoferes, bringAyudantes, changeChofer, changePeoneta } from '../../redux/novaSlice/thunks'
 import { Modal, Button, ModalHeader, ModalBody, ModalFooter, Label, FormGroup } from 'reactstrap';
 import Select from 'react-select';
-import style from './cambioDePersonal.module.css'
 
-const CambioDePersonal = ({ novaOrdenById }) => {
+const CambioDePersonal = ({ novaOrdenById, style, guideValidator }) => {
 
     const dispatch = useDispatch();
     const [modal, setModal] = useState(false);
@@ -59,7 +58,7 @@ const CambioDePersonal = ({ novaOrdenById }) => {
 
     return (
         <div>
-            <Button color="danger" onClick={toggle} className={style.boton}>Cambio de Personal</Button>
+            <Button color='info' onClick={toggle} className={style}>Cambio de Personal</Button>
             <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Cambio de Personal</ModalHeader>
                 <ModalBody>
@@ -135,10 +134,10 @@ const CambioDePersonal = ({ novaOrdenById }) => {
                             <Button color="primary" onClick={
                                 () => {
                                     if(idChofer) {
-                                        dispatch(changeChofer(novaOrdenById?.id, idChofer, novaOrdenById?.fecha))
+                                        dispatch(changeChofer(novaOrdenById?.id, idChofer, novaOrdenById?.fecha, guideValidator))
                                     }
                                     if(idAyudante) {
-                                        dispatch(changePeoneta(novaOrdenById?.id, idAyudante, novaOrdenById?.fecha))
+                                        dispatch(changePeoneta(novaOrdenById?.id, idAyudante, novaOrdenById?.fecha, guideValidator))
                                     }
                                     setModal(false)
                                     setModalDesactive(false)

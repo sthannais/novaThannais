@@ -900,17 +900,23 @@ export const switchLoading = () => async (dispatch) => {
     }
 }
 
-export const changeChofer = (idOrden, idChofer, fecha) => async (dispatch) => {
+export const changeChofer = (idOrden, idChofer, fecha, guideValidator) => async (dispatch) => {
 
     try {
         await fetch(`${process.env.REACT_APP_API}/orden/cambiarChoferOPeonetaDeOrden/${idOrden}/${idChofer}`, {
             method: 'PUT',
+            body: JSON.stringify({ guideValidator }),
             headers: {
                 'Content-Type': 'application/json'
             },
         });
         dispatch(bringOrdenById(idOrden));
         dispatch(ordenesRendicion(fecha));
+        if (guideValidator) {
+            dispatch(getAllOrdenes(fecha));
+            dispatch(bringChoferes());
+            dispatch(bringAyudantes());
+        }
         Swal.fire({
             icon: 'success',
             title: 'Chofer cambiado',
@@ -923,17 +929,23 @@ export const changeChofer = (idOrden, idChofer, fecha) => async (dispatch) => {
     }
 };
 
-export const changePeoneta = (idOrden, idPeoneta, fecha) => async (dispatch) => {
+export const changePeoneta = (idOrden, idPeoneta, fecha, guideValidator) => async (dispatch) => {
 
     try {
         await fetch(`${process.env.REACT_APP_API}/orden/cambiarAyudanteOPeonetaDeOrden/${idOrden}/${idPeoneta}`, {
             method: 'PUT',
+            body: JSON.stringify({ guideValidator }),
             headers: {
                 'Content-Type': 'application/json'
             },
         });
         dispatch(bringOrdenById(idOrden));
         dispatch(ordenesRendicion(fecha));
+        if (guideValidator) {
+            dispatch(getAllOrdenes(fecha));
+            dispatch(bringChoferes());
+            dispatch(bringAyudantes());
+        }
         Swal.fire({
             icon: 'success',
             title: 'Peoneta cambiada',

@@ -67,7 +67,7 @@
 .containerVales{
     position: relative;
     width: 20rem;
-    height: 24rem;
+    height: 20rem;
     font-family: 'Roboto';
     font-weight: bold;
     border-radius: 30px;
@@ -129,7 +129,7 @@
 .containerMetodoPagos {
     position: relative;
     width: 15rem;
-    height: 24rem;
+    height: 20rem;
     font-family: 'Roboto';
     font-weight: bold;
     box-shadow: 0.1rem 0.1rem 0.6rem 0 #bebaba;
@@ -190,6 +190,12 @@
     color: red;
     font-size: 12px;
     margin-left: 1rem;
+}
+
+.botonCambioPersonal {
+    position: absolute;
+    left: 31.5rem;
+    top: 43.9rem;
 }
 
 @media screen and ( min-width: 1800px) {
