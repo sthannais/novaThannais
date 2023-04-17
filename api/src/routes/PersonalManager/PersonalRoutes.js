@@ -13,7 +13,8 @@ const { getPersonals,
         changeActiveForOrdenById,
         modifyPersonal,
         getPersonalById,
-        changePasswordManual
+        changePasswordManual,
+        modifyPersonalRut
     } = require('./PersonalController');
 
 router.get('/', getPersonals);
@@ -42,6 +43,8 @@ router.put('/orden/:personalId', changeActiveForOrdenById);
 router.put('/:personalId', modifyPersonal);
 
 router.put('/password/:personalId', changePasswordManual);
+
+router.put('/rut/:personalId', modifyPersonalRut);
 
 
 module.exports = router;
