@@ -12,7 +12,8 @@ const OrdenList = ({
         estado, 
         recargas,
         contabilidadRecarga,
-        metodoPagos
+        metodoPagos,
+        numeroDeMaquina
     }) => {
 
     const width = window.innerWidth;
@@ -30,6 +31,7 @@ const OrdenList = ({
                 width > 768 ? (
                     <tr key={id} onClick={toggle} className={style.tabla}>
                         <td>#{id}</td>
+                        <td>{numeroDeMaquina}</td>
                         <td>{fecha}</td>
                         <td>{totalCantidad}</td>
                         <td>{patente}</td>

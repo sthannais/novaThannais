@@ -15,6 +15,7 @@ const {
 
 const { Op } = require('sequelize');
 const moment = require('moment');
+const { createExcelBuffer } = require('../../helpers/excelCreate');
 
 const updateAbono = async (req, res, next) => {
     const { id } = req.params;
@@ -712,10 +713,10 @@ const getAllOrdenesEstructuradas = async (req, res, next) => {
             }
         })
 
-        res.json({
-            message: 'Ordenes de reparto con metodo de pago',
-            ordenes: ordenesWithMetodoPagos
-        })
+        const excelBuffer = await createExcelBuffer(ordenesWithMetodoPagos);
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        res.setHeader('Content-Disposition', 'attachment; filename=' + 'ordenes.xlsx');
+        res.send(excelBuffer);
 
     }
         catch (error) {

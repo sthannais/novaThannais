@@ -1,7 +1,7 @@
 .columna {
     position: absolute;
-    left: 49rem;
-    top: 6.5rem;
+    left: 25rem;
+    top: 7rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -31,8 +31,8 @@
 
 @media screen and (min-width: 1800px) {
     .columna {
-        top: 5rem;
-        left: 65rem;
+        top: 7rem;
+        left: 38rem;
     }
 
     .text {
@@ -49,8 +49,8 @@
 
 @media screen and ( max-width: 1366px ) {
     .columna {
-        left: 42rem;
-        top: 6rem;
+        left: 19.6rem;
+        top: 6.5rem;
     }
     
     .text {

@@ -211,6 +211,9 @@ const getAllOrdenesByDate = async (req, res) => {
                     model: Patentes,
                 },
                 {
+                    model: NumeroDeMaquina
+                },
+                {
                     model: Recargas,
                     where: {
                         active: true
