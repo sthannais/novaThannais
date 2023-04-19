@@ -28,10 +28,17 @@ const NavBar = () => {
     const isDesktop = width >= 768;
     const toggleMenu = () => {
         if(!isDesktop) {
-            setIsMenuOpen(!isMenuOpen);
-            setTimeout(() => {
+            if(isMenuOpen === false) {
+                setIsMenuOpen(true);
+                setTimeout(() => {
+                    setTimeToDesplegate(!timeToDesplegate)
+                }, 100)
+            } else {
                 setTimeToDesplegate(!timeToDesplegate)
-            }, 100)
+                setTimeout(() => {
+                    setIsMenuOpen(false);
+                }, 500)
+            }
         }
     };
     console.log('isMenuOpen', isMenuOpen)

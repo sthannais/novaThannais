@@ -10,7 +10,7 @@ const EfectivoTable = ({ cuadratura, tablaRef }) => {
             </p>
             <div className={style.tabla}>
                 <table 
-                    className="table-lg table table-bordered table-hover" 
+                    className="table-sm table table-bordered table-hover" 
                     ref={tablaRef}
                 >
                     <thead>

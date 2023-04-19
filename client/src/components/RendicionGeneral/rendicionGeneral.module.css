@@ -4,7 +4,7 @@
     left: 17rem;
     background-color: #F5F5F5;
     width: 1210px;
-    height: 870px;
+    height: 740px;
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
@@ -31,7 +31,7 @@
 .button {
     position: absolute;
     left: 5%;
-    top: 8%;
+    top: 6%;
     width: 160px;
     height: 45px;
     font-family: "Roboto";
@@ -50,7 +50,7 @@
 .selected {
     position: absolute;
     left: 20%;
-    top: 8%;
+    top: 6%;
     width: 225px;
     height: 45px;
 }
@@ -62,7 +62,7 @@
     margin-bottom: 0.3rem;
 }
 
-.excel{
+.excel {
     position: absolute;
     left: 84%;
     top: 2%;
@@ -79,10 +79,27 @@
     height: 37px;
 }
 
+.excel2 {
+    position: absolute;
+    left: 74%;
+    top: 2%;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 5px;
+    color: #3C3C3C !important;
+    background-color: transparent;
+    font-family: "Roboto";
+    font-weight: 800;
+    width: 164px;
+    height: 37px;
+}
+
 .datePicker {
     position: absolute;
-    left: 5%;
-    top: 18%;
+    left: 40%;
+    top: 1.7%;
     font-family: "Roboto";
     font-size: 14px;
 }
@@ -98,9 +115,8 @@
 .classDatePicker {
     border-radius: 3px;
     border: 1px solid #000000;
-    background: #eed9d9;
-    width: 10rem;
-    height: 2rem;
+    width: 12rem;
+    height: 2.8rem;
     text-align: center;
 }
 
@@ -125,7 +141,7 @@
 
     .button {
         left: 5%;
-        top: 8%;
+        top: 6%;
         width: 180px;
         height: 45px;
         font-family: "Roboto";
@@ -133,9 +149,13 @@
         font-size: 16px;
     }
 
+    .selected {
+        left: 18%;
+    }
+
     .datePicker {
-        left: 5%;
-        top: 18%;
+        left: 34%;
+        top: 1.4%;
     }
 
     .textDatePicker {
@@ -145,9 +165,8 @@
     .classDatePicker {
         border-radius: 3px;
         border: 1px solid #000000;
-        background: #eed9d9;
-        width: 10rem;
-        height: 2rem;
+        width: 13rem;
+        height: 2.7rem;
         text-align: center;
     }
 }
@@ -181,18 +200,22 @@
     }
     
     .datePicker {
-        left: 5%;
-        top: 15%;
+        left: 46%;
+        top: 1%;
     }
     
     .textDatePicker {
         font-size: 15px;
     }
 
+    .classDatePicker {
+        height: 37px; 
+    }
+
     .selected {
         left: 22%;
         top: 6%;
         width: 228px;
-        height: 37px;
+        height: 37px; 
     }
 }

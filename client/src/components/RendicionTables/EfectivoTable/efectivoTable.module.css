@@ -1,7 +1,7 @@
 .columna {
     position: absolute;
-    left: 52.2rem;
-    top: 25rem;
+    left: 25rem;
+    top: 26rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -22,8 +22,8 @@
     text-align: center;
     font-size: 1rem;
     overflow: hidden;
-    width: 20rem;
-    height: 20.5rem;
+    width: 26rem;
+    height: 16.6rem;
     border: 1px solid #3C3C3C;
     border-radius: 15px;
     background-color: #FFFFFF;
@@ -32,8 +32,8 @@
 @media screen and ( min-width: 1800px ) {
 
     .columna {
-        left: 65rem;
-        top: 25rem;
+        left: 38rem;
+        top: 28rem;
     }
 
     .text {
@@ -43,15 +43,16 @@
 
     .tabla {
         font-size: 1.1rem;
-        height: 22rem;
+        height: 18rem;
+        width: 30rem;
     }
 }
 
 @media screen and ( max-width: 1366px ) {
     
         .columna {
-            left: 42rem;
-            top: 23rem;
+            left: 19.5rem;
+            top: 24rem;
         }
     
         .text {
@@ -61,6 +62,6 @@
     
         .tabla {
             font-size: 14px;
-            height: 19rem;
+            height: 15rem;
         }
 }

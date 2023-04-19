@@ -223,6 +223,7 @@ const GuidePage = () => {
                                         width > 768 ? (
                                             <>
                                                 <th>Numero de orden</th>
+                                                <th>Numero de maquina</th>
                                                 <th>Fecha</th>
                                                 <th>Cantidad de tarros</th>
                                                 <th>Patente</th>
@@ -265,6 +266,7 @@ const GuidePage = () => {
                                         recargas={orden?.recargas}
                                         contabilidadRecarga={orden?.contabilidadRecarga}
                                         metodoPagos={orden?.metodoPagos}
+                                        numeroDeMaquina={orden?.numeroDeMaquina?.Numero}
                                     />
                                 ))}
                             </tbody>

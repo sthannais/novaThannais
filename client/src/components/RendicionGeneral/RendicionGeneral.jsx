@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import DatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
-import { bringAllFaltantes, bringCuadratura2, bringAllAdministradores } from '../../redux/novaSlice/thunks';
-import { Input } from 'reactstrap';
+import { bringAllFaltantes, bringCuadratura2, bringAllAdministradores, descargarExcelOrdenesPorFecha } from '../../redux/novaSlice/thunks';
+import { Input, Button } from 'reactstrap';
 import style from './rendicionGeneral.module.css'
 import JorgeGas from '../../assetsOficial/jorgegas.svg';
 import SinAcceso from '../SinAcceso/SinAcceso';
@@ -14,7 +14,7 @@ import TarrosTable from '../RendicionTables/TarrosTable/TarrosTable';
 import ValesTable from '../RendicionTables/ValesTable/ValesTable';
 import MetodosTable from '../RendicionTables/MetodosTable/MetodosTable';
 import ResumenTable from '../RendicionTables/ResumenTable/ResumenTable';
-import { RiFileExcel2Fill } from 'react-icons/ri';
+import { RiFileExcel2Fill, RiFileExcel2Line } from 'react-icons/ri';
 import XLSX from 'xlsx';
 
 registerLocale('es', es)
@@ -99,9 +99,17 @@ const RendicionGeneral = () => {
                     ))}
                     <option value="all">Todas las rendiciones</option>
                 </Input>
+                <button onClick={
+                    () => {
+                        dispatch(descargarExcelOrdenesPorFecha(soloFecha, soloFechaFin))
+                    }
+                } className={style.excel2}>
+                    <RiFileExcel2Line className={style.icon3} />
+                    <p>Excel por fecha</p>
+                </button>
                 <button onClick={handleExportExcel} className={style.excel}>
                     <RiFileExcel2Fill className={style.icon3} />
-                    <p>Exportar a excel</p>
+                    <p>Excel General</p>
                 </button>
                 <div className={style.datePicker}>
                     <p className={style.textDatePicker}>
@@ -113,7 +121,6 @@ const RendicionGeneral = () => {
                         selectsRange
                         startDate={startDate}
                         endDate={endDate}
-                        inline
                         locale="es"
                         dateFormat="dd/MM/yyyy"
                         maxDate={new Date()}
