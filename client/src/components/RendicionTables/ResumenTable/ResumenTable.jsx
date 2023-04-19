@@ -56,7 +56,7 @@ const ResumenTable = ({ cuadratura, faltantes, tablaRef }) => {
                             <td>{cuadratura?.totalDescuentos ? numberWithDots(cuadratura?.totalDescuentos) : 0}</td>
                         </tr>
                         <tr>
-                            <td>Trasnbank</td>
+                            <td>Transbank</td>
                             <td>{cuadratura?.totalTransbank ? numberWithDots(cuadratura?.totalTransbank) : 0}</td>
                         </tr>
                         <tr>
