@@ -283,7 +283,24 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
                     where: {
                         fecha: fechaInicio,
                         rendida : true
-                    }
+                    },
+                    include: [
+                        { 
+                            model: MetodoPagos, 
+                            include: [
+                                { model: DescuentoRut },
+                                { model: Descuentos },
+                                { model: Transbank },
+                                { model: Transferencias },
+                                { model: Abonos },
+                                { model: Efectivo },
+                                { model: Vales },
+                                { model: ValesDigiRegalados },
+                                { model: Gastos }
+                            ]
+                        },
+                        { model: ContabilidadRecargas }
+                    ]
                 })
             }else{
                 ordenesDeReparto = await OrdenDeReparto.findAll({
@@ -292,7 +309,24 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
                             [Op.between]: [fechaInicio, fechaFin]
                         },
                         rendida : true
-                    }
+                    },
+                    include: [
+                        { 
+                            model: MetodoPagos, 
+                            include: [
+                                { model: DescuentoRut },
+                                { model: Descuentos },
+                                { model: Transbank },
+                                { model: Transferencias },
+                                { model: Abonos },
+                                { model: Efectivo },
+                                { model: Vales },
+                                { model: ValesDigiRegalados },
+                                { model: Gastos }
+                            ]
+                        },
+                        { model: ContabilidadRecargas }
+                    ]
                 })
             }
         }else{
@@ -302,7 +336,24 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
                         fecha: fechaInicio,
                         cuadradoPor: administradorId,
                         rendida : true
-                    }
+                    },
+                    include: [
+                        { 
+                            model: MetodoPagos, 
+                            include: [
+                                { model: DescuentoRut },
+                                { model: Descuentos },
+                                { model: Transbank },
+                                { model: Transferencias },
+                                { model: Abonos },
+                                { model: Efectivo },
+                                { model: Vales },
+                                { model: ValesDigiRegalados },
+                                { model: Gastos }
+                            ]
+                        },
+                        { model: ContabilidadRecargas }
+                    ]
                 })
             }else{
                 ordenesDeReparto = await OrdenDeReparto.findAll({
@@ -312,106 +363,47 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
                         },
                         cuadradoPor: administradorId,
                         rendida : true
-                    }
+                    },
+                    include: [
+                        { 
+                            model: MetodoPagos, 
+                            include: [
+                                { model: DescuentoRut },
+                                { model: Descuentos },
+                                { model: Transbank },
+                                { model: Transferencias },
+                                { model: Abonos },
+                                { model: Efectivo },
+                                { model: Vales },
+                                { model: ValesDigiRegalados },
+                                { model: Gastos }
+                            ]
+                        },
+                        { model: ContabilidadRecargas }
+                    ]
                 })
             }
         }
-
-        const ordenesWithMetodoPagos = await Promise.all(ordenesDeReparto.map(async orden => {
-            const metodoPago = await orden.getMetodoPagos()
-
-            const descuentoRut = await DescuentoRut.findOne({
-                where: {
-                    fk_MetodoPagosID: metodoPago[0].id
-                }
-            })
-
-            const descuentos = await Descuentos.findOne({
-                where: {
-                    fk_MetodoPagosID: metodoPago[0].id
-                }
-            })
-
-            const transbank = await Transbank.findOne({
-                where: {
-                    fk_MetodoPagosID: metodoPago[0].id
-                }
-            })
-
-            const transferencias = await Transferencias.findOne({
-                where: {
-                    fk_MetodoPagosID: metodoPago[0].id
-                }
-            })
-
-            const sumaAbonos = await Abonos.sum('monto', {
-                where: {
-                    fk_MetodoPagosID: metodoPago[0].id
-                }
-            })
-
-            const contabilidadRecargas = await orden.getContabilidadRecarga();
-
-            const efectivo = await Efectivo.findOne({
-                where: {
-                    fk_MetodoPagosID: metodoPago[0].id
-                }
-            })
-
-            const vales = await Vales.findOne({
-                where: {
-                    fk_MetodoPagosID: metodoPago[0].id
-                }
-            })
-
-            const valesRegalados = await ValesDigiRegalados.findOne({
-                where: {
-                    fk_MetodoPagosID: metodoPago[0].id
-                }
-            })
-
-            const gastos = await Gastos.findOne({
-                where: {
-                    fk_MetodoPagosID: metodoPago[0].id
-                }
-            })
-
-            return {
-                sumaAbonos,
-                contabilidadRecargas,
-                efectivo,
-                vales,
-                valesRegalados,
-                descuentoRut,
-                descuentos,
-                transbank,
-                transferencias,
-                gastos
-            }
-        }))
         
-        const sumaSobrantes = ordenesDeReparto.reduce((acc, curr) => {
-            return Number(acc) + Number(curr.sobrante)
+
+        const sumaAbonos = ordenesDeReparto.reduce((acc, curr) => {
+            return acc + Number(curr.metodoPagos[0].abono.monto)
         }, 0)
 
-        const sumaTotalAbonos = ordenesWithMetodoPagos.reduce((acc, curr) => {
-            return acc + Number(curr.sumaAbonos)
-        }, 0)
-
-        const sumaTotalRecargas = ordenesWithMetodoPagos.reduce((acc, curr) => {
+        const sumaTotalRecargas = ordenesDeReparto.reduce((acc, curr) => {
             return {
-                ventas5kg: Number(acc.ventas5kg) + Number(curr.contabilidadRecargas.ventas5kg),
-                recaudacion5kg: Number(acc.recaudacion5kg) + Number(curr.contabilidadRecargas.recaudacion5kg),
-                ventas11kg: Number(acc.ventas11kg) + Number(curr.contabilidadRecargas.ventas11kg),
-                recaudacion11kg: Number(acc.recaudacion11kg) + Number(curr.contabilidadRecargas.recaudacion11kg),
-                ventas15kg: Number(acc.ventas15kg) + Number(curr.contabilidadRecargas.ventas15kg),
-                recaudacion15kg: Number(acc.recaudacion15kg) + Number(curr.contabilidadRecargas.recaudacion15kg),
-                ventas45kg: Number(acc.ventas45kg) + Number(curr.contabilidadRecargas.ventas45kg),
-                recaudacion45kg: Number(acc.recaudacion45kg) + Number(curr.contabilidadRecargas.recaudacion45kg),
-                totalCantidad: Number(acc.totalCantidad) + Number(curr.contabilidadRecargas.totalCantidad),
-                totalRecaudacion: Number(acc.totalRecaudacion) + Number(curr.contabilidadRecargas.totalRecaudacion),
+                ventas5kg: Number(acc.ventas5kg) + Number(curr.contabilidadRecarga.ventas5kg),
+                recaudacion5kg: Number(acc.recaudacion5kg) + Number(curr.contabilidadRecarga.recaudacion5kg),
+                ventas11kg: Number(acc.ventas11kg) + Number(curr.contabilidadRecarga.ventas11kg),
+                recaudacion11kg: Number(acc.recaudacion11kg) + Number(curr.contabilidadRecarga.recaudacion11kg),
+                ventas15kg: Number(acc.ventas15kg) + Number(curr.contabilidadRecarga.ventas15kg),
+                recaudacion15kg: Number(acc.recaudacion15kg) + Number(curr.contabilidadRecarga.recaudacion15kg),
+                ventas45kg: Number(acc.ventas45kg) + Number(curr.contabilidadRecarga.ventas45kg),
+                recaudacion45kg: Number(acc.recaudacion45kg) + Number(curr.contabilidadRecarga.recaudacion45kg),
+                totalCantidad: Number(acc.totalCantidad) + Number(curr.contabilidadRecarga.totalCantidad),
+                totalRecaudacion: Number(acc.totalRecaudacion) + Number(curr.contabilidadRecarga.totalRecaudacion),
             }
-        }, {
+        },{
             ventas5kg: 0,
             recaudacion5kg: 0,
             ventas11kg: 0,
@@ -424,15 +416,15 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
             totalRecaudacion: 0
         })
 
-        const sumaTotalEfectivo = ordenesWithMetodoPagos.reduce((acc, curr) => {
+        const sumaTotalEfectivo = ordenesDeReparto.reduce((acc, curr) => {
             return {
-                totalBilletes20: Number(acc.totalBilletes20) + Number(curr.efectivo.totalBilletes20),
-                totalBilletes10: Number(acc.totalBilletes10) + Number(curr.efectivo.totalBilletes10),
-                totalBilletes5: Number(acc.totalBilletes5) + Number(curr.efectivo.totalBilletes5),
-                totalBilletes2: Number(acc.totalBilletes2) + Number(curr.efectivo.totalBilletes2),
-                totalBilletes1: Number(acc.totalBilletes1) + Number(curr.efectivo.totalBilletes1),
-                monedas: Number(acc.monedas) + Number(curr.efectivo.monedas),
-                totalGeneral: Number(acc.totalGeneral) + Number(curr.efectivo.totalGeneral),
+                totalBilletes20: Number(acc.totalBilletes20) + Number(curr.metodoPagos[0].efectivo.totalBilletes20),
+                totalBilletes10: Number(acc.totalBilletes10) + Number(curr.metodoPagos[0].efectivo.totalBilletes10),
+                totalBilletes5: Number(acc.totalBilletes5) + Number(curr.metodoPagos[0].efectivo.totalBilletes5),
+                totalBilletes2: Number(acc.totalBilletes2) + Number(curr.metodoPagos[0].efectivo.totalBilletes2),
+                totalBilletes1: Number(acc.totalBilletes1) + Number(curr.metodoPagos[0].efectivo.totalBilletes1),
+                monedas: Number(acc.monedas) + Number(curr.metodoPagos[0].efectivo.monedas),
+                totalGeneral: Number(acc.totalGeneral) + Number(curr.metodoPagos[0].efectivo.totalGeneral),
             }
         }, {
             totalBilletes20: 0,
@@ -444,28 +436,28 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
             totalGeneral: 0
         })
 
-        const sumaTotalVales = ordenesWithMetodoPagos.reduce((acc, curr) => {
+        const sumaTotalVales = ordenesDeReparto.reduce((acc, curr) => {
             return {
-                fisico5kg: Number(acc.fisico5kg) + Number(curr.vales.fisico5kg),
-                digital5kg: Number(acc.digital5kg) + Number(curr.vales.digital5kg),
-                totalCantidadFisicoYDigital5kg: Number(acc.fisico5kg) + Number(curr.vales.fisico5kg) + Number(acc.digital5kg) + Number(curr.vales.digital5kg),
-                sumaTotalDigitalYFisico5kg: Number(acc.sumaTotalDigitalYFisico5kg) + Number(curr.vales.sumaTotalDigitalYFisico5kg),
-                fisico11kg: Number(acc.fisico11kg) + Number(curr.vales.fisico11kg),
-                digital11kg: Number(acc.digital11kg) + Number(curr.vales.digital11kg),
-                totalCantidadFisicoYDigital11kg: Number(acc.fisico11kg) + Number(curr.vales.fisico11kg) + Number(acc.digital11kg) + Number(curr.vales.digital11kg),
-                sumaTotalDigitalYFisico11kg: Number(acc.sumaTotalDigitalYFisico11kg) + Number(curr.vales.sumaTotalDigitalYFisico11kg),
-                fisico15kg: Number(acc.fisico15kg) + Number(curr.vales.fisico15kg),
-                digital15kg: Number(acc.digital15kg) + Number(curr.vales.digital15kg),
-                totalCantidadFisicoYDigital15kg: Number(acc.fisico15kg) + Number(curr.vales.fisico15kg) + Number(acc.digital15kg) + Number(curr.vales.digital15kg),
-                sumaTotalDigitalYFisico15kg: Number(acc.sumaTotalDigitalYFisico15kg) + Number(curr.vales.sumaTotalDigitalYFisico15kg),
-                fisico45kg: Number(acc.fisico45kg) + Number(curr.vales.fisico45kg),
-                digital45kg: Number(acc.digital45kg) + Number(curr.vales.digital45kg),
-                totalCantidadFisicoYDigital45kg: Number(acc.fisico45kg) + Number(curr.vales.fisico45kg) + Number(acc.digital45kg) + Number(curr.vales.digital45kg),
-                sumaTotalDigitalYFisico45kg: Number(acc.sumaTotalDigitalYFisico45kg) + Number(curr.vales.sumaTotalDigitalYFisico45kg),
-                totalFisico: Number(acc.fisico5kg) + Number(curr.vales.fisico5kg) + Number(acc.fisico11kg) + Number(curr.vales.fisico11kg) + Number(acc.fisico15kg) + Number(curr.vales.fisico15kg) + Number(acc.fisico45kg) + Number(curr.vales.fisico45kg),
-                totalDigital: Number(acc.digital5kg) + Number(curr.vales.digital5kg) + Number(acc.digital11kg) + Number(curr.vales.digital11kg) + Number(acc.digital15kg) + Number(curr.vales.digital15kg) + Number(acc.digital45kg) + Number(curr.vales.digital45kg),
-                totalVales: Number(acc.totalVales) + Number(curr.vales.totalVales),
-                totalSumaVales: Number(acc.totalSumaVales) + Number(curr.vales.totalSumaVales)
+                fisico5kg: Number(acc.fisico5kg) + Number(curr.metodoPagos[0].vale.fisico5kg),
+                digital5kg: Number(acc.digital5kg) + Number(curr.metodoPagos[0].vale.digital5kg),
+                totalCantidadFisicoYDigital5kg: Number(acc.fisico5kg) + Number(curr.metodoPagos[0].vale.fisico5kg) + Number(acc.digital5kg) + Number(curr.metodoPagos[0].vale.digital5kg),
+                sumaTotalDigitalYFisico5kg: Number(acc.sumaTotalDigitalYFisico5kg) + Number(curr.metodoPagos[0].vale.sumaTotalDigitalYFisico5kg),
+                fisico11kg: Number(acc.fisico11kg) + Number(curr.metodoPagos[0].vale.fisico11kg),
+                digital11kg: Number(acc.digital11kg) + Number(curr.metodoPagos[0].vale.digital11kg),
+                totalCantidadFisicoYDigital11kg: Number(acc.fisico11kg) + Number(curr.metodoPagos[0].vale.fisico11kg) + Number(acc.digital11kg) + Number(curr.metodoPagos[0].vale.digital11kg),
+                sumaTotalDigitalYFisico11kg: Number(acc.sumaTotalDigitalYFisico11kg) + Number(curr.metodoPagos[0].vale.sumaTotalDigitalYFisico11kg),
+                fisico15kg: Number(acc.fisico15kg) + Number(curr.metodoPagos[0].vale.fisico15kg),
+                digital15kg: Number(acc.digital15kg) + Number(curr.metodoPagos[0].vale.digital15kg),
+                totalCantidadFisicoYDigital15kg: Number(acc.fisico15kg) + Number(curr.metodoPagos[0].vale.fisico15kg) + Number(acc.digital15kg) + Number(curr.metodoPagos[0].vale.digital15kg),
+                sumaTotalDigitalYFisico15kg: Number(acc.sumaTotalDigitalYFisico15kg) + Number(curr.metodoPagos[0].vale.sumaTotalDigitalYFisico15kg),
+                fisico45kg: Number(acc.fisico45kg) + Number(curr.metodoPagos[0].vale.fisico45kg),
+                digital45kg: Number(acc.digital45kg) + Number(curr.metodoPagos[0].vale.digital45kg),
+                totalCantidadFisicoYDigital45kg: Number(acc.fisico45kg) + Number(curr.metodoPagos[0].vale.fisico45kg) + Number(acc.digital45kg) + Number(curr.metodoPagos[0].vale.digital45kg),
+                sumaTotalDigitalYFisico45kg: Number(acc.sumaTotalDigitalYFisico45kg) + Number(curr.metodoPagos[0].vale.sumaTotalDigitalYFisico45kg),
+                totalFisico: Number(acc.fisico5kg) + Number(curr.metodoPagos[0].vale.fisico5kg) + Number(acc.fisico11kg) + Number(curr.metodoPagos[0].vale.fisico11kg) + Number(acc.fisico15kg) + Number(curr.metodoPagos[0].vale.fisico15kg) + Number(acc.fisico45kg) + Number(curr.metodoPagos[0].vale.fisico45kg),
+                totalDigital: Number(acc.digital5kg) + Number(curr.metodoPagos[0].vale.digital5kg) + Number(acc.digital11kg) + Number(curr.metodoPagos[0].vale.digital11kg) + Number(acc.digital15kg) + Number(curr.metodoPagos[0].vale.digital15kg) + Number(acc.digital45kg) + Number(curr.metodoPagos[0].vale.digital45kg),
+                totalVales: Number(acc.totalVales) + Number(curr.metodoPagos[0].vale.totalVales),
+                totalSumaVales: Number(acc.totalSumaVales) + Number(curr.metodoPagos[0].vale.totalSumaVales)
             }
         }, {
             fisico5kg: 0,
@@ -488,18 +480,17 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
             totalSumaVales: 0
         })
 
-        //si hay ordenes con valesRegalados se suman los montos y si no se deja en 0
-        const sumaTotalValesRegalados = ordenesWithMetodoPagos.reduce((acc, curr) => {
+        const sumaTotalValesRegalados = ordenesDeReparto.reduce((acc, curr) => {
 
-            const valesRegalados5kg = curr.valesRegalados === null ? 0 : curr.valesRegalados?.digital5kg
-            const totalMontoVales5kg = curr.valesRegalados === null ? 0 : curr.valesRegalados?.totalDigital5kg
-            const valesRegalados11kg = curr.valesRegalados === null ? 0 : curr.valesRegalados?.digital11kg
-            const totalMontoVales11kg = curr.valesRegalados === null ? 0 : curr.valesRegalados?.totalDigital11kg
-            const valesRegalados15kg = curr.valesRegalados === null ? 0 : curr.valesRegalados?.digital15kg
-            const totalMontoVales15kg = curr.valesRegalados === null ? 0 : curr.valesRegalados?.totalDigital15kg
-            const valesRegalados45kg = curr.valesRegalados === null ? 0 : curr.valesRegalados?.digital45kg
-            const totalMontoVales45kg = curr.valesRegalados === null ? 0 : curr.valesRegalados?.totalDigital45kg
-            const totalValesDigitales = curr.valesRegalados === null ? 0 : curr.valesRegalados?.totalValesDigitales
+            const valesRegalados5kg = curr.metodoPagos[0]?.valesDigiRegalado === null ? 0 : curr.metodoPagos[0]?.valesDigiRegalado?.digital5kg
+            const totalMontoVales5kg = curr.metodoPagos[0]?.valesDigiRegalado === null ? 0 : curr.metodoPagos[0]?.valesDigiRegalado?.totalDigital5kg
+            const valesRegalados11kg = curr.metodoPagos[0]?.valesDigiRegalado === null ? 0 : curr.metodoPagos[0]?.valesDigiRegalado?.digital11kg
+            const totalMontoVales11kg = curr.metodoPagos[0]?.valesDigiRegalado === null ? 0 : curr.metodoPagos[0]?.valesDigiRegalado?.totalDigital11kg
+            const valesRegalados15kg = curr.metodoPagos[0]?.valesDigiRegalado === null ? 0 : curr.metodoPagos[0]?.valesDigiRegalado?.digital15kg
+            const totalMontoVales15kg = curr.metodoPagos[0]?.valesDigiRegalado === null ? 0 : curr.metodoPagos[0]?.valesDigiRegalado?.totalDigital15kg
+            const valesRegalados45kg = curr.metodoPagos[0]?.valesDigiRegalado === null ? 0 : curr.metodoPagos[0]?.valesDigiRegalado?.digital45kg
+            const totalMontoVales45kg = curr.metodoPagos[0]?.valesDigiRegalado === null ? 0 : curr.metodoPagos[0]?.valesDigiRegalado?.totalDigital45kg
+            const totalValesDigitales = curr.metodoPagos[0]?.valesDigiRegalado === null ? 0 : curr.metodoPagos[0]?.valesDigiRegalado.totalValesDigitales
 
             return {
                 digital5kg: Number(acc.digital5kg) + Number(valesRegalados5kg),
@@ -526,30 +517,33 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
             totalSumaValesRegalados: 0
         })
         
-        const sumaTotalDescuentosRut = ordenesWithMetodoPagos.reduce((acc, curr) => {
-            return acc + Number(curr.descuentoRut.monto)
+        const sumaTotalDescuentosRut = ordenesDeReparto.reduce((acc, curr) => {
+            return acc + Number(curr.metodoPagos[0]?.descuentoRut?.monto)
         }, 0)
 
-        const sumaTotalDescuentos = ordenesWithMetodoPagos.reduce((acc, curr) => {
-            return acc + Number(curr.descuentos.monto)
+        const sumaTotalDescuentos = ordenesDeReparto.reduce((acc, curr) => {
+            return acc + Number(curr.metodoPagos[0]?.descuento?.monto)
         }, 0)
 
-        const sumaTotalTransbank = ordenesWithMetodoPagos.reduce((acc, curr) => {
-            return acc + Number(curr.transbank.monto)
+        const sumaTotalTransbank = ordenesDeReparto.reduce((acc, curr) => {
+            return acc + Number(curr.metodoPagos[0]?.transbank?.monto)
         }, 0)
 
-        const sumaTotalTransferencia = ordenesWithMetodoPagos.reduce((acc, curr) => {
-            return acc + Number(curr.transferencias.monto)
+        const sumaTotalTransferencia = ordenesDeReparto.reduce((acc, curr) => {
+            return acc + Number(curr.metodoPagos[0]?.transferencia?.monto)
         }, 0)
 
-        const sumaGastos = ordenesWithMetodoPagos.reduce((acc, curr) => {
-            return acc + Number(curr.gastos.monto)
+        const sumaGastos = ordenesDeReparto.reduce((acc, curr) => {
+            return acc + Number(curr.metodoPagos[0]?.gasto?.monto)
         }, 0)
 
-        //funcion para sumar todos los metodos de pago
+        const sumaTotalSobrante = ordenesDeReparto.reduce((acc, curr) => {
+            return acc + Number(curr.sobrante)
+        }, 0)
+
         const sumaTotalDeTodo = 
         (
-            sumaTotalAbonos +
+            sumaAbonos +
             sumaTotalEfectivo.totalGeneral +
             sumaTotalVales.totalSumaVales +
             sumaTotalDescuentosRut +
@@ -560,8 +554,7 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
         )
 
         res.json({
-            message: 'Ordenes de reparto con metodo de pago',
-            sumaAbonos: sumaTotalAbonos,
+            abonos: sumaAbonos,
             ventaTotalTarros: sumaTotalRecargas,
             totalEfectivo: sumaTotalEfectivo,
             totalVales: sumaTotalVales,
@@ -571,7 +564,7 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
             totalTransbank: sumaTotalTransbank,
             totalTransferencia: sumaTotalTransferencia,
             totalGeneral: sumaTotalDeTodo,
-            sobrante: sumaSobrantes,
+            sobrante: sumaTotalSobrante,
             gastos: sumaGastos
         })
 
@@ -680,36 +673,36 @@ const getAllOrdenesEstructuradas = async (req, res, next) => {
             return {
                 fecha: orden.fecha,
                 sumaAnticipos: Number(orden.faltanteChofer) + Number(orden.faltantePeoneta),
-                ventas5kg: orden.contabilidadRecarga.ventas5kg,
-                ventas11kg: orden.contabilidadRecarga.ventas11kg,
-                ventas15kg: orden.contabilidadRecarga.ventas15kg,
-                ventas45kg: orden.contabilidadRecarga.ventas45kg,
-                totalRecaudacion: orden.contabilidadRecarga.totalRecaudacion,
-                cantidadVale5kgFisico: orden.metodoPagos[0].vale.fisico5kg,
-                valorValefisico5kg: orden.metodoPagos[0].vale.totalFisico5kg,
-                cantidadVale11kgFisico: orden.metodoPagos[0].vale.fisico11kg,
-                valorValefisico11kg: orden.metodoPagos[0].vale.totalFisico11kg,
-                cantidadVale15kgFisico: orden.metodoPagos[0].vale.fisico15kg,
-                valorValefisico15kg: orden.metodoPagos[0].vale.totalFisico15kg,
-                cantidadVale45kgFisico: orden.metodoPagos[0].vale.fisico45kg,
-                valorValefisico45kg: orden.metodoPagos[0].vale.totalFisico45kg,
-                cantidadVale5kgDigital: orden.metodoPagos[0].vale.digital5kg,
-                valorValedigital5kg: orden.metodoPagos[0].vale.totalDigital5kg,
-                cantidadVale11kgDigital: orden.metodoPagos[0].vale.digital11kg,
-                valorValedigital11kg: orden.metodoPagos[0].vale.totalDigital11kg,
-                cantidadVale15kgDigital: orden.metodoPagos[0].vale.digital15kg,
-                valorValedigital15kg: orden.metodoPagos[0].vale.totalDigital15kg,
-                cantidadVale45kgDigital: orden.metodoPagos[0].vale.digital45kg,
-                valorValedigital45kg: orden.metodoPagos[0].vale.totalDigital45kg,
-                totalSuma: orden.metodoPagos[0].vale.totalSumaVales,
-                efectivo: orden.metodoPagos[0].efectivo.totalGeneral,
-                transferencias: orden.metodoPagos[0].transferencia.monto,
-                transbank: orden.metodoPagos[0].transbank.monto,
-                descuentoRut: orden.metodoPagos[0].descuentoRut.monto,
-                descuentos: orden.metodoPagos[0].descuento.monto,
-                gastos: orden.metodoPagos[0].gasto.monto,
-                sobrante: orden.sobrante,
-                faltante: orden.faltante,
+                ventas5kg: Number(orden.contabilidadRecarga.ventas5kg),
+                ventas11kg: Number(orden.contabilidadRecarga.ventas11kg),
+                ventas15kg: Number(orden.contabilidadRecarga.ventas15kg),
+                ventas45kg: Number(orden.contabilidadRecarga.ventas45kg),
+                totalRecaudacion: Number(orden.contabilidadRecarga.totalRecaudacion),
+                cantidadVale5kgFisico: Number(orden.metodoPagos[0].vale.fisico5kg),
+                valorValefisico5kg: Number(orden.metodoPagos[0].vale.totalFisico5kg),
+                cantidadVale11kgFisico: Number(orden.metodoPagos[0].vale.fisico11kg),
+                valorValefisico11kg: Number(orden.metodoPagos[0].vale.totalFisico11kg),
+                cantidadVale15kgFisico: Number(orden.metodoPagos[0].vale.fisico15kg),
+                valorValefisico15kg: Number(orden.metodoPagos[0].vale.totalFisico15kg),
+                cantidadVale45kgFisico: Number(orden.metodoPagos[0].vale.fisico45kg),
+                valorValefisico45kg: Number(orden.metodoPagos[0].vale.totalFisico45kg),
+                cantidadVale5kgDigital: Number(orden.metodoPagos[0].vale.digital5kg),
+                valorValedigital5kg: Number(orden.metodoPagos[0].vale.totalDigital5kg),
+                cantidadVale11kgDigital: Number(orden.metodoPagos[0].vale.digital11kg),
+                valorValedigital11kg: Number(orden.metodoPagos[0].vale.totalDigital11kg),
+                cantidadVale15kgDigital: Number(orden.metodoPagos[0].vale.digital15kg),
+                valorValedigital15kg: Number(orden.metodoPagos[0].vale.totalDigital15kg),
+                cantidadVale45kgDigital: Number(orden.metodoPagos[0].vale.digital45kg),
+                valorValedigital45kg: Number(orden.metodoPagos[0].vale.totalDigital45kg),
+                totalSuma: Number(orden.metodoPagos[0].vale.totalSumaVales),
+                efectivo: Number(orden.metodoPagos[0].efectivo.totalGeneral),
+                transferencias: Number(orden.metodoPagos[0].transferencia.monto),
+                transbank: Number(orden.metodoPagos[0].transbank.monto),
+                descuentoRut: Number(orden.metodoPagos[0].descuentoRut.monto),
+                descuentos: Number(orden.metodoPagos[0].descuento.monto),
+                gastos: Number(orden.metodoPagos[0].gasto.monto),
+                sobrante: Number(orden.sobrante),
+                faltante: Number(orden.faltante),
             }
         })
 
