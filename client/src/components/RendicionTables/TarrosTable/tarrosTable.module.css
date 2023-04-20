@@ -65,3 +65,22 @@
     }
 
 }
+
+@media screen and (max-width: 768px) {
+    .columna {
+        left: 3rem;
+        top: 13rem;
+    }
+    
+    .text {
+        font-weight: 800;
+        font-size: 15px;
+        color: #FFFFFF;
+    }
+
+    .tabla {
+        font-size: 14px;
+        height: 14.4rem;
+        width: 15rem;
+    }
+}

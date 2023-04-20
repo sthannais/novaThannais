@@ -103,7 +103,7 @@
 @media screen and ( max-width: 768px ) {
     .iconContainer {
         position: absolute;
-        right: 3.5rem;
+        right: 0.8rem;
         top: 4.5rem;
     }
 

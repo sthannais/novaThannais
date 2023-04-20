@@ -300,6 +300,9 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
                             ]
                         },
                         { model: ContabilidadRecargas }
+                    ],
+                    order: [
+                        ['fecha', 'DESC']
                     ]
                 })
             }else{
@@ -326,6 +329,9 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
                             ]
                         },
                         { model: ContabilidadRecargas }
+                    ],
+                    order: [
+                        ['fecha', 'DESC']
                     ]
                 })
             }
@@ -353,6 +359,9 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
                             ]
                         },
                         { model: ContabilidadRecargas }
+                    ],
+                    order: [
+                        ['fecha', 'DESC']
                     ]
                 })
             }else{
@@ -380,6 +389,9 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
                             ]
                         },
                         { model: ContabilidadRecargas }
+                    ],
+                    order: [
+                        ['fecha', 'DESC']
                     ]
                 })
             }
@@ -620,6 +632,9 @@ const getAllOrdenesEstructuradas = async (req, res, next) => {
                     {
                         model: ContabilidadRecargas,
                     }        
+                ],
+                order: [
+                    ['fecha', 'ASC'],
                 ]
             })
         } else {
@@ -664,7 +679,9 @@ const getAllOrdenesEstructuradas = async (req, res, next) => {
                         model: ContabilidadRecargas
                     }       
                 ],
-                
+                order: [
+                    ['fecha', 'ASC'],
+                ]
             })
         }
 
