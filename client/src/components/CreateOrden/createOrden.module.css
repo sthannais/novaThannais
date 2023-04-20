@@ -110,7 +110,34 @@
 
 @media screen and ( max-width: 1366px ) {
     .iconContainer2 {
-        
         margin-left: 42.6rem;
+    }
+}
+
+@media screen and ( max-width: 768px ) {
+    .iconContainer2 {
+        position: absolute;
+        right: 6.5rem;
+        top: 0.2rem;
+    }
+
+    .icon {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .createText {
+        color: #FFFFFF;
+        font-weight: 500;
+    }
+
+    .cantidadContainer{
+        padding-left: 0.5px;
+    }
+    
+    .containerProductos {
+        justify-items: center;
+        grid-gap: 0.5rem;
+        margin-left: 1rem;
     }
 }

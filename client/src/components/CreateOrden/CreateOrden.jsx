@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import carrito from '../../assetsOficial/carrito.svg';
+import carritoMobile from '../../assetsOficial/DiseñoMovil/Create.svg';
 import { Modal, Button, ModalHeader, ModalBody, ModalFooter, Input, Form } from 'reactstrap';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
@@ -20,6 +21,7 @@ registerLocale('es', es);
 
 const CreateOrden = () => {
 
+    const width = window.innerWidth;
     const { patentes, cuadrantes, choferes, ayudantes, listaDePrecios, loading } = useSelector(state => state.Nova);
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const onlyDate = new Date().toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
@@ -217,6 +219,15 @@ const CreateOrden = () => {
         fontFamily: 'Roboto'
     };
 
+    const modalStylesMobile = {
+        position: 'relative',
+        transform: 'translate(0%, 0.5%)',
+        "--bs-modal-bg": "#F5F5F5",
+        "--bs-modal-margin": "1rem",
+        fontFamily: 'Roboto',
+        fontSize: '14px',
+    };
+
     return (
         <div>
             {
@@ -224,12 +235,16 @@ const CreateOrden = () => {
             }
             <div className={style.iconContainer2}>
                 <button onClick={toggle} className={style.botonsito}>
-                    <img src={carrito} alt="carrito" className={style.icon}/>
-                    <p>Crear orden</p>
+                    <img src={
+                        width > 768 ? carrito : carritoMobile
+                    } alt="carrito" className={style.icon}/>
+                    <p className={style.createText}>Crear orden</p>
                 </button>
                 
             </div>
-            <Modal isOpen={modal} toggle={toggle} style={modalStyles} backdrop="static" onKeyDown={handleKeydown}>
+            <Modal isOpen={modal} toggle={toggle} style={
+                width > 768 ? modalStyles : modalStylesMobile
+            } backdrop="static" onKeyDown={handleKeydown}>
                 <ModalHeader toggle={toggle}>Crear Orden</ModalHeader>
                 <Form onSubmit={handleSubmit}>
                     <ModalBody >
@@ -287,7 +302,9 @@ const CreateOrden = () => {
                                         type="text"
                                         name="numeroDeMaquina"
                                         onChange={(e) => setOrden({ ...orden, numeroDeMaquina: e.target.value })}
-                                        placeholder="Numero de maquina"
+                                        placeholder={
+                                            width > 768 ? "Numero de maquina" : "N° maquina"
+                                        }
                                         className={style.inpusito}
                                         value={orden.numeroDeMaquina}
                                         autoComplete='off'

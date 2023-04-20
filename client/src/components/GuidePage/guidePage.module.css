@@ -218,7 +218,7 @@
     }
     
     .text {
-        left: 17%;
+        left: 10%;
         top: 12%;
     }
     
@@ -230,7 +230,7 @@
         padding: 5rem 2.5rem 0 2.5rem;
         background: rgba(255, 255, 255, 0.4);
         border-radius: 20px;
-        padding: 22% 1.5rem 0 1.5rem;
+        padding: 40% 1.5rem 0 1.5rem;
     }
 
     .datePicker {
@@ -268,7 +268,7 @@
         border-radius: 10px;
         overflow-y: scroll;
         background: #FFFFFF;
-        height: 83%;
+        height: 95%;
         font-size: 12px;
     }
 

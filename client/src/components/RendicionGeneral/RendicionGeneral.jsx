@@ -21,6 +21,7 @@ registerLocale('es', es)
 
 const RendicionGeneral = () => {
 
+    const width = window.innerWidth;
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const [startDate , setStartDate] = useState(new Date())
     const [endDate , setEndDate] = useState(null)
@@ -79,9 +80,13 @@ const RendicionGeneral = () => {
             <p className={style.text}>Rendición general</p>
             <img src={JorgeGas} alt="logo" className={style.logo} />
             <div className={style.container}>
-                <Link to="/personalSellTable">
-                    <button className={style.button}>Rendicion del Personal</button>
-                </Link>
+                {
+                    width > 800 ? (
+                        <Link to="/personalSellTable">
+                            <button className={style.button}>Rendicion del Personal</button>
+                        </Link>
+                    ) : null
+                }
                 <Input
                     type="select"
                     name="id"
@@ -99,18 +104,24 @@ const RendicionGeneral = () => {
                     ))}
                     <option value="all">Todas las rendiciones</option>
                 </Input>
-                <button onClick={
-                    () => {
-                        dispatch(descargarExcelOrdenesPorFecha(soloFecha, soloFechaFin))
-                    }
-                } className={style.excel2}>
-                    <RiFileExcel2Line className={style.icon3} />
-                    <p>Excel por fecha</p>
-                </button>
-                <button onClick={handleExportExcel} className={style.excel}>
-                    <RiFileExcel2Fill className={style.icon3} />
-                    <p>Excel General</p>
-                </button>
+                {
+                    width > 800 ? (
+                        <>
+                            <button onClick={
+                                () => {
+                                    dispatch(descargarExcelOrdenesPorFecha(soloFecha, soloFechaFin))
+                                }
+                            } className={style.excel2}>
+                                <RiFileExcel2Line className={style.icon3} />
+                                <p>Excel por fecha</p>
+                            </button>
+                            <button onClick={handleExportExcel} className={style.excel}>
+                                <RiFileExcel2Fill className={style.icon3} />
+                                <p>Excel General</p>
+                            </button>
+                        </>
+                    ) : null
+                }
                 <div className={style.datePicker}>
                     <p className={style.textDatePicker}>
                         Seleccione un rango de fechas
@@ -127,11 +138,19 @@ const RendicionGeneral = () => {
                         className={style.classDatePicker}
                     />
                 </div>
-                <EfectivoTable cuadratura={cuadratura} tablaRef={tabla1Ref}/>
-                <TarrosTable cuadratura={cuadratura} tablaRef={tabla2Ref}/>
-                <ValesTable cuadratura={cuadratura} tablaRef={tabla3Ref}/>
-                <MetodosTable cuadratura={cuadratura} tablaRef={tabla4Ref}/>
-                <ResumenTable cuadratura={cuadratura} faltantes={faltantes} tablaRef={tabla5Ref}/>
+                {
+                    width > 800 ? (
+                        <>
+                            <TarrosTable cuadratura={cuadratura} tablaRef={tabla2Ref}/>
+                            <EfectivoTable cuadratura={cuadratura} tablaRef={tabla1Ref}/>
+                            <ValesTable cuadratura={cuadratura} tablaRef={tabla3Ref}/>
+                            <MetodosTable cuadratura={cuadratura} tablaRef={tabla4Ref}/>
+                            <ResumenTable cuadratura={cuadratura} faltantes={faltantes} tablaRef={tabla5Ref}/>
+                        </>
+                    ) : (
+                        <TarrosTable cuadratura={cuadratura} tablaRef={tabla2Ref}/>
+                    )
+                }
             </div>
         </div>
     )
