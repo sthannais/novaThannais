@@ -87,6 +87,9 @@ const getOrdenesDeReparto = async (req, res) => {
                             model: Vales,
                         },
                         {
+                            model: ValesDigiRegalados
+                        },
+                        {
                             model: Efectivo,
                         },
                         {
@@ -1290,7 +1293,7 @@ const cuadrarOrden = async (req, res) => {
             totalValesAmbos: Number(inventario.totalValesAmbos) + Number(totalValesDigitalesYFisicos)
         });
 
-        if(digitalRegalado11kg && digitalRegalado15kg && digitalRegalado45kg && digitalRegalado5kg && totalValesDigitalesRegalados){
+        if(digitalRegalado11kg || digitalRegalado15kg || digitalRegalado45kg || digitalRegalado5kg || totalValesDigitalesRegalados){
             const inventarioRegalados = await InventarioValesDigitalesRegalados.findByPk(1);
 
             await inventarioRegalados.update({

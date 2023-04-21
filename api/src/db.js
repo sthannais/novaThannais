@@ -3,31 +3,31 @@ const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 const {
-  DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT, DB_DEPLOY
+  DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT, DB_DEPLOY, NODE_ENV
 } = process.env;
 
-let sequelize = 
-    // new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`, {
-    //   logging: false,
-    //   native: false,  
-    new Sequelize(DB_DEPLOY, { // 
-      dialectOptions: {
-        ssl: {
-          require: true,
-        },
-        keepAlive: true,
+let sequelize = NODE_ENV === 'development' ? new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`, {
+    logging: false,
+    native: false,
+  }) :  
+  new Sequelize(DB_DEPLOY, { // 
+    dialectOptions: {
+      ssl: {
+        require: true,
       },
-      ssl: true,
-      logging: false,
-      native: false,
-      pool: {
-        max: 10,
-        min: 0,
-        acquire: 300000,
-        idle: 300000,
-      },
-      port: 5432,
-      queryCache : true,
+      keepAlive: true,
+    },
+    ssl: true,
+    logging: false,
+    native: false,
+    pool: {
+      max: 10,
+      min: 0,
+      acquire: 300000,
+      idle: 300000,
+    },
+    port: 5432,
+    queryCache : true
   });
 
 const basename = path.basename(__filename);
@@ -52,8 +52,6 @@ fs
   .forEach((file) => {
     modelDefiners.push(require(path.join(__dirname, '/models/MetodosDePagos', file)));
   });
-
-  
 
 // Injectamos la conexion (sequelize) a todos los modelos
 modelDefiners.forEach(model => model(sequelize));

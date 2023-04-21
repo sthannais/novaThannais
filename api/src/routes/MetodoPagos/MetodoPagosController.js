@@ -10,7 +10,10 @@ const {
     Gastos,
     MetodoPagos,
     ContabilidadRecargas,
-    ValesDigiRegalados
+    ValesDigiRegalados,
+    Chofer,
+    Ayudante,
+    Personal
     } = require('../../db.js');
 
 const { Op } = require('sequelize');
@@ -397,7 +400,6 @@ const getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates = async (re
             }
         }
         
-
         const sumaAbonos = ordenesDeReparto.reduce((acc, curr) => {
             return acc + Number(curr.metodoPagos[0].abono.monto)
         }, 0)
@@ -749,6 +751,9 @@ const getUltimosValesPorFecha = async (req, res, next) => {
                     include: [
                         {
                             model: Vales,
+                        },
+                        {
+                            model: ValesDigiRegalados
                         }
                     ]
                 }
@@ -766,6 +771,10 @@ const getUltimosValesPorFecha = async (req, res, next) => {
                     digital11kg: vale.metodoPagos[0].vale.digital11kg,
                     digital15kg: vale.metodoPagos[0].vale.digital15kg,
                     digital45kg: vale.metodoPagos[0].vale.digital45kg,
+                    digitalRegalado5kg: vale.metodoPagos[0].valesDigiRegalado.digital5kg,
+                    digitalRegalado11kg: vale.metodoPagos[0].valesDigiRegalado.digital11kg,
+                    digitalRegalado15kg: vale.metodoPagos[0].valesDigiRegalado.digital15kg,
+                    digitalRegalado45kg: vale.metodoPagos[0].valesDigiRegalado.digital45kg
                 }
             })
 
@@ -780,6 +789,10 @@ const getUltimosValesPorFecha = async (req, res, next) => {
                     digital11kg: Number(acumulador.digital11kg) + Number(valorActual.digital11kg),
                     digital15kg: Number(acumulador.digital15kg) + Number(valorActual.digital15kg),
                     digital45kg: Number(acumulador.digital45kg) + Number(valorActual.digital45kg),
+                    digitalRegalado5kg: Number(acumulador.digitalRegalado5kg) + Number(valorActual.digitalRegalado5kg),
+                    digitalRegalado11kg: Number(acumulador.digitalRegalado11kg) + Number(valorActual.digitalRegalado11kg),
+                    digitalRegalado15kg: Number(acumulador.digitalRegalado15kg) + Number(valorActual.digitalRegalado15kg),
+                    digitalRegalado45kg: Number(acumulador.digitalRegalado45kg) + Number(valorActual.digitalRegalado45kg)
                 }
             })
 
@@ -869,6 +882,140 @@ const getUltimosValesDeAyer = async (req, res, next) => {
     }
 };
         
+const getAllOrdenesByDatesToGetChoferAndPeonetasTotalTarros = async (req, res, next) => {
+    const { date, date2 } = req.params;
+
+    try {
+        let ordenes 
+
+        if( !date2 || date2 === 'undefined' || date2 === 'null' ) {
+            ordenes = await OrdenDeReparto.findAll({
+                where: {
+                    fecha: date
+                },
+                include: [
+                    { model: ContabilidadRecargas },
+                    { model: Chofer,
+                        include: [
+                            { model: Personal }
+                        ]
+                    },
+                    { model: Ayudante,
+                        include: [
+                            { model: Personal }
+                        ]
+                    }
+                ]
+            })
+        } else {
+            ordenes = await OrdenDeReparto.findAll({
+                where: {
+                    fecha: {
+                        [Op.between]: [date, date2]
+                    }
+                },
+                include: [
+                    { model: ContabilidadRecargas },
+                    { model: Chofer,
+                        include: [
+                            { model: Personal }
+                        ]
+                    },
+                    { model: Ayudante,
+                        include: [
+                            { model: Personal }
+                        ]
+                    }
+                ]
+            })
+        }
+
+        if(ordenes) {
+            //Choferes y Peonetas sin repetir
+            const choferes = [...new Set(ordenes.map(orden => orden?.chofer?.id))]
+            const peonetas = [...new Set(ordenes.map(orden => orden?.ayudante?.id))]
+            
+            //si encuentro un valor en null lo elimino del array con splice
+            if(choferes.includes(null)) {
+                choferes.splice(choferes.indexOf(null), 1)
+            }
+            if(peonetas.includes(null)) {
+                peonetas.splice(peonetas.indexOf(null), 1)
+            }
+            
+
+            //Choferes y Peonetas con total de tarros
+
+            const choferesConTotalTarros = choferes.map(chofer => {
+                const totalTarros = ordenes.reduce((acumulador, valorActual) => {
+                    // console.log(valorActual)
+                    if(valorActual.chofer?.id === chofer) {
+                        return acumulador + Number(valorActual?.contabilidadRecarga?.totalCantidad)
+                    } else {
+                        return acumulador
+                    }
+                }, 0)
+                return {
+                    id: chofer,
+                    nombre: ordenes.find(orden => orden.chofer?.id === chofer)?.chofer?.personal?.name,
+                    apellido: ordenes.find(orden => orden.chofer?.id === chofer)?.chofer?.personal?.lastname,
+                    totalTarros
+                }
+            })
+
+
+            // //total de tarros por chofer y peoneta
+            // const choferesConTotalTarros = choferesSinRepetir.map(chofer => {
+            //     const totalTarros = ordenes.reduce((acumulador, valorActual) => {
+            //         if(valorActual.chofer.id === chofer.chofer.id) {
+            //             return acumulador + valorActual.contabilidadRecargas.totalCantidad
+            //         } else {
+            //             return acumulador
+            //         }
+            //     }, 0)
+            //     return {
+            //         id: chofer.chofer.id,
+            //         nombre: chofer.chofer.personal.name,
+            //         apellido: chofer.chofer.personal.lastname,
+            //         totalTarros
+            //     }
+            // })
+
+            // const peonetasConTotalTarros = peonetasSinRepetir.map(peoneta => {
+            //     const totalTarros = ordenes.reduce((acumulador, valorActual) => {
+            //         if(valorActual.ayudante.id === peoneta.ayudante.id) {
+            //             return acumulador + valorActual.contabilidadRecargas.totalCantidad
+            //         } else {
+            //             return acumulador
+            //         }
+            //     }, 0)
+            //     return {
+            //         id: peoneta.ayudante.id,
+            //         nombre: peoneta.ayudante.personal.name,
+            //         apellido: peoneta.ayudante.personal.lastname,
+            //         totalTarros
+            //     }
+            // })
+
+            res.json({
+
+                choferTarros: choferesConTotalTarros,
+                choferes,
+                peonetas
+                // choferes: choferesConTotalTarros,
+                // peonetas: peonetasConTotalTarros
+            })
+        } else {
+            res.json({
+                message: 'No hay ordenes para esas fechas'
+            })
+        }
+    } catch (error) {
+        next(error)
+    }
+};
+
+
 
 module.exports = {
     updateAbono,
@@ -876,5 +1023,6 @@ module.exports = {
     getallMetodoPagosInOrdenDeRepartoByAdministradorIdBetweenDates,
     getAllOrdenesEstructuradas,
     getUltimosValesPorFecha,
-    getUltimosValesDeAyer
+    getUltimosValesDeAyer,
+    getAllOrdenesByDatesToGetChoferAndPeonetasTotalTarros
 }
