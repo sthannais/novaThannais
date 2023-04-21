@@ -26,6 +26,11 @@
     cursor: pointer;
 }
 
+.icono:hover {
+    width: 3.2rem;
+    height: 3.2rem;
+}
+
 .active {
     font-size: 10rem;
 }

@@ -932,23 +932,12 @@ const getAllOrdenesByDatesToGetChoferAndPeonetasTotalTarros = async (req, res, n
 
         if(ordenes) {
             //Choferes y Peonetas sin repetir
-            const choferes = [...new Set(ordenes.map(orden => orden?.chofer?.id))]
-            const peonetas = [...new Set(ordenes.map(orden => orden?.ayudante?.id))]
-            
-            //si encuentro un valor en null lo elimino del array con splice
-            if(choferes.includes(null)) {
-                choferes.splice(choferes.indexOf(null), 1)
-            }
-            if(peonetas.includes(null)) {
-                peonetas.splice(peonetas.indexOf(null), 1)
-            }
-            
+            const choferes = [...new Set(ordenes.map(orden => orden.chofer === null ? null : orden.chofer.id))].filter(chofer => chofer !== null)
+            const peonetas = [...new Set(ordenes.map(orden => orden?.ayudante === null ? null : orden?.ayudante?.id))].filter(peoneta => peoneta !== null)
 
             //Choferes y Peonetas con total de tarros
-
             const choferesConTotalTarros = choferes.map(chofer => {
                 const totalTarros = ordenes.reduce((acumulador, valorActual) => {
-                    // console.log(valorActual)
                     if(valorActual.chofer?.id === chofer) {
                         return acumulador + Number(valorActual?.contabilidadRecarga?.totalCantidad)
                     } else {
@@ -956,55 +945,33 @@ const getAllOrdenesByDatesToGetChoferAndPeonetasTotalTarros = async (req, res, n
                     }
                 }, 0)
                 return {
-                    id: chofer,
+                    rol: "Chofer",
                     nombre: ordenes.find(orden => orden.chofer?.id === chofer)?.chofer?.personal?.name,
                     apellido: ordenes.find(orden => orden.chofer?.id === chofer)?.chofer?.personal?.lastname,
                     totalTarros
                 }
             })
 
-
-            // //total de tarros por chofer y peoneta
-            // const choferesConTotalTarros = choferesSinRepetir.map(chofer => {
-            //     const totalTarros = ordenes.reduce((acumulador, valorActual) => {
-            //         if(valorActual.chofer.id === chofer.chofer.id) {
-            //             return acumulador + valorActual.contabilidadRecargas.totalCantidad
-            //         } else {
-            //             return acumulador
-            //         }
-            //     }, 0)
-            //     return {
-            //         id: chofer.chofer.id,
-            //         nombre: chofer.chofer.personal.name,
-            //         apellido: chofer.chofer.personal.lastname,
-            //         totalTarros
-            //     }
-            // })
-
-            // const peonetasConTotalTarros = peonetasSinRepetir.map(peoneta => {
-            //     const totalTarros = ordenes.reduce((acumulador, valorActual) => {
-            //         if(valorActual.ayudante.id === peoneta.ayudante.id) {
-            //             return acumulador + valorActual.contabilidadRecargas.totalCantidad
-            //         } else {
-            //             return acumulador
-            //         }
-            //     }, 0)
-            //     return {
-            //         id: peoneta.ayudante.id,
-            //         nombre: peoneta.ayudante.personal.name,
-            //         apellido: peoneta.ayudante.personal.lastname,
-            //         totalTarros
-            //     }
-            // })
-
-            res.json({
-
-                choferTarros: choferesConTotalTarros,
-                choferes,
-                peonetas
-                // choferes: choferesConTotalTarros,
-                // peonetas: peonetasConTotalTarros
+            const peonetasConTotalTarros = peonetas.map(peoneta => {
+                const totalTarros = ordenes.reduce((acumulador, valorActual) => {
+                    if(valorActual.ayudante?.id === peoneta) {
+                        return acumulador + Number(valorActual?.contabilidadRecarga?.totalCantidad)
+                    } else {
+                        return acumulador
+                    }
+                }, 0)
+                return {
+                    peoneta: "Peoneta",
+                    nombre: ordenes.find(orden => orden.ayudante?.id === peoneta)?.ayudante?.personal?.name,
+                    apellido: ordenes.find(orden => orden.ayudante?.id === peoneta)?.ayudante?.personal?.lastname,
+                    totalTarros
+                }
             })
+
+            const excelBuffer = await createExcelBuffer([...choferesConTotalTarros, ...peonetasConTotalTarros])
+            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            res.setHeader('Content-Disposition', 'attachment; filename=' + 'Choferes y Peonetas con total de tarros.xlsx')
+            res.end(excelBuffer)
         } else {
             res.json({
                 message: 'No hay ordenes para esas fechas'
@@ -1014,8 +981,6 @@ const getAllOrdenesByDatesToGetChoferAndPeonetasTotalTarros = async (req, res, n
         next(error)
     }
 };
-
-
 
 module.exports = {
     updateAbono,

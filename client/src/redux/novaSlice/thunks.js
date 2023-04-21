@@ -1112,7 +1112,22 @@ export const descargarExcelOrdenesPorFecha = async (date1, date2) => {
         const url = window.URL.createObjectURL(new Blob([blob]));
         const link = document.createElement('a');
         link.href = url;
-        link.download = `Ordenes_${date1}-${date2 ? date2 : ""}.xlsx`;
+        link.download = `Ordenes-${date1}-${date2 ? date2 : ""}.xlsx`;
+        link.click();
+        URL.revokeObjectURL(url);
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+export const descargarExcelVentaDeTarros = async (date1, date2) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_API}/metodoPago/tarrosChoferesYPeonetas/${date1}/${date2}`);
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `Venta-Tarros-${date1}-${date2 ? date2 : ""}.xlsx`;
         link.click();
         URL.revokeObjectURL(url);
     } catch (error) {

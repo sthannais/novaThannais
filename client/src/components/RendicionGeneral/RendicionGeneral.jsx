@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import DatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
-import { bringAllFaltantes, bringCuadratura2, bringAllAdministradores, descargarExcelOrdenesPorFecha } from '../../redux/novaSlice/thunks';
-import { Input, Button } from 'reactstrap';
+import { bringAllFaltantes, bringCuadratura2, bringAllAdministradores, descargarExcelOrdenesPorFecha, descargarExcelVentaDeTarros } from '../../redux/novaSlice/thunks';
+import { Input } from 'reactstrap';
 import style from './rendicionGeneral.module.css'
 import JorgeGas from '../../assetsOficial/jorgegas.svg';
 import SinAcceso from '../SinAcceso/SinAcceso';
@@ -15,6 +15,7 @@ import ValesTable from '../RendicionTables/ValesTable/ValesTable';
 import MetodosTable from '../RendicionTables/MetodosTable/MetodosTable';
 import ResumenTable from '../RendicionTables/ResumenTable/ResumenTable';
 import { RiFileExcel2Fill, RiFileExcel2Line } from 'react-icons/ri';
+import { BsPersonVcardFill } from 'react-icons/bs';
 import XLSX from 'xlsx';
 
 registerLocale('es', es)
@@ -107,6 +108,14 @@ const RendicionGeneral = () => {
                 {
                     width > 800 ? (
                         <>
+                            <button className={style.excel3} onClick={
+                                () => {
+                                    dispatch(descargarExcelVentaDeTarros(soloFecha, soloFechaFin))
+                                }
+                            }>
+                                <BsPersonVcardFill className={style.icon3} />
+                                <p>Excel venta tarros</p>
+                            </button>
                             <button onClick={
                                 () => {
                                     dispatch(descargarExcelOrdenesPorFecha(soloFecha, soloFechaFin))
