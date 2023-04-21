@@ -89,6 +89,28 @@ const ValesPorFecha = () => {
                             </tbody>
                         </table>
                     </div>
+                    <div className={style.tableContainer2}>
+                        <table
+                            className="table-sm table table-bordered table-hover responsive"
+                        >
+                            <thead>
+                                <tr>
+                                    <th className="px-4 py-3">Vales digitales regalados 5kg</th>
+                                    <th className="px-4 py-3">Vales digitales regalados 11kg</th>
+                                    <th className="px-4 py-3">Vales digitales regalados 15kg</th>
+                                    <th className="px-4 py-3">Vales digitales regalados 45kg</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td className="px-4 py-3">{valesPorFecha?.vales?.digitalRegalado5kg}</td>
+                                    <td className="px-4 py-3">{valesPorFecha?.vales?.digitalRegalado11kg}</td>
+                                    <td className="px-4 py-3">{valesPorFecha?.vales?.digitalRegalado15kg}</td>
+                                    <td className="px-4 py-3">{valesPorFecha?.vales?.digitalRegalado45kg}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     {
                         valesPorFecha?.message ? <p style={{
                             color: 'red',
