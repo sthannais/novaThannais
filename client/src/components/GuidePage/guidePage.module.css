@@ -37,6 +37,11 @@
     margin-bottom: 0.3rem;
 }
 
+.icon3:hover {
+    width: 2.3rem;
+    height: 2.3rem;
+}
+
 .tableContainer {
     border-radius: 30px;
     height: 31rem;

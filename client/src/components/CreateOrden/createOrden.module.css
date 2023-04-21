@@ -26,6 +26,11 @@
     cursor: pointer;
 }
 
+.icon:hover {
+    width: 3.2rem;
+    height: 3.2rem;
+}
+
 .datePicker {
     width: 30%;
     height: 7%;
