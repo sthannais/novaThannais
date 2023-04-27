@@ -58,12 +58,6 @@
     margin-top: 0.5rem;
 }
 
-.inputs {
-    width: 6.2rem;
-    height: 1.5rem;
-    margin-top: 0.4rem;
-}
-
 .containerVales{
     position: relative;
     width: 20rem;
@@ -112,6 +106,18 @@
     text-align: center;
 }
 
+.inputs {
+    width: 6.2rem;
+    height: 1.5rem;
+    margin-top: 0.4rem;
+}
+
+.inputs2 {
+    width: 10rem;
+    height: 1.5rem;
+    margin-top: -0.5rem;
+}
+
 .inputs3 {
     width: 3.5rem;
     height: 1.3rem;
@@ -120,10 +126,19 @@
     margin-bottom: 1rem;
 }
 
-.inputs2 {
-    width: 10rem;
+.inputs4 {
+    width: 12rem;
     height: 1.5rem;
-    margin-top: -0.5rem;
+    background: white !important;
+}
+
+.inputs5 {
+    width: 12rem;
+    margin-left: 2.5rem;
+}
+
+.textInputDescuento {
+    margin-left: 2.5rem;
 }
 
 .containerMetodoPagos {
@@ -165,12 +180,6 @@
     grid-template-columns: 1fr 1fr;
     padding: -1rem;
     margin-left: 3.5rem;
-}
-
-.inputs4 {
-    width: 12rem;
-    height: 1.5rem;
-    background: white !important;
 }
 
 .boton2 {

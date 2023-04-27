@@ -24,6 +24,8 @@ const RendicionGeneral = () => {
 
     const width = window.innerWidth;
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
+    const { email } = useSelector(state => state.Autenticacion.autBack)
+    console.log(email)
     const [startDate , setStartDate] = useState(new Date())
     const [endDate , setEndDate] = useState(null)
     const soloFecha = startDate.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
@@ -148,7 +150,7 @@ const RendicionGeneral = () => {
                     />
                 </div>
                 {
-                    width > 800 ? (
+                    width > 800 && email !== "bodega@jorgegas.cl" ? (
                         <>
                             <TarrosTable cuadratura={cuadratura} tablaRef={tabla2Ref}/>
                             <EfectivoTable cuadratura={cuadratura} tablaRef={tabla1Ref}/>

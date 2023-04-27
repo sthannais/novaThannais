@@ -6,28 +6,33 @@ const {
   DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT, DB_DEPLOY, NODE_ENV
 } = process.env;
 
-let sequelize = NODE_ENV === 'development' ? new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`, {
+// let sequelize = NODE_ENV === 'development' ? new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`, {
+//     logging: false,
+//     native: false,
+//   }) :  
+//   new Sequelize(DB_DEPLOY, { // 
+//     dialectOptions: {
+//       ssl: {
+//         require: true,
+//       },
+//       keepAlive: true,
+//     },
+//     ssl: true,
+//     logging: false,
+//     native: false,
+//     pool: {
+//       max: 10,
+//       min: 0,
+//       acquire: 300000,
+//       idle: 300000,
+//     },
+//     port: 5432,
+//     queryCache : true
+//   });
+
+let sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`, {
     logging: false,
     native: false,
-  }) :  
-  new Sequelize(DB_DEPLOY, { // 
-    dialectOptions: {
-      ssl: {
-        require: true,
-      },
-      keepAlive: true,
-    },
-    ssl: true,
-    logging: false,
-    native: false,
-    pool: {
-      max: 10,
-      min: 0,
-      acquire: 300000,
-      idle: 300000,
-    },
-    port: 5432,
-    queryCache : true
   });
 
 const basename = path.basename(__filename);
@@ -81,11 +86,12 @@ const {
     Efectivo,
     Abonos,
     DescuentoRut,
+    TiposDescuentoRut,
     Descuentos,
     Vales,
     Gastos,
     NumeroDeMaquina,
-    ValesDigiRegalados
+    ValesDigiRegalados,
     } = sequelize.models;
 
 // Relaciones entre los modelos
@@ -218,6 +224,13 @@ MetodoPagos.hasOne(DescuentoRut, { foreignKey: 'fk_MetodoPagosID', targetKey: 'i
   onUpdate: 'CASCADE'
 });
 DescuentoRut.belongsTo(MetodoPagos, { foreignKey: 'fk_MetodoPagosID', targetKey: 'id' });
+
+//Relacion entre descuentoRut y TiposDescuentoRut
+DescuentoRut.hasOne(TiposDescuentoRut, { foreignKey: 'fk_descuentoRutID', targetKey: 'id' }, {
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE'
+});
+TiposDescuentoRut.belongsTo(DescuentoRut, { foreignKey: 'fk_descuentoRutID', targetKey: 'id' });
 
 //Relacion entre metodo de pago y gastos
 MetodoPagos.hasOne(Gastos, { foreignKey: 'fk_MetodoPagosID', targetKey: 'id' }, {

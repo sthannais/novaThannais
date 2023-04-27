@@ -193,7 +193,7 @@ const OrdenDetail = (
         top: '3%',
         transform: 'translate(-38%, -3%)',
         fontFamily: 'Roboto',
-        "--bs-modal-width": "695px",
+        "--bs-modal-width": "700px",
     };
 
     const modalStylesMobile = {
@@ -570,9 +570,13 @@ const OrdenDetail = (
             </ModalBody>
             <ModalFooter>
                 {
+                    estado === "Activa" ? (
+                        <CambioDePersonal novaOrdenById={novaOrdenById} guideValidator={guideValidator}/>
+                    ) : null
+                }
+                {
                     desactive === true ? (
                         <>
-                            <CambioDePersonal novaOrdenById={novaOrdenById} guideValidator={guideValidator}/>
                             <Button color="danger" onClick={toggleDesactive}>Eliminar</Button>
                             <Button color="dark" onClick={
                                 () => {
