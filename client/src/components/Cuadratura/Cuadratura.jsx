@@ -1089,7 +1089,7 @@ const Cuadratura = ({ novaOrdenById }) => {
                                         </ModalHeader>
                                         <ModalBody>
                                             <FormGroup>
-                                                <Label className={style.textInputDescuento}>Descuento 5kg</Label>
+                                                <Label className={style.textInputDescuento}>5kg</Label>
                                                 <Input
                                                     type='text'
                                                     name='descuento5kg'
@@ -1102,7 +1102,7 @@ const Cuadratura = ({ novaOrdenById }) => {
                                                 />
                                             </FormGroup>
                                             <FormGroup>
-                                                <Label className={style.textInputDescuento}>Descuento 11kg</Label>
+                                                <Label className={style.textInputDescuento}>11kg</Label>
                                                 <Input
                                                     type='text'
                                                     name='descuento11kg'
@@ -1115,7 +1115,7 @@ const Cuadratura = ({ novaOrdenById }) => {
                                                 />
                                             </FormGroup>
                                             <FormGroup>
-                                                <Label className={style.textInputDescuento}>Descuento 15kg</Label>
+                                                <Label className={style.textInputDescuento}>15kg</Label>
                                                 <Input
                                                     type='text'
                                                     name='descuento15kg'
@@ -1128,7 +1128,7 @@ const Cuadratura = ({ novaOrdenById }) => {
                                                 />
                                             </FormGroup>
                                             <FormGroup>
-                                                <Label className={style.textInputDescuento}>Descuento 45kg</Label>
+                                                <Label className={style.textInputDescuento}>45kg</Label>
                                                 <Input
                                                     type='text'
                                                     name='descuento45kg'
@@ -1167,6 +1167,15 @@ const Cuadratura = ({ novaOrdenById }) => {
                                             </Button>
                                         </ModalFooter>
                                     </Modal>
+                                    <Input  
+                                        type='text'
+                                        name='porcentajeDescuentoRut'
+                                        id='porcentajeDescuentoRut'
+                                        value={descuentoRut.porcentajeDescuentoRut === 0 ? "" : descuentoRut.porcentajeDescuentoRut}
+                                        className={style.inputs2s}
+                                        onChange={(e) => handleDescuentoRutChange(e)}
+                                        disabled
+                                    />
                                 </div>
                             </div>
                         </div>

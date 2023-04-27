@@ -1334,14 +1334,15 @@ const cuadrarOrden = async (req, res) => {
         await descuentoRut.update({
             monto: porcentajeDescuentoRut
         });
-
-        await tiposDescuentoRut.update({
-            descuento5kg,
-            descuento11kg,
-            descuento15kg,
-            descuento45kg
-        });
-
+        
+        if(tiposDescuentoRut) {
+            await tiposDescuentoRut.update({
+                descuento5kg,
+                descuento11kg,
+                descuento15kg,
+                descuento45kg
+            });
+        }
         await gastos.update({
             monto: montoGastos,
             descripcion: DescripcionGastos
