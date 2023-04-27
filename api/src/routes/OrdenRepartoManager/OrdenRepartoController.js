@@ -259,6 +259,9 @@ const getAllOrdenesByDate = async (req, res) => {
                         },
                         {
                             model: DescuentoRut,
+                            include: [
+                                { model: TiposDescuentoRut }
+                            ]
                         },
                         {
                             model: Descuentos,
