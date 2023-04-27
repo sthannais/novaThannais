@@ -36,15 +36,35 @@ const ChangeLog = () => {
                 () => {
                     toggle();
                 }
-            } >Ver. 1.2.0
+            } >Ver. 1.3.0
             </button>
             <Modal isOpen={modal} toggle={toggle} style={
                 width > 768 ? modalStyles : modalStylesMobile
             } size="md" backdrop="static" onKeyDown={handleKeydown}>
                 <ModalHeader toggle={toggle}>Cambios recientes</ModalHeader>
                 <ModalBody>
+                    <h5>Ver. 1.3.0</h5>
+                    <em style={{ color: 'red' }}>27/04/2023</em>
+                    {
+                        verMas && name === 'Ver. 1.3.0' ? (
+                            <ul className={style.newli}>
+                                <li>Se habilita boton de cambiar personal en el detalle de la orden mientras esta activa</li>
+                                <li>Se le agrega formato moneda a excel de rendicion de personal y rendicion general</li>
+                                <li>Se agrega desglose de descuento rut al momento de cuadrar una guia, en 5kg, 11kg, 15kg y 45kg</li>
+                            </ul>
+                        ) : null
+                    }
+                    <br />
+                    <button onClick={
+                        () => {
+                            setVerMas(!verMas);
+                            setName('Ver. 1.3.0')
+                        }
+                    } className={style.verMas}>
+                        { verMas && name === 'Ver. 1.3.0' ? 'Ver menos...' : 'Ver mas...'}
+                    </button>
                     <h5>Ver. 1.2.0</h5>
-                    <em style={{ color: 'red' }}>17/06/2023</em>
+                    <em style={{ color: 'red' }}>17/04/2023</em>
                     {
                         verMas && name === 'Ver. 1.2.0' ? (
                             <ul className={style.newli}>
