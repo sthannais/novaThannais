@@ -1553,6 +1553,179 @@ const changeContabilidadRecargaById = async (req, res) => {
         res.status(400).json({error: error.message});
     }
 };
+
+//Cuadrar orden Aux
+const cuadrarOrdenAux = async (req, res) => {
+    const { id } = req.params;
+    const {
+        montoTransbank,
+        montoTransferencias,
+        porcentajeDescuentoRut,
+        descuento5kg,
+        descuento11kg,
+        descuento15kg,
+        descuento45kg,
+        porcentajeDescuento,
+        totalBilletes1,
+        totalBilletes2,
+        totalBilletes5,
+        totalBilletes10,
+        totalBilletes20,
+        monedas,
+        totalGeneral,
+        fisico5kg,
+        totalFisico5kg,
+        fisico11kg,
+        totalFisico11kg,
+        fisico15kg,
+        totalFisico15kg,
+        fisico45kg,
+        totalFisico45kg,
+        digital5kg,
+        totalDigital5kg,
+        digital11kg,
+        totalDigital11kg,
+        digital15kg,
+        totalDigital15kg,
+        digital45kg,
+        totalDigital45kg,
+        sumaTotalDigitalYFisico5kg,
+        sumaTotalDigitalYFisico11kg,
+        sumaTotalDigitalYFisico15kg,
+        sumaTotalDigitalYFisico45kg,
+        totalVales,
+        totalSumaVales,
+        faltanteChofer,
+        faltantePeoneta,
+        faltante,
+        sobrante,
+        idDeDecuadre,
+        montoGastos,
+        DescripcionGastos,
+        digitalRegalado5kg,
+        totalDigitalRegalado5kg,
+        digitalRegalado11kg,
+        totalDigitalRegalado11kg,
+        digitalRegalado15kg,
+        totalDigitalRegalado15kg,
+        digitalRegalado45kg,
+        totalDigitalRegalado45kg,
+        totalValesDigitalesRegalados,
+    } = req.body;
+
+    try {
+        const ordenDeReparto = await OrdenDeReparto.findByPk(id);
+
+        // if(ordenDeReparto.rendida === true){
+        //     return res.status(400).send({error: "La orden de reparto ya fue rendida"})
+        // }
+
+        await ordenDeReparto.update({
+            cuadradoPor: idDeDecuadre
+        })
+        const metodoPagos = await ordenDeReparto.getMetodoPagos();
+        const efectivo = await metodoPagos[0].getEfectivo();
+        const vales = await metodoPagos[0].getVale();
+        const transbank = await metodoPagos[0].getTransbank();
+        const transferencias = await metodoPagos[0].getTransferencia();
+        const descuentos = await metodoPagos[0].getDescuento();
+        const descuentoRut = await metodoPagos[0].getDescuentoRut();
+        const tiposDescuentoRut = await descuentoRut.getTiposDescuentoRut();
+        const gastos = await metodoPagos[0].getGasto();
+        const valesRegalados = await metodoPagos[0].getValesDigiRegalado();
+
+        await efectivo.update({
+            totalBilletes1,
+            totalBilletes2,
+            totalBilletes5,
+            totalBilletes10,
+            totalBilletes20,
+            monedas,
+            totalGeneral
+        });
+
+        await vales.update({
+                fisico5kg,
+                totalFisico5kg,
+                fisico11kg,
+                totalFisico11kg,
+                fisico15kg,
+                totalFisico15kg,
+                fisico45kg,
+                totalFisico45kg,
+                digital5kg,
+                totalDigital5kg,
+                digital11kg,
+                totalDigital11kg,
+                digital15kg,
+                totalDigital15kg,
+                digital45kg,
+                totalDigital45kg,
+                sumaTotalDigitalYFisico5kg,
+                sumaTotalDigitalYFisico11kg,
+                sumaTotalDigitalYFisico15kg,
+                sumaTotalDigitalYFisico45kg,
+                totalVales,
+                totalSumaVales
+        });
+
+        if(valesRegalados) {
+            await valesRegalados.update({
+                digital5kg: digitalRegalado5kg,
+                totalDigital5kg: totalDigitalRegalado5kg,
+                digital11kg: digitalRegalado11kg,
+                totalDigital11kg: totalDigitalRegalado11kg,
+                digital15kg: digitalRegalado15kg,
+                totalDigital15kg: totalDigitalRegalado15kg,
+                digital45kg: digitalRegalado45kg,
+                totalDigital45kg: totalDigitalRegalado45kg,
+                totalValesDigitales: totalValesDigitalesRegalados
+            }) 
+        }
+
+        await transbank.update({
+            monto: montoTransbank
+        });
+
+        await transferencias.update({
+            monto: montoTransferencias
+        });
+
+        await descuentos.update({
+            monto: porcentajeDescuento
+        });
+
+        await descuentoRut.update({
+            monto: porcentajeDescuentoRut
+        });
+        
+        if(tiposDescuentoRut) {
+            await tiposDescuentoRut.update({
+                descuento5kg,
+                descuento11kg,
+                descuento15kg,
+                descuento45kg
+            });
+        }
+        await gastos.update({
+            monto: montoGastos,
+            descripcion: DescripcionGastos
+        });
+
+        await ordenDeReparto.update({
+            faltante,
+            faltanteChofer,
+            faltantePeoneta,
+            rendida : true,
+            sobrante
+        });
+
+        res.json({msg: "Orden de reparto cuadrada correctamente"});
+    } catch (error) {
+        console.log(error.message);
+        res.status(400).json({error: error.message});
+    }
+}
     
 
 module.exports = {
@@ -1576,4 +1749,5 @@ module.exports = {
     cambiarAyudanteDeOrden,
     changeContabilidadOrdenById,
     changeContabilidadRecargaById,
+    cuadrarOrdenAux
 }

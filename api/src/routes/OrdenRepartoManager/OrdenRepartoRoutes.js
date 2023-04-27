@@ -22,7 +22,8 @@ const {
         cambiarChoferDeOrden,
         cambiarAyudanteDeOrden,
         changeContabilidadOrdenById,
-        changeContabilidadRecargaById
+        changeContabilidadRecargaById,
+        cuadrarOrdenAux
     } = require('./OrdenRepartoController');
 
 router.get('/', getOrdenesDeReparto);
@@ -37,6 +38,7 @@ router.put('/changeLlenos/:idOrden', changeLlenos);
 router.put('/finalize/:id', finalizeOrden);
 router.put('/finalizeAux/:id', finalizeOrdenAux);
 router.put('/cuadrar/:id', cuadrarOrden);
+router.put('/cuadrarAux/:id', cuadrarOrdenAux);
 router.put('/desactiveRecarga/:idOrden/:idRecarga', desactiveRecarga);
 router.put('/cambiarChoferOPeonetaDeOrden/:idOrden/:idChofer', cambiarChoferDeOrden);
 router.put('/cambiarAyudanteOPeonetaDeOrden/:idOrden/:idAyudante', cambiarAyudanteDeOrden);
