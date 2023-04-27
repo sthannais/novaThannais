@@ -81,11 +81,12 @@ const {
     Efectivo,
     Abonos,
     DescuentoRut,
+    TiposDescuentoRut,
     Descuentos,
     Vales,
     Gastos,
     NumeroDeMaquina,
-    ValesDigiRegalados
+    ValesDigiRegalados,
     } = sequelize.models;
 
 // Relaciones entre los modelos
@@ -218,6 +219,13 @@ MetodoPagos.hasOne(DescuentoRut, { foreignKey: 'fk_MetodoPagosID', targetKey: 'i
   onUpdate: 'CASCADE'
 });
 DescuentoRut.belongsTo(MetodoPagos, { foreignKey: 'fk_MetodoPagosID', targetKey: 'id' });
+
+//Relacion entre descuentoRut y TiposDescuentoRut
+DescuentoRut.hasOne(TiposDescuentoRut, { foreignKey: 'fk_descuentoRutID', targetKey: 'id' }, {
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE'
+});
+TiposDescuentoRut.belongsTo(DescuentoRut, { foreignKey: 'fk_descuentoRutID', targetKey: 'id' });
 
 //Relacion entre metodo de pago y gastos
 MetodoPagos.hasOne(Gastos, { foreignKey: 'fk_MetodoPagosID', targetKey: 'id' }, {

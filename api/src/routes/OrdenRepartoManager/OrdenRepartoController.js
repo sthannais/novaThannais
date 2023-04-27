@@ -11,6 +11,7 @@ const { OrdenDeReparto,
         MetodoPagos,
         Abonos,
         DescuentoRut,
+        TiposDescuentoRut,
         Descuentos,
         Vales,
         ValesDigiRegalados,
@@ -79,9 +80,12 @@ const getOrdenesDeReparto = async (req, res) => {
                         },
                         {
                             model: DescuentoRut,
+                            include: [
+                                { model: TiposDescuentoRut }
+                            ]
                         },
                         {
-                            model: Descuentos,
+                            model: Descuentos
                         },
                         {
                             model: Vales,
@@ -637,6 +641,7 @@ const createOrden = async (req, res) => {
         const efectivo = await Efectivo.create();
         const abonos = await Abonos.create();
         const descuentoRut = await DescuentoRut.create();
+        const tiposDescuentoRut = await TiposDescuentoRut.create();
         const descuentos = await Descuentos.create();
         const vales = await Vales.create();
         const valesDigiRegalados = await ValesDigiRegalados.create();
@@ -647,6 +652,7 @@ const createOrden = async (req, res) => {
         await metodoPagos.setAbono(abonos);
         await metodoPagos.setDescuentoRut(descuentoRut);
         await metodoPagos.setDescuento(descuentos);
+        await descuentoRut.setTiposDescuentoRut(tiposDescuentoRut);
         await metodoPagos.setVale(vales);
         await metodoPagos.setValesDigiRegalado(valesDigiRegalados);
         await metodoPagos.setTransbank(transbank);
@@ -1157,6 +1163,10 @@ const cuadrarOrden = async (req, res) => {
         montoTransbank,
         montoTransferencias,
         porcentajeDescuentoRut,
+        descuento5kg,
+        descuento11kg,
+        descuento15kg,
+        descuento45kg,
         porcentajeDescuento,
         totalBilletes1,
         totalBilletes2,
@@ -1223,6 +1233,7 @@ const cuadrarOrden = async (req, res) => {
         const transferencias = await metodoPagos[0].getTransferencia();
         const descuentos = await metodoPagos[0].getDescuento();
         const descuentoRut = await metodoPagos[0].getDescuentoRut();
+        const tiposDescuentoRut = await descuentoRut.getTiposDescuentoRut();
         const gastos = await metodoPagos[0].getGasto();
         const valesRegalados = await metodoPagos[0].getValesDigiRegalado();
 
@@ -1319,6 +1330,13 @@ const cuadrarOrden = async (req, res) => {
 
         await descuentoRut.update({
             monto: porcentajeDescuentoRut
+        });
+
+        await tiposDescuentoRut.update({
+            descuento5kg,
+            descuento11kg,
+            descuento15kg,
+            descuento45kg
         });
 
         await gastos.update({

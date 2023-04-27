@@ -65,12 +65,12 @@ const PersonalSellTable = ({id}) => {
                 'peoneta': post?.ayudante?.personal?.name && post?.ayudante?.personal?.lastname ? 
                 post?.ayudante?.personal?.name + ' ' + post?.ayudante?.personal?.lastname : 
                 'Sin peoneta',
-                '5kg': post.contabilidadRecarga.ventas5kg,
-                '11kg': post.contabilidadRecarga.ventas11kg,
-                '15kg': post.contabilidadRecarga.ventas15kg,
-                '45kg': post.contabilidadRecarga.ventas45kg,
-                'Cilindros': post.contabilidadRecarga.totalCantidad,
-                'Total': post.contabilidadRecarga.totalRecaudacion,
+                '5kg': Number(post.contabilidadRecarga.ventas5kg),
+                '11kg': Number(post.contabilidadRecarga.ventas11kg),
+                '15kg': Number(post.contabilidadRecarga.ventas15kg),
+                '45kg': Number(post.contabilidadRecarga.ventas45kg),
+                'Cilindros': Number(post.contabilidadRecarga.totalCantidad),
+                'Total': Number(post.contabilidadRecarga.totalRecaudacion),
             };
         });
         const saveAs = function (blob, fileName) {
@@ -88,7 +88,6 @@ const PersonalSellTable = ({id}) => {
         ws.row(2).height(20);
 
         //le agrego width a las columnas 
-
         ws.column(1).width(20);
         ws.column(2).width(10);
         ws.column(3).width(20);
@@ -97,6 +96,7 @@ const PersonalSellTable = ({id}) => {
         ws.column(6).width(20);
         ws.column(7).width(15);
         ws.column(8).width(15);
+        ws.column(10).width(15);
 
         ws.row(2).cell(1).value('Numero de orden').style({
             border: true,
@@ -146,10 +146,12 @@ const PersonalSellTable = ({id}) => {
         ws.row(2).cell(10).value('Total').style({
             border: true,
             fill: '8d99ae',
-            bold : true
+            bold : true,
+            numberFormat: '$#,##0'
         })
         
         for(let i = 0; i < data.length; i++) {
+            //le agrego el valor a cada celda y le doy formato a la celda de tipo numero
             ws.row(i + 3).cell(1).value(data[i]['Numero de orden']);
             ws.row(i + 3).cell(2).value(data[i]['Fecha']);
             ws.row(i + 3).cell(3).value(data[i]['chofer']);
@@ -159,7 +161,9 @@ const PersonalSellTable = ({id}) => {
             ws.row(i + 3).cell(7).value(data[i]['15kg']);
             ws.row(i + 3).cell(8).value(data[i]['45kg']);
             ws.row(i + 3).cell(9).value(data[i]['Cilindros']);
-            ws.row(i + 3).cell(10).value(data[i]['Total']);
+            ws.row(i + 3).cell(10).value(data[i]['Total']).style({
+                numberFormat: '$#,##0'
+            });
         }
 
         wb.outputAsync().then(function (blob) {
@@ -236,11 +240,11 @@ const PersonalSellTable = ({id}) => {
                                         <td>{orden.fecha}</td>
                                         <td>{orden.chofer.personal.name + " " + orden.chofer.personal.lastname}</td>
                                         <td>{orden.ayudante ? orden.ayudante.personal.name + " " + orden.ayudante.personal.lastname : "Sin peoneta"}</td>
-                                        <td>{orden.contabilidadRecarga.ventas5kg}</td>
-                                        <td>{orden.contabilidadRecarga.ventas11kg}</td>
-                                        <td>{orden.contabilidadRecarga.ventas15kg}</td>
-                                        <td>{orden.contabilidadRecarga.ventas45kg}</td>
-                                        <td>{orden.contabilidadRecarga.totalCantidad}</td>
+                                        <td>{Number(orden.contabilidadRecarga.ventas5kg)}</td>
+                                        <td>{Number(orden.contabilidadRecarga.ventas11kg)}</td>
+                                        <td>{Number(orden.contabilidadRecarga.ventas15kg)}</td>
+                                        <td>{Number(orden.contabilidadRecarga.ventas45kg)}</td>
+                                        <td>{Number(orden.contabilidadRecarga.totalCantidad)}</td>
                                         <td>{orden.contabilidadRecarga.totalRecaudacion ? numberWithDots(orden.contabilidadRecarga.totalRecaudacion) : 0}</td>
                                     </tr>
                                 ))}
@@ -248,9 +252,9 @@ const PersonalSellTable = ({id}) => {
                         </Table>
                     </InfiniteScroll>
                 </div>
-                <button onClick={loadMore} className={style.boton}>
+                {/* <button onClick={loadMore} className={style.boton}>
                     Cargar mas
-                </button>
+                </button> */}
             </div>
         </div>
     )

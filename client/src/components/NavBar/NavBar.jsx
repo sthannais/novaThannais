@@ -20,7 +20,7 @@ const NavBar = () => {
 
     const [buttonSelected, setButtonSelected] = useState('')
 
-    ////// Estados para navbar version movil //////
+    // Estados para version movil
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [timeToDesplegate, setTimeToDesplegate] = useState(false);
@@ -41,7 +41,7 @@ const NavBar = () => {
             }
         }
     };
-    console.log('isMenuOpen', isMenuOpen)
+
     const navBarRef = useRef(null);
 
     // const handleClickOutside = (event) => {
@@ -59,7 +59,7 @@ const NavBar = () => {
 
     useEffect(() => {
         if (isDesktop) setIsMenuOpen(false);
-    }, []);
+    }, [isDesktop]);
 
     return (
         <div>

@@ -42,3 +42,9 @@ margin: 0;
 .tabla {
     font-family: 'Roboto';
 }
+
+.botonCambioPersonal2 {
+    position: absolute;
+    left: 31.5rem;
+    top: 1rem;
+}

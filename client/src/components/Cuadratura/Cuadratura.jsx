@@ -27,6 +27,26 @@ const Cuadratura = ({ novaOrdenById }) => {
         setCloseAll(false);
     }
 
+    //Estados para descuento rut
+    const [modalDescuentoRut, setModalDescuentoRut] = useState(false);
+    const toggleDescuentoRut = () => setModalDescuentoRut(!modalDescuentoRut);
+
+    const [descuentoRut, setDescuentoRut] = useState({
+        descuento5kg: '',
+        descuento11kg: '',
+        descuento15kg: '',
+        descuento45kg: '',
+        porcentajeDescuentoRut: ''
+    })
+
+    const [descuentoRutNumber, setDescuentoRutNumber] = useState({	
+        descuento5kg: 0,
+        descuento11kg: 0,
+        descuento15kg: 0,
+        descuento45kg: 0,
+        porcentajeDescuentoRut: 0
+    })
+
     const [idDeDecuadre, setIdDeDecuadre] = useState({
         idDeDecuadre : 0,
     })
@@ -107,14 +127,12 @@ const Cuadratura = ({ novaOrdenById }) => {
     const [metodoPagos, setMetodoPagos] = useState({
         montoTransbank : "",
         montoTransferencias : "",
-        porcentajeDescuentoRut : "",
         porcentajeDescuento : "",
     })
 
     const [metodoPagosNumber, setMetodoPagosNumber] = useState({
         montoTransbank : 0,
         montoTransferencias : 0,
-        porcentajeDescuentoRut : 0,
         porcentajeDescuento : 0,
     })
 
@@ -134,7 +152,7 @@ const Cuadratura = ({ novaOrdenById }) => {
         sobrante : 0,
     })
 
-    ///////// GASTOS /////////
+    //Gastos
 
     const [gastos, setGastos] = useState({
         montoGastos: '',
@@ -200,7 +218,7 @@ const Cuadratura = ({ novaOrdenById }) => {
             ) - (
                 Number(metodoPagosNumber.montoTransferencias) 
             ) - (
-                Number(metodoPagosNumber.porcentajeDescuentoRut) 
+                Number(descuentoRutNumber.porcentajeDescuentoRut) 
             ) - (
                 Number(metodoPagosNumber.porcentajeDescuento)
             ) - (
@@ -251,7 +269,6 @@ const Cuadratura = ({ novaOrdenById }) => {
         vales.totalSumaVales,
         metodoPagos.montoTransbank,
         metodoPagos.montoTransferencias,
-        metodoPagos.porcentajeDescuentoRut,
         metodoPagos.porcentajeDescuento,
         totalRecaudacion.totalRecaudacion,
         novaOrdenById?.contabilidadRecarga?.totalRecaudacion,
@@ -274,7 +291,8 @@ const Cuadratura = ({ novaOrdenById }) => {
         valesDigitalesRegalados.totalDigitalRegalado11kg,
         valesDigitalesRegalados.totalDigitalRegalado15kg,
         valesDigitalesRegalados.totalDigitalRegalado45kg,
-        valesDigitalesRegalados.totalValesDigitalesRegalados
+        valesDigitalesRegalados.totalValesDigitalesRegalados,
+        descuentoRutNumber.porcentajeDescuentoRut
     ])
 
     useEffect(() => {
@@ -288,7 +306,7 @@ const Cuadratura = ({ novaOrdenById }) => {
             ) + (
                 Number(metodoPagosNumber.montoTransferencias) 
             ) + (
-                Number(metodoPagosNumber.porcentajeDescuentoRut) 
+                Number(descuentoRutNumber.porcentajeDescuentoRut) 
             ) + (
                 Number(metodoPagosNumber.porcentajeDescuento)
             ) + (
@@ -333,7 +351,6 @@ const Cuadratura = ({ novaOrdenById }) => {
         vales.totalSumaVales,
         metodoPagos.montoTransbank,
         metodoPagos.montoTransferencias,
-        metodoPagos.porcentajeDescuentoRut,
         metodoPagos.porcentajeDescuento,
         totalRecaudacion.totalRecaudacion,
         novaOrdenById?.contabilidadRecarga?.totalRecaudacion,
@@ -356,7 +373,25 @@ const Cuadratura = ({ novaOrdenById }) => {
         valesDigitalesRegalados.totalDigitalRegalado11kg,
         valesDigitalesRegalados.totalDigitalRegalado15kg,
         valesDigitalesRegalados.totalDigitalRegalado45kg,
-        valesDigitalesRegalados.totalValesDigitalesRegalados
+        valesDigitalesRegalados.totalValesDigitalesRegalados,
+        descuentoRutNumber.porcentajeDescuentoRut
+    ])
+
+    useEffect(() => {
+        setDescuentoRut({
+            ...descuentoRut,
+            porcentajeDescuentoRut: descuentoRutNumber.porcentajeDescuentoRut.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ',')
+        })
+        setDescuentoRutNumber({
+            ...descuentoRutNumber,
+            porcentajeDescuentoRut: descuentoRutNumber.descuento5kg + descuentoRutNumber.descuento11kg + descuentoRutNumber.descuento15kg + descuentoRutNumber.descuento45kg
+        })
+    }, [
+        descuentoRutNumber.descuento5kg,
+        descuentoRutNumber.descuento11kg,
+        descuentoRutNumber.descuento15kg,
+        descuentoRutNumber.descuento45kg,
+        descuentoRutNumber.porcentajeDescuentoRut
     ])
 
     useEffect(() => {
@@ -419,6 +454,19 @@ const Cuadratura = ({ novaOrdenById }) => {
         })
         setMetodoPagosNumber({
             ...metodoPagosNumber,
+            [e.target.name] : formatted ? parseInt(formatted.replace(/,/g, '')) : 0
+        })
+    }
+
+    const handleDescuentoRutChange = (e) => {
+        const inputValue = e.target.value
+        const formatted = inputValue.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ',')
+        setDescuentoRut({
+            ...descuentoRut,
+            [e.target.name] : formatted
+        })
+        setDescuentoRutNumber({
+            ...descuentoRutNumber,
             [e.target.name] : formatted ? parseInt(formatted.replace(/,/g, '')) : 0
         })
     }
@@ -542,13 +590,11 @@ const Cuadratura = ({ novaOrdenById }) => {
         setMetodoPagos({
             montoTransbank : "",
             montoTransferencias : "",
-            porcentajeDescuentoRut : "",
             porcentajeDescuento : "",
         })
         setMetodoPagosNumber({
             montoTransbank : 0,
             montoTransferencias : 0,
-            porcentajeDescuentoRut : 0,
             porcentajeDescuento : 0,
         })
 
@@ -607,6 +653,24 @@ const Cuadratura = ({ novaOrdenById }) => {
         })
     }
 
+    const cleanDescuentoRut = () => {
+        setDescuentoRut({
+            descuento5kg : "",
+            descuento11kg : "",
+            descuento15kg : "",
+            descuento45kg : "",
+            porcentajeDescuentoRut : "",
+        })
+
+        setDescuentoRutNumber({
+            descuento5kg : 0,
+            descuento11kg : 0,
+            descuento15kg : 0,
+            descuento45kg : 0,
+            porcentajeDescuentoRut : 0,
+        })
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(cuadrarOrden(novaOrdenById.id, {
@@ -619,7 +683,8 @@ const Cuadratura = ({ novaOrdenById }) => {
             ...sobrante,
             ...idDeDecuadre,
             ...gastosNumber,
-            ...valesDigitalesRegalados
+            ...valesDigitalesRegalados,
+            ...descuentoRutNumber
         }))
         cleanStates();
         cleanFaltantes();
@@ -1008,23 +1073,100 @@ const Cuadratura = ({ novaOrdenById }) => {
                                 <div style={{
                                     paddingBlock: '0.5rem'
                                 }}>
-                                    <p style={{
-                                        fontSize: '18px',
-                                        fontWeight: 'bold',
-                                        fontFamily: 'Roboto',
-                                    }}>
+                                    <Button onClick={
+                                        () => {
+                                            toggleDescuentoRut();
+                                        }
+                                    }>
                                         Descuento Rut
-                                    </p>
-                                    <Input
-                                        type="text"
-                                        name="porcentajeDescuentoRut"
-                                        id="porcentajeDescuentoRut"
-                                        value={metodoPagos.porcentajeDescuentoRut === 0 ? "" : metodoPagos.porcentajeDescuentoRut}
-                                        className={style.inputs2}
-                                        onChange={(e) => handleMetodoPagosChange(e)}
-                                        min={0}
-                                        autoComplete="off"
-                                    />
+                                    </Button>
+                                    <Modal isOpen={modalDescuentoRut} style={{
+                                        fontFamily: 'Roboto',
+                                        fontWeight: 'bold',
+                                    }} toggle={toggleDescuentoRut} backdrop="static" onKeyDown={handleKeydown} size='sm'>
+                                        <ModalHeader>
+                                            Descuento Rut
+                                        </ModalHeader>
+                                        <ModalBody>
+                                            <FormGroup>
+                                                <Label className={style.textInputDescuento}>Descuento 5kg</Label>
+                                                <Input
+                                                    type='text'
+                                                    name='descuento5kg'
+                                                    id='descuento5kg'
+                                                    value={descuentoRut.descuento5kg === 0 ? "" : descuentoRut.descuento5kg}
+                                                    className={style.inputs5}
+                                                    onChange={(e) => handleDescuentoRutChange(e)}
+                                                    min={0}
+                                                    autoComplete='off'
+                                                />
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <Label className={style.textInputDescuento}>Descuento 11kg</Label>
+                                                <Input
+                                                    type='text'
+                                                    name='descuento11kg'
+                                                    id='descuento11kg'
+                                                    value={descuentoRut.descuento11kg === 0 ? "" : descuentoRut.descuento11kg}
+                                                    className={style.inputs5}
+                                                    onChange={(e) => handleDescuentoRutChange(e)}
+                                                    min={0}
+                                                    autoComplete='off'
+                                                />
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <Label className={style.textInputDescuento}>Descuento 15kg</Label>
+                                                <Input
+                                                    type='text'
+                                                    name='descuento15kg'
+                                                    id='descuento15kg'
+                                                    value={descuentoRut.descuento15kg === 0 ? "" : descuentoRut.descuento15kg}
+                                                    className={style.inputs5}
+                                                    onChange={(e) => handleDescuentoRutChange(e)}
+                                                    min={0}
+                                                    autoComplete='off'
+                                                />
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <Label className={style.textInputDescuento}>Descuento 45kg</Label>
+                                                <Input
+                                                    type='text'
+                                                    name='descuento45kg'
+                                                    id='descuento45kg'
+                                                    value={descuentoRut.descuento45kg === 0 ? "" : descuentoRut.descuento45kg}
+                                                    className={style.inputs5}
+                                                    onChange={(e) => handleDescuentoRutChange(e)}
+                                                    min={0}
+                                                    autoComplete='off'
+                                                />
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <Label className={style.textInputDescuento}>Descuento Total</Label>
+                                                <Input  
+                                                    type='text'
+                                                    name='porcentajeDescuentoRut'
+                                                    id='porcentajeDescuentoRut'
+                                                    value={descuentoRut.porcentajeDescuentoRut === 0 ? "" : descuentoRut.porcentajeDescuentoRut}
+                                                    className={style.inputs5}
+                                                    onChange={(e) => handleDescuentoRutChange(e)}
+                                                    disabled
+                                                />
+                                            </FormGroup>
+                                        </ModalBody>
+                                        <ModalFooter>
+                                            <Button onClick={() => {
+                                                setModalDescuentoRut(false)
+                                                cleanDescuentoRut();
+                                            }}>
+                                                Cancelar
+                                            </Button>
+                                            <Button onClick={() => {
+                                                setModalDescuentoRut(false)
+                                            }} color='primary'>
+                                                Guardar
+                                            </Button>
+                                        </ModalFooter>
+                                    </Modal>
                                 </div>
                             </div>
                         </div>
