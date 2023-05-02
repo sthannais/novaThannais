@@ -1728,7 +1728,7 @@ const cuadrarOrdenAux = async (req, res) => {
 }
     
 const changeListaDePreciosInOrdenDeReparto = async (req, res) => {
-    const {idOrden, listaDePreciosId} = req.body;
+    const {idOrden, listaDePreciosId} = req.params;
 
     try {
         const ordenDeReparto = await OrdenDeReparto.findByPk(idOrden);
