@@ -252,9 +252,9 @@ const PersonalSellTable = ({id}) => {
                         </Table>
                     </InfiniteScroll>
                 </div>
-                {/* <button onClick={loadMore} className={style.boton}>
+                <button onClick={loadMore} className={style.boton}>
                     Cargar mas
-                </button> */}
+                </button>
             </div>
         </div>
     )
