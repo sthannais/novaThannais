@@ -1728,12 +1728,12 @@ const cuadrarOrdenAux = async (req, res) => {
 }
     
 const changeListaDePreciosInOrdenDeReparto = async (req, res) => {
-    const {id, listaDePreciosId} = req.body;
+    const {idOrden, listaDePreciosId} = req.body;
 
     try {
-        const ordenDeReparto = await OrdenDeReparto.findByPk(id);
+        const ordenDeReparto = await OrdenDeReparto.findByPk(idOrden);
 
-        const listaDePrecios = await ListaDePrecio.findByPk(listaDePreciosId);
+        const listaDePrecios = await ListaDePrecios.findByPk(listaDePreciosId);
 
         await ordenDeReparto.setsetListaDePrecio(listaDePrecios);
 
