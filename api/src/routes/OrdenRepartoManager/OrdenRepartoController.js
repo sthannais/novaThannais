@@ -1735,7 +1735,7 @@ const changeListaDePreciosInOrdenDeReparto = async (req, res) => {
 
         const listaDePrecios = await ListaDePrecios.findByPk(listaDePreciosId);
 
-        await ordenDeReparto.setsetListaDePrecio(listaDePrecios);
+        await ordenDeReparto.setListaDePrecio(listaDePrecios);
 
         res.json({msg: "Lista de precios cambiada correctamente"});
     } catch (error) {
