@@ -1727,6 +1727,22 @@ const cuadrarOrdenAux = async (req, res) => {
     }
 }
     
+const changeListaDePreciosInOrdenDeReparto = async (req, res) => {
+    const {idOrden, listaDePreciosId} = req.params;
+
+    try {
+        const ordenDeReparto = await OrdenDeReparto.findByPk(idOrden);
+
+        const listaDePrecios = await ListaDePrecios.findByPk(listaDePreciosId);
+
+        await ordenDeReparto.setsetListaDePrecio(listaDePrecios);
+
+        res.json({msg: "Lista de precios cambiada correctamente"});
+    } catch (error) {
+        console.log(error.message);
+        res.status(400).json({error: error.message});
+    }
+}
 
 module.exports = {
     getOrdenesDeReparto,
@@ -1749,5 +1765,6 @@ module.exports = {
     cambiarAyudanteDeOrden,
     changeContabilidadOrdenById,
     changeContabilidadRecargaById,
-    cuadrarOrdenAux
+    cuadrarOrdenAux,
+    changeListaDePreciosInOrdenDeReparto
 }
