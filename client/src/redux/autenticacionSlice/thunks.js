@@ -27,7 +27,7 @@ export const fetchLoginThunk = (email, password) => {
                 dispatch(setError(body.msg));
             }
         } catch (error) {
-            console.log(error);
+            console.log("Error en el login");
         }
     }
 };
