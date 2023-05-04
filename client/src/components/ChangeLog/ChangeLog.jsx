@@ -43,6 +43,25 @@ const ChangeLog = () => {
             } size="md" backdrop="static" onKeyDown={handleKeydown}>
                 <ModalHeader toggle={toggle}>Cambios recientes</ModalHeader>
                 <ModalBody>
+                    <h5>Ver. 1.4.0</h5>
+                    <em style={{ color: 'red' }}>04/05/2023</em>
+                    {
+                        verMas && name === 'Ver. 1.4.0' ? (
+                            <ul className={style.newli}>
+                                <li>Se corrige suma en Rendicion General en donde no sumaba los vales regalados</li>
+                                <li>Se corrige exportacion a excel por fecha para que incluya los vales regalados de las rendiciones</li>
+                            </ul>
+                        ) : null
+                    }
+                    <br />
+                    <button onClick={
+                        () => {
+                            setVerMas(!verMas);
+                            setName('Ver. 1.4.0')
+                        }
+                    } className={style.verMas}>
+                        { verMas && name === 'Ver. 1.4.0' ? 'Ver menos...' : 'Ver mas...'}
+                    </button>
                     <h5>Ver. 1.3.0</h5>
                     <em style={{ color: 'red' }}>27/04/2023</em>
                     {

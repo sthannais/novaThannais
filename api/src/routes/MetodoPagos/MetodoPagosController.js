@@ -618,6 +618,9 @@ const getAllOrdenesEstructuradas = async (req, res, next) => {
                                 model: Vales,
                             },
                             {
+                                model: ValesDigiRegalados
+                            },
+                            {
                                 model: Efectivo,
                             },
                             {
@@ -662,6 +665,9 @@ const getAllOrdenesEstructuradas = async (req, res, next) => {
                             },
                             {
                                 model: Vales,
+                            },
+                            {
+                                model: ValesDigiRegalados
                             },
                             {
                                 model: Efectivo,
@@ -713,6 +719,15 @@ const getAllOrdenesEstructuradas = async (req, res, next) => {
                 valorValedigital15kg: Number(orden.metodoPagos[0].vale.totalDigital15kg),
                 cantidadVale45kgDigital: Number(orden.metodoPagos[0].vale.digital45kg),
                 valorValedigital45kg: Number(orden.metodoPagos[0].vale.totalDigital45kg),
+                cantidadValesRegalados5kg: Number(orden.metodoPagos[0].valesDigiRegalado.digital5kg),
+                valorValesRegalados5kg: Number(orden.metodoPagos[0].valesDigiRegalado.totalDigital5kg),
+                cantidadValesRegalados11kg: Number(orden.metodoPagos[0].valesDigiRegalado.digital11kg),
+                valorValesRegalados11kg: Number(orden.metodoPagos[0].valesDigiRegalado.totalDigital11kg),
+                cantidadValesRegalados15kg: Number(orden.metodoPagos[0].valesDigiRegalado.digital15kg),
+                valorValesRegalados15kg: Number(orden.metodoPagos[0].valesDigiRegalado.totalDigital15kg),
+                cantidadValesRegalados45kg: Number(orden.metodoPagos[0].valesDigiRegalado.digital45kg),
+                valorValesRegalados45kg: Number(orden.metodoPagos[0].valesDigiRegalado.totalDigital45kg),
+                totalValesDigiRegalados: Number(orden.metodoPagos[0].valesDigiRegalado.totalValesDigitales),
                 totalSuma: Number(orden.metodoPagos[0].vale.totalSumaVales),
                 efectivo: Number(orden.metodoPagos[0].efectivo.totalGeneral),
                 transferencias: Number(orden.metodoPagos[0].transferencia.monto),
