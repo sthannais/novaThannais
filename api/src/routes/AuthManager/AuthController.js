@@ -49,9 +49,8 @@ const login = async (req, res) => {
             token
         });
     } catch (error) {
-        console.log(error);
         res.status(500).json({
-            message: error.message
+            message: "No se pudo iniciar sesión"
         });
     };
 };

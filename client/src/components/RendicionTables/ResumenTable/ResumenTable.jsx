@@ -6,6 +6,7 @@ const ResumenTable = ({ cuadratura, faltantes, tablaRef }) => {
 
     const sumaDeTodo =  Number(cuadratura?.totalVales?.totalSumaVales) + 
                         Number(cuadratura?.totalEfectivo?.totalGeneral) + 
+                        Number(cuadratura?.totalValesRegalados?.totalSumaValesRegalados) +
                         Number(cuadratura?.totalTransferencia) + 
                         Number(cuadratura?.totalDescuentosRut) + 
                         Number(cuadratura?.totalDescuentos) + 
@@ -38,6 +39,10 @@ const ResumenTable = ({ cuadratura, faltantes, tablaRef }) => {
                         <tr>
                             <td>Vales</td>
                             <th>{cuadratura?.totalVales?.totalSumaVales ? numberWithDots(cuadratura?.totalVales?.totalSumaVales) : 0 }</th>
+                        </tr>
+                        <tr>
+                            <td>Vales Regalados</td>
+                            <th>{cuadratura?.totalValesRegalados?.totalSumaValesRegalados ? numberWithDots(cuadratura?.totalValesRegalados?.totalSumaValesRegalados) : 0}</th>
                         </tr>
                         <tr>
                             <td>Efectivo</td>
