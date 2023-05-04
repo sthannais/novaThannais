@@ -36,7 +36,7 @@ const ChangeLog = () => {
                 () => {
                     toggle();
                 }
-            } >Ver. 1.3.0
+            } >Ver. 1.4.0
             </button>
             <Modal isOpen={modal} toggle={toggle} style={
                 width > 768 ? modalStyles : modalStylesMobile
