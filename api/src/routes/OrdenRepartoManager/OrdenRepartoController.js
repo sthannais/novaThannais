@@ -19,15 +19,13 @@ const { OrdenDeReparto,
         Transferencias,
         Transbank,
         Gastos,
-        InventarioVales, 
-        InventarioValesDigitalesRegalados,
-        NumeroDeMaquina
+        NumeroDeMaquina,
     } = require('../../db.js');
 
 const { Op } = require('sequelize');
 const  transporter  = require('../../helpers/mailer');
 
-///////////////////// GET //////////////////////
+// GET
 
 const getOrdenesDeReparto = async (req, res) => {
     try {
@@ -1220,7 +1218,7 @@ const cuadrarOrden = async (req, res) => {
 
     try {
         const ordenDeReparto = await OrdenDeReparto.findByPk(id);
-        const inventario = await InventarioVales.findByPk(1);
+        
 
         // if(ordenDeReparto.rendida === true){
         //     return res.status(400).send({error: "La orden de reparto ya fue rendida"})
@@ -1274,7 +1272,7 @@ const cuadrarOrden = async (req, res) => {
                 totalVales,
                 totalSumaVales
         });
-
+        
         if(valesRegalados) {
             await valesRegalados.update({
                 digital5kg: digitalRegalado5kg,
@@ -1291,33 +1289,7 @@ const cuadrarOrden = async (req, res) => {
 
         const totalValesFisicos = Number(fisico5kg) + Number(fisico11kg) + Number(fisico15kg) + Number(fisico45kg);
         const totalValesDigitales = Number(digital5kg) + Number(digital11kg) + Number(digital15kg) + Number(digital45kg);
-        const totalValesDigitalesYFisicos = Number(totalValesFisicos) + Number(totalValesDigitales);
-
-        await inventario.update({
-            fisico5kg: Number(inventario.fisico5kg) + Number(fisico5kg),
-            fisico11kg: Number(inventario.fisico11kg) + Number(fisico11kg),
-            fisico15kg: Number(inventario.fisico15kg) + Number(fisico15kg),
-            fisico45kg: Number(inventario.fisico45kg) + Number(fisico45kg),
-            digital5kg: Number(inventario.digital5kg) + Number(digital5kg),
-            digital11kg: Number(inventario.digital11kg) + Number(digital11kg),
-            digital15kg: Number(inventario.digital15kg) + Number(digital15kg),
-            digital45kg: Number(inventario.digital45kg) + Number(digital45kg),
-            totalValesFisicos: Number(inventario.totalValesFisicos) + Number(totalValesFisicos),
-            totalValesDigitales: Number(inventario.totalValesDigitales) + Number(totalValesDigitales),
-            totalValesAmbos: Number(inventario.totalValesAmbos) + Number(totalValesDigitalesYFisicos)
-        });
-
-        if(digitalRegalado11kg || digitalRegalado15kg || digitalRegalado45kg || digitalRegalado5kg || totalValesDigitalesRegalados){
-            const inventarioRegalados = await InventarioValesDigitalesRegalados.findByPk(1);
-
-            await inventarioRegalados.update({
-                digital5kg: Number(inventarioRegalados.digital5kg) + Number(digitalRegalado5kg),
-                digital11kg: Number(inventarioRegalados.digital11kg) + Number(digitalRegalado11kg),
-                digital15kg: Number(inventarioRegalados.digital15kg) + Number(digitalRegalado15kg),
-                digital45kg: Number(inventarioRegalados.digital45kg) + Number(digitalRegalado45kg),
-                totalValesDigitales : Number(inventarioRegalados.totalValesDigitales) + Number(totalValesDigitalesRegalados)
-            });
-        }
+        const totalValesDigiRegalados = Number(digitalRegalado5kg) + Number(digitalRegalado11kg) + Number(digitalRegalado15kg) + Number(digitalRegalado45kg);
 
         await transbank.update({
             monto: montoTransbank

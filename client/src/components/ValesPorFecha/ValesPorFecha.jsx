@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Form }  from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter }  from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { CgRowLast } from 'react-icons/cg';

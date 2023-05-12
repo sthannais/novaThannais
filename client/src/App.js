@@ -4,6 +4,7 @@ import MainPage from './components/MainPage/MainPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import GuidePage from './components/GuidePage/GuidePage';
 import NavBar from './components/NavBar/NavBar';
+import NavBarNew from './components/NavBarNew/NavBarNew';
 import RendicionPage from './components/RendicionPage/RendicionPage';
 import RendicionGeneral from './components/RendicionGeneral/RendicionGeneral';
 import PersonalSellTable from './components/TablesPayments/PersonalSellTable/PersonalSellTable';
