@@ -35,7 +35,8 @@ import {
         getValesPorFecha,
         getUltimosVales,
         getRegistroDescargaVales,
-        getValesDigitalesRegalados
+        getValesDigitalesRegalados,
+        getAceptarVales
     } from './novaSlice';
 
 export const getAllOrdenes = (date) => async (dispatch) => {
@@ -1134,4 +1135,6 @@ export const descargarExcelVentaDeTarros = async (date1, date2) => {
         console.error(error.message);
     }
 }
+
+
 

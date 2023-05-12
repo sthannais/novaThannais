@@ -9,6 +9,7 @@ import MetricaVales from '../MetricaVales/MetricaVales';
 import EnviarVales from '../EnviarVales/EnviarVales';
 import HistorialSalidaVales from '../HistorialSalidaVales/HistorialSalidaVales';
 import InventarioValesDigitalesRegalados from '../InventarioValesRegalados/InventarioValesRegalados';
+import AceptarVales from '../AceptarVales/AceptarVales';
 import style from './inventarioVales.module.css'
 
 const InventarioVales = () => {
