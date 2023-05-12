@@ -35,8 +35,7 @@ import {
         getValesPorFecha,
         getUltimosVales,
         getRegistroDescargaVales,
-        getValesDigitalesRegalados,
-        getAceptarVales
+        getValesDigitalesRegalados
     } from './novaSlice';
 
 export const getAllOrdenes = (date) => async (dispatch) => {
