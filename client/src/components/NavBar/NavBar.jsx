@@ -168,6 +168,27 @@ const NavBar = () => {
                                 </button>
                             </div>
                         </div>
+                    ) : email === 'rendicion1@jorgegas.cl' || 
+                        email === 'rendicion2@jorgegas.cl' ? (
+                            <div>
+                            <p className={style.completeName}>{name + " " + lastname}</p>
+                            <p className={style.rolStyle}>Administrador</p>
+
+                            <div className={style.grid1}>
+                                <Link to="/rendicion">
+                                    <button onClick={
+                                        () => setButtonSelected('rendicion')
+                                    } className={
+                                        buttonSelected === 'rendicion' ? style.guideStyleSelected : style.guideStyle
+                                    }>
+                                        Rendición de ventas
+                                    </button>
+                                </Link>
+                                <button className={style.guideStyle} onClick={handleLogout}>
+                                    Cerrar sesión
+                                </button>
+                            </div>
+                        </div>
                     ) : (
                         <div>
                             <p className={style.completeName}>{name + " " + lastname}</p>

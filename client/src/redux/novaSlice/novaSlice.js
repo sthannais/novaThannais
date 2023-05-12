@@ -180,6 +180,6 @@ export const {  getPersonal,
                 getValesPorFecha,
                 getUltimosVales,
                 getRegistroDescargaVales,
-                getValesDigitalesRegalados,
+                getValesDigitalesRegalados
             } = NovaSlice.actions;
             
