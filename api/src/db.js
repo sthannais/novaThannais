@@ -42,7 +42,7 @@ fs
   })
   .forEach((file) => {
     modelDefiners.push(require(path.join(__dirname, '/models', file)));
-  });1
+  });
 
 fs
   .readdirSync(path.join(__dirname, '/models/MetodosDePagos'))
