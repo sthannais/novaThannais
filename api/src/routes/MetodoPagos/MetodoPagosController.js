@@ -636,7 +636,24 @@ const getAllOrdenesEstructuradas = async (req, res, next) => {
                     },
                     {
                         model: ContabilidadRecargas,
-                    }        
+                    },
+                    {
+                        model: Chofer,
+                        include: [
+                            {
+                                model: Personal
+                            }
+                        ]
+                    },
+                    {
+                        model: Ayudante,
+                        include: [
+                            {
+                                model: Personal
+                            }
+                        ]
+                    }    
+                    
                 ],
                 order: [
                     ['fecha', 'ASC'],
@@ -685,7 +702,23 @@ const getAllOrdenesEstructuradas = async (req, res, next) => {
                     },
                     {
                         model: ContabilidadRecargas
-                    }       
+                    },
+                    {
+                        model: Chofer,
+                        include: [
+                            {
+                                model: Personal
+                            }
+                        ]
+                    },
+                    {
+                        model: Ayudante,
+                        include: [
+                            {
+                                model: Personal
+                            }
+                        ]
+                    }         
                 ],
                 order: [
                     ['fecha', 'ASC'],
@@ -697,6 +730,8 @@ const getAllOrdenesEstructuradas = async (req, res, next) => {
         const ordenesWithMetodoPagos = ordenes.map(orden => {
             return {
                 fecha: orden.fecha,
+                chofer: orden.chofer.personal.name + ' ' + orden.chofer.personal.lastname,
+                peoneta: orden.ayudante ? orden.ayudante.personal.name + ' ' + orden.ayudante.personal.lastname : 'Sin peoneta',
                 sumaAnticipos: Number(orden.faltanteChofer) + Number(orden.faltantePeoneta),
                 ventas5kg: Number(orden.contabilidadRecarga.ventas5kg),
                 ventas11kg: Number(orden.contabilidadRecarga.ventas11kg),
