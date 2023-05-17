@@ -21,7 +21,7 @@ export const fetchLoginThunk = (email, password) => {
                 localStorage.setItem('usuario', JSON.stringify(body));
                 dispatch(login(body));
                 //redirecciona a home
-                window.location.href = '/home';
+                window.location.href = '/listaDePersonal';
             } else {
                 Swal.fire('Error', body.msg, 'error');
                 dispatch(setError(body.msg));
