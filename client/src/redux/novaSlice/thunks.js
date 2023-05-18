@@ -350,7 +350,7 @@ export const cuadrarOrden = async (id, quantity) => {
                     allowEscapeKey: false,
                     allowEnterKey: false,
                     showConfirmButton: false,
-                    footer: '<a class="btn btn-primary" href="/rendicion">OK</a>'
+                    footer: '<a class="btn btn-primary" href="/rendicionVentas">OK</a>'
                 });
         //     }
         // });
