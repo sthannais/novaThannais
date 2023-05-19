@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { Table } from 'reactstrap'
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { ordenesRendicionBetween } from '../../../../redux/novaSlice/thunks'
+import { ordenesRendicionBetween, bringOrdenesChoferById, bringOrdenesAyudanteById, bringChoferes, bringAyudantes, } from '../../../../redux/novaSlice/thunks'
 import es from 'date-fns/locale/es';
 import { numberWithDots } from '../../../../helpers/numberWithDot';
 import { RiFileExcel2Fill } from 'react-icons/ri';
@@ -13,6 +13,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import style from './rendicionPersonal.module.css'
 import InfiniteScroll from 'react-infinite-scroller';
 import * as XLSXPopulate from 'xlsx-populate/browser/xlsx-populate';
+import Select from 'react-select';
 
 registerLocale('es', es);
 
@@ -24,6 +25,8 @@ const RendicionPersonal = ({id}) => {
     const [endDate, setEndDate] = useState(null);
     const soloFecha = startDate.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
     const soloFechaFin = endDate?.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
+    const [choferId, setChoferId] = useState(null);
+    //const [ayudanteId, setAyudanteId] = useState(null);
     
     const onChangeDate = (dates) => {
         const [start, end] = dates;
@@ -31,11 +34,19 @@ const RendicionPersonal = ({id}) => {
         setEndDate(end);
     }
 
+    const onChangeChofer = (choferId) => {
+        setChoferId(choferId);
+        console.log('choferId', choferId);
+    }
+
     useEffect(() => {
-        dispatch(ordenesRendicionBetween(soloFecha, soloFechaFin))
+        dispatch(ordenesRendicionBetween(soloFecha, soloFechaFin));
+        dispatch(bringOrdenesChoferById(choferId, soloFecha, soloFechaFin));
+        dispatch(bringChoferes());
+        dispatch(bringAyudantes());
     }, [dispatch, soloFecha, soloFechaFin])
 
-    const { ordenesRendidasDisponibles } = useSelector(state => state.Nova)
+    const { ordenesRendidasDisponibles, choferes, ayudantes, ordenesPorChofer } = useSelector(state => state.Nova)
 
     const width = window.innerWidth;
     const [paginaActual, setPaginaActual] = useState(1)
@@ -55,6 +66,54 @@ const RendicionPersonal = ({id}) => {
             porPagina + 9
         )
     }
+
+    //FEATURE ORDENES POR PERSONAL
+
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const onMenuOpen = () => setIsMenuOpen(true);
+    const onMenuClose = () => setIsMenuOpen(false);
+
+    const optionsChoferes = choferes?.map((chofer) => {
+        return {
+            choferId: chofer?.chofer?.id,
+            label: `${chofer?.name} ${chofer?.lastname}`
+        }
+    });
+
+    const optionsAyudantes = ayudantes?.map((ayudante) => {
+        return {
+            ayudanteId: ayudante?.ayudante?.id,
+            label: `${ayudante?.name} ${ayudante?.lastname}`
+        }
+    });
+
+    const optionsPersonal = [];
+
+    optionsChoferes.forEach((chofer) => {
+        const existingPersonal = optionsPersonal.find((personal) => personal.label === chofer.label);
+        if (existingPersonal){
+            existingPersonal.choferId = chofer.choferId;
+        } else {
+            optionsPersonal.push({ choferId: chofer.choferId, label: chofer.label });
+        }
+    });
+
+    optionsAyudantes.forEach((ayudante) => {
+        const existingPersonal = optionsPersonal.find((personal) => personal.label === ayudante.label);
+        if (existingPersonal){
+            if(!existingPersonal.ayudanteId){
+                existingPersonal.ayudanteId = ayudante.ayudanteId;
+            }
+        } else {
+            optionsPersonal.push({ ayudanteId: ayudante.ayudanteId, label: ayudante.label });
+        }
+    });
+    console.log('optionsPersonal', optionsPersonal);
+
+
+
+    //EXCEL
 
     const handleExportExcelPopulate = async () => {
         const data = ordenesRendidasDisponibles?.map((post) => {
@@ -191,6 +250,20 @@ const RendicionPersonal = ({id}) => {
                         dateFormat="dd/MM/yyyy"
                         className={style.classDatePicker}
                         maxDate={new Date()}
+                    />
+                </div>
+                <div>
+                    <Select
+                        name="personal"
+                        className={style.classDatePicker}
+                        options={optionsPersonal}
+                        placeholder="Personal"
+                        isMenuOpen={isMenuOpen}
+                        onMenuOpen={onMenuOpen}
+                        onMenuClose={onMenuClose}
+                        onChange={(e) => {
+                            onChangeChofer(e.choferId);
+                        }}
                     />
                 </div>
                 <Link to="/rendicionGeneral">
