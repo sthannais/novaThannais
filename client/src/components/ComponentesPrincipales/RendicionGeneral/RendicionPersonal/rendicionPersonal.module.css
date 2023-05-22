@@ -78,6 +78,14 @@
     text-align: center;
 }
 
+.selectPersonal{
+    width: 12rem;
+    position: absolute;
+    left: 40%;
+    margin-top: 2.5rem;
+    
+}
+
 .tableContainer {
     width: 68rem;
     height: 30rem;

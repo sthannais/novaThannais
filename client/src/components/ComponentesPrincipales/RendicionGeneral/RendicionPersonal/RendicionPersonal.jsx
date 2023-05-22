@@ -44,9 +44,10 @@ const RendicionPersonal = ({id}) => {
         dispatch(bringOrdenesChoferById(choferId, soloFecha, soloFechaFin));
         dispatch(bringChoferes());
         dispatch(bringAyudantes());
-    }, [dispatch, soloFecha, soloFechaFin])
+    }, [dispatch, soloFecha, soloFechaFin, choferId])
 
-    const { ordenesRendidasDisponibles, choferes, ayudantes, ordenesPorChofer } = useSelector(state => state.Nova)
+    const { ordenesRendidasDisponibles, choferes, ayudantes, ordenesChoferById } = useSelector(state => state.Nova)
+    console.log( 'ordenesChoferById', ordenesChoferById)
 
     const width = window.innerWidth;
     const [paginaActual, setPaginaActual] = useState(1)
@@ -109,7 +110,6 @@ const RendicionPersonal = ({id}) => {
             optionsPersonal.push({ ayudanteId: ayudante.ayudanteId, label: ayudante.label });
         }
     });
-    console.log('optionsPersonal', optionsPersonal);
 
 
 
@@ -252,10 +252,10 @@ const RendicionPersonal = ({id}) => {
                         maxDate={new Date()}
                     />
                 </div>
-                <div>
+                <div className={style.selectPersonal}>
                     <Select
                         name="personal"
-                        className={style.classDatePicker}
+                        //className={style.classFindByPersonal}
                         options={optionsPersonal}
                         placeholder="Personal"
                         isMenuOpen={isMenuOpen}
