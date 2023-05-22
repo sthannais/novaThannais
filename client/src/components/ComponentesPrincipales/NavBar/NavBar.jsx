@@ -102,7 +102,7 @@ const NavBar = () => {
                         <div>
                             <p className={style.completeName}>{name + " " + lastname}</p>
                             <p className={style.rolStyle}>{
-                                email === "benjaminsotoro@gmail.com" ? "Modo Dios" : "Administrador"
+                                email === "benjaminsotoro@gmail.com" ? "Modo Dios" : email === 'maicol.nieto@jorgegas.cl' ? 'Super Saiyan blue' : "Administrador"
                             }</p>
 
                             <div className={style.grid1}>
@@ -151,7 +151,9 @@ const NavBar = () => {
                                     </button>
                                 </Link>
                                 {
-                                    email === "benjaminsotoro@gmail.com" ? (
+                                    email === "benjaminsotoro@gmail.com" ||
+                                    email === "maicol.nieto@jorgegas.cl"
+                                    ? (
                                         <Link to="/inventarioVales">
                                             <button onClick={
                                                 () => setButtonSelected('inventarioVales')

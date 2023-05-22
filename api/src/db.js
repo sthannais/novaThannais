@@ -53,14 +53,14 @@ fs
     modelDefiners.push(require(path.join(__dirname, '/models/MetodosDePagos', file)));
   });
 
-// fs
-//   .readdirSync(path.join(__dirname, '/models/PreInventarioVales'))
-//   .filter((file) => {
-//     return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
-//   })
-//   .forEach((file) => {
-//     modelDefiners.push(require(path.join(__dirname, '/models/PreInventarioVales', file)));
-//   });
+fs
+  .readdirSync(path.join(__dirname, '/models/PreInventarioVales'))
+  .filter((file) => {
+    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+  })
+  .forEach((file) => {
+    modelDefiners.push(require(path.join(__dirname, '/models/PreInventarioVales', file)));
+  });
 
 
 // Injectamos la conexion (sequelize) a todos los modelos

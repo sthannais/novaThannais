@@ -20,10 +20,14 @@ const { OrdenDeReparto,
         Transbank,
         Gastos,
         NumeroDeMaquina,
+        PreInventarioDigitales,
+        PreInventarioFisicos,
+        PreInventarioRegalados
     } = require('../../db.js');
 
 const { Op } = require('sequelize');
 const  transporter  = require('../../helpers/mailer');
+const moment = require('moment');
 
 // GET
 
@@ -1291,6 +1295,84 @@ const cuadrarOrden = async (req, res) => {
         const totalValesDigitales = Number(digital5kg) + Number(digital11kg) + Number(digital15kg) + Number(digital45kg);
         const totalValesDigiRegalados = Number(digitalRegalado5kg) + Number(digitalRegalado11kg) + Number(digitalRegalado15kg) + Number(digitalRegalado45kg);
 
+        const preInventarioFisicos = await PreInventarioFisicos.findOne({
+            where: {
+                active: true,
+                fecha: moment().format("YYYY-MM-DD")
+            }
+        });
+
+        if(preInventarioFisicos){
+            await preInventarioFisicos.update({
+                fisico5kg: Number(preInventarioFisicos.fisico5kg) + Number(fisico5kg),
+                fisico11kg: Number(preInventarioFisicos.fisico11kg) + Number(fisico11kg),
+                fisico15kg: Number(preInventarioFisicos.fisico15kg) + Number(fisico15kg),
+                fisico45kg: Number(preInventarioFisicos.fisico45kg) + Number(fisico45kg),
+                totalValesFisicos: Number(preInventarioFisicos.totalValesFisicos) + Number(totalValesFisicos),
+            })
+        } else {
+            await PreInventarioFisicos.create({
+                fecha: moment().format("YYYY-MM-DD"),
+                fisico5kg,
+                fisico11kg,
+                fisico15kg,
+                fisico45kg,
+                totalValesFisicos
+            })
+        }
+
+        const preInventarioDigitales = await PreInventarioDigitales.findOne({
+            where: {
+                active: true,
+                fecha: moment().format("YYYY-MM-DD")
+            }
+        });
+
+        if(preInventarioDigitales){
+            await preInventarioDigitales.update({
+                digital5kg: Number(preInventarioDigitales.digital5kg) + Number(digital5kg),
+                digital11kg: Number(preInventarioDigitales.digital11kg) + Number(digital11kg),
+                digital15kg: Number(preInventarioDigitales.digital15kg) + Number(digital15kg),
+                digital45kg: Number(preInventarioDigitales.digital45kg) + Number(digital45kg),
+                totalValesDigitales: Number(preInventarioDigitales.totalValesDigitales) + Number(totalValesDigitales),
+            })
+        } else {
+            await PreInventarioDigitales.create({
+                fecha: moment().format("YYYY-MM-DD"),
+                digital5kg,
+                digital11kg,
+                digital15kg,
+                digital45kg,
+                totalValesDigitales
+            })
+        }
+
+        const preInventarioRegalados = await PreInventarioRegalados.findOne({
+            where: {
+                active: true,
+                fecha: moment().format("YYYY-MM-DD")
+            }
+        });
+
+        if(preInventarioRegalados){
+            await preInventarioRegalados.update({
+                regalados5kg: Number(preInventarioRegalados.regalados5kg) + Number(digitalRegalado5kg),
+                regalados11kg: Number(preInventarioRegalados.regalados11kg) + Number(digitalRegalado11kg),
+                regalados15kg: Number(preInventarioRegalados.regalados15kg) + Number(digitalRegalado15kg),
+                regalados45kg: Number(preInventarioRegalados.regalados45kg) + Number(digitalRegalado45kg),
+                totalValesRegalados : Number(preInventarioRegalados.totalValesRegalados) + Number(totalValesDigiRegalados),
+            })
+        } else {
+            await PreInventarioRegalados.create({
+                fecha: moment().format("YYYY-MM-DD"),
+                regalados5kg: digitalRegalado5kg,
+                regalados11kg: digitalRegalado11kg,
+                regalados15kg: digitalRegalado15kg,
+                regalados45kg: digitalRegalado45kg,
+                totalValesRegalados: totalValesDigiRegalados
+            })
+        }
+
         await transbank.update({
             monto: montoTransbank
         });
@@ -1587,10 +1669,6 @@ const cuadrarOrdenAux = async (req, res) => {
 
     try {
         const ordenDeReparto = await OrdenDeReparto.findByPk(id);
-
-        // if(ordenDeReparto.rendida === true){
-        //     return res.status(400).send({error: "La orden de reparto ya fue rendida"})
-        // }
 
         await ordenDeReparto.update({
             cuadradoPor: idDeDecuadre
