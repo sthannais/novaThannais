@@ -39,6 +39,7 @@ const InventarioVales = () => {
             <EnviarVales />
             <HistorialSalidaVales />
             <InventarioValesDigitalesRegalados />
+            <AceptarVales />
             <p className={style.text}>Inventario de vales</p>
             <img src={JorgeGas} alt="logo" className={style.logo} />
             <div className={style.container}>
