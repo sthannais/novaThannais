@@ -44,6 +44,21 @@
     color: white;
 }
 
+.buttonClean {
+    position: absolute;
+    left: 63%;
+    top: 8%;
+    width: 120px;
+    height: 40px;
+    font-family: "Roboto";
+    font-weight: 800;
+    font-size: 14px;
+    background: #5E5F5F;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+}
+
 .button:hover {
     background: #808080;
 }
@@ -51,6 +66,10 @@
 .vectorDerecho {
     margin-right: 0.5rem;
     margin-bottom: 0.1rem;
+}
+
+.imputs {
+    display: flex;
 }
 
 .datePicker {
@@ -79,11 +98,11 @@
 }
 
 .selectPersonal{
-    width: 12rem;
+    width: 13rem;
     position: absolute;
-    left: 40%;
-    margin-top: 2.5rem;
-    
+    left: 42%;
+    top: 8%;
+    font-size: 19px;
 }
 
 .tableContainer {

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { Table } from 'reactstrap'
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { ordenesRendicionBetween, bringOrdenesChoferById, bringOrdenesAyudanteById, bringChoferes, bringAyudantes, } from '../../../../redux/novaSlice/thunks'
+import { ordenesRendicionBetween, bringOrdenesByPersonalAndDate, bringChoferes, bringAyudantes, } from '../../../../redux/novaSlice/thunks'
 import es from 'date-fns/locale/es';
 import { numberWithDots } from '../../../../helpers/numberWithDot';
 import { RiFileExcel2Fill } from 'react-icons/ri';
@@ -26,7 +26,7 @@ const RendicionPersonal = ({id}) => {
     const soloFecha = startDate.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
     const soloFechaFin = endDate?.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
     const [choferId, setChoferId] = useState(null);
-    //const [ayudanteId, setAyudanteId] = useState(null);
+    const [ayudanteId, setAyudanteId] = useState(null);  
     
     const onChangeDate = (dates) => {
         const [start, end] = dates;
@@ -34,29 +34,40 @@ const RendicionPersonal = ({id}) => {
         setEndDate(end);
     }
 
-    const onChangeChofer = (choferId) => {
-        setChoferId(choferId);
-        console.log('choferId', choferId);
-    }
+    const onChangePersonal = (e) => {
+        console.log('e', e.value);
+        const listaAyudantes = ayudantes?.map((ayudante) => {
+            return {
+                ayudanteId: ayudante?.ayudante?.id,
+                label: `${ayudante?.name} ${ayudante?.lastname}`
+            }
+        });
+        const searchedAyudante = listaAyudantes.find((ayudante) => ayudante.label === e.label);
+        setChoferId(e.value);
+        setAyudanteId(searchedAyudante?.ayudanteId);
+    };
+
 
     useEffect(() => {
         dispatch(ordenesRendicionBetween(soloFecha, soloFechaFin));
-        dispatch(bringOrdenesChoferById(choferId, soloFecha, soloFechaFin));
+        dispatch(bringOrdenesByPersonalAndDate(choferId, ayudanteId, soloFecha, soloFechaFin));
         dispatch(bringChoferes());
         dispatch(bringAyudantes());
-    }, [dispatch, soloFecha, soloFechaFin, choferId])
+    }, [dispatch, soloFecha, soloFechaFin, choferId, ayudanteId])
+    
 
-    const { ordenesRendidasDisponibles, choferes, ayudantes, ordenesChoferById } = useSelector(state => state.Nova)
-    console.log( 'ordenesChoferById', ordenesChoferById)
+    const { ordenesRendidasDisponibles, choferes, ayudantes, ordenesPersonal } = useSelector(state => state.Nova)
 
+    
+    const ordenesToRender = ordenesPersonal?.length > 0 ? ordenesPersonal : ordenesRendidasDisponibles;
     const width = window.innerWidth;
     const [paginaActual, setPaginaActual] = useState(1)
     const [porPagina, setPorPagina] = useState(width > 1800 ? 18 : 12)
     const [hasMore, setHasMore] = useState(true)
-    const maximo = ordenesRendidasDisponibles?.length / porPagina
+    const maximo = ordenesToRender?.length / porPagina
     const primerIndice = (paginaActual - 1) * porPagina
     const ultimoIndice = (paginaActual - 1) * porPagina + porPagina
-    const currentPosts = ordenesRendidasDisponibles?.slice(primerIndice, ultimoIndice)
+    const currentPosts = ordenesToRender?.slice(primerIndice, ultimoIndice)
 
     const loadMore = () => {
         if (paginaActual >= maximo) {
@@ -68,6 +79,11 @@ const RendicionPersonal = ({id}) => {
         )
     }
 
+    const limpiarPersonal = () => {
+        setChoferId(null);
+        setAyudanteId(null);
+    };
+
     //FEATURE ORDENES POR PERSONAL
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -77,41 +93,10 @@ const RendicionPersonal = ({id}) => {
 
     const optionsChoferes = choferes?.map((chofer) => {
         return {
-            choferId: chofer?.chofer?.id,
+            value: chofer?.chofer?.id,
             label: `${chofer?.name} ${chofer?.lastname}`
         }
     });
-
-    const optionsAyudantes = ayudantes?.map((ayudante) => {
-        return {
-            ayudanteId: ayudante?.ayudante?.id,
-            label: `${ayudante?.name} ${ayudante?.lastname}`
-        }
-    });
-
-    const optionsPersonal = [];
-
-    optionsChoferes.forEach((chofer) => {
-        const existingPersonal = optionsPersonal.find((personal) => personal.label === chofer.label);
-        if (existingPersonal){
-            existingPersonal.choferId = chofer.choferId;
-        } else {
-            optionsPersonal.push({ choferId: chofer.choferId, label: chofer.label });
-        }
-    });
-
-    optionsAyudantes.forEach((ayudante) => {
-        const existingPersonal = optionsPersonal.find((personal) => personal.label === ayudante.label);
-        if (existingPersonal){
-            if(!existingPersonal.ayudanteId){
-                existingPersonal.ayudanteId = ayudante.ayudanteId;
-            }
-        } else {
-            optionsPersonal.push({ ayudanteId: ayudante.ayudanteId, label: ayudante.label });
-        }
-    });
-
-
 
     //EXCEL
 
@@ -236,42 +221,48 @@ const RendicionPersonal = ({id}) => {
             <p className={style.text}>Rendicion del personal</p>
             <img src={JorgeGas} alt="logo" className={style.logo} />
             <div className={style.container}>
-                <div className={style.datePicker}>
-                    <p className={style.textDatePicker}>
-                        Seleccione una fecha
-                    </p>
-                    <DatePicker
-                        selected={startDate}
-                        onChange={onChangeDate}
-                        startDate={startDate}
-                        endDate={endDate}
-                        selectsRange
-                        locale="es"
-                        dateFormat="dd/MM/yyyy"
-                        className={style.classDatePicker}
-                        maxDate={new Date()}
-                    />
-                </div>
-                <div className={style.selectPersonal}>
-                    <Select
-                        name="personal"
-                        //className={style.classFindByPersonal}
-                        options={optionsPersonal}
-                        placeholder="Personal"
-                        isMenuOpen={isMenuOpen}
-                        onMenuOpen={onMenuOpen}
-                        onMenuClose={onMenuClose}
-                        onChange={(e) => {
-                            onChangeChofer(e.choferId);
-                        }}
-                    />
-                </div>
                 <Link to="/rendicionGeneral">
                     <button className={style.button}>
                         <img src={vectorDerecho} alt="vector" className={style.vectorDerecho} />
                         Rendicion General
                     </button>
                 </Link>
+                <div className={style.imputs}>
+                    <div className={style.datePicker}>
+                        <p className={style.textDatePicker}>
+                            Seleccione una fecha
+                        </p>
+                        <DatePicker
+                            selected={startDate}
+                            onChange={onChangeDate}
+                            startDate={startDate}
+                            endDate={endDate}
+                            selectsRange
+                            locale="es"
+                            dateFormat="dd/MM/yyyy"
+                            className={style.classDatePicker}
+                            maxDate={new Date()}
+                        />
+                    </div>
+                    <div>
+                        <Select
+                            name="personal"
+                            className={style.selectPersonal}
+                            options={optionsChoferes}
+                            isMenuOpen={isMenuOpen}
+                            onMenuOpen={onMenuOpen}
+                            onMenuClose={onMenuClose}
+                            placeholder="Personal"
+                            onChange={(e) => {
+                                onChangePersonal(e);
+                            }}
+                        />  
+                    </div>
+                    <button className={style.buttonClean}  onClick={limpiarPersonal}>
+                        
+                        Mostrar Todo
+                    </button>
+                </div>
                 <button onClick={handleExportExcelPopulate} className={style.excel}>
                     <RiFileExcel2Fill className={style.icon3} />
                     <p>Exportar a excel</p>

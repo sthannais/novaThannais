@@ -24,7 +24,8 @@ const {
         changeContabilidadOrdenById,
         changeContabilidadRecargaById,
         cuadrarOrdenAux,
-        changeListaDePreciosInOrdenDeReparto
+        changeListaDePreciosInOrdenDeReparto,
+        getOrdenesByPersonalAndDate
     } = require('./OrdenRepartoController');
 
 router.get('/', getOrdenesDeReparto);
@@ -49,5 +50,6 @@ router.get('/ayudante/:id/:fechaInicio/:fechaFin?', getAllAyudanteOrdenesDeRepar
 router.post('/sendEmail', sendEmailWithCode);
 router.put('/changeContabilidadRecargaById/:idOrden', changeContabilidadRecargaById);
 router.put('/changeListaDePreciosInOrdenDeReparto/:idOrden/:listaDePreciosId', changeListaDePreciosInOrdenDeReparto);
+router.get('/personal/:idChofer/:idAyudante/:fechaInicio/:fechaFin?', getOrdenesByPersonalAndDate);
 
 module.exports = router;

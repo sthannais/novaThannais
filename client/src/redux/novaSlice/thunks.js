@@ -35,7 +35,8 @@ import {
         getValesPorFecha,
         getUltimosVales,
         getRegistroDescargaVales,
-        getValesDigitalesRegalados
+        getValesDigitalesRegalados,
+        getOrdenesByPersonalAndDate,
     } from './novaSlice';
 
 export const getAllOrdenes = (date) => async (dispatch) => {
@@ -1134,6 +1135,21 @@ export const descargarExcelVentaDeTarros = async (date1, date2) => {
         console.error(error.message);
     }
 }
+
+export const bringOrdenesByPersonalAndDate = (choferId, ayudanteId, date1, date2) => async (dispatch) => {
+    try {
+        //fetch
+        const response = await fetch(`${process.env.REACT_APP_API}/orden/personal/${choferId}/${ayudanteId}/${date1}/${date2}`);
+        const data = await response.json();
+        dispatch(getOrdenesByPersonalAndDate(data));
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${error.message}`,
+        });
+    }
+};
 
 
 
