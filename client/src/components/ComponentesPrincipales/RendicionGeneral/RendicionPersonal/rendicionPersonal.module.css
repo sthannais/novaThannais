@@ -101,9 +101,10 @@
     text-align: center;
 }
 
+
 .personalPicker{
     width: 13rem;
-    position: absolute;
+    position: relative;
     left: 42%;
     top: 8%;
     font-size: 19px;
@@ -170,6 +171,11 @@
     border: 1px solid #5E5F5F;
 }
 
+.inputPerson {
+    position: relative;
+    top: 8%;
+}
+
 @media screen and ( min-width: 1800px ) {
     .container {
         width: 1590px;
@@ -199,14 +205,18 @@
         width: 2.5rem;
         height: 2.5rem;
     }
-
+  
     .personalPicker{
         width: 13rem;
-        position: absolute;
         left: 42%;
         top: 8%;
         font-size: 19px;
     }
+    .inputPerson {
+        position: relative;
+        top: 70px;
+    }
+ 
 }
 
 @media screen and ( max-width: 1366px ) {
@@ -263,10 +273,11 @@
         height: 37px;
     }
     
+   
+    
     .personalPicker {
         width: 10rem;
         height: 2rem;
-        position: absolute;
         left: 38%;
         top: 6%;
         margin-left: -0.5rem;
@@ -279,5 +290,10 @@
         width: 160px;
         height: 37px;
         font-size: 13px;
+    }
+
+    .inputPerson {
+        position: relative;
+        top: 6%;
     }
 }

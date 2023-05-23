@@ -249,7 +249,7 @@ const RendicionPersonal = ({id}) => {
                         maxDate={new Date()}
                     />
                 </div>
-                <div>
+                <div className={style.inputPerson}>
                     <Select
                         name="personal"
                         className={style.personalPicker}
