@@ -152,19 +152,20 @@ const aceptarPreInventarioValesFisicos = async (req, res, next) => {
 
         const inventarioVales = await InventarioVales.findByPk(1);
 
-        const fisico5kg = preInventarioFisicos.fisico5kg;
-        const fisico11kg = preInventarioFisicos.fisico11kg;
-        const fisico15kg = preInventarioFisicos.fisico15kg;
-        const fisico45kg = preInventarioFisicos.fisico45kg;
+        const fisico5kg = Number(preInventarioFisicos.fisico5kg);
+        const fisico11kg = Number(preInventarioFisicos.fisico11kg);
+        const fisico15kg = Number(preInventarioFisicos.fisico15kg);
+        const fisico45kg = Number(preInventarioFisicos.fisico45kg);
 
-        const totalValesFisicos = preInventarioFisicos.totalValesFisicos;
+        const totalValesFisicos = Number(preInventarioFisicos.totalValesFisicos);
 
         await inventarioVales.update({
-            fisico5kg: inventarioVales.fisico5kg + fisico5kg,
-            fisico11kg: inventarioVales.fisico11kg + fisico11kg,
-            fisico15kg: inventarioVales.fisico15kg + fisico15kg,
-            fisico45kg: inventarioVales.fisico45kg + fisico45kg,
-            totalValesFisicos: inventarioVales.totalValesFisicos + totalValesFisicos
+            fisico5kg: Number(inventarioVales.fisico5kg) + fisico5kg,
+            fisico11kg: Number(inventarioVales.fisico11kg) + fisico11kg,
+            fisico15kg: Number(inventarioVales.fisico15kg) + fisico15kg,
+            fisico45kg: Number(inventarioVales.fisico45kg) + fisico45kg,
+            totalValesFisicos: Number(inventarioVales.totalValesFisicos) + totalValesFisicos,
+            totalValesAmbos : Number(inventarioVales.totalValesAmbos) + totalValesFisicos
         });
 
         await preInventarioFisicos.update({
@@ -182,7 +183,7 @@ const aceptarPreInventarioValesDigitales = async (req, res, next) => {
     const { id } = req.params;
 
     try {
-        const preInventarioDigitales = await PreInventarioDigital.findOne({
+        const preInventarioDigitales = await PreInventarioDigitales.findOne({
             where: {
                 id
             }
@@ -190,19 +191,20 @@ const aceptarPreInventarioValesDigitales = async (req, res, next) => {
 
         const inventarioVales = await InventarioVales.findByPk(1);
 
-        const digital5kg = preInventarioDigitales.digital5kg;
-        const digital11kg = preInventarioDigitales.digital11kg;
-        const digital15kg = preInventarioDigitales.digital15kg;
-        const digital45kg = preInventarioDigitales.digital45kg;
+        const digital5kg = Number(preInventarioDigitales.digital5kg);
+        const digital11kg = Number(preInventarioDigitales.digital11kg);
+        const digital15kg = Number(preInventarioDigitales.digital15kg);
+        const digital45kg = Number(preInventarioDigitales.digital45kg);
 
-        const totalValesDigitales = preInventarioDigitales.totalValesDigitales;
+        const totalValesDigitales = Number(preInventarioDigitales.totalValesDigitales);
 
         await inventarioVales.update({
-            digital5kg: inventarioVales.digital5kg + digital5kg,
-            digital11kg: inventarioVales.digital11kg + digital11kg,
-            digital15kg: inventarioVales.digital15kg + digital15kg,
-            digital45kg: inventarioVales.digital45kg + digital45kg,
-            totalValesDigitales: inventarioVales.totalValesDigitales + totalValesDigitales
+            digital5kg: Number(inventarioVales.digital5kg) + digital5kg,
+            digital11kg: Number(inventarioVales.digital11kg) + digital11kg,
+            digital15kg: Number(inventarioVales.digital15kg) + digital15kg,
+            digital45kg: Number(inventarioVales.digital45kg) + digital45kg,
+            totalValesDigitales: Number(inventarioVales.totalValesDigitales) + totalValesDigitales,
+            totalValesAmbos : Number(inventarioVales.totalValesAmbos) + totalValesDigitales
         });
 
         await preInventarioDigitales.update({
@@ -228,19 +230,19 @@ const aceptarPreInventarioValesRegalados = async (req, res, next) => {
 
         const inventarioValesDigitalesRegalados = await InventarioValesDigitalesRegalados.findByPk(1);
             
-        const regalados5kg = preInventarioRegalados.regalados5kg;
-        const regalados11kg = preInventarioRegalados.regalados11kg;
-        const regalados15kg = preInventarioRegalados.regalados15kg; 
-        const regalados45kg = preInventarioRegalados.regalados45kg;
+        const regalados5kg = Number(preInventarioRegalados.regalados5kg);
+        const regalados11kg = Number(preInventarioRegalados.regalados11kg);
+        const regalados15kg = Number(preInventarioRegalados.regalados15kg); 
+        const regalados45kg = Number(preInventarioRegalados.regalados45kg);
 
-        const totalValesRegalados = preInventarioRegalados.totalValesRegalados;
+        const totalValesRegalados = Number(preInventarioRegalados.totalValesRegalados);
 
         await inventarioValesDigitalesRegalados.update({
-            digital5kg : inventarioValesDigitalesRegalados.digital5kg + regalados5kg,
-            digital11kg : inventarioValesDigitalesRegalados.digital11kg + regalados11kg,
-            digital15kg : inventarioValesDigitalesRegalados.digital15kg + regalados15kg,
-            digital45kg : inventarioValesDigitalesRegalados.digital45kg + regalados45kg,
-            totalValesDigitales : inventarioValesDigitalesRegalados.totalValesDigitales + totalValesRegalados
+            digital5kg : Number(inventarioValesDigitalesRegalados.digital5kg) + regalados5kg,
+            digital11kg : Number(inventarioValesDigitalesRegalados.digital11kg) + regalados11kg,
+            digital15kg : Number(inventarioValesDigitalesRegalados.digital15kg) + regalados15kg,
+            digital45kg : Number(inventarioValesDigitalesRegalados.digital45kg) + regalados45kg,
+            totalValesDigitales : Number(inventarioValesDigitalesRegalados.totalValesDigitales) + totalValesRegalados
         });
 
         await preInventarioRegalados.update({
