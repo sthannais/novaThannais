@@ -1,9 +1,9 @@
 .boton {
     position: absolute;
     left: 86%;
-    top: 94%;
+    top: 95%;
     width: 7rem;
-    height: 2.3rem;
+    height: 2rem;
     background-color: #F65108;
     border: none;
     display: grid;
@@ -21,11 +21,13 @@
 @media screen and (min-width: 1800px) {
     .boton {
         left: 89%;
+        top: 93%;
     }
 }
 
 @media screen and ( max-width: 1366px ) {
     .boton {
         left: 85%;
+        top: 93%;
     }
 }

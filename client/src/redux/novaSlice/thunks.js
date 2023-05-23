@@ -37,6 +37,9 @@ import {
         getRegistroDescargaVales,
         getValesDigitalesRegalados,
         getOrdenesByPersonalAndDate,
+        getPreInventarioValesDigitales,
+        getPreInventarioValesFisicos,
+        getPreInventarioValesRegalados
     } from './novaSlice';
 
 export const getAllOrdenes = (date) => async (dispatch) => {
@@ -324,7 +327,7 @@ export const finalizeOrden = (id, quantity, fecha) => async (dispatch) => {
 };
 
 export const cuadrarOrden = async (id, quantity) => {
-    console.log(quantity)
+
     try {
         await fetch(`${process.env.REACT_APP_API}/orden/cuadrar/${id}`, {
             method: 'PUT',
@@ -333,28 +336,47 @@ export const cuadrarOrden = async (id, quantity) => {
             },
             body: JSON.stringify(quantity)
         })
-        // .then(response => {
-        //     console.log(response)
-        //     if (response.status === 400) {
-        //         Swal.fire({
-        //             icon: 'error',
-        //             title: 'Error',
-        //             text: 'Esta orden ya fue rendida',
-        //         });
-        //     } else {
-                Swal.fire({
-                    title: 'Orden cuadrada',
-                    text: 'La orden se ha cuadrado correctamente',
-                    icon: 'success',
-                    backdrop: true,
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    allowEnterKey: false,
-                    showConfirmButton: false,
-                    footer: '<a class="btn btn-primary" href="/rendicionVentas">OK</a>'
-                });
-        //     }
-        // });
+        Swal.fire({
+            title: 'Orden cuadrada',
+            text: 'La orden se ha cuadrado correctamente',
+            icon: 'success',
+            backdrop: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            showConfirmButton: false,
+            footer: '<a class="btn btn-primary" href="/rendicionVentas">OK</a>'
+        });
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: `${error.message}`,
+            text: 'Something went wrong!',
+        });
+    };
+};
+
+export const cuadrarOrdenAuxiliar = async (id, quantity) => {
+
+    try {
+        await fetch(`${process.env.REACT_APP_API}/orden/cuadrarAux/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(quantity)
+        })
+        Swal.fire({
+            title: 'Orden cuadrada',
+            text: 'La orden se ha cuadrado correctamente',
+            icon: 'success',
+            backdrop: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            showConfirmButton: false,
+            footer: '<a class="btn btn-primary" href="/rendicionVentas">OK</a>'
+        });
     } catch (error) {
         Swal.fire({
             icon: 'error',
@@ -1136,6 +1158,7 @@ export const descargarExcelVentaDeTarros = async (date1, date2) => {
     }
 }
 
+
 export const bringOrdenesByPersonalAndDate = (choferId, ayudanteId, date1, date2) => async (dispatch) => {
     try {
         //fetch
@@ -1157,6 +1180,171 @@ export const bringOrdenesByPersonalAndDate = (choferId, ayudanteId, date1, date2
         });
     }
 };
+
+export const bringPreInventarioValesFisicos = () => async (dispatch) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_API}/preInventarioVales/pre-inventario-vales-fisicos`);
+        const data = await response.json();
+        dispatch(getPreInventarioValesFisicos(data));
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+export const bringPreInventarioValesDigitales = () => async (dispatch) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_API}/preInventarioVales/pre-inventario-vales-digitales`);
+        const data = await response.json();
+        dispatch(getPreInventarioValesDigitales(data));
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+export const bringPreInventarioValesDigitalesRegalados = () => async (dispatch) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_API}/preInventarioVales/pre-inventario-vales-regalados`);
+        const data = await response.json();
+        dispatch(getPreInventarioValesRegalados(data));
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+export const modifyPreInventarioValesFisicos = (id, cantidad) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/preInventarioVales/modificar-pre-inventario-vales-fisicos/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cantidad)
+        });
+        dispatch(bringPreInventarioValesFisicos());
+        Swal.fire({
+            icon: 'success',
+            title: 'Pre inventario modificado',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+export const modifyPreInventarioValesDigitales = (id, cantidad) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/preInventarioVales/modificar-pre-inventario-vales-digitales/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cantidad)
+        });
+        dispatch(bringPreInventarioValesDigitales());
+        Swal.fire({
+            icon: 'success',
+            title: 'Pre inventario modificado',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+export const modifyPreInventarioValesDigitalesRegalados = (id, cantidad) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/preInventarioVales/modificar-pre-inventario-vales-regalados/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cantidad)
+        });
+        dispatch(bringPreInventarioValesDigitalesRegalados());
+        Swal.fire({
+            icon: 'success',
+            title: 'Pre inventario modificado',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+export const aceptarPreInventarioValesFisicos = (id) => async (dispatch) => {
+
+    try {
+        await fetch(`${process.env.REACT_APP_API}/preInventarioVales/aceptar-pre-inventario-vales-fisicos/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        dispatch(bringPreInventarioValesFisicos());
+        dispatch(brinInventarioVales());
+        dispatch(bringValesDigitalesRegalados())
+        Swal.fire({
+            icon: 'success',
+            title: 'Pre inventario aceptado',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+export const aceptarPreInventarioValesDigitales = (id) => async (dispatch) => {
+    
+    try {
+        await fetch(`${process.env.REACT_APP_API}/preInventarioVales/aceptar-pre-inventario-vales-digitales/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        dispatch(bringPreInventarioValesDigitales());
+        dispatch(brinInventarioVales());
+        dispatch(bringValesDigitalesRegalados())
+        Swal.fire({
+            icon: 'success',
+            title: 'Pre inventario aceptado',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+export const aceptarPreInventarioValesDigitalesRegalados = (id) => async (dispatch) => {
+
+    try {
+        await fetch(`${process.env.REACT_APP_API}/preInventarioVales/aceptar-pre-inventario-vales-regalados/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        dispatch(bringPreInventarioValesDigitalesRegalados());
+        dispatch(brinInventarioVales());
+        dispatch(bringValesDigitalesRegalados())
+        Swal.fire({
+            icon: 'success',
+            title: 'Pre inventario aceptado',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+
+
 
 
 

@@ -14,6 +14,7 @@ import TableVales from './TablasDePago/TablaVales/TablaVales';
 import RecaudacionOrden from './TablasDePago/RecaudacionOrden/RecaudacionOrden';
 import OrdenInfo from './TablasDePago/OrdenInfo/OrdenInfo';
 import Cuadratura from './Cuadratura/Cuadratura';
+import CuadraturaAuxiliar from './CuadraturaAxiliar/CuadraturaAuxiliar';
 import Anticipos from './Anticipos/Anticipos';
 import SinAcceso from '../../ComponentesAuxiliares/SinAcceso/SinAcceso';
 import ModalGastos from './ModalGastos/ModalGastos';
@@ -32,6 +33,7 @@ const RendicionPage = () => {
     const dispatch = useDispatch()
     const [ordenId , setOrdenId] = useState(0)
     const { ordenesRendidas, novaOrdenById } = useSelector(state => state.Nova)
+    const { email } = useSelector(state => state.Autenticacion.autBack)
     const [date, setDate] = useState(new Date());
     const soloFecha = moment(date).tz('America/Santiago').format('YYYY-MM-DD');
 
@@ -352,6 +354,11 @@ const RendicionPage = () => {
                         <Cuadratura novaOrdenById={novaOrdenById} fecha={soloFecha}/>
                     ) : null
                 }
+                {/* {
+                    novaOrdenById?.rendida === true && email === 'benjaminsotoro@gmail.com' ? (
+                        <CuadraturaAuxiliar novaOrdenById={novaOrdenById} fecha={soloFecha}/>
+                    ) : null
+                } */}
                 {
                     Number(novaOrdenById?.faltanteChofer) > 0 | Number(novaOrdenById?.faltantePeoneta) > 0 ? (
                         <Anticipos novaOrdenById={novaOrdenById} />
