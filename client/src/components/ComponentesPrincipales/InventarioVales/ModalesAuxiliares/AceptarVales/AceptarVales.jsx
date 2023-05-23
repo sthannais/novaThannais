@@ -20,9 +20,13 @@ const AceptarVales = () => {
 
     const dispatch = useDispatch();
     const [modal, setModal] = useState(false);
-    const [modalAceptar, setModalAceptar] = useState(false);
+    const [modalAceptarFisicos, setModalAceptarFisicos] = useState(false);
+    const [modalAceptarDigitales, setModalAceptarDigitales] = useState(false);
+    const [modalAceptarDigitalesRegalados, setModalAceptarDigitalesRegalados] = useState(false);
     const toggle = () => setModal(!modal);
-    const toggleAceptar = () => setModalAceptar(!modalAceptar);
+    const toggleAceptarFisicos = () => setModalAceptarFisicos(!modalAceptarFisicos);
+    const toggleAceptarDigitales = () => setModalAceptarDigitales(!modalAceptarDigitales);
+    const toggleAceptarDigitalesRegalados = () => setModalAceptarDigitalesRegalados(!modalAceptarDigitalesRegalados);
     const {
         preInventarioValesFisicos,
         preInventarioValesDigitales,
@@ -160,6 +164,7 @@ const AceptarVales = () => {
                             </thead>
                             <tbody>
                                 {preInventarioValesFisicos?.map((item) => (
+                                    console.log(item.id, 'fisicos'),
                                     <tr key={item.id}>
                                         <td>{item.fecha}</td>
                                         {
@@ -252,20 +257,20 @@ const AceptarVales = () => {
                                                     <>
                                                         <button 
                                                             className={style.botonAceptar}
-                                                            onClick={toggleAceptar}
+                                                            onClick={toggleAceptarFisicos}
                                                         >
                                                             Aceptar
                                                         </button>
-                                                        <Modal isOpen={modalAceptar} toggle={toggleAceptar}>
-                                                            <ModalHeader toggle={toggleAceptar}>¿Aceptar vales fisicos del {item.fecha}?</ModalHeader>
+                                                        <Modal isOpen={modalAceptarFisicos} toggle={toggleAceptarFisicos}>
+                                                            <ModalHeader toggle={toggleAceptarFisicos}>¿Aceptar vales fisicos del {item.fecha}?</ModalHeader>
                                                             <ModalFooter>
                                                                 <Button color="primary" onClick={() => {
-                                                                    toggleAceptar();
+                                                                    toggleAceptarFisicos();
                                                                     dispatch(aceptarPreInventarioValesFisicos(item.id));
                                                                 }}>
                                                                     Aceptar
                                                                 </Button>
-                                                                <Button color="secondary" onClick={toggleAceptar}>
+                                                                <Button color="secondary" onClick={toggleAceptarFisicos}>
                                                                     Cancelar
                                                                 </Button>
                                                             </ModalFooter>
@@ -317,6 +322,7 @@ const AceptarVales = () => {
                             </thead>
                             <tbody>
                                 {preInventarioValesDigitales?.map((item) => (
+                                    console.log(item.id, "digitales"),
                                     <tr key={item.id}>
                                         <td>{item.fecha}</td>
                                         {
@@ -409,20 +415,20 @@ const AceptarVales = () => {
                                                     <>
                                                         <button
                                                             className={style.botonAceptar}
-                                                            onClick={toggleAceptar}
+                                                            onClick={toggleAceptarDigitales}
                                                         >
                                                             Aceptar
                                                         </button>
-                                                        <Modal isOpen={modalAceptar} toggle={toggleAceptar}>
-                                                            <ModalHeader toggle={toggleAceptar}>¿Aceptar vales digitales del {item.fecha}?</ModalHeader>
+                                                        <Modal isOpen={modalAceptarDigitales} toggle={toggleAceptarDigitales}>
+                                                            <ModalHeader toggle={toggleAceptarDigitales}>¿Aceptar vales digitales del {item.fecha}?</ModalHeader>
                                                             <ModalFooter>
                                                                 <Button color="primary" onClick={() => {
-                                                                    toggleAceptar();
+                                                                    toggleAceptarDigitales();
                                                                     dispatch(aceptarPreInventarioValesDigitales(item.id));
                                                                 }}>
                                                                     Aceptar
                                                                 </Button>
-                                                                <Button color="secondary" onClick={toggleAceptar}>
+                                                                <Button color="secondary" onClick={toggleAceptarDigitales}>
                                                                     Cancelar
                                                                 </Button>
                                                             </ModalFooter>
@@ -473,6 +479,7 @@ const AceptarVales = () => {
                             </thead>
                             <tbody>
                                 {preInventarioValesRegalados?.map((item) => (
+                                    console.log(item.id, "regalados"),
                                     <tr key={item.id}>
                                         <td>{item.fecha}</td>
                                         {
@@ -565,20 +572,20 @@ const AceptarVales = () => {
                                                     <>
                                                         <button
                                                             className={style.botonAceptar}
-                                                            onClick={toggleAceptar}
+                                                            onClick={toggleAceptarDigitalesRegalados}
                                                         >
                                                             Aceptar
                                                         </button>
-                                                        <Modal isOpen={modalAceptar} toggle={toggleAceptar}>
-                                                            <ModalHeader toggle={toggleAceptar}>¿Aceptar vales digitales regalados del {item.fecha}?</ModalHeader>
+                                                        <Modal isOpen={modalAceptarDigitalesRegalados} toggle={toggleAceptarDigitalesRegalados}>
+                                                            <ModalHeader toggle={toggleAceptarDigitalesRegalados}>¿Aceptar vales digitales regalados del {item.fecha}?</ModalHeader>
                                                             <ModalFooter>
                                                                 <Button color="primary" onClick={() => {
-                                                                    toggleAceptar();
+                                                                    toggleAceptarDigitales();
                                                                     dispatch(aceptarPreInventarioValesDigitalesRegalados(item.id));
                                                                 }}>
                                                                     Aceptar
                                                                 </Button>
-                                                                <Button color="secondary" onClick={toggleAceptar}>
+                                                                <Button color="secondary" onClick={toggleAceptarDigitalesRegalados}>
                                                                     Cancelar
                                                                 </Button>
                                                             </ModalFooter>

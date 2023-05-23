@@ -1250,7 +1250,7 @@ export const modifyPreInventarioValesDigitalesRegalados = (id, cantidad) => asyn
     }
 }
 
-export const aceptarPreInventarioValesFisicos = async (id) => {
+export const aceptarPreInventarioValesFisicos = (id) => async (dispatch) => {
 
     try {
         await fetch(`${process.env.REACT_APP_API}/preInventarioVales/aceptar-pre-inventario-vales-fisicos/${id}`, {
@@ -1259,6 +1259,9 @@ export const aceptarPreInventarioValesFisicos = async (id) => {
                 'Content-Type': 'application/json'
             }
         });
+        dispatch(bringPreInventarioValesFisicos());
+        dispatch(brinInventarioVales());
+        dispatch(bringValesDigitalesRegalados())
         Swal.fire({
             icon: 'success',
             title: 'Pre inventario aceptado',
@@ -1270,7 +1273,7 @@ export const aceptarPreInventarioValesFisicos = async (id) => {
     }
 }
 
-export const aceptarPreInventarioValesDigitales = async (id) => {
+export const aceptarPreInventarioValesDigitales = (id) => async (dispatch) => {
     
     try {
         await fetch(`${process.env.REACT_APP_API}/preInventarioVales/aceptar-pre-inventario-vales-digitales/${id}`, {
@@ -1279,6 +1282,9 @@ export const aceptarPreInventarioValesDigitales = async (id) => {
                 'Content-Type': 'application/json'
             }
         });
+        dispatch(bringPreInventarioValesDigitales());
+        dispatch(brinInventarioVales());
+        dispatch(bringValesDigitalesRegalados())
         Swal.fire({
             icon: 'success',
             title: 'Pre inventario aceptado',
@@ -1290,7 +1296,7 @@ export const aceptarPreInventarioValesDigitales = async (id) => {
     }
 }
 
-export const aceptarPreInventarioValesDigitalesRegalados = async (id) => {
+export const aceptarPreInventarioValesDigitalesRegalados = (id) => async (dispatch) => {
 
     try {
         await fetch(`${process.env.REACT_APP_API}/preInventarioVales/aceptar-pre-inventario-vales-regalados/${id}`, {
@@ -1299,6 +1305,9 @@ export const aceptarPreInventarioValesDigitalesRegalados = async (id) => {
                 'Content-Type': 'application/json'
             }
         });
+        dispatch(bringPreInventarioValesDigitalesRegalados());
+        dispatch(brinInventarioVales());
+        dispatch(bringValesDigitalesRegalados())
         Swal.fire({
             icon: 'success',
             title: 'Pre inventario aceptado',
