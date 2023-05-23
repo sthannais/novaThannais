@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
-import { Table } from 'reactstrap'
+import { Table, Modal, Button, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { ordenesRendicionBetween, bringOrdenesByPersonalAndDate, bringChoferes, bringAyudantes, } from '../../../../redux/novaSlice/thunks'
 import es from 'date-fns/locale/es';
@@ -58,8 +58,14 @@ const RendicionPersonal = ({id}) => {
 
     const { ordenesRendidasDisponibles, choferes, ayudantes, ordenesPersonal } = useSelector(state => state.Nova)
 
-    
-    const ordenesToRender = ordenesPersonal?.length > 0 ? ordenesPersonal : ordenesRendidasDisponibles;
+    let ordenesToRender;
+    if (ordenesPersonal?.length > 0) {
+        ordenesToRender = ordenesPersonal;
+    }else if (ordenesPersonal?.length === 0 && choferId !== null && ayudanteId !== null) {
+        ordenesToRender = [];
+    }else {
+        ordenesToRender = ordenesRendidasDisponibles;
+    }
     const width = window.innerWidth;
     const [paginaActual, setPaginaActual] = useState(1)
     const [porPagina, setPorPagina] = useState(width > 1800 ? 18 : 12)
@@ -227,42 +233,39 @@ const RendicionPersonal = ({id}) => {
                         Rendicion General
                     </button>
                 </Link>
-                <div className={style.imputs}>
-                    <div className={style.datePicker}>
-                        <p className={style.textDatePicker}>
-                            Seleccione una fecha
-                        </p>
-                        <DatePicker
-                            selected={startDate}
-                            onChange={onChangeDate}
-                            startDate={startDate}
-                            endDate={endDate}
-                            selectsRange
-                            locale="es"
-                            dateFormat="dd/MM/yyyy"
-                            className={style.classDatePicker}
-                            maxDate={new Date()}
-                        />
-                    </div>
-                    <div>
-                        <Select
-                            name="personal"
-                            className={style.selectPersonal}
-                            options={optionsChoferes}
-                            isMenuOpen={isMenuOpen}
-                            onMenuOpen={onMenuOpen}
-                            onMenuClose={onMenuClose}
-                            placeholder="Personal"
-                            onChange={(e) => {
-                                onChangePersonal(e);
-                            }}
-                        />  
-                    </div>
-                    <button className={style.buttonClean}  onClick={limpiarPersonal}>
-                        
-                        Mostrar Todo
-                    </button>
+                <div className={style.datePicker}>
+                    <p className={style.textDatePicker}>
+                        Seleccione una fecha
+                    </p>
+                    <DatePicker
+                        selected={startDate}
+                        onChange={onChangeDate}
+                        startDate={startDate}
+                        endDate={endDate}
+                        selectsRange
+                        locale="es"
+                        dateFormat="dd/MM/yyyy"
+                        className={style.classDatePicker}
+                        maxDate={new Date()}
+                    />
                 </div>
+                <div>
+                    <Select
+                        name="personal"
+                        className={style.personalPicker}
+                        options={optionsChoferes}
+                        isMenuOpen={isMenuOpen}
+                        onMenuOpen={onMenuOpen}
+                        onMenuClose={onMenuClose}
+                        placeholder="Personal"
+                        onChange={(e) => {
+                            onChangePersonal(e);
+                        }}
+                    />  
+                </div>
+                <button className={style.buttonClean}  onClick={limpiarPersonal}>
+                    Mostrar Todo
+                </button>            
                 <button onClick={handleExportExcelPopulate} className={style.excel}>
                     <RiFileExcel2Fill className={style.icon3} />
                     <p>Exportar a excel</p>

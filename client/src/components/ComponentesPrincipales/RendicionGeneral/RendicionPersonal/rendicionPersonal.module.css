@@ -49,7 +49,7 @@
     left: 63%;
     top: 8%;
     width: 120px;
-    height: 40px;
+    height: 45px;
     font-family: "Roboto";
     font-weight: 800;
     font-size: 14px;
@@ -60,6 +60,10 @@
 }
 
 .button:hover {
+    background: #808080;
+}
+
+.buttonClean:hover {
     background: #808080;
 }
 
@@ -97,7 +101,7 @@
     text-align: center;
 }
 
-.selectPersonal{
+.personalPicker{
     width: 13rem;
     position: absolute;
     left: 42%;
@@ -116,7 +120,7 @@
     text-align: center;
 }
 
-.excel{
+.excel {
     position: absolute;
     left: 80%;
     top: 7.2%;
@@ -195,6 +199,14 @@
         width: 2.5rem;
         height: 2.5rem;
     }
+
+    .personalPicker{
+        width: 13rem;
+        position: absolute;
+        left: 42%;
+        top: 8%;
+        font-size: 19px;
+    }
 }
 
 @media screen and ( max-width: 1366px ) {
@@ -249,5 +261,23 @@
         top: 3.5%;
         width: 164px;
         height: 37px;
+    }
+    
+    .personalPicker {
+        width: 10rem;
+        height: 2rem;
+        position: absolute;
+        left: 38%;
+        top: 6%;
+        margin-left: -0.5rem;
+        font-size: 14px;
+    }
+
+    .buttonClean {
+        left: 57%;
+        top: 6%;
+        width: 160px;
+        height: 37px;
+        font-size: 13px;
     }
 }
