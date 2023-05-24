@@ -39,7 +39,10 @@ import {
         getOrdenesByPersonalAndDate,
         getPreInventarioValesDigitales,
         getPreInventarioValesFisicos,
-        getPreInventarioValesRegalados
+        getPreInventarioValesRegalados,
+        getInventarioDctoRut,
+        getPreInventarioDctoRut,
+        getHistorialAceptacionDctoRut
     } from './novaSlice';
 
 export const getAllOrdenes = (date) => async (dispatch) => {
@@ -1342,6 +1345,48 @@ export const aceptarPreInventarioValesDigitalesRegalados = (id) => async (dispat
         console.error(error.message);
     }
 }
+
+export const bringInventarioDctoRut = () => async (dispatch) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_API}/dctoRut/inventario`);
+        const data = await response.json();
+        dispatch(getInventarioDctoRut(data));
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${error.message}`,
+        });
+    }
+};
+
+export const bringPreInventarioDctoRut = () => async (dispatch) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_API}/dctoRut/preinventario`);
+        const data = await response.json();
+        dispatch(getPreInventarioDctoRut(data));
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${error.message}`,
+        });
+    }
+};
+
+export const bringHistorialAceptacionDctoRut = () => async (dispatch) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_API}/dctoRut/historialAceptacion`);
+        const data = await response.json();
+        dispatch(getHistorialAceptacionDctoRut(data));
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${error.message}`,
+        });
+    }
+};
 
 
 

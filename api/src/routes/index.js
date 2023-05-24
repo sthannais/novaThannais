@@ -15,6 +15,7 @@ const listaDePreciosRoutes = require('./ListaDePreciosManager/ListaDePreciosRout
 const inventarioValesRoutes = require('./InvetarioVales/InventarioValesRoutes');
 const inventarioValesRegaladosRoutes = require('./InventarioValesRegalados/InventarioValesRegaladosRoutes');
 const preInventarioValesRoutes = require('./PreInventarioValesManager/PreInventarioValesRoutes');
+const dctoRutRoutes = require('./DctoRutManager/DctoRutRoutes');
 
 router.use('/chofer', choferRoutes);
 router.use('/admin', adminRoutes);
@@ -30,6 +31,7 @@ router.use('/listaDePrecios', listaDePreciosRoutes);
 router.use('/inventarioVales', inventarioValesRoutes);
 router.use('/inventarioValesRegalados', inventarioValesRegaladosRoutes);
 router.use('/preInventarioVales', preInventarioValesRoutes);
+router.use('/dctoRut', dctoRutRoutes);
 
 
 module.exports = router;
