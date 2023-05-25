@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
-import { Table, Modal, Button, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import { Table } from 'reactstrap'
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { ordenesRendicionBetween, bringOrdenesByPersonalAndDate, bringChoferes, bringAyudantes, } from '../../../../redux/novaSlice/thunks'
 import es from 'date-fns/locale/es';

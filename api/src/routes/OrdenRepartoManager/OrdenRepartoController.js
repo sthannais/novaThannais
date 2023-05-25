@@ -22,8 +22,7 @@ const { OrdenDeReparto,
         NumeroDeMaquina,
         PreInventarioDigitales,
         PreInventarioFisicos,
-        PreInventarioRegalados,
-        PreInventarioDctoRut
+        PreInventarioRegalados
     } = require('../../db.js');
 
 const { Op } = require('sequelize');
@@ -1570,38 +1569,6 @@ const cuadrarOrden = async (req, res) => {
             })
         }
        
-
-        ////////PREINVETARIO DESCUENTO RUT////////  
-
-        const preInventarioDctoRut = await PreInventarioDctoRut.findOne({
-            where: {
-                active: true,
-                fecha: moment().format("YYYY-MM-DD")
-            }
-        });
-        console.log("preInventarioDctoRut", preInventarioDctoRut);
-
-        if(preInventarioDctoRut){
-            await PreInventarioDctoRut.update({
-                dctoRut5kg: Number(preInventarioDctoRut.dctoRut5kg) + Number(descuento5kg),
-                dctoRut11kg: Number(preInventarioDctoRut.dctoRut11kg) + Number(descuento11kg),
-                dctoRut15kg: Number(preInventarioDctoRut.dctoRut15kg) + Number(descuento15kg),
-                dctoRut45kg: Number(preInventarioDctoRut.dctoRut45kg) + Number(descuento45kg),
-                totalDctoRut: Number(preInventarioDctoRut.totalDctoRut) + Number(porcentajeDescuento),
-            })
-        } else {
-            await PreInventarioDctoRut.create({
-                fecha: moment().format("YYYY-MM-DD"),
-                dctoRut5kg: digitalRegalado5kg,
-                dctoRut11kg: digitalRegalado11kg,
-                dctoRut15kg: digitalRegalado15kg,
-                dctoRut45kg: digitalRegalado45kg,
-                totalDctoRut: totalValesDigiRegalados
-            })
-        }
-
-        ///////////////////////******************************************* */
-
 
         await transbank.update({
             monto: montoTransbank

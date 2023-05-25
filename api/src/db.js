@@ -61,14 +61,7 @@ fs
   .forEach((file) => {
     modelDefiners.push(require(path.join(__dirname, '/models/PreInventarioVales', file)));
   });
-fs
-  .readdirSync(path.join(__dirname, '/models/DctoRut'))
-  .filter((file) => {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
-  })
-  .forEach((file) => {
-    modelDefiners.push(require(path.join(__dirname, '/models/DctoRut', file)));
-  });
+
 
 // Injectamos la conexion (sequelize) a todos los modelos
 modelDefiners.forEach(model => model(sequelize));
@@ -103,9 +96,7 @@ const {
     Vales,
     Gastos,
     NumeroDeMaquina,
-    ValesDigiRegalados,
-    HistorialAceptacionDctoRut,
-    PreInventarioDctoRut
+    ValesDigiRegalados
     } = sequelize.models;
 
 // Relaciones entre los modelos
@@ -263,14 +254,6 @@ ValesDigiRegalados.belongsTo(MetodoPagos, { foreignKey: 'fk_MetodoPagosID', targ
 //Relacion entre lista de precios y orden de reparto
 ListaDePrecios.hasMany(OrdenDeReparto, { foreignKey: 'fk_listaPreciosID', targetKey: 'id' });
 OrdenDeReparto.belongsTo(ListaDePrecios, { foreignKey: 'fk_listaPreciosID', targetKey: 'id' });
-
-///////// DCTO RUT /////////
-//Relacion entre historial de aceptacion y preinventario descuentos rut
-HistorialAceptacionDctoRut.hasOne(PreInventarioDctoRut, { foreignKey: 'fk_historialAceptacionID', targetKey: 'id' }, {
-  onDelete: 'CASCADE',
-  onUpdate: 'CASCADE'
-});
-PreInventarioDctoRut.belongsTo(HistorialAceptacionDctoRut, { foreignKey: 'fk_historialAceptacionID', targetKey: 'id' });
 
 
 

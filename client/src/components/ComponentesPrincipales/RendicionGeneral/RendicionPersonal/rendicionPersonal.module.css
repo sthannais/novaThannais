@@ -172,8 +172,9 @@
 }
 
 .inputPerson {
-    position: relative;
+    position: absolute;
     top: 8%;
+    left: 36%;
 }
 
 @media screen and ( min-width: 1800px ) {
@@ -206,15 +207,16 @@
         height: 2.5rem;
     }
   
-    .personalPicker{
+    .inputPerson{
         width: 13rem;
         left: 42%;
         top: 8%;
         font-size: 19px;
     }
     .inputPerson {
-        position: relative;
+        position: absolut;
         top: 70px;
+        left: 37%;
     }
  
 }
@@ -293,7 +295,9 @@
     }
 
     .inputPerson {
-        position: relative;
+        position: absolute;
         top: 6%;
+        left: 34%;
+    
     }
 }
