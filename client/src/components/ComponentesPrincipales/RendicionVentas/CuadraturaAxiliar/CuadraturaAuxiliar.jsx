@@ -577,13 +577,13 @@ const CuadraturaAuxiliar = ({ novaOrdenById }) => {
             sumaTotalDigitalYFisico45kg : 0,
         })
         setValesDigitalesRegalados({
-            digital5kg : 0,
+            digitalRegalado5kg : 0,
             totalDigitalRegalado5kg : 0,
-            digital11kg : 0,
+            digitalRegalado11kg : 0,
             totalDigitalRegalado11kg : 0,
-            digital15kg : 0,
+            digitalRegalado15kg : 0,
             totalDigitalRegalado15kg : 0,
-            digital45kg : 0,
+            digitalRegalado45kg : 0,
             totalDigitalRegalado45kg : 0,
             totalValesDigitalesRegalados : 0,
         })
@@ -711,6 +711,106 @@ const CuadraturaAuxiliar = ({ novaOrdenById }) => {
                 toggle()
                 setTotalRecaudacion({
                     totalRecaudacion: novaOrdenById?.contabilidadRecarga?.totalRecaudacion
+                })
+                setEfectivo({
+                    totalBilletes1: novaOrdenById?.metodoPagos[0]?.efectivo?.totalBilletes1.replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ','),
+                    totalBilletes2: novaOrdenById?.metodoPagos[0]?.efectivo?.totalBilletes2.replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ','),
+                    totalBilletes5: novaOrdenById?.metodoPagos[0]?.efectivo?.totalBilletes5.replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ','),
+                    totalBilletes10: novaOrdenById?.metodoPagos[0]?.efectivo?.totalBilletes10.replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ','),
+                    totalBilletes20: novaOrdenById?.metodoPagos[0]?.efectivo?.totalBilletes20.replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ','),
+                    monedas: novaOrdenById?.metodoPagos[0]?.efectivo?.monedas.replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ','),
+                    totalGeneral: novaOrdenById?.metodoPagos[0]?.efectivo?.totalGeneral.replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ',')
+                })
+                setEfectivoNumber({
+                    totalBilletes1: Number(novaOrdenById?.metodoPagos[0]?.efectivo?.totalBilletes1),
+                    totalBilletes2: Number(novaOrdenById?.metodoPagos[0]?.efectivo?.totalBilletes2),
+                    totalBilletes5: Number(novaOrdenById?.metodoPagos[0]?.efectivo?.totalBilletes5),
+                    totalBilletes10: Number(novaOrdenById?.metodoPagos[0]?.efectivo?.totalBilletes10),
+                    totalBilletes20: Number(novaOrdenById?.metodoPagos[0]?.efectivo?.totalBilletes20),
+                    monedas: Number(novaOrdenById?.metodoPagos[0]?.efectivo?.monedas),
+                    totalGeneral: Number(novaOrdenById?.metodoPagos[0]?.efectivo?.totalGeneral)
+                })
+                setVales({
+                    fisico5kg: Number(novaOrdenById?.metodoPagos[0]?.vale?.fisico5kg),
+                    totalFisico5kg: Number(novaOrdenById?.metodoPagos[0]?.vale?.totalFisico5kg),
+                    fisico11kg: Number(novaOrdenById?.metodoPagos[0]?.vale?.fisico11kg),
+                    totalFisico11kg: Number(novaOrdenById?.metodoPagos[0]?.vale?.totalFisico11kg),
+                    fisico15kg: Number(novaOrdenById?.metodoPagos[0]?.vale?.fisico15kg),
+                    totalFisico15kg: Number(novaOrdenById?.metodoPagos[0]?.vale?.totalFisico15kg),
+                    fisico45kg: Number(novaOrdenById?.metodoPagos[0]?.vale?.fisico45kg),
+                    totalFisico45kg: Number(novaOrdenById?.metodoPagos[0]?.vale?.totalFisico45kg),
+                    digital5kg: Number(novaOrdenById?.metodoPagos[0]?.vale?.digital5kg),
+                    totalDigital5kg: Number(novaOrdenById?.metodoPagos[0]?.vale?.totalDigital5kg),
+                    digital11kg: Number(novaOrdenById?.metodoPagos[0]?.vale?.digital11kg),
+                    totalDigital11kg: Number(novaOrdenById?.metodoPagos[0]?.vale?.totalDigital11kg),
+                    digital15kg: Number(novaOrdenById?.metodoPagos[0]?.vale?.digital15kg),
+                    totalDigital15kg: Number(novaOrdenById?.metodoPagos[0]?.vale?.totalDigital15kg),
+                    digital45kg: Number(novaOrdenById?.metodoPagos[0]?.vale?.digital45kg),
+                    totalDigital45kg: Number(novaOrdenById?.metodoPagos[0]?.vale?.totalDigital45kg),
+                    sumaTotalDigitalYFisico5kg: Number(novaOrdenById?.metodoPagos[0]?.vale?.sumaTotalDigitalYFisico5kg),
+                    sumaTotalDigitalYFisico11kg: Number(novaOrdenById?.metodoPagos[0]?.vale?.sumaTotalDigitalYFisico11kg),
+                    sumaTotalDigitalYFisico15kg: Number(novaOrdenById?.metodoPagos[0]?.vale?.sumaTotalDigitalYFisico15kg),
+                    sumaTotalDigitalYFisico45kg: Number(novaOrdenById?.metodoPagos[0]?.vale?.sumaTotalDigitalYFisico45kg),
+                    totalVales: Number(novaOrdenById?.metodoPagos[0]?.vale?.totalVales),
+                    totalSumaVales: Number(novaOrdenById?.metodoPagos[0]?.vale?.totalSumaVales),
+                })
+                setValesDigitalesRegalados({
+                    digitalRegalado5kg: Number(novaOrdenById?.metodoPagos[0]?.valesDigiRegalado?.digital5kg),
+                    totalDigitalRegalado5kg: Number(novaOrdenById?.metodoPagos[0]?.valesDigiRegalado?.totalDigital5kg),
+                    digitalRegalado11kg: Number(novaOrdenById?.metodoPagos[0]?.valesDigiRegalado?.digital11kg),
+                    totalDigitalRegalado11kg: Number(novaOrdenById?.metodoPagos[0]?.valesDigiRegalado?.totalDigital11kg),
+                    digitalRegalado15kg: Number(novaOrdenById?.metodoPagos[0]?.valesDigiRegalado?.digital15kg),
+                    totalDigitalRegalado15kg: Number(novaOrdenById?.metodoPagos[0]?.valesDigiRegalado?.totalDigital15kg),
+                    digitalRegalado45kg: Number(novaOrdenById?.metodoPagos[0]?.valesDigiRegalado?.digital45kg),
+                    totalDigitalRegalado45kg: Number(novaOrdenById?.metodoPagos[0]?.valesDigiRegalado?.totalDigital45kg),
+                    totalValesDigitalesRegalados: Number(novaOrdenById?.metodoPagos[0]?.valesDigiRegalado?.totalValesDigitales),
+                })
+                setMetodoPagos({
+                    montoTransbank: novaOrdenById?.metodoPagos[0]?.transbank?.monto.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ','),
+                    montoTransferencias: novaOrdenById?.metodoPagos[0]?.transferencia?.monto.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ','),
+                    porcentajeDescuento: novaOrdenById?.metodoPagos[0]?.descuento?.monto.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ','),
+                })
+                setMetodoPagosNumber({
+                    montoTransbank: Number(novaOrdenById?.metodoPagos[0]?.transbank?.monto),
+                    montoTransferencias: Number(novaOrdenById?.metodoPagos[0]?.transferencia?.monto),
+                    porcentajeDescuento: Number(novaOrdenById?.metodoPagos[0]?.descuento?.monto),
+                })
+                setDescuentoRut({
+                    descuento5kg: novaOrdenById?.metodoPagos[0]?.descuentoRut?.tiposDescuentoRut?.descuento5kg.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ','),
+                    descuento11kg: novaOrdenById?.metodoPagos[0]?.descuentoRut?.tiposDescuentoRut?.descuento11kg.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ','),
+                    descuento15kg: novaOrdenById?.metodoPagos[0]?.descuentoRut?.tiposDescuentoRut?.descuento15kg.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ','),
+                    descuento45kg: novaOrdenById?.metodoPagos[0]?.descuentoRut?.tiposDescuentoRut?.descuento45kg.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ','),
+                    porcentajeDescuentoRut: novaOrdenById?.metodoPagos[0]?.descuentoRut?.monto.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ',')
+                })
+                setDescuentoRutNumber({
+                    descuento5kg: Number(novaOrdenById?.metodoPagos[0]?.descuentoRut?.tiposDescuentoRut?.descuento5kg),
+                    descuento11kg: Number(novaOrdenById?.metodoPagos[0]?.descuentoRut?.tiposDescuentoRut?.descuento11kg),
+                    descuento15kg: Number(novaOrdenById?.metodoPagos[0]?.descuentoRut?.tiposDescuentoRut?.descuento15kg),
+                    descuento45kg: Number(novaOrdenById?.metodoPagos[0]?.descuentoRut?.tiposDescuentoRut?.descuento45kg),
+                    porcentajeDescuentoRut: Number(novaOrdenById?.metodoPagos[0]?.descuentoRut?.monto)
+                })
+                setFaltanteChofer({
+                    faltanteChofer: novaOrdenById?.faltanteChofer.replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ',')
+                })
+                setFaltanteChoferNumber({
+                    faltanteChofer: Number(novaOrdenById?.faltanteChofer)
+                })
+                setFaltantePeoneta({
+                    faltantePeoneta : novaOrdenById?.faltantePeoneta.replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ',')
+                })
+                setFaltantePeonetaNumber({
+                    faltantePeoneta : Number(novaOrdenById?.faltantePeoneta)
+                })
+                setSobrante({
+                    sobrante: Number(novaOrdenById?.sobrante)
+                })
+                setGastos({
+                    montoGastos: novaOrdenById?.metodoPagos[0]?.gasto?.monto?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".").replace(/\./g, ','),
+                    DescripcionGastos: novaOrdenById?.metodoPagos[0]?.gasto?.descripcion
+                })
+                setGastosNumber({
+                    montoGastos: Number(novaOrdenById?.metodoPagos[0]?.gasto?.monto),
+                    DescripcionGastos: novaOrdenById?.metodoPagos[0]?.gasto?.descripcion
                 })
             }} className={style.boton}>
                 <p>Modificar</p>
@@ -950,7 +1050,7 @@ const CuadraturaAuxiliar = ({ novaOrdenById }) => {
                                                 type="number"
                                                 name="digitalRegalado5kg"
                                                 id="digitalRegalado5kg"
-                                                value={vales.digitalRegalado5kg === 0 ? "" : vales.digitalRegalado5kg}
+                                                value={valesDigitalesRegalados.digitalRegalado5kg === 0 ? "" : valesDigitalesRegalados.digitalRegalado5kg}
                                                 className={style.inputs3}
                                                 onChange={(e) => handleValesDigitalesRegaladosChange(e)}
                                                 min={0}
@@ -962,7 +1062,7 @@ const CuadraturaAuxiliar = ({ novaOrdenById }) => {
                                                 type="number"
                                                 name="digitalRegalado11kg"
                                                 id="digitalRegalado11kg"
-                                                value={vales.digitalRegalado11kg === 0 ? "" : vales.digitalRegalado11kg}
+                                                value={valesDigitalesRegalados.digitalRegalado11kg === 0 ? "" : valesDigitalesRegalados.digitalRegalado11kg}
                                                 className={style.inputs3}
                                                 onChange={(e) => handleValesDigitalesRegaladosChange(e)}
                                                 min={0}
@@ -974,7 +1074,7 @@ const CuadraturaAuxiliar = ({ novaOrdenById }) => {
                                                 type="number"
                                                 name="digitalRegalado15kg"
                                                 id="digitalRegalado15kg"
-                                                value={vales.digitalRegalado15kg === 0 ? "" : vales.digitalRegalado15kg}
+                                                value={valesDigitalesRegalados.digitalRegalado15kg === 0 ? "" : valesDigitalesRegalados.digitalRegalado15kg}
                                                 className={style.inputs3}
                                                 onChange={(e) => handleValesDigitalesRegaladosChange(e)}
                                                 min={0}
@@ -986,7 +1086,7 @@ const CuadraturaAuxiliar = ({ novaOrdenById }) => {
                                                 type="number"
                                                 name="digitalRegalado45kg"
                                                 id="digitalRegalado45kg"
-                                                value={vales.digitalRegalado45kg === 0 ? "" : vales.digitalRegalado45kg}
+                                                value={valesDigitalesRegalados.digitalRegalado45kg === 0 ? "" : valesDigitalesRegalados.digitalRegalado45kg}
                                                 className={style.inputs3}
                                                 onChange={(e) => handleValesDigitalesRegaladosChange(e)}
                                                 min={0}

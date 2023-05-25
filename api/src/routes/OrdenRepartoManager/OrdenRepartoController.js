@@ -119,6 +119,7 @@ const getOrdenesDeReparto = async (req, res) => {
 
 const getOrdenDeRepartoById = async (req, res) => {
     const { id } = req.params;
+
     try {
         const ordenDeReparto = await OrdenDeReparto.findByPk(id, {
             include: [
@@ -167,9 +168,12 @@ const getOrdenDeRepartoById = async (req, res) => {
                         },
                         {
                             model: DescuentoRut,
+                            include: [
+                                { model: TiposDescuentoRut }
+                            ]
                         },
                         {
-                            model: Descuentos,
+                            model: Descuentos
                         },
                         {
                             model: Vales,
@@ -1490,11 +1494,12 @@ const cuadrarOrden = async (req, res) => {
         const totalValesFisicos = Number(fisico5kg) + Number(fisico11kg) + Number(fisico15kg) + Number(fisico45kg);
         const totalValesDigitales = Number(digital5kg) + Number(digital11kg) + Number(digital15kg) + Number(digital45kg);
         const totalValesDigiRegalados = Number(digitalRegalado5kg) + Number(digitalRegalado11kg) + Number(digitalRegalado15kg) + Number(digitalRegalado45kg);
+        const fechaDeOrdenDeReparto = moment(ordenDeReparto.fecha).format("YYYY-MM-DD");
 
         const preInventarioFisicos = await PreInventarioFisicos.findOne({
             where: {
                 active: true,
-                fecha: moment().format("YYYY-MM-DD")
+                fecha: fechaDeOrdenDeReparto
             }
         });
 
@@ -1508,7 +1513,7 @@ const cuadrarOrden = async (req, res) => {
             })
         } else {
             await PreInventarioFisicos.create({
-                fecha: moment().format("YYYY-MM-DD"),
+                fecha: fechaDeOrdenDeReparto,
                 fisico5kg,
                 fisico11kg,
                 fisico15kg,
@@ -1520,7 +1525,7 @@ const cuadrarOrden = async (req, res) => {
         const preInventarioDigitales = await PreInventarioDigitales.findOne({
             where: {
                 active: true,
-                fecha: moment().format("YYYY-MM-DD")
+                fecha: fechaDeOrdenDeReparto
             }
         });
 
@@ -1534,7 +1539,7 @@ const cuadrarOrden = async (req, res) => {
             })
         } else {
             await PreInventarioDigitales.create({
-                fecha: moment().format("YYYY-MM-DD"),
+                fecha: fechaDeOrdenDeReparto,
                 digital5kg,
                 digital11kg,
                 digital15kg,
@@ -1546,7 +1551,7 @@ const cuadrarOrden = async (req, res) => {
         const preInventarioRegalados = await PreInventarioRegalados.findOne({
             where: {
                 active: true,
-                fecha: moment().format("YYYY-MM-DD")
+                fecha: fechaDeOrdenDeReparto
             }
         });
 
@@ -1560,7 +1565,7 @@ const cuadrarOrden = async (req, res) => {
             })
         } else {
             await PreInventarioRegalados.create({
-                fecha: moment().format("YYYY-MM-DD"),
+                fecha: fechaDeOrdenDeReparto,
                 regalados5kg: digitalRegalado5kg,
                 regalados11kg: digitalRegalado11kg,
                 regalados15kg: digitalRegalado15kg,

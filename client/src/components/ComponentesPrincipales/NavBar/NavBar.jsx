@@ -160,7 +160,7 @@ const NavBar = () => {
                                             } className={
                                                 buttonSelected === 'inventarioVales' ? style.guideStyleSelected : style.guideStyle
                                             }>
-                                                Vales
+                                                Control de vales
                                             </button>
                                         </Link>
                                     ) : null
