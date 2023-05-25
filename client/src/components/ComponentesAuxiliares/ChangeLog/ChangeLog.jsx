@@ -36,14 +36,36 @@ const ChangeLog = () => {
                 () => {
                     toggle();
                 }
-            } >Ver. 1.4.0
+            } >Ver. 1.5.0
             </button>
             <Modal isOpen={modal} toggle={toggle} style={
                 width > 768 ? modalStyles : modalStylesMobile
             } size="md" backdrop="static" onKeyDown={handleKeydown}>
                 <ModalHeader toggle={toggle}>Cambios recientes</ModalHeader>
                 <ModalBody>
-                    <h5>Ver. 1.4.0</h5>
+                    <h5>Ver. 1.5.0</h5>
+                    <em style={{ color: 'red' }}>25/05/2023</em>
+                    {
+                        verMas && name === 'Ver. 1.5.0' ? (
+                            <ul className={style.newli}>
+                                <li>Se agrega pren inventario de vales para controlar la adicion de vales al inventario</li>
+                                <li>Se optimiza y se corrigen bugs para componentes de pre inventario de vales</li>
+                                <li>Se agrega filtro en componente de rendicion de personal para filtra por nombre de chofer o peoneta y que traiga sus ordenes</li>
+                                <li>Se corrigen guias y desfases de todo el mes de mayo</li>
+                                <li>Se empieza el desarrollo de la estructura de la base de datos y del servidor de nuevo inventario de descuentos rut</li>
+                            </ul>
+                        ) : null
+                    }
+                    <br />
+                    <button onClick={
+                        () => {
+                            setVerMas(!verMas);
+                            setName('Ver. 1.5.0')
+                        }
+                    } className={style.verMas}>
+                        { verMas && name === 'Ver. 1.5.0' ? 'Ver menos...' : 'Ver mas...'}
+                    </button>
+                    <h5>Ver. 1.5.0</h5>
                     <em style={{ color: 'red' }}>04/05/2023</em>
                     {
                         verMas && name === 'Ver. 1.4.0' ? (
