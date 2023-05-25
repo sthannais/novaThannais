@@ -8,7 +8,7 @@
     "test": "mocha -w ./tests/**/*.spec.js",
     "dev": "nodemon -L"
   },
-  "author": "Henry",
+  "author": "Jhoskar Toro",
   "license": "ISC",
   "engines": {
     "node": ">=12.18.3",

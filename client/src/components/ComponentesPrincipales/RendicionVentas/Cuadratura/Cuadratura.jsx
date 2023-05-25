@@ -577,13 +577,13 @@ const Cuadratura = ({ novaOrdenById }) => {
             sumaTotalDigitalYFisico45kg : 0,
         })
         setValesDigitalesRegalados({
-            digital5kg : 0,
+            digitalRegalado5kg : 0,
             totalDigitalRegalado5kg : 0,
-            digital11kg : 0,
+            digitalRegalado11kg : 0,
             totalDigitalRegalado11kg : 0,
-            digital15kg : 0,
+            digitalRegalado15kg : 0,
             totalDigitalRegalado15kg : 0,
-            digital45kg : 0,
+            digitalRegalado45kg : 0,
             totalDigitalRegalado45kg : 0,
             totalValesDigitalesRegalados : 0,
         })
