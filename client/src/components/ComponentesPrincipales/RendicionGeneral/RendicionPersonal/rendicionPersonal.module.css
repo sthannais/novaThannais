@@ -107,7 +107,7 @@
     position: relative;
     left: 42%;
     top: 8%;
-    font-size: 19px;
+    font-size: 14px;
 }
 
 .tableContainer {
@@ -177,6 +177,18 @@
     left: 36%;
 }
 
+.textAdvertencia {
+    color: rgb(255, 0, 0);
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.totalTarros{
+    font-size: 19px;
+    font-weight: bold;
+}
+
+
 @media screen and ( min-width: 1800px ) {
     .container {
         width: 1590px;
@@ -211,12 +223,23 @@
         width: 13rem;
         left: 42%;
         top: 8%;
-        font-size: 19px;
+        font-size: 14px;
     }
     .inputPerson {
         position: absolut;
         top: 70px;
         left: 37%;
+    }
+
+    .textAdvertencia {
+        color: rgb(255, 0, 0);
+        font-size: 19px;
+        font-weight: bold;
+    }
+
+    .totalTarros{
+        font-size: 19px;
+        font-weight: bold;
     }
  
 }
@@ -283,7 +306,7 @@
         left: 38%;
         top: 6%;
         margin-left: -0.5rem;
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .buttonClean {
@@ -299,5 +322,16 @@
         top: 6%;
         left: 34%;
     
+    }
+
+    .textAdvertencia {
+        color: rgb(255, 0, 0);
+        font-size: 19px;
+        font-weight: bold;
+    }
+
+    .totalTarros{
+        font-size: 19px;
+        font-weight: bold;
     }
 }
