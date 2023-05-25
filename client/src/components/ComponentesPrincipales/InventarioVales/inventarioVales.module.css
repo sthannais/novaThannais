@@ -1,0 +1,157 @@
+.text {
+    position: absolute;
+    left: 20%;
+    top: 4.5%;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 23px;
+    color: #FFFFFF;
+}
+
+.logo {
+    margin-left: 82rem;
+    margin-top: 1rem;
+}
+
+.excel{
+    position: absolute;
+    left: 83%;
+    top: 2%;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 5px;
+    color: #3C3C3C !important;
+    font-family: "Roboto";
+    font-weight: 800;
+    background-color: transparent;
+    width: 164px;
+    height: 37px;
+}
+
+.container {
+    position: absolute;
+    top: 70px;
+    left: 17rem;
+    width: 1200px;
+    height: 660px;
+    background: #F5F5F5;
+    overflow: hidden;
+    z-index: -1;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    font-family: 'Roboto';
+    padding: 5rem 2.5rem 0 2.5rem;
+}
+
+.tableContainer {
+    position: absolute;
+    top: 1.5rem;
+    left: 2.5rem;
+    border-radius: 30px;
+    background: #FFFFFF;
+    width: 80%;
+    height: 33.5%;
+    font-size: 14px;
+    border: none;
+    overflow: hidden;
+}
+
+.title {
+    position: absolute;
+    left: 7.5rem;
+    top: 1.5rem;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 23px;
+    color: #3C3C3C;
+}
+
+.text2 {
+    text-align: center;
+    font-family: 'Roboto';
+    vertical-align: middle;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 14px;
+    height: 2.3rem;
+    width: 1rem;
+}
+
+@media screen and (min-width: 1800px) {
+    .container {
+        width: 1590px;
+        height: 860px;
+    }
+
+    .text {
+        left: 15%;
+        top: 3%;
+    }
+
+    .logo {
+        margin-left: 105rem;
+    }
+
+    .tableContainer {
+        top: 3rem;
+        width: 80rem;
+        height: 14rem;
+    }
+
+    .title {
+        left: 9.5rem;
+        top: 4rem;
+        font-size: 18px;
+    }
+
+    .text2 {
+        margin-top: -2.5rem;
+        margin-left: 35rem;
+        font-size: 18px;
+    }
+}
+
+@media screen and ( max-width: 1366px ) {
+    .text {
+        font-size: 16px;
+        left: 22%;
+        top: 2.5%;
+    }
+
+    .logo {
+        margin-top: 0.3rem;
+        margin-left: 72rem;
+    }
+
+    .container {
+        width: 1040px;
+        height: 618px;
+        top: 52px;
+        left: 16rem;
+    }
+
+    .tableContainer {
+        top: 1.3rem;
+        left: 2.5rem;
+        width: 52rem;
+        height: 13.5rem;
+    }
+
+    .title {
+        left: 7.5rem;
+        top: 0.5rem;
+        font-size: 14px;
+    }
+
+    .text2 {
+        margin-top: -2.5rem;
+        margin-left: 35rem;
+        font-size: 14px;
+    }
+}

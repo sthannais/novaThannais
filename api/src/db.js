@@ -3,23 +3,31 @@ const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 const {
-  DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT, DB_DEPLOY
+  DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT, DB_DEPLOY, NODE_ENV
 } = process.env;
 
-let sequelize = 
-    new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`, {
-      logging: false,
-      native: false,  
-  // new Sequelize(DB_DEPLOY, { // deploy render
-  //   dialectOptions: {
-  //     ssl: {
-  //       require: true,
-  //     },
-  //     keepAlive: true,
-  //   },
-  //   ssl: true,
-  //   logging: false,
-  //   native: false,
+let sequelize = NODE_ENV === 'development' ? new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`, {
+    logging: false,
+    native: false,
+  }) :  
+  new Sequelize(DB_DEPLOY, { // 
+    dialectOptions: {
+      ssl: {
+        require: true,
+      },
+      keepAlive: true,
+    },
+    ssl: true,
+    logging: false,
+    native: false,
+    pool: {
+      max: 10,
+      min: 0,
+      acquire: 300000,
+      idle: 300000,
+    },
+    port: 5432,
+    queryCache : true
   });
 
 const basename = path.basename(__filename);
@@ -45,7 +53,15 @@ fs
     modelDefiners.push(require(path.join(__dirname, '/models/MetodosDePagos', file)));
   });
 
-  
+fs
+  .readdirSync(path.join(__dirname, '/models/PreInventarioVales'))
+  .filter((file) => {
+    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+  })
+  .forEach((file) => {
+    modelDefiners.push(require(path.join(__dirname, '/models/PreInventarioVales', file)));
+  });
+
 
 // Injectamos la conexion (sequelize) a todos los modelos
 modelDefiners.forEach(model => model(sequelize));
@@ -75,8 +91,12 @@ const {
     Efectivo,
     Abonos,
     DescuentoRut,
+    TiposDescuentoRut,
     Descuentos,
     Vales,
+    Gastos,
+    NumeroDeMaquina,
+    ValesDigiRegalados
     } = sequelize.models;
 
 // Relaciones entre los modelos
@@ -148,6 +168,13 @@ OrdenDeReparto.hasOne(ContabilidadRecargas, { foreignKey: 'fk_ordenDeRepartoID',
   });
 ContabilidadRecargas.belongsTo(OrdenDeReparto, { foreignKey: 'fk_ordenDeRepartoID', targetKey: 'id' });
 
+//Relacion entre orden de reparto y numero de maquina
+OrdenDeReparto.hasOne(NumeroDeMaquina, { foreignKey: 'fk_ordenDeRepartoID', targetKey: 'id' }, {
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE'
+  });
+NumeroDeMaquina.belongsTo(OrdenDeReparto, { foreignKey: 'fk_ordenDeRepartoID', targetKey: 'id' });
+
 /////// METODOS DE PAGO ///////
 
 //Relacion entre orden de reparto y metodo de pago
@@ -203,9 +230,32 @@ MetodoPagos.hasOne(DescuentoRut, { foreignKey: 'fk_MetodoPagosID', targetKey: 'i
 });
 DescuentoRut.belongsTo(MetodoPagos, { foreignKey: 'fk_MetodoPagosID', targetKey: 'id' });
 
+//Relacion entre descuentoRut y TiposDescuentoRut
+DescuentoRut.hasOne(TiposDescuentoRut, { foreignKey: 'fk_descuentoRutID', targetKey: 'id' }, {
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE'
+});
+TiposDescuentoRut.belongsTo(DescuentoRut, { foreignKey: 'fk_descuentoRutID', targetKey: 'id' });
+
+//Relacion entre metodo de pago y gastos
+MetodoPagos.hasOne(Gastos, { foreignKey: 'fk_MetodoPagosID', targetKey: 'id' }, {
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE'
+});
+Gastos.belongsTo(MetodoPagos, { foreignKey: 'fk_MetodoPagosID', targetKey: 'id' });
+
+//Relacion entre metodo de pago y vales regalados
+MetodoPagos.hasOne(ValesDigiRegalados, { foreignKey: 'fk_MetodoPagosID', targetKey: 'id' }, {
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE'
+});
+ValesDigiRegalados.belongsTo(MetodoPagos, { foreignKey: 'fk_MetodoPagosID', targetKey: 'id' });
+
 //Relacion entre lista de precios y orden de reparto
 ListaDePrecios.hasMany(OrdenDeReparto, { foreignKey: 'fk_listaPreciosID', targetKey: 'id' });
 OrdenDeReparto.belongsTo(ListaDePrecios, { foreignKey: 'fk_listaPreciosID', targetKey: 'id' });
+
+
 
 
 module.exports = {

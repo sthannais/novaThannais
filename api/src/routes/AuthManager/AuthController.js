@@ -49,9 +49,8 @@ const login = async (req, res) => {
             token
         });
     } catch (error) {
-        console.log(error);
         res.status(500).json({
-            message: error.message
+            message: "No se pudo iniciar sesión"
         });
     };
 };
@@ -68,6 +67,50 @@ const logout = async (req, res) => {
             return res.status(400).json({
                 ok: false,
                 msg: 'El usuario no existe'
+            });
+        }
+        await usuario.update({online: false})
+        res.json({
+            ok: true,
+            usuario
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: error.message
+        });
+    };
+};
+
+const logoutAux = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const usuario = await Personal.findOne({
+            where: {
+                email
+            }
+        });
+
+        if (!usuario) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'El usuario no existe'
+            });
+        }
+
+        const validPassword = bcrypt.compareSync(password, usuario.password);
+        if (!validPassword) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Contraseña incorrecta'
+            });
+        }
+        if(usuario.online === false) {
+            //mando un mensaje en el error de que el usuario no está logueado
+            return res.status(400).json({
+                ok: false,
+                msg: 'Todas las sesiones ya están cerradas'
             });
         }
         await usuario.update({online: false})
@@ -102,5 +145,6 @@ const renewToken = async (req, res = response) => {
 module.exports = {
     login,
     logout,
-    renewToken
+    renewToken,
+    logoutAux
 }

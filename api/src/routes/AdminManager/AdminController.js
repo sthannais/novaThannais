@@ -1,6 +1,6 @@
 const { Administrador, Personal, Rol } = require('../../db')
 
-const getAdmins = (req, res) => {
+const getAdmins = (req, res, next) => {
     Administrador.findAll({
         include: [{
             model: Personal,
@@ -11,9 +11,7 @@ const getAdmins = (req, res) => {
     }).then(administradores => {
         res.json(administradores);
     }).catch(error => {
-        res.status(500).json({
-            msg: 'Error al obtener los administradores'
-        });
+        next(error);
     });
 }
 
@@ -34,7 +32,30 @@ const getAdminById = async (req, res) => {
     res.json(admin);
 }
 
+const changeOnlineStatus = async (req, res) => {
+    try{
+        const { id } = req.params;
+
+        const personal = await Personal.findByPk(id);
+
+        await personal.update({
+            online: !personal.online
+        });
+
+        res.json({
+            msg: 'Estado de conexión actualizado'
+        });
+    }catch(error){
+        res.status(500).json({
+            msg: 'Error al actualizar el estado de conexión',
+            error: error.message
+        });
+    }
+}
+
+
 module.exports = {
     getAdmins,
     getAdminById,
+    changeOnlineStatus
 }

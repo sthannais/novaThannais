@@ -41,6 +41,9 @@ const getAllAyudanteNames = async (req, res) => {
             include: [
                 {
                     model: Rol,
+                    where: {
+                        name: 'Ayudante'
+                    }, 
                 },
                 {
                     model: Ayudante

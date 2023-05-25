@@ -1,14 +1,15 @@
 import { Route, Routes } from 'react-router-dom';
 import { useCheckAuthBack } from './hooks/useCheckAuthBack';
-import MainPage from './components/MainPage/MainPage';
-import LoginPage from './components/LoginPage/LoginPage';
-import GuidePage from './components/GuidePage/GuidePage';
-import NavBar from './components/NavBar/NavBar';
-import RendicionPage from './components/RendicionPage/RendicionPage';
-import RendicionGeneral from './components/RendicionGeneral/RendicionGeneral';
-import PersonalSellTable from './components/TablesPayments/PersonalSellTable/PersonalSellTable';
-import HistorialAnticipos from './components/HistorialAnticipos/HistorialAnticipos';
-import Metricas from './components/Metricas/Metricas';
+import LoginPage from './components/ComponentesPrincipales/PaginaLogin/PaginaLogin';
+import ListaDePersonal from './components/ComponentesPrincipales/ListaDePersonal/ListaDePersonal';
+import GuiaDeReparto from './components/ComponentesPrincipales/GuiaDeReparto/GuiaDeReparto';
+import NavBar from './components/ComponentesPrincipales/NavBar/NavBar';
+import NavBarNew from './components/ComponentesPrincipales/NavBarNew/NavBarNew';
+import RendicionVentas from './components/ComponentesPrincipales/RendicionVentas/RendicionVentas';
+import RendicionGeneral from './components/ComponentesPrincipales/RendicionGeneral/RendicionGeneral';
+import RendicionPersonal from './components/ComponentesPrincipales/RendicionGeneral/RendicionPersonal/RendicionPersonal';
+import HistorialAnticipos from './components/ComponentesPrincipales/HistorialAnticipos/HistorialAnticipos';
+import InventarioVales from './components/ComponentesPrincipales/InventarioVales/InventarioVales';
 
 function App() {
   
@@ -25,13 +26,13 @@ function App() {
         <>
           <NavBar />
           <Routes>
-            <Route path="/home" element={<MainPage />} />
-            <Route path="/guide" element={<GuidePage />} />
-            <Route path="/rendicion" element={<RendicionPage />} />
+            <Route path="/listaDePersonal" element={<ListaDePersonal />} />
+            <Route path="/guiaDeReparto" element={<GuiaDeReparto />} />
+            <Route path="/rendicionVentas" element={<RendicionVentas />} />
             <Route path="/rendicionGeneral" element={<RendicionGeneral />} />
-            <Route path="/personalSellTable" element={<PersonalSellTable />} />
+            <Route path="/rendicionPersonal" element={<RendicionPersonal />} />
             <Route path="/historialAnticipos" element={<HistorialAnticipos />} />
-            <Route path="/metricas" element={<Metricas />} />
+            <Route path="/inventarioVales" element={<InventarioVales />} />
           </Routes>
         </>
         :

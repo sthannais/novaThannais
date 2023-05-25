@@ -12,6 +12,10 @@ const patentesRoutes = require('./PatenteManager/PatenteRoutes');
 const cuadranteRoutes = require('./CuadranteManager/CuadranteRoutes');
 const metodoPagoRoutes = require('./MetodoPagos/MetodoPagosRoutes');
 const listaDePreciosRoutes = require('./ListaDePreciosManager/ListaDePreciosRoutes');
+const inventarioValesRoutes = require('./InvetarioVales/InventarioValesRoutes');
+const inventarioValesRegaladosRoutes = require('./InventarioValesRegalados/InventarioValesRegaladosRoutes');
+const preInventarioValesRoutes = require('./PreInventarioValesManager/PreInventarioValesRoutes');
+
 
 router.use('/chofer', choferRoutes);
 router.use('/admin', adminRoutes);
@@ -24,6 +28,9 @@ router.use('/patente', patentesRoutes);
 router.use('/cuadrante', cuadranteRoutes);
 router.use('/metodoPago', metodoPagoRoutes);
 router.use('/listaDePrecios', listaDePreciosRoutes);
+router.use('/inventarioVales', inventarioValesRoutes);
+router.use('/inventarioValesRegalados', inventarioValesRegaladosRoutes);
+router.use('/preInventarioVales', preInventarioValesRoutes);
 
 
 module.exports = router;
