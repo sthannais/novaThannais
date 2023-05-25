@@ -354,11 +354,11 @@ const RendicionPage = () => {
                         <Cuadratura novaOrdenById={novaOrdenById} fecha={soloFecha}/>
                     ) : null
                 }
-                {/* {
+                {
                     novaOrdenById?.rendida === true && email === 'benjaminsotoro@gmail.com' ? (
                         <CuadraturaAuxiliar novaOrdenById={novaOrdenById} fecha={soloFecha}/>
                     ) : null
-                } */}
+                }
                 {
                     Number(novaOrdenById?.faltanteChofer) > 0 | Number(novaOrdenById?.faltantePeoneta) > 0 ? (
                         <Anticipos novaOrdenById={novaOrdenById} />
