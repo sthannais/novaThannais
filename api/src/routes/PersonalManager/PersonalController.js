@@ -28,6 +28,17 @@ const getPersonals = async (req, res) => {
     }
 }
 
+const getPersonalById = async (req, res) => {
+    const { personalId } = req.params;
+    
+    try {
+        const personal = await Personal.findByPk(personalId)
+        res.json(personal);
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+};
+
 const createPersonal = async (req, res) => {
     const { name, lastname, email, password, rut, rol } = req.body;
     
@@ -134,9 +145,7 @@ const getOnlyChofercWithFaltantesBetweenDates = async (req, res) => {
                     faltanteChofer: {
                         [Op.gt]: 0
                     },
-                    fecha: {
-                        [Op.gte]: fechaInicio
-                    }
+                    fecha: fechaInicio
                 },
                 include: [
                     {
@@ -223,9 +232,7 @@ const getOnlyAyudantesWithFaltantesBetweenDates = async (req, res) => {
                     faltantePeoneta: {
                         [Op.gt]: 0
                     },
-                    fecha: {
-                        [Op.gte]: fechaInicio
-                    }
+                    fecha: fechaInicio
                 },
                 include: [
                     {
@@ -277,7 +284,6 @@ const getOnlyAyudantesWithFaltantesBetweenDates = async (req, res) => {
                 }
             ]
         });
-
         // se calcula el total de faltantes de cada chofer y ayudante manejando promesas
         const ayudantesWithFaltantes = await Promise.all(ayudantes.map(async (ayudante) => {
             const faltantes = ordenesDeReparto.filter(orden => orden.ayudante.id === ayudante.id);
@@ -322,9 +328,7 @@ const getAllFaltantesBetweenDates = async (req, res) => {
                                 }
                             }
                         ],
-                        fecha: {
-                            [Op.gte]: fechaInicio
-                        }
+                        fecha: fechaInicio
                     }
                 });
             } else {
@@ -365,10 +369,8 @@ const getAllFaltantesBetweenDates = async (req, res) => {
                                 }
                             }
                         ],
-                        fecha: {
-                            [Op.gte]: fechaInicio
-                        },
-                        administradorId
+                        fecha: fechaInicio,
+                        cuadradoPor: administradorId
                     }
                 });
             } else {
@@ -390,7 +392,7 @@ const getAllFaltantesBetweenDates = async (req, res) => {
                         fecha: {
                             [Op.between]: [fechaInicio, fechaFin]
                         },
-                        administradorId
+                        cuadradoPor: administradorId
                     }
                 });
             }
@@ -405,11 +407,127 @@ const getAllFaltantesBetweenDates = async (req, res) => {
     }
 };
 
+const changeActiveForOrdenById = async (req, res) => {
+    const { personalId } = req.params;
+
+    try {
+        const personal = await Personal.findByPk(personalId);
+
+        if(!personal) {
+            return res.status(404).json({error: 'Personal no encontrado'});
+        }
+
+        await personal.update({
+            activeForOrden: !personal.activeForOrden
+        });
+
+        res.json(personal);
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+}
+
+const modifyPersonal = async (req, res, next) => {
+    const { personalId } = req.params;
+    const { name, lastname, email, rut, lastPassword, password } = req.body;
+
+    try {
+
+        const personal = await Personal.findByPk(personalId);
+
+        if(!personal) {
+            return res.status(404).json({error: 'Personal no encontrado'});
+        }
+
+        if(lastPassword && password) {
+            const isPasswordCorrect = await bcrypt.compare(lastPassword, personal.password);
+
+            if(!isPasswordCorrect) {
+                return res.status(400).json({error: 'Contraseña incorrecta'});
+            }
+
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(password, salt);
+            
+            await personal.update({
+                name,
+                lastname,
+                email,
+                rut,
+                password: hashedPassword
+            });
+        } else {
+            await personal.update({
+                name,
+                lastname,
+                email,
+                rut
+            });
+        }
+        
+        res.json(personal);
+    } catch (error) {
+        next(error);
+    }
+}
+
+const changePasswordManual = async (req, res, next) => {
+    const { personalId } = req.params;
+    const { password } = req.body;
+
+    try {
+
+        const personal = await Personal.findByPk(personalId);
+
+        if(!personal) {
+            return res.status(404).json({error: 'Personal no encontrado'});
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        await personal.update({
+            password: hashedPassword
+        });
+
+        res.json(personal);
+
+    } catch (error) {
+        next(error);
+    }
+};
+
+const modifyPersonalRut = async (req, res, next) => {
+    const { personalId } = req.params;
+    const { rut } = req.body;
+
+    try {
+
+        const personal = await Personal.findByPk(personalId);
+
+        if(!personal) {
+            return res.status(404).json({error: 'Personal no encontrado'});
+        }
+
+        await personal.update({
+            rut
+        });
+
+        res.json(personal);
+    } catch (error) {
+        next(error);
+    }
+}
 
 module.exports = {
     getPersonals,
     createPersonal,
     getOnlyChofercWithFaltantesBetweenDates,
     getOnlyAyudantesWithFaltantesBetweenDates,
-    getAllFaltantesBetweenDates
+    getAllFaltantesBetweenDates,
+    changeActiveForOrdenById,
+    modifyPersonal,
+    getPersonalById,
+    changePasswordManual,
+    modifyPersonalRut
 }

@@ -9,8 +9,10 @@ export const NovaSlice = createSlice({
         ordenesParaFiltrar : [],
         ordenesDisponibles: [],
         ordenesRendidas: [],
+        ordenesRendidasDisponibles: [],
         novaOrdenById: {},
         patentes: [],
+        allPatentes: [],
         cuadrantes: [],
         allCuadrantes: [],
         choferes: [],
@@ -27,6 +29,16 @@ export const NovaSlice = createSlice({
         faltantes: [],
         administradores: [],
         loading: false,
+        inventarioVales: [],
+        RegistroCambiosVales: [],
+        valesPorFecha: [],
+        ultimosVales: [],
+        registroDescargaVales: [],
+        ValesDigitalesRegalados: [],
+        preInventarioValesFisicos: [],
+        preInventarioValesDigitales: [],
+        preInventarioValesRegalados: [],
+        ordenesPersonal: []
     },
     reducers: {
         getPersonal: (state, {payload}) => {
@@ -45,6 +57,9 @@ export const NovaSlice = createSlice({
         Rendidas: (state, {payload}) => {
             state.ordenesRendidas = payload;
         },
+        RendidasDisponibles : (state, {payload}) => {
+            state.ordenesRendidasDisponibles = payload;
+        },
         getOrdenById: (state, {payload}) => {
             state.novaOrdenById = payload;
         },
@@ -53,6 +68,9 @@ export const NovaSlice = createSlice({
         },
         getPatentes: (state, {payload}) => {
             state.patentes = payload.sort((a,b) => a.name.localeCompare(b.name));
+        },
+        getAllPatentes: (state, {payload}) => {
+            state.allPatentes = payload.sort((a,b) => a.name.localeCompare(b.name));
         },
         getCuadrantes: (state, {payload}) => {
             state.cuadrantes = payload.sort((a,b) => a.name.localeCompare(b.name));
@@ -84,11 +102,17 @@ export const NovaSlice = createSlice({
         getCodigoDeModificar: (state, {payload}) => {
             state.codigoDeModificar = payload;
         },
+        limpiarCodigo: (state) => {
+            state.codigoDeModificar = {};
+        },
         setPorAutorizar: (state) => {
             state.autorizado = "Por autorizar";
         },
         setAutorizado : (state) => {
             state.autorizado = "Autorizado";
+        },
+        setNoAutorizado : (state) => {
+            state.autorizado = "No autorizado";
         },
         getListaDePrecios: (state, {payload}) => {
             state.listaDePrecios = payload;
@@ -104,6 +128,36 @@ export const NovaSlice = createSlice({
         },
         changeLoading: (state) => {
             state.loading = !state.loading;
+        },
+        getInventarioVales: (state, {payload}) => {
+            state.inventarioVales = payload;
+        },
+        getRegistroCambiosVales: (state, {payload}) => {
+            state.RegistroCambiosVales = payload;
+        },
+        getValesPorFecha: (state, {payload}) => {
+            state.valesPorFecha = payload;
+        },
+        getUltimosVales: (state, {payload}) => {
+            state.ultimosVales = payload;
+        },
+        getRegistroDescargaVales: (state, {payload}) => {
+            state.registroDescargaVales = payload;
+        },
+        getValesDigitalesRegalados: (state, {payload}) => {
+            state.ValesDigitalesRegalados = payload;
+        },
+        getPreInventarioValesFisicos: (state, {payload}) => {
+            state.preInventarioValesFisicos = payload;
+        },
+        getPreInventarioValesDigitales: (state, {payload}) => {
+            state.preInventarioValesDigitales = payload;
+        },
+        getPreInventarioValesRegalados: (state, {payload}) => {
+            state.preInventarioValesRegalados = payload;
+        },
+        getOrdenesByPersonalAndDate: (state, {payload}) => {
+            state.ordenesPersonal = payload;
         }
     }
 });
@@ -113,11 +167,13 @@ export const {  getPersonal,
                 getOrdenes,
                 getOrdenById, 
                 getPatentes,
+                getAllPatentes,
                 getCuadrantes,
                 getChoferes,
                 getAyudantes,
                 ordenesDisponibles,
                 Rendidas,
+                RendidasDisponibles,
                 clearOrdenById,
                 getCuadratura,
                 getOrdenesChoferById,
@@ -125,13 +181,25 @@ export const {  getPersonal,
                 getOrdenesChofer,
                 getOrdenesAyudante,
                 getCodigoDeModificar,
+                limpiarCodigo,
                 setPorAutorizar,
                 setAutorizado,
+                setNoAutorizado,
                 getListaDePrecios,
                 getAllFaltantes,
                 getAdministradores,
                 getTodosLosPrecios,
                 changeLoading,
-                getAllCuadrantes
+                getAllCuadrantes,
+                getInventarioVales,
+                getRegistroCambiosVales,
+                getValesPorFecha,
+                getUltimosVales,
+                getRegistroDescargaVales,
+                getValesDigitalesRegalados,
+                getPreInventarioValesFisicos,
+                getPreInventarioValesDigitales,
+                getPreInventarioValesRegalados,
+                getOrdenesByPersonalAndDate,  
             } = NovaSlice.actions;
             

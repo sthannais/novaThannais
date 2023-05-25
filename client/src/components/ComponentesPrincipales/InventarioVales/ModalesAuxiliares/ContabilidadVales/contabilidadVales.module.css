@@ -1,0 +1,113 @@
+.iconContainer2 {
+    position: absolute;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-items: center;
+    cursor: pointer;
+    left: 88%;
+    top: 13%;
+    font-size: 24px;
+    width: 5rem;
+    height: 4rem;
+}
+
+.botonsito {
+    background-color: transparent;
+    cursor: pointer;
+    font-family: 'Roboto';
+    font-size: 14px;
+    font-weight: 800;
+    color: #3C3C3C;
+}
+
+.icono {
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+}
+
+.icono2 {
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+}
+
+.title2 {
+    font-family: 'Roboto';
+    font-weight: 800;
+    color: #3C3C3C;
+}
+
+.title3 {
+    margin-top: 5rem;
+    font-family: 'Roboto';
+    font-weight: 800;
+    color: #3C3C3C;
+}
+
+.tableContainer {
+    width: 47rem;
+    height: 12rem;
+    text-align: center;
+}
+
+.tableContainer2 {
+    width: 47rem;
+    height: 12rem;
+    text-align: center;
+}
+
+.inputsito {
+    width: 3rem;
+    margin-left: 3rem;
+}
+
+.inputsito2 {
+    margin-left: 2rem;
+    width: 7rem;
+    height: 5rem;
+    font-size: 13px;
+    resize: none;
+}
+
+.botonsito {
+    background-color: transparent;
+    cursor: pointer;
+    font-family: 'Roboto';
+    font-size: 14px;
+    font-weight: 800;
+    color: #3C3C3C;
+}
+
+.modalFooter {
+    margin-top: 2rem;
+}
+
+@media screen and (max-width: 1920px) {
+    .iconContainer2 {
+        left: 88%;
+        top: 13%;
+    }
+}
+
+@media screen and (max-width: 1700px) {
+    .iconContainer2 {
+        left:82%;
+        top: 8.5%;
+    }
+}
+
+@media screen and (max-width: 1600px) {
+    .iconContainer2 {
+        left: 88%;
+        top: 13%;
+    }
+}
+
+@media screen and (max-width: 1366px) {
+    .iconContainer2 {
+        left: 88%;
+        top: 13%;
+    }
+}

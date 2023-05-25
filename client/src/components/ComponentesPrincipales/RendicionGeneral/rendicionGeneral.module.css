@@ -1,0 +1,285 @@
+.container {
+    position: absolute;
+    top: 70px;
+    left: 17rem;
+    background-color: #F5F5F5;
+    width: 1210px;
+    height: 740px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    font-family: 'Roboto';
+}
+
+.text {
+    position: absolute;
+    left: 20%;
+    top: 4.5%;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 23px;
+    color: #FFFFFF;
+}
+
+.logo {
+    margin-left: 82rem;
+    margin-top: 1rem;
+}
+
+.button {
+    position: absolute;
+    left: 5%;
+    top: 6%;
+    width: 160px;
+    height: 45px;
+    font-family: "Roboto";
+    font-weight: 800;
+    font-size: 14px;
+    background: #5E5F5F;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+}
+
+.button:hover {
+    background: #808080;
+}
+
+.selected {
+    position: absolute;
+    left: 20%;
+    top: 6%;
+    width: 225px;
+    height: 45px;
+}
+
+.icon3 {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.3rem;
+}
+
+.icon3:hover {
+    width: 2.3rem;
+    height: 2.3rem;
+}
+
+.excel {
+    position: absolute;
+    left: 84%;
+    top: 2%;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 5px;
+    color: #3C3C3C !important;
+    background-color: transparent;
+    font-family: "Roboto";
+    font-weight: 800;
+    width: 164px;
+    height: 37px;
+}
+
+.excel2 {
+    position: absolute;
+    left: 74%;
+    top: 2%;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 5px;
+    color: #3C3C3C !important;
+    background-color: transparent;
+    font-family: "Roboto";
+    font-weight: 800;
+    width: 164px;
+    height: 37px;
+}
+
+.excel3 {
+    position: absolute;
+    left: 64%;
+    top: 2%;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 5px;
+    color: #3C3C3C !important;
+    background-color: transparent;
+    font-family: "Roboto";
+    font-weight: 800;
+    width: 164px;
+    height: 37px;
+}
+
+.datePicker {
+    position: absolute;
+    left: 40%;
+    top: 1.7%;
+    font-family: "Roboto";
+    font-size: 14px;
+}
+
+.textDatePicker {
+    color: #000000;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: 'Roboto';
+    text-align: center;
+}
+
+.classDatePicker {
+    border-radius: 3px;
+    border: 1px solid #000000;
+    width: 12rem;
+    height: 2.8rem;
+    text-align: center;
+}
+
+@media screen and (min-width: 1800px) {
+
+    .container {
+        position: absolute;
+        top: 70px;
+        left: 17rem;
+        width: 1590px;
+        height: 850px;
+    }
+
+    .text {
+        left: 15%;
+        top: 3%;
+    }
+
+    .logo {
+        margin-left: 105rem;
+    }
+
+    .button {
+        left: 5%;
+        top: 6%;
+        width: 180px;
+        height: 45px;
+        font-family: "Roboto";
+        font-weight: 800;
+        font-size: 16px;
+    }
+
+    .selected {
+        left: 18%;
+    }
+
+    .datePicker {
+        left: 34%;
+        top: 1.4%;
+    }
+
+    .textDatePicker {
+        font-size: 16px;
+    }
+
+    .classDatePicker {
+        border-radius: 3px;
+        border: 1px solid #000000;
+        width: 13rem;
+        height: 2.7rem;
+        text-align: center;
+    }
+}
+
+@media screen and ( max-width: 1366px ) {
+    
+    .text {
+        font-size: 16px;
+        left: 22%;
+        top: 2.5%;
+    }
+
+    .logo {
+        margin-top: 0.3rem;
+        margin-left: 72rem;
+    }
+
+    .container {
+        width: 1040px;
+        height: 790px;
+        top: 52px;
+        left: 16rem;
+    }  
+
+    .button {
+        left: 4.5%;
+        top: 6%;
+        width: 160px;
+        height: 37px;
+        font-size: 14px;
+    }
+    
+    .datePicker {
+        left: 46%;
+        top: 1%;
+    }
+    
+    .textDatePicker {
+        font-size: 15px;
+    }
+
+    .classDatePicker {
+        height: 37px; 
+    }
+
+    .selected {
+        left: 22%;
+        top: 6%;
+        width: 228px;
+        height: 37px; 
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .logo {
+        position: absolute;
+        right: 8.5rem;
+        top: 0rem;
+    }
+    
+    .text {
+        left: 10%;
+        top: 12%;
+    }
+    
+    .container {
+        top: 10%;
+        left: 3%;
+        width: 95%;
+        height: 87%;
+        padding: 5rem 2.5rem 0 2.5rem;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 20px;
+        padding: 40% 1.5rem 0 1.5rem;
+    }
+
+    .selected {
+        left: 7%;
+        top: 8%;
+        font-size: 13px;
+        width: 12rem;
+        height: 37px; 
+    }
+
+    .datePicker {
+        left: 7%;
+        top: 17%;
+    }
+    
+    .textDatePicker {
+        font-size: 15px;
+        color: #FFFFFF;
+    }
+}

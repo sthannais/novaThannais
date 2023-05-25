@@ -2,7 +2,7 @@ const Router = require('express');
 const router = Router();
 const { check } = require('express-validator');
 const { validateFields } = require('../../helpers/FieldValidators');
-const { login, logout, renewToken } = require('./AuthController');
+const { login, logout, renewToken, logoutAux } = require('./AuthController');
 
 // Importar todos los routers;
 
@@ -13,6 +13,8 @@ router.post('/login', [
 ], login);
 
 router.post('/logout', logout);
+
+router.post('/logoutAux', logoutAux);
 
 router.get('/renew', renewToken);
 
