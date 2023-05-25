@@ -36,9 +36,10 @@ import {
         getUltimosVales,
         getRegistroDescargaVales,
         getValesDigitalesRegalados,
+        getOrdenesByPersonalAndDate,
         getPreInventarioValesDigitales,
         getPreInventarioValesFisicos,
-        getPreInventarioValesRegalados
+        getPreInventarioValesRegalados,
     } from './novaSlice';
 
 export const getAllOrdenes = (date) => async (dispatch) => {
@@ -1157,6 +1158,29 @@ export const descargarExcelVentaDeTarros = async (date1, date2) => {
     }
 }
 
+
+export const bringOrdenesByPersonalAndDate = (choferId, ayudanteId, date1, date2) => async (dispatch) => {
+    try {
+        //fetch
+        const response = await fetch(`${process.env.REACT_APP_API}/orden/personal/${choferId}/${ayudanteId}/${date1}/${date2}`);
+        const data = await response.json();
+        dispatch(getOrdenesByPersonalAndDate(data));
+        if (data.length === 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Sin ordenes',
+                text: 'Este empleado no tiene ordenes en esas fechas',
+            });
+        }
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${error.message}`,
+        });
+    }
+};
+
 export const bringPreInventarioValesFisicos = () => async (dispatch) => {
     try {
         const response = await fetch(`${process.env.REACT_APP_API}/preInventarioVales/pre-inventario-vales-fisicos`);
@@ -1318,6 +1342,8 @@ export const aceptarPreInventarioValesDigitalesRegalados = (id) => async (dispat
         console.error(error.message);
     }
 }
+
+
 
 
 

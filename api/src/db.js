@@ -96,7 +96,7 @@ const {
     Vales,
     Gastos,
     NumeroDeMaquina,
-    ValesDigiRegalados,
+    ValesDigiRegalados
     } = sequelize.models;
 
 // Relaciones entre los modelos
@@ -254,6 +254,8 @@ ValesDigiRegalados.belongsTo(MetodoPagos, { foreignKey: 'fk_MetodoPagosID', targ
 //Relacion entre lista de precios y orden de reparto
 ListaDePrecios.hasMany(OrdenDeReparto, { foreignKey: 'fk_listaPreciosID', targetKey: 'id' });
 OrdenDeReparto.belongsTo(ListaDePrecios, { foreignKey: 'fk_listaPreciosID', targetKey: 'id' });
+
+
 
 
 module.exports = {

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { Table } from 'reactstrap'
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { ordenesRendicionBetween } from '../../../../redux/novaSlice/thunks'
+import { ordenesRendicionBetween, bringOrdenesByPersonalAndDate, bringChoferes, bringAyudantes, } from '../../../../redux/novaSlice/thunks'
 import es from 'date-fns/locale/es';
 import { numberWithDots } from '../../../../helpers/numberWithDot';
 import { RiFileExcel2Fill } from 'react-icons/ri';
@@ -13,6 +13,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import style from './rendicionPersonal.module.css'
 import InfiniteScroll from 'react-infinite-scroller';
 import * as XLSXPopulate from 'xlsx-populate/browser/xlsx-populate';
+import Select from 'react-select';
 
 registerLocale('es', es);
 
@@ -24,6 +25,8 @@ const RendicionPersonal = ({id}) => {
     const [endDate, setEndDate] = useState(null);
     const soloFecha = startDate.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
     const soloFechaFin = endDate?.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
+    const [choferId, setChoferId] = useState(null);
+    const [ayudanteId, setAyudanteId] = useState(null);  
     
     const onChangeDate = (dates) => {
         const [start, end] = dates;
@@ -31,20 +34,46 @@ const RendicionPersonal = ({id}) => {
         setEndDate(end);
     }
 
+    const onChangePersonal = (e) => {
+        console.log('e', e.value);
+        const listaAyudantes = ayudantes?.map((ayudante) => {
+            return {
+                ayudanteId: ayudante?.ayudante?.id,
+                label: `${ayudante?.name} ${ayudante?.lastname}`
+            }
+        });
+        const searchedAyudante = listaAyudantes.find((ayudante) => ayudante.label === e.label);
+        setChoferId(e.value);
+        setAyudanteId(searchedAyudante?.ayudanteId);
+    };
+
+
     useEffect(() => {
-        dispatch(ordenesRendicionBetween(soloFecha, soloFechaFin))
-    }, [dispatch, soloFecha, soloFechaFin])
+        dispatch(ordenesRendicionBetween(soloFecha, soloFechaFin));
+        dispatch(bringOrdenesByPersonalAndDate(choferId, ayudanteId, soloFecha, soloFechaFin));
+        dispatch(bringChoferes());
+        dispatch(bringAyudantes());
+    }, [dispatch, soloFecha, soloFechaFin, choferId, ayudanteId])
+    
 
-    const { ordenesRendidasDisponibles } = useSelector(state => state.Nova)
+    const { ordenesRendidasDisponibles, choferes, ayudantes, ordenesPersonal } = useSelector(state => state.Nova)
 
+    let ordenesToRender;
+    if (ordenesPersonal?.length > 0) {
+        ordenesToRender = ordenesPersonal;
+    }else if (ordenesPersonal?.length === 0 && choferId !== null && ayudanteId !== null) {
+        ordenesToRender = [];
+    }else {
+        ordenesToRender = ordenesRendidasDisponibles;
+    }
     const width = window.innerWidth;
     const [paginaActual, setPaginaActual] = useState(1)
     const [porPagina, setPorPagina] = useState(width > 1800 ? 18 : 12)
     const [hasMore, setHasMore] = useState(true)
-    const maximo = ordenesRendidasDisponibles?.length / porPagina
+    const maximo = ordenesToRender?.length / porPagina
     const primerIndice = (paginaActual - 1) * porPagina
     const ultimoIndice = (paginaActual - 1) * porPagina + porPagina
-    const currentPosts = ordenesRendidasDisponibles?.slice(primerIndice, ultimoIndice)
+    const currentPosts = ordenesToRender?.slice(primerIndice, ultimoIndice)
 
     const loadMore = () => {
         if (paginaActual >= maximo) {
@@ -55,6 +84,27 @@ const RendicionPersonal = ({id}) => {
             porPagina + 9
         )
     }
+
+    const limpiarPersonal = () => {
+        setChoferId(null);
+        setAyudanteId(null);
+    };
+
+    //FEATURE ORDENES POR PERSONAL
+
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const onMenuOpen = () => setIsMenuOpen(true);
+    const onMenuClose = () => setIsMenuOpen(false);
+
+    const optionsChoferes = choferes?.map((chofer) => {
+        return {
+            value: chofer?.chofer?.id,
+            label: `${chofer?.name} ${chofer?.lastname}`
+        }
+    });
+
+    //EXCEL
 
     const handleExportExcelPopulate = async () => {
         const data = ordenesRendidasDisponibles?.map((post) => {
@@ -177,6 +227,12 @@ const RendicionPersonal = ({id}) => {
             <p className={style.text}>Rendicion del personal</p>
             <img src={JorgeGas} alt="logo" className={style.logo} />
             <div className={style.container}>
+                <Link to="/rendicionGeneral">
+                    <button className={style.button}>
+                        <img src={vectorDerecho} alt="vector" className={style.vectorDerecho} />
+                        Rendicion General
+                    </button>
+                </Link>
                 <div className={style.datePicker}>
                     <p className={style.textDatePicker}>
                         Seleccione una fecha
@@ -193,12 +249,23 @@ const RendicionPersonal = ({id}) => {
                         maxDate={new Date()}
                     />
                 </div>
-                <Link to="/rendicionGeneral">
-                    <button className={style.button}>
-                        <img src={vectorDerecho} alt="vector" className={style.vectorDerecho} />
-                        Rendicion General
-                    </button>
-                </Link>
+                <div className={style.inputPerson}>
+                    <Select
+                        name="personal"
+                        className={style.personalPicker}
+                        options={optionsChoferes}
+                        isMenuOpen={isMenuOpen}
+                        onMenuOpen={onMenuOpen}
+                        onMenuClose={onMenuClose}
+                        placeholder="Personal"
+                        onChange={(e) => {
+                            onChangePersonal(e);
+                        }}
+                    />  
+                </div>
+                <button className={style.buttonClean}  onClick={limpiarPersonal}>
+                    Mostrar Todo
+                </button>            
                 <button onClick={handleExportExcelPopulate} className={style.excel}>
                     <RiFileExcel2Fill className={style.icon3} />
                     <p>Exportar a excel</p>
