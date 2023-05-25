@@ -35,7 +35,6 @@ const RendicionPersonal = ({id}) => {
     }
 
     const onChangePersonal = (e) => {
-        console.log('e', e.value);
         const listaAyudantes = ayudantes?.map((ayudante) => {
             return {
                 ayudanteId: ayudante?.ayudante?.id,
@@ -58,11 +57,24 @@ const RendicionPersonal = ({id}) => {
 
     const { ordenesRendidasDisponibles, choferes, ayudantes, ordenesPersonal } = useSelector(state => state.Nova)
 
+    let advertencia = "";
+    let totalTarros = "";
     let ordenesToRender;
     if (ordenesPersonal?.length > 0) {
         ordenesToRender = ordenesPersonal;
+        let nombre;
+        let sumaTarros = ordenesPersonal?.reduce((acc, curr) => {
+            return acc + Number(curr.contabilidadRecarga.totalCantidad)
+        }, 0);
+        if(ordenesPersonal[0]?.chofer?.id == choferId){
+            nombre = `${ordenesPersonal[0]?.chofer?.personal?.name} ${ordenesPersonal[0]?.chofer?.personal?.lastname}`;
+        } else if (ordenesPersonal[0]?.ayudante?.id == ayudanteId) {
+            nombre = `${ordenesPersonal[0]?.ayudante?.personal?.name} ${ordenesPersonal[0]?.ayudante?.personal?.lastname}`;
+        }
+        totalTarros = `La suma total de los tarros de ${nombre} es: ${sumaTarros}`;
     }else if (ordenesPersonal?.length === 0 && choferId !== null && ayudanteId !== null) {
         ordenesToRender = [];
+        advertencia = "Empleado sin ordenes";
     }else {
         ordenesToRender = ordenesRendidasDisponibles;
     }
@@ -107,7 +119,7 @@ const RendicionPersonal = ({id}) => {
     //EXCEL
 
     const handleExportExcelPopulate = async () => {
-        const data = ordenesRendidasDisponibles?.map((post) => {
+        const data = ordenesToRender?.map((post) => {
             return {
                 'Numero de orden': post.id,
                 'Fecha': post.fecha,
@@ -262,6 +274,7 @@ const RendicionPersonal = ({id}) => {
                             onChangePersonal(e);
                         }}
                     />  
+                    
                 </div>
                 <button className={style.buttonClean}  onClick={limpiarPersonal}>
                     Mostrar Todo
@@ -292,7 +305,7 @@ const RendicionPersonal = ({id}) => {
                                     <th>11kg</th>
                                     <th>15kg</th>
                                     <th>45kg</th>
-                                    <th>Cilindros</th>
+                                    <th>Tarros</th>
                                     <th>Total</th>
                                 </tr>
                             </thead>
@@ -317,6 +330,12 @@ const RendicionPersonal = ({id}) => {
                                 ))}
                             </tbody>
                         </Table>
+                    <p className={style.textAdvertencia}>
+                        { advertencia }
+                    </p>
+                    <p className={style.totalTarros}>
+                        { totalTarros }
+                    </p>
                     </InfiniteScroll>
                 </div>
                 <button onClick={loadMore} className={style.boton}>
