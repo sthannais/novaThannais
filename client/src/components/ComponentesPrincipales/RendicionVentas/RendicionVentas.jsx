@@ -356,7 +356,8 @@ const RendicionPage = () => {
                 }
                 {
                     novaOrdenById?.rendida === true && email === 'jhoskartoro@gmail.com' ||
-                    email === 'maicol.nieto@jorgegas.cl' ? (
+                    novaOrdenById?.rendida === true && email === 'maicol.nieto@jorgegas.cl' ||
+                    novaOrdenById?.rendida === true && email === 'benjaminsotoro@gmail.com' ? (
                         <CuadraturaAuxiliar novaOrdenById={novaOrdenById} fecha={soloFecha}/>
                     ) : null
                 }

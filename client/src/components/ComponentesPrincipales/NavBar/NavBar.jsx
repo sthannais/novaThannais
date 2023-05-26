@@ -152,7 +152,8 @@ const NavBar = () => {
                                 </Link>
                                 {
                                     email === "benjaminsotoro@gmail.com" ||
-                                    email === "maicol.nieto@jorgegas.cl"
+                                    email === "maicol.nieto@jorgegas.cl" ||
+                                    email === "jhoskartoro@gmail.com"
                                     ? (
                                         <Link to="/inventarioVales">
                                             <button onClick={
