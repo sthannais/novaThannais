@@ -164,7 +164,6 @@ const AceptarVales = () => {
                             </thead>
                             <tbody>
                                 {preInventarioValesFisicos?.map((item) => (
-                                    console.log(item.id, 'fisicos'),
                                     <tr key={item.id}>
                                         <td>{item.fecha}</td>
                                         {
@@ -322,7 +321,6 @@ const AceptarVales = () => {
                             </thead>
                             <tbody>
                                 {preInventarioValesDigitales?.map((item) => (
-                                    console.log(item.id, "digitales"),
                                     <tr key={item.id}>
                                         <td>{item.fecha}</td>
                                         {
@@ -479,7 +477,6 @@ const AceptarVales = () => {
                             </thead>
                             <tbody>
                                 {preInventarioValesRegalados?.map((item) => (
-                                    console.log(item.id, "regalados"),
                                     <tr key={item.id}>
                                         <td>{item.fecha}</td>
                                         {
