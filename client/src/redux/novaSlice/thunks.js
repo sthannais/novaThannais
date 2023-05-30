@@ -40,6 +40,7 @@ import {
         getPreInventarioValesDigitales,
         getPreInventarioValesFisicos,
         getPreInventarioValesRegalados,
+        getChoferesYAyudantes
     } from './novaSlice';
 
 export const getAllOrdenes = (date) => async (dispatch) => {
@@ -606,6 +607,21 @@ export const bringAyudantes = () => async (dispatch) => {
         });
     }
 };
+
+export const bringChoferesYAyudantes = () => async (dispatch) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_API}/personal/choferes/ayudantes`);
+        const data = await response.json();
+        dispatch(getChoferesYAyudantes(data));
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${error.message}`,
+        });
+    }
+};
+
 
 export const ordenesActivas = () => async (dispatch) => {
     try {

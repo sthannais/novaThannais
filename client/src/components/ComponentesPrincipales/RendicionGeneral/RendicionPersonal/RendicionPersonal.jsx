@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { Table } from 'reactstrap'
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { ordenesRendicionBetween, bringOrdenesByPersonalAndDate, bringChoferes, bringAyudantes, } from '../../../../redux/novaSlice/thunks'
+import { ordenesRendicionBetween, bringOrdenesByPersonalAndDate, bringChoferesYAyudantes } from '../../../../redux/novaSlice/thunks'
 import es from 'date-fns/locale/es';
 import { numberWithDots } from '../../../../helpers/numberWithDot';
 import { RiFileExcel2Fill } from 'react-icons/ri';
@@ -26,36 +26,27 @@ const RendicionPersonal = ({id}) => {
     const soloFecha = startDate.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
     const soloFechaFin = endDate?.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
     const [choferId, setChoferId] = useState(null);
-    const [ayudanteId, setAyudanteId] = useState(null);  
+    const [ayudanteId, setAyudanteId] = useState(null); 
+    const [selectedOption, setSelectedOption] = useState(null);
+    const [mostrarTodo, setMostrarTodo] = useState(false); 
     
     const onChangeDate = (dates) => {
         const [start, end] = dates;
         setStartDate(start);
         setEndDate(end);
+        setMostrarTodo(false);
     }
-
-    const onChangePersonal = (e) => {
-        const listaAyudantes = ayudantes?.map((ayudante) => {
-            return {
-                ayudanteId: ayudante?.ayudante?.id,
-                label: `${ayudante?.name} ${ayudante?.lastname}`
-            }
-        });
-        const searchedAyudante = listaAyudantes.find((ayudante) => ayudante.label === e.label);
-        setChoferId(e.value);
-        setAyudanteId(searchedAyudante?.ayudanteId);
-    };
-
-
+    //FEATURE ORDENES POR PERSONAL
     useEffect(() => {
         dispatch(ordenesRendicionBetween(soloFecha, soloFechaFin));
-        dispatch(bringOrdenesByPersonalAndDate(choferId, ayudanteId, soloFecha, soloFechaFin));
-        dispatch(bringChoferes());
-        dispatch(bringAyudantes());
+        dispatch(bringChoferesYAyudantes());
+        if(choferId || ayudanteId || !choferId && !ayudanteId && mostrarTodo){
+            dispatch(bringOrdenesByPersonalAndDate(choferId, ayudanteId, soloFecha, soloFechaFin));
+        }
     }, [dispatch, soloFecha, soloFechaFin, choferId, ayudanteId])
     
 
-    const { ordenesRendidasDisponibles, choferes, ayudantes, ordenesPersonal } = useSelector(state => state.Nova)
+    const { ordenesRendidasDisponibles, choferesYAyudantes, ordenesPersonal } = useSelector(state => state.Nova)
 
     let advertencia = "";
     let totalTarros = "";
@@ -97,24 +88,33 @@ const RendicionPersonal = ({id}) => {
         )
     }
 
+    const onChangePersonal = (e) => {
+        const searchedPersonal = choferesYAyudantes.find(item => item.id === e.value);
+        const choferId = searchedPersonal?.chofer?.id;
+        const ayudanteId = searchedPersonal?.ayudante?.id;
+        setChoferId(choferId);
+        setAyudanteId(ayudanteId);
+        setSelectedOption(e);
+        setMostrarTodo(false);
+    };
+
     const limpiarPersonal = () => {
         setChoferId(null);
         setAyudanteId(null);
+        setSelectedOption(null);
+        setMostrarTodo(true);
     };
 
     //FEATURE ORDENES POR PERSONAL
 
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-    const onMenuOpen = () => setIsMenuOpen(true);
-    const onMenuClose = () => setIsMenuOpen(false);
-
-    const optionsChoferes = choferes?.map((chofer) => {
+    const optionsPersonal = choferesYAyudantes?.map((personal) => {  
         return {
-            value: chofer?.chofer?.id,
-            label: `${chofer?.name} ${chofer?.lastname}`
+            value: personal?.id,
+            label: `${personal?.name} ${personal?.lastname}`
         }
-    });
+    }
+);
+
 
     //EXCEL
 
@@ -265,11 +265,9 @@ const RendicionPersonal = ({id}) => {
                     <Select
                         name="personal"
                         className={style.personalPicker}
-                        options={optionsChoferes}
-                        isMenuOpen={isMenuOpen}
-                        onMenuOpen={onMenuOpen}
-                        onMenuClose={onMenuClose}
+                        options={optionsPersonal}
                         placeholder="Personal"
+                        value={selectedOption}
                         onChange={(e) => {
                             onChangePersonal(e);
                         }}

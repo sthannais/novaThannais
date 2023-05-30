@@ -619,196 +619,71 @@ const getAllOrdenesWhereEstadoFalseBetweenDates = async (req, res) => {
 // Buscar ordenes por fecha y personal
 
 const getOrdenesByPersonalAndDate = async (req, res) => {
-    const {idChofer, idAyudante, fechaInicio, fechaFin} = req.params;
+    const { idChofer, idAyudante, fechaInicio, fechaFin } = req.params;
+
 
     try {
-        let ordenesDeRepartoByPersonal = [];
-        if(!fechaFin || fechaFin === "undefined" || fechaFin === null) {
-            const ordenesDeRepartoByChofer = await OrdenDeReparto.findAll({
-                where: {
-                    fk_choferID: idChofer,
-                    fecha: fechaInicio
-                },
-                order : [
-                    ['fecha', 'DESC']
-                ],
-                include: [
-                    {
-                        model: Recargas,
-                        where: {
-                            active: true
-                        }
-                    },
-                    {
-                        model: ContabilidadRecargas,
-                    },
-                    {
-                        model: Cuadrante,
-                    },
-                    {
-                        model: Chofer,
-                        include: [
-                            {
-                                model: Personal
-                            }
-                        ]
-                    },
-                    {
-                        model: ListaDePrecios,
-                    },
-                    {
-                        model: Ayudante,
-                        include: [
-                            {
-                                model: Personal
-                            }
-                        ]
-                    },
-                ]
+        const whereCondition = {
+            [Op.or]: [
+              {
+                fk_choferID: idChofer,
+                fecha: fechaInicio,
+              },
+              {
+                fk_ayudanteID: idAyudante,
+                fecha: fechaInicio,
+              },
+            ],
+          };
+     
+          if (fechaFin && fechaFin !== "undefined" && fechaFin !== null) {
+            whereCondition[Op.or].forEach((condition) => {
+              condition.fecha = {
+                [Op.between]: [fechaInicio, fechaFin],
+              };
             });
-            const ordenesDeRepartoByAyudante = await OrdenDeReparto.findAll({
+          }
+     
+          const ordenesDeRepartoByPersonal = await OrdenDeReparto.findAll({
+            where: whereCondition,
+            order: [["fecha", "DESC"]],
+            include: [
+              {
+                model: Recargas,
                 where: {
-                    fk_ayudanteID: idAyudante,
-                    fecha: fechaInicio
+                  active: true,
                 },
-                order : [
-                    ['fecha', 'DESC']
-                ],
+              },
+              {
+                model: ContabilidadRecargas,
+              },
+              {
+                model: Chofer,
                 include: [
-                    {
-                        model: Recargas,
-                        where: {
-                            active: true
-                        }
-                    },
-                    {
-                        model: ContabilidadRecargas,
-                    },
-                    {
-                        model: Cuadrante,
-                    },
-                    {
-                        model: Chofer,
-                        include: [
-                            {
-                                model: Personal
-                            }
-                        ]
-                    },
-                    {
-                        model: ListaDePrecios,
-                    },
-                    {
-                        model: Ayudante,
-                        include: [
-                            {
-                                model: Personal
-                            }
-                        ]
-                    },
-                ]
-            });
-            ordenesDeRepartoByPersonal = [...ordenesDeRepartoByChofer, ...ordenesDeRepartoByAyudante];
-            res.json(ordenesDeRepartoByPersonal);
-        } else {
-            const ordenesDeRepartoByChofer = await OrdenDeReparto.findAll({
-                where: {
-                    fk_choferID: idChofer,
-                    fecha: {
-                        [Op.between]: [fechaInicio, fechaFin]
-                    }
-                },
-                order : [
-                    ['fecha', 'DESC']
+                  {
+                    model: Personal,
+                  },
                 ],
+              },
+              {
+                model: Ayudante,
                 include: [
-                    {
-                        model: Recargas,
-                        where: {
-                            active: true
-                        }
-                    },
-                    {
-                        model: ContabilidadRecargas,
-                    },
-                    {
-                        model: Cuadrante,
-                    },
-                    {
-                        model: Chofer,
-                        include: [
-                            {
-                                model: Personal
-                            }
-                        ]
-                    },
-                    {
-                        model: ListaDePrecios,
-                    },
-                    {
-                        model: Ayudante,
-                        include: [
-                            {
-                                model: Personal
-                            }
-                        ]
-                    },
-                ]
-            });
-            const ordenesDeRepartoByAyudante = await OrdenDeReparto.findAll({
-                where: {
-                    fk_ayudanteID: idAyudante,
-                    fecha: {
-                        [Op.between]: [fechaInicio, fechaFin]
-                    }
-                },
-                order : [
-                    ['fecha', 'DESC']
+                  {
+                    model: Personal,
+                  },
                 ],
-                include: [
-                    {
-                        model: Recargas,
-                        where: {
-                            active: true
-                        }
-                    },
-                    {
-                        model: ContabilidadRecargas,
-                    },
-                    {
-                        model: Cuadrante,
-                    },
-                    {
-                        model: Chofer,
-                        include: [
-                            {
-                                model: Personal
-                            }
-                        ]
-                    },
-                    {
-                        model: ListaDePrecios,
-                    },
-                    {
-                        model: Ayudante,
-                        include: [
-                            {
-                                model: Personal
-                            }
-                        ]
-                    },
-                ]
-            });
-            ordenesDeRepartoByPersonal = [...ordenesDeRepartoByChofer, ...ordenesDeRepartoByAyudante];
-            res.json(ordenesDeRepartoByPersonal);
-        }
+              },
+            ],
+          });
+     
+          res.json(ordenesDeRepartoByPersonal);
+
 
     } catch (error) {
-        console.log(error.message);
         res.status(400).json({error: error.message});
     }
-
 }
+
     
 
 //////////////// POST  //////////////////////

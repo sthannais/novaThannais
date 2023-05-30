@@ -17,6 +17,7 @@ export const NovaSlice = createSlice({
         allCuadrantes: [],
         choferes: [],
         ayudantes: [],
+        choferesYAyudantes: [],
         cuadratura: [],
         ordenesChoferById: [],
         ordenesAyudanteById: [],
@@ -86,6 +87,9 @@ export const NovaSlice = createSlice({
         },
         getCuadratura: (state, {payload}) => {
             state.cuadratura = payload;
+        },
+        getChoferesYAyudantes: (state, {payload}) => {
+            state.choferesYAyudantes = payload.sort((a,b) => a.name.localeCompare(b.name));
         },
         getOrdenesChoferById: (state, {payload}) => {
             state.ordenesChoferById = payload;
@@ -201,5 +205,6 @@ export const {  getPersonal,
                 getPreInventarioValesDigitales,
                 getPreInventarioValesRegalados,
                 getOrdenesByPersonalAndDate,  
+                getChoferesYAyudantes
             } = NovaSlice.actions;
             
