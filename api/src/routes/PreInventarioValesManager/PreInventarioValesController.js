@@ -3,8 +3,12 @@ const {
     PreInventarioFisicos,
     PreInventarioRegalados,
     InventarioVales,
-    InventarioValesDigitalesRegalados
+    InventarioValesDigitalesRegalados,
+    HistorialAceptacion,
+    PreInventarioFinalizado,
+    Personal
 } = require('../../db');
+const moment = require('moment');
 
 // Traigo los vales fisicos, digitales y regalados del pre inventario
 
@@ -15,7 +19,10 @@ const getPreInventarioValesFisicos = async (req, res) => {
             where: {
                 active: true
             },
-            attributes: ['id', 'fecha', 'fisico5kg', 'fisico11kg', 'fisico15kg', 'fisico45kg', 'totalValesFisicos']
+            attributes: ['id', 'fecha', 'fisico5kg', 'fisico11kg', 'fisico15kg', 'fisico45kg', 'totalValesFisicos'],
+            include: {
+                model: PreInventarioFinalizado
+            }
         });
         res.json(preInventarioFisicos);
     } catch (error) {
@@ -31,7 +38,10 @@ const getPreInventarioValesDigitales = async (req, res) => {
             where: {
                 active: true
             },
-            attributes: ['id', 'fecha', 'digital5kg', 'digital11kg', 'digital15kg', 'digital45kg', 'totalValesDigitales']
+            attributes: ['id', 'fecha', 'digital5kg', 'digital11kg', 'digital15kg', 'digital45kg', 'totalValesDigitales'],
+            include: {
+                model: PreInventarioFinalizado
+            }
         });
         res.json(preInventarioDigitales);
     } catch (error) {
@@ -47,12 +57,75 @@ const getPreInventarioValesRegalados = async (req, res) => {
             where: {
                 active: true
             },
-            attributes: ['id', 'fecha', 'regalados5kg', 'regalados11kg', 'regalados15kg', 'regalados45kg', 'totalValesRegalados']
+            attributes: ['id', 'fecha', 'regalados5kg', 'regalados11kg', 'regalados15kg', 'regalados45kg', 'totalValesRegalados'],
+            include: {
+                model: PreInventarioFinalizado
+            }
         });
         res.json(preInventarioRegalados);
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Error al obtener el pre inventario de vales regalados" });
+    }
+}
+
+//funciones para finalizar el pre inventario de vales fisicos, digitales y regalados
+
+const finalizarPreInventarioValesFisicos = async (req, res, next) => {
+
+    const { id } = req.params;
+
+    try {
+        const preInventarioFisicos = await PreInventarioFisicos.findByPk(id);
+
+        const preInventarioFinalizado = await preInventarioFisicos.getPreInventarioFinalizado()
+
+        await preInventarioFinalizado.update({
+            finalizado : true
+        });
+
+        res.json({ message: "Se finalizo el pre inventario de vales fisicos" });
+    } catch (error) {
+        next(error);
+    }
+}
+
+const finalizarPreInventarioValesDigitales = async (req, res, next) => {
+
+    const { id } = req.params;
+
+    try {
+        const preInventarioDigitales = await PreInventarioDigitales.findByPk(id);
+
+        const preInventarioFinalizado = await preInventarioDigitales.getPreInventarioFinalizado()
+
+        await preInventarioFinalizado.update({
+            finalizado : true
+        });
+        
+        res.json({ message: "Se finalizo el pre inventario de vales digitales" });
+    } catch (error) {
+        next(error);
+    }
+}
+
+const finalizarPreInventarioValesRegalados = async (req, res, next) => {
+
+    const { id } = req.params;
+
+    try {
+
+        const preInventarioRegalados = await PreInventarioRegalados.findByPk(id);
+
+        const preInventarioFinalizado = await preInventarioRegalados.getPreInventarioFinalizado()
+
+        await preInventarioFinalizado.update({
+            finalizado : true
+        });
+
+        res.json({ message: "Se finalizo el pre inventario de vales regalados" });
+    } catch (error) {
+        next(error);
     }
 }
 
@@ -141,7 +214,7 @@ const modificarPreInventarioValesRegalados = async (req, res, next) => {
 
 const aceptarPreInventarioValesFisicos = async (req, res, next) => {
 
-    const { id } = req.params;
+    const { id, idResponsable } = req.params;
 
     try {
         const preInventarioFisicos = await PreInventarioFisicos.findOne({
@@ -172,7 +245,19 @@ const aceptarPreInventarioValesFisicos = async (req, res, next) => {
             active: false
         });
 
-        res.json({ message: "Se acepto el pre inventario de vales fisicos" });
+        const responsable = await Personal.findByPk(idResponsable, {
+            attributes: ['name', 'lastname']
+        });
+        
+        const nuevoHistorialAceptacionFisicos = await HistorialAceptacion.create({
+            fecha: preInventarioFisicos.fecha,
+            hora: moment().format('HH:mm:ss'),
+            Responsable: `${responsable.name} ${responsable.lastname}`,
+        });
+
+        await preInventarioFisicos.addHistorialAceptacion(nuevoHistorialAceptacionFisicos);
+
+        res.json(responsable);
     } catch (error) {
         next(error);
     }
@@ -180,7 +265,7 @@ const aceptarPreInventarioValesFisicos = async (req, res, next) => {
 
 const aceptarPreInventarioValesDigitales = async (req, res, next) => {
 
-    const { id } = req.params;
+    const { id, idResponsable } = req.params;
 
     try {
         const preInventarioDigitales = await PreInventarioDigitales.findOne({
@@ -211,6 +296,18 @@ const aceptarPreInventarioValesDigitales = async (req, res, next) => {
             active: false
         });
 
+        const responsable = await Personal.findByPk(idResponsable, {
+            attributes: ['name', 'lastname']
+        });
+
+        const nuevoHistorialAceptacionDigitales = await HistorialAceptacion.create({
+            fecha: preInventarioDigitales.fecha,
+            hora: moment().format('HH:mm:ss'),
+            Responsable: `${responsable.name} ${responsable.lastname}`,
+        });
+
+        await preInventarioDigitales.addHistorialAceptacion(nuevoHistorialAceptacionDigitales);
+
         res.json({ message: "Se acepto el pre inventario de vales digitales" });
     } catch (error) {
         next(error)
@@ -219,7 +316,7 @@ const aceptarPreInventarioValesDigitales = async (req, res, next) => {
 
 const aceptarPreInventarioValesRegalados = async (req, res, next) => {
 
-    const { id } = req.params;
+    const { id, idResponsable } = req.params;
 
     try {
         const preInventarioRegalados = await PreInventarioRegalados.findOne({
@@ -249,6 +346,18 @@ const aceptarPreInventarioValesRegalados = async (req, res, next) => {
             active: false
         });
 
+        const responsable = await Personal.findByPk(idResponsable, {
+            attributes: ['name', 'lastname']
+        });
+
+        const nuevoHistorialAceptacionRegalados = await HistorialAceptacion.create({
+            fecha: preInventarioRegalados.fecha,
+            hora: moment().format('HH:mm:ss'),
+            Responsable: `${responsable.name} ${responsable.lastname}`,
+        });
+
+        await preInventarioRegalados.addHistorialAceptacion(nuevoHistorialAceptacionRegalados);
+
         res.json({ message: "Se acepto el pre inventario de vales regalados" });
     } catch (error) {
         next(error);
@@ -260,6 +369,9 @@ module.exports = {
     getPreInventarioValesFisicos,
     getPreInventarioValesDigitales,
     getPreInventarioValesRegalados,
+    finalizarPreInventarioValesFisicos,
+    finalizarPreInventarioValesDigitales,
+    finalizarPreInventarioValesRegalados,
     modificarPreInventarioValesFisicos,
     modificarPreInventarioValesDigitales,
     modificarPreInventarioValesRegalados,
