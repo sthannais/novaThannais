@@ -96,7 +96,12 @@ const {
     Vales,
     Gastos,
     NumeroDeMaquina,
-    ValesDigiRegalados
+    ValesDigiRegalados,
+    PreInventarioDigitales,
+    PreInventarioFisicos,
+    PreInventarioRegalados,
+    PreInventarioFinalizado,
+    HistorialAceptacion,
     } = sequelize.models;
 
 // Relaciones entre los modelos
@@ -255,7 +260,36 @@ ValesDigiRegalados.belongsTo(MetodoPagos, { foreignKey: 'fk_MetodoPagosID', targ
 ListaDePrecios.hasMany(OrdenDeReparto, { foreignKey: 'fk_listaPreciosID', targetKey: 'id' });
 OrdenDeReparto.belongsTo(ListaDePrecios, { foreignKey: 'fk_listaPreciosID', targetKey: 'id' });
 
+//Relacion entre PreInventarioDigitales e HistorialAceptacion
+PreInventarioDigitales.hasMany(HistorialAceptacion, { foreignKey: 'fk_preInventarioDigitalesID', targetKey: 'id' });
+HistorialAceptacion.belongsTo(PreInventarioDigitales, { foreignKey: 'fk_preInventarioDigitalesID', targetKey: 'id' });
 
+//Relacion entre PreInventarioDigitales e PreInventarioFinalizado
+PreInventarioDigitales.hasOne(PreInventarioFinalizado, { foreignKey: 'fk_preInventarioDigitalesID', targetKey: 'id' }, {
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE'
+});
+
+//Relacion entre PreInventarioFisicos e HistorialAceptacion
+PreInventarioFisicos.hasMany(HistorialAceptacion, { foreignKey: 'fk_preInventarioFisicosID', targetKey: 'id' });
+HistorialAceptacion.belongsTo(PreInventarioFisicos, { foreignKey: 'fk_preInventarioFisicosID', targetKey: 'id' });
+
+//Relacion entre PreInventarioFisicos e PreInventarioFinalizado
+PreInventarioFisicos.hasOne(PreInventarioFinalizado, { foreignKey: 'fk_preInventarioFisicosID', targetKey: 'id' }, {
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE'
+});
+
+//Relacion entre PreInventarioRegalados e HistorialAceptacion
+PreInventarioRegalados.hasMany(HistorialAceptacion, { foreignKey: 'fk_preInventarioRegaladosID', targetKey: 'id' });
+HistorialAceptacion.belongsTo(PreInventarioRegalados, { foreignKey: 'fk_preInventarioRegaladosID', targetKey: 'id' });
+
+//Relacion entre PreInventarioRegalados e PreInventarioFinalizado
+PreInventarioRegalados.hasOne(PreInventarioFinalizado, { foreignKey: 'fk_preInventarioRegaladosID', targetKey: 'id' }, {
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE'
+});
+PreInventarioFinalizado.belongsTo(PreInventarioRegalados, { foreignKey: 'fk_preInventarioRegaladosID', targetKey: 'id' });
 
 
 module.exports = {

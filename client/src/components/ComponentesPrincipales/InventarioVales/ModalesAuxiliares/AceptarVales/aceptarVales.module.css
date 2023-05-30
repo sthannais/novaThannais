@@ -47,9 +47,23 @@
     color: #FFFFFF;
     padding: 0.2rem 0.2rem 0.2rem 0.2rem;
     font-size: 15px;
+    margin-right: 0.5rem;
 }
 
 .botonModificar:hover {
+    color: #000000;
+}
+
+.botonFinalizar {
+    margin-top: 0.3rem;
+    background-color: #c93737;
+    border-radius: 7px;
+    color: #FFFFFF;
+    padding: 0.2rem 0.2rem 0.2rem 0.2rem;
+    font-size: 15px;
+}
+
+.botonFinalizar:hover {
     color: #000000;
 }
 
