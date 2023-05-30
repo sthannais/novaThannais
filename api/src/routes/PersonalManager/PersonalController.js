@@ -519,6 +519,39 @@ const modifyPersonalRut = async (req, res, next) => {
     }
 }
 
+const getChoferesYayudantes = async (req, res) => {
+   
+    try {
+        const choferesAyudantes = await Personal.findAll({
+            attributes: ['name', 'lastname', 'id'],
+            include: [
+                {
+                  model: Rol,
+                  where: {
+                    name: {
+                      [Op.or]: ['Chofer', 'Ayudante']
+                    }
+                  }
+                },
+                {
+                    model: Chofer,
+                    required: false
+                },
+                {
+                    model: Ayudante,
+                    required: false
+                }
+            ]
+        });
+
+        res.json(choferesAyudantes)
+
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+};
+
+
 module.exports = {
     getPersonals,
     createPersonal,
@@ -529,5 +562,6 @@ module.exports = {
     modifyPersonal,
     getPersonalById,
     changePasswordManual,
-    modifyPersonalRut
+    modifyPersonalRut,
+    getChoferesYayudantes
 }
