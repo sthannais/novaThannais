@@ -520,7 +520,7 @@ const modifyPersonalRut = async (req, res, next) => {
 }
 
 const getChoferesYayudantes = async (req, res) => {
-   
+    // funcion para traer todos los choferes y ayudantes
     try {
         const choferesAyudantes = await Personal.findAll({
             attributes: ['name', 'lastname', 'id'],

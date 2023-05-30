@@ -36,7 +36,7 @@ const RendicionPersonal = ({id}) => {
         setEndDate(end);
         setMostrarTodo(false);
     }
-
+    //FEATURE ORDENES POR PERSONAL
     useEffect(() => {
         dispatch(ordenesRendicionBetween(soloFecha, soloFechaFin));
         dispatch(bringChoferesYAyudantes());
