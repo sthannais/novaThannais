@@ -14,7 +14,8 @@ const { getPersonals,
         modifyPersonal,
         getPersonalById,
         changePasswordManual,
-        modifyPersonalRut
+        modifyPersonalRut,
+        getChoferesYayudantes
     } = require('./PersonalController');
 
 router.get('/', getPersonals);
@@ -26,6 +27,8 @@ router.get('/chofer/faltantes/:fechaInicio/:fechaFin?', getOnlyChofercWithFaltan
 router.get('/ayudante/faltantes/:fechaInicio/:fechaFin?', getOnlyAyudantesWithFaltantesBetweenDates);
 
 router.get('/faltantes/:administradorId/:fechaInicio/:fechaFin?', authMiddleware, getAllFaltantesBetweenDates);
+
+router.get('/choferes/ayudantes', getChoferesYayudantes);
 
 router.post('/', [
     check('name', 'El nombre es obligatorio').not().isEmpty(),
