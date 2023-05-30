@@ -22,7 +22,9 @@ const { OrdenDeReparto,
         NumeroDeMaquina,
         PreInventarioDigitales,
         PreInventarioFisicos,
-        PreInventarioRegalados
+        PreInventarioRegalados,
+        PreInventarioFinalizado,
+        HistorialAceptacion
     } = require('../../db.js');
 
 const { Op } = require('sequelize');
@@ -1512,7 +1514,7 @@ const cuadrarOrden = async (req, res) => {
                 totalValesFisicos: Number(preInventarioFisicos.totalValesFisicos) + Number(totalValesFisicos),
             })
         } else {
-            await PreInventarioFisicos.create({
+            const nuevoPreInventarioFisico = await PreInventarioFisicos.create({
                 fecha: fechaDeOrdenDeReparto,
                 fisico5kg,
                 fisico11kg,
@@ -1520,6 +1522,8 @@ const cuadrarOrden = async (req, res) => {
                 fisico45kg,
                 totalValesFisicos
             })
+            const nuevoPreInventarioFinalizadoFisico = await PreInventarioFinalizado.create();
+            await nuevoPreInventarioFisico.setPreInventarioFinalizado(nuevoPreInventarioFinalizadoFisico);
         }
 
         const preInventarioDigitales = await PreInventarioDigitales.findOne({
@@ -1538,7 +1542,7 @@ const cuadrarOrden = async (req, res) => {
                 totalValesDigitales: Number(preInventarioDigitales.totalValesDigitales) + Number(totalValesDigitales),
             })
         } else {
-            await PreInventarioDigitales.create({
+            const nuevoPreInventarioDigital = await PreInventarioDigitales.create({
                 fecha: fechaDeOrdenDeReparto,
                 digital5kg,
                 digital11kg,
@@ -1546,6 +1550,8 @@ const cuadrarOrden = async (req, res) => {
                 digital45kg,
                 totalValesDigitales
             })
+            const nuevoPreInventarioFinalizadoDigital = await PreInventarioFinalizado.create();
+            await nuevoPreInventarioDigital.setPreInventarioFinalizado(nuevoPreInventarioFinalizadoDigital);
         }
 
         const preInventarioRegalados = await PreInventarioRegalados.findOne({
@@ -1564,7 +1570,7 @@ const cuadrarOrden = async (req, res) => {
                 totalValesRegalados : Number(preInventarioRegalados.totalValesRegalados) + Number(totalValesDigiRegalados),
             })
         } else {
-            await PreInventarioRegalados.create({
+            const nuevoPreInventarioRegalado = await PreInventarioRegalados.create({
                 fecha: fechaDeOrdenDeReparto,
                 regalados5kg: digitalRegalado5kg,
                 regalados11kg: digitalRegalado11kg,
@@ -1572,6 +1578,8 @@ const cuadrarOrden = async (req, res) => {
                 regalados45kg: digitalRegalado45kg,
                 totalValesRegalados: totalValesDigiRegalados
             })
+            const nuevoPreInventarioFinalizadoRegalado = await PreInventarioFinalizado.create();
+            await nuevoPreInventarioRegalado.setPreInventarioFinalizado(nuevoPreInventarioFinalizadoRegalado);
         }
        
 

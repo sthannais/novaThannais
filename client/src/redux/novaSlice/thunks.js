@@ -1211,6 +1211,66 @@ export const bringPreInventarioValesDigitalesRegalados = () => async (dispatch) 
     }
 }
 
+export const finalizarPreInventarioFisico = (id) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/preInventarioVales/finalizar-pre-inventario-vales-fisicos/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        dispatch(bringPreInventarioValesFisicos());
+        Swal.fire({
+            icon: 'success',
+            title: 'Pre inventario finalizado',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+export const finalizarPreInventarioDigitales = (id) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/preInventarioVales/finalizar-pre-inventario-vales-digitales/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        dispatch(bringPreInventarioValesDigitales());
+        Swal.fire({
+            icon: 'success',
+            title: 'Pre inventario finalizado',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+export const finalizarPreInventarioDigitalesRegalados = (id) => async (dispatch) => {
+    try {
+        await fetch(`${process.env.REACT_APP_API}/preInventarioVales/finalizar-pre-inventario-vales-regalados/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        dispatch(bringPreInventarioValesDigitalesRegalados());
+        Swal.fire({
+            icon: 'success',
+            title: 'Pre inventario finalizado',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
 export const modifyPreInventarioValesFisicos = (id, cantidad) => async (dispatch) => {
     try {
         await fetch(`${process.env.REACT_APP_API}/preInventarioVales/modificar-pre-inventario-vales-fisicos/${id}`, {
@@ -1274,10 +1334,10 @@ export const modifyPreInventarioValesDigitalesRegalados = (id, cantidad) => asyn
     }
 }
 
-export const aceptarPreInventarioValesFisicos = (id) => async (dispatch) => {
+export const aceptarPreInventarioValesFisicos = (id, idResponsable) => async (dispatch) => {
 
     try {
-        await fetch(`${process.env.REACT_APP_API}/preInventarioVales/aceptar-pre-inventario-vales-fisicos/${id}`, {
+        await fetch(`${process.env.REACT_APP_API}/preInventarioVales/aceptar-pre-inventario-vales-fisicos/${id}/${idResponsable}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -1297,10 +1357,10 @@ export const aceptarPreInventarioValesFisicos = (id) => async (dispatch) => {
     }
 }
 
-export const aceptarPreInventarioValesDigitales = (id) => async (dispatch) => {
+export const aceptarPreInventarioValesDigitales = (id, idResponsable) => async (dispatch) => {
     
     try {
-        await fetch(`${process.env.REACT_APP_API}/preInventarioVales/aceptar-pre-inventario-vales-digitales/${id}`, {
+        await fetch(`${process.env.REACT_APP_API}/preInventarioVales/aceptar-pre-inventario-vales-digitales/${id}/${idResponsable}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -1320,10 +1380,10 @@ export const aceptarPreInventarioValesDigitales = (id) => async (dispatch) => {
     }
 }
 
-export const aceptarPreInventarioValesDigitalesRegalados = (id) => async (dispatch) => {
+export const aceptarPreInventarioValesDigitalesRegalados = (id, idResponsable) => async (dispatch) => {
 
     try {
-        await fetch(`${process.env.REACT_APP_API}/preInventarioVales/aceptar-pre-inventario-vales-regalados/${id}`, {
+        await fetch(`${process.env.REACT_APP_API}/preInventarioVales/aceptar-pre-inventario-vales-regalados/${id}/${idResponsable}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
