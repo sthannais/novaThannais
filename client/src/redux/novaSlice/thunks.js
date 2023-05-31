@@ -1177,6 +1177,7 @@ export const descargarExcelVentaDeTarros = async (date1, date2) => {
 
 export const bringOrdenesByPersonalAndDate = (choferId, ayudanteId, date1, date2) => async (dispatch) => {
     try {
+        
         //fetch
         const response = await fetch(`${process.env.REACT_APP_API}/orden/personal/${choferId}/${ayudanteId}/${date1}/${date2}`);
         const data = await response.json();

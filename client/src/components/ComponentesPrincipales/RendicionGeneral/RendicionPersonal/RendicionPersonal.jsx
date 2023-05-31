@@ -39,8 +39,14 @@ const RendicionPersonal = ({id}) => {
     //FEATURE ORDENES POR PERSONAL
     useEffect(() => {
         dispatch(ordenesRendicionBetween(soloFecha, soloFechaFin));
-        dispatch(bringChoferesYAyudantes());
+        dispatch(bringChoferesYAyudantes());      
         if(choferId || ayudanteId || !choferId && !ayudanteId && mostrarTodo){
+            if (typeof choferId === 'undefined') {
+                setChoferId(0);
+            }
+            if (typeof ayudanteId === 'undefined') {
+                setAyudanteId(0);
+            }
             dispatch(bringOrdenesByPersonalAndDate(choferId, ayudanteId, soloFecha, soloFechaFin));
         }
     }, [dispatch, soloFecha, soloFechaFin, choferId, ayudanteId])
