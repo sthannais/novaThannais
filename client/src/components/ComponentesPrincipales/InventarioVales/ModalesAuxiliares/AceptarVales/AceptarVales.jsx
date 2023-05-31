@@ -311,27 +311,33 @@ const AceptarVales = () => {
                                                         }>
                                                             Modificar
                                                         </button>
-                                                        <button className={style.botonFinalizar} onClick={
-                                                            () => {
-                                                                toggleFinalizarValesFisicos();
-                                                            }
-                                                        }>
-                                                            Finalizar
-                                                        </button>
-                                                        <Modal isOpen={modalFinalizarValesFisicos} toggle={toggleFinalizarValesFisicos}>
-                                                            <ModalHeader toggle={toggleFinalizarValesFisicos}>¿Finalizar pre inventario de vales fisicos?</ModalHeader>
-                                                            <ModalFooter>
-                                                                <Button color="primary" onClick={() => {
-                                                                    toggleFinalizarValesFisicos();
-                                                                    dispatch(finalizarPreInventarioFisico(item.id));
-                                                                }}>
-                                                                    Finalizar
-                                                                </Button>
-                                                                <Button color="secondary" onClick={toggleFinalizarValesFisicos}>
-                                                                    Cancelar
-                                                                </Button>
-                                                            </ModalFooter>
-                                                        </Modal>
+                                                        {
+                                                            item.preInventarioFinalizado?.finalizado === false ? (
+                                                                <>
+                                                                <button className={style.botonFinalizar} onClick={
+                                                                    () => {
+                                                                        toggleFinalizarValesFisicos();
+                                                                    }
+                                                                }>
+                                                                    Finalizar dia
+                                                                </button>
+                                                                <Modal isOpen={modalFinalizarValesFisicos} toggle={toggleFinalizarValesFisicos}>
+                                                                    <ModalHeader toggle={toggleFinalizarValesFisicos}>¿Finalizar pre inventario de vales fisicos?</ModalHeader>
+                                                                    <ModalFooter>
+                                                                        <Button color="primary" onClick={() => {
+                                                                            toggleFinalizarValesFisicos();
+                                                                            dispatch(finalizarPreInventarioFisico(item.id));
+                                                                        }}>
+                                                                            Finalizar
+                                                                        </Button>
+                                                                        <Button color="secondary" onClick={toggleFinalizarValesFisicos}>
+                                                                            Cancelar
+                                                                        </Button>
+                                                                    </ModalFooter>
+                                                                </Modal>
+                                                                </>
+                                                            ) : null
+                                                        }
                                                     </>
                                                 )
                                             }
@@ -490,27 +496,34 @@ const AceptarVales = () => {
                                                         }>
                                                             Modificar
                                                         </button>
-                                                        <button className={style.botonFinalizar} onClick={
-                                                            () => {
-                                                                toggleFinalizarValesDigitales();
-                                                            }
-                                                        }>
-                                                            Finalizar
-                                                        </button>
-                                                        <Modal isOpen={modalFinalizarValesDigitales} toggle={toggleFinalizarValesDigitales}>
-                                                            <ModalHeader toggle={toggleFinalizarValesDigitales}>¿Finalizar pre inventario de vales digitales?</ModalHeader>
-                                                            <ModalFooter>
-                                                                <Button color="primary" onClick={() => {
-                                                                    toggleFinalizarValesDigitales();
-                                                                    dispatch(finalizarPreInventarioDigitales(item.id));
-                                                                }}>
-                                                                    Finalizar
-                                                                </Button>
-                                                                <Button color="secondary" onClick={toggleFinalizarValesDigitales}>
-                                                                    Cancelar
-                                                                </Button>
-                                                            </ModalFooter>
-                                                        </Modal>
+                                                        {
+                                                            item.preInventarioFinalizado?.finalizado === false ? (
+                                                                <>
+                                                                <button className={style.botonFinalizar} onClick={
+                                                                    () => {
+                                                                        toggleFinalizarValesDigitales();
+                                                                    }
+                                                                }>
+                                                                    Finalizar dia
+                                                                </button>
+                                                                <Modal isOpen={modalFinalizarValesDigitales} toggle={toggleFinalizarValesDigitales}>
+                                                                    <ModalHeader toggle={toggleFinalizarValesDigitales}>¿Finalizar pre inventario de vales digitales?</ModalHeader>
+                                                                    <ModalFooter>
+                                                                        <Button color="primary" onClick={() => {
+                                                                            toggleFinalizarValesDigitales();
+                                                                            dispatch(finalizarPreInventarioDigitales(item.id));
+                                                                        }}>
+                                                                            Finalizar
+                                                                        </Button>
+                                                                        <Button color="secondary" onClick={toggleFinalizarValesDigitales}>
+                                                                            Cancelar
+                                                                        </Button>
+                                                                    </ModalFooter>
+                                                                </Modal>
+                                                                </>
+                                                            ) : null
+                                                        }
+                                                        
                                                     </>
                                                 )
                                             }
@@ -644,7 +657,7 @@ const AceptarVales = () => {
                                                             <ModalHeader toggle={toggleAceptarDigitalesRegalados}>¿Aceptar vales digitales regalados del {item.fecha}?</ModalHeader>
                                                             <ModalFooter>
                                                                 <Button color="primary" onClick={() => {
-                                                                    toggleAceptarDigitales();
+                                                                    toggleAceptarDigitalesRegalados();
                                                                     dispatch(aceptarPreInventarioValesDigitalesRegalados(item.id, id));
                                                                 }}>
                                                                     Aceptar
@@ -668,27 +681,33 @@ const AceptarVales = () => {
                                                         }>
                                                             Modificar
                                                         </button>
-                                                        <button className={style.botonFinalizar} onClick={
-                                                            () => {
-                                                                toggleFinalizarValesDigitalesRegalados();
-                                                            }
-                                                        }>
-                                                            Finalizar
-                                                        </button>
-                                                        <Modal isOpen={modalFinalizarValesDigitalesRegalados} toggle={toggleFinalizarValesDigitalesRegalados}>
-                                                            <ModalHeader toggle={toggleFinalizarValesDigitalesRegalados}>¿Finalizar pre inventario de vales digitales regalados?</ModalHeader>
-                                                            <ModalFooter>
-                                                                <Button color="primary" onClick={() => {
-                                                                    toggleFinalizarValesDigitalesRegalados();
-                                                                    dispatch(finalizarPreInventarioDigitalesRegalados(item.id));
-                                                                }}>
-                                                                    Finalizar
-                                                                </Button>
-                                                                <Button color="secondary" onClick={toggleFinalizarValesDigitalesRegalados}>
-                                                                    Cancelar
-                                                                </Button>
-                                                            </ModalFooter>
-                                                        </Modal>
+                                                        {
+                                                            item.preInventarioFinalizado?.finalizado === false ? (
+                                                                <>
+                                                                <button className={style.botonFinalizar} onClick={
+                                                                    () => {
+                                                                        toggleFinalizarValesDigitalesRegalados();
+                                                                    }
+                                                                }>
+                                                                    Finalizar dia
+                                                                </button>
+                                                                <Modal isOpen={modalFinalizarValesDigitalesRegalados} toggle={toggleFinalizarValesDigitalesRegalados}>
+                                                                    <ModalHeader toggle={toggleFinalizarValesDigitalesRegalados}>¿Finalizar pre inventario de vales digitales regalados?</ModalHeader>
+                                                                    <ModalFooter>
+                                                                        <Button color="primary" onClick={() => {
+                                                                            toggleFinalizarValesDigitalesRegalados();
+                                                                            dispatch(finalizarPreInventarioDigitalesRegalados(item.id));
+                                                                        }}>
+                                                                            Finalizar
+                                                                        </Button>
+                                                                        <Button color="secondary" onClick={toggleFinalizarValesDigitalesRegalados}>
+                                                                            Cancelar
+                                                                        </Button>
+                                                                    </ModalFooter>
+                                                                </Modal>
+                                                                </>
+                                                            ) : null
+                                                        }
                                                     </>
                                                 )
                                             }
