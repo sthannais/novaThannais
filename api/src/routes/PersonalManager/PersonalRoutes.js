@@ -15,7 +15,9 @@ const { getPersonals,
         getPersonalById,
         changePasswordManual,
         modifyPersonalRut,
-        getChoferesYayudantes
+        getChoferesYayudantes,
+        deshabilitarPersonal,
+        setearRolDeAyudanteAChofer
     } = require('./PersonalController');
 
 router.get('/', getPersonals);
@@ -48,6 +50,10 @@ router.put('/:personalId', modifyPersonal);
 router.put('/password/:personalId', changePasswordManual);
 
 router.put('/rut/:personalId', modifyPersonalRut);
+
+router.put('/deshabilitar/:personalId', deshabilitarPersonal);
+
+router.put('/setearRolDeAyudanteAChofer/:personalId', setearRolDeAyudanteAChofer);
 
 
 module.exports = router;

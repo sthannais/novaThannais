@@ -35,7 +35,8 @@ const getAllChoferNames = async (req, res) => {
         const personalActivo = await Personal.findAll({
             attributes: ['name', 'lastname'],
             where: {
-                activeForOrden: true
+                activeForOrden: true,
+                stateDB: true
             },
             include: [
                 {
