@@ -116,7 +116,7 @@ const RendicionPersonal = ({id}) => {
     const optionsPersonal = choferesYAyudantes?.map((personal) => {  
         return {
             value: personal?.id,
-            label: `${personal?.name} ${personal?.lastname}`
+            label:`${personal.stateDB === true ? "✅" : "❌"}` + `${personal?.name} ${personal?.lastname}`
         }
     }
 );
