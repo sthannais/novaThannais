@@ -119,7 +119,7 @@ export const createPersonal = async (personal) => {
             text: 'El personal se ha creado correctamente',
             icon: 'success',
             showConfirmButton: false,
-            footer: '<a class="btn btn-primary" href="/home">OK</a>'
+            footer: '<a class="btn btn-primary" href=/listaDePersonal>OK</a>'
         });
     } catch (error) {
         Swal.fire({

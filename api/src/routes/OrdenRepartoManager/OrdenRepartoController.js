@@ -625,14 +625,14 @@ const getOrdenesByPersonalAndDate = async (req, res) => {
         if(idChofer && idChofer !== "undefined" && idChofer !== null && idAyudante && idAyudante !== "undefined" && idAyudante !== null) {
             whereCondition = {
                 [Op.or]: [
-                {
-                    fk_choferID: idChofer,
-                    fecha: fechaInicio,
-                },
-                {
-                    fk_ayudanteID: idAyudante,
-                    fecha: fechaInicio,
-                },
+                        {
+                            fk_choferID: idChofer,
+                            fecha: fechaInicio,
+                        },
+                        {
+                            fk_ayudanteID: idAyudante,
+                            fecha: fechaInicio,
+                        },
                 ],
             };
         } else if (idChofer && idChofer !== "undefined" && idChofer !== null && idAyudante === "undefined" || idAyudante === null) {
