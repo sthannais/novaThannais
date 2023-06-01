@@ -620,76 +620,41 @@ const getAllOrdenesWhereEstadoFalseBetweenDates = async (req, res) => {
 
 const getOrdenesByPersonalAndDate = async (req, res) => {
     const { idChofer, idAyudante, fechaInicio, fechaFin } = req.params;
-
-
+    let whereCondition
     try {
-
-        const whereCondition = {
-            [Op.or]: [
-              {
+        if(idChofer && idChofer !== "undefined" && idChofer !== null && idAyudante && idAyudante !== "undefined" && idAyudante !== null) {
+            whereCondition = {
+                [Op.or]: [
+                {
+                    fk_choferID: idChofer,
+                    fecha: fechaInicio,
+                },
+                {
+                    fk_ayudanteID: idAyudante,
+                    fecha: fechaInicio,
+                },
+                ],
+            };
+        } else if (idChofer && idChofer !== "undefined" && idChofer !== null && idAyudante === "undefined" || idAyudante === null) {
+            whereCondition = {
                 fk_choferID: idChofer,
                 fecha: fechaInicio,
-              },
-              {
-                fk_ayudanteID: idAyudante,
-                fecha: fechaInicio,
-              },
-            ],
-        };
-
-         if (fechaFin && fechaFin !== "undefined" && fechaFin !== null) {
-            whereCondition[Op.or].forEach((condition) => {
-              condition.fecha = {
-                [Op.between]: [fechaInicio, fechaFin],
-              };
-            });
-        }
-        
-        /*
-        
-        */
-
-        /*
-        
-        console.log(idChofer, idAyudante, fechaInicio, fechaFin);
-        const whereCondition = {};
-
-        if (idChofer !== NaN && idChofer !== undefined && idChofer !== null) {
-        whereCondition[Op.or] = [
-            {
-            fk_choferID: idChofer,
-            fecha: fechaInicio,
-            },
-        ];
-        }
-
-        if (idAyudante !== NaN && idAyudante !== undefined && idAyudante !== null) {
-        if (whereCondition[Op.or]) {
-            whereCondition[Op.or].push({
-            fk_ayudanteID: idAyudante,
-            fecha: fechaInicio,
-            });
-        } else {
-            whereCondition[Op.or] = [
-            {
-                fk_ayudanteID: idAyudante,
-                fecha: fechaInicio,
-            },
-            ];
-        }
-        }
-
-        if (fechaFin && fechaFin !== "undefined" && fechaFin !== null) {
-        if (whereCondition[Op.or]) {
-            whereCondition[Op.or].forEach((condition) => {
-            condition.fecha = {
-                [Op.between]: [fechaInicio, fechaFin],
             };
+        } else if (idAyudante && idAyudante !== "undefined" && idAyudante !== null && idChofer === "undefined" || idChofer === null) {
+            whereCondition = {
+                fk_ayudanteID: idAyudante,
+                fecha: fechaInicio,
+            };
+        }
+     
+        if (fechaFin && fechaFin !== "undefined" && fechaFin !== null) {
+            whereCondition[Op.or].forEach((condition) => {
+                condition.fecha = {
+                    [Op.between]: [fechaInicio, fechaFin],
+                };
             });
         }
-        }
-        */
-     
+        
         const ordenesDeRepartoByPersonal = await OrdenDeReparto.findAll({
             where: whereCondition,
             order: [["fecha", "DESC"]],

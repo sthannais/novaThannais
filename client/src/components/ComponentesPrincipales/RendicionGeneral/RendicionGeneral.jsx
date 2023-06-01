@@ -25,7 +25,7 @@ const RendicionGeneral = () => {
     const width = window.innerWidth;
     const { usuario } = JSON.parse(localStorage.getItem('usuario'));
     const { email } = useSelector(state => state.Autenticacion.autBack)
-    console.log(email)
+    
     const [startDate , setStartDate] = useState(new Date())
     const [endDate , setEndDate] = useState(null)
     const soloFecha = startDate.toLocaleDateString('es-CL', { timeZone: 'America/Santiago' }).split('-').reverse().join('-');
