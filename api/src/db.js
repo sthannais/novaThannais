@@ -269,6 +269,7 @@ PreInventarioDigitales.hasOne(PreInventarioFinalizado, { foreignKey: 'fk_preInve
   onDelete: 'CASCADE',
   onUpdate: 'CASCADE'
 });
+PreInventarioFinalizado.belongsTo(PreInventarioDigitales, { foreignKey: 'fk_preInventarioDigitalesID', targetKey: 'id' });
 
 //Relacion entre PreInventarioFisicos e HistorialAceptacion
 PreInventarioFisicos.hasMany(HistorialAceptacion, { foreignKey: 'fk_preInventarioFisicosID', targetKey: 'id' });
