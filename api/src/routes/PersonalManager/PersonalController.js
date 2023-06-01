@@ -526,7 +526,7 @@ const getChoferesYayudantes = async (req, res) => {
     // funcion para traer todos los choferes y ayudantes
     try {
         const choferesAyudantes = await Personal.findAll({
-            attributes: ['name', 'lastname', 'id'],
+            attributes: ['name', 'lastname', 'id', 'stateDB'],
             include: [
                 {
                   model: Rol,
