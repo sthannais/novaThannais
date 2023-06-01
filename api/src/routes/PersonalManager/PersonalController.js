@@ -15,6 +15,9 @@ const getPersonals = async (req, res) => {
 
     try {
         const personals = await Personal.findAll({
+            where: {
+                stateDB: true
+            },
             include: [
                 {
                     model: Rol,
@@ -551,6 +554,58 @@ const getChoferesYayudantes = async (req, res) => {
     }
 };
 
+const deshabilitarPersonal = async (req, res) => {
+    const { personalId } = req.params;
+
+    try {
+        const personal = await Personal.findByPk(personalId);
+
+        if(!personal) {
+            return res.status(404).json({error: 'Personal no encontrado'});
+        }
+
+        if(personal.stateDB === false) {
+            return res.status(400).json({error: 'El personal ya se encuentra deshabilitado'});
+        }
+
+        await personal.update({
+            stateDB: false
+        });
+
+        res.json(personal, {message: 'Personal deshabilitado'});
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+}
+
+const setearRolDeAyudanteAChofer = async (req, res) => {
+    const { personalId } = req.params;
+
+    try {
+        const personal = await Personal.findByPk(personalId);
+
+        if(!personal) {
+            return res.status(404).json({error: 'Personal no encontrado'});
+        }
+
+        const nuevoAyudante = await Ayudante.create();
+        const rolAyudante = await Rol.findOne({
+            where: {
+                name: 'Ayudante'
+            }
+        });
+
+        personal.addRols(rolAyudante);
+        personal.setAyudante(nuevoAyudante);
+
+        res.json(personal);
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+}
+
+        
+
 
 module.exports = {
     getPersonals,
@@ -563,5 +618,7 @@ module.exports = {
     getPersonalById,
     changePasswordManual,
     modifyPersonalRut,
-    getChoferesYayudantes
+    getChoferesYayudantes,
+    deshabilitarPersonal,
+    setearRolDeAyudanteAChofer
 }

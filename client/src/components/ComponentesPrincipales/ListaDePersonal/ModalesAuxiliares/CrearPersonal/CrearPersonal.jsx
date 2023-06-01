@@ -171,8 +171,8 @@ export default function CrearPersonal() {
                                     <option hidden>Rol</option>
                                     <option value="Administrador">Administrador</option>
                                     <option value="Auxiliar">Auxiliar</option>
-                                    <option value="Chofer">Chofer</option>
-                                    <option value="Ayudante">Peoneta</option>
+                                    {/* <option value="Chofer">Chofer</option>
+                                    <option value="Ayudante">Peoneta</option> */}
                                     <option value="Chofer/Peoneta">Chofer/Peoneta</option>
                                 </select>
                                 {error.rol && <p className={style.error}>{error.rol}</p>}
