@@ -623,6 +623,7 @@ const getOrdenesByPersonalAndDate = async (req, res) => {
 
 
     try {
+
         const whereCondition = {
             [Op.or]: [
               {
@@ -634,17 +635,62 @@ const getOrdenesByPersonalAndDate = async (req, res) => {
                 fecha: fechaInicio,
               },
             ],
-          };
-     
-          if (fechaFin && fechaFin !== "undefined" && fechaFin !== null) {
+        };
+
+         if (fechaFin && fechaFin !== "undefined" && fechaFin !== null) {
             whereCondition[Op.or].forEach((condition) => {
               condition.fecha = {
                 [Op.between]: [fechaInicio, fechaFin],
               };
             });
-          }
+        }
+        
+        /*
+        
+        */
+
+        /*
+        
+        console.log(idChofer, idAyudante, fechaInicio, fechaFin);
+        const whereCondition = {};
+
+        if (idChofer !== NaN && idChofer !== undefined && idChofer !== null) {
+        whereCondition[Op.or] = [
+            {
+            fk_choferID: idChofer,
+            fecha: fechaInicio,
+            },
+        ];
+        }
+
+        if (idAyudante !== NaN && idAyudante !== undefined && idAyudante !== null) {
+        if (whereCondition[Op.or]) {
+            whereCondition[Op.or].push({
+            fk_ayudanteID: idAyudante,
+            fecha: fechaInicio,
+            });
+        } else {
+            whereCondition[Op.or] = [
+            {
+                fk_ayudanteID: idAyudante,
+                fecha: fechaInicio,
+            },
+            ];
+        }
+        }
+
+        if (fechaFin && fechaFin !== "undefined" && fechaFin !== null) {
+        if (whereCondition[Op.or]) {
+            whereCondition[Op.or].forEach((condition) => {
+            condition.fecha = {
+                [Op.between]: [fechaInicio, fechaFin],
+            };
+            });
+        }
+        }
+        */
      
-          const ordenesDeRepartoByPersonal = await OrdenDeReparto.findAll({
+        const ordenesDeRepartoByPersonal = await OrdenDeReparto.findAll({
             where: whereCondition,
             order: [["fecha", "DESC"]],
             include: [
