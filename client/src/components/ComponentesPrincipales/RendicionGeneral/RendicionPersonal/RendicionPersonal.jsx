@@ -49,7 +49,7 @@ const RendicionPersonal = ({id}) => {
             }
             dispatch(bringOrdenesByPersonalAndDate(choferId, ayudanteId, soloFecha, soloFechaFin));
         }
-    }, [dispatch, soloFecha, soloFechaFin, choferId, ayudanteId])
+    }, [dispatch, soloFecha, soloFechaFin, choferId, ayudanteId, mostrarTodo])
     
 
     const { ordenesRendidasDisponibles, choferesYAyudantes, ordenesPersonal } = useSelector(state => state.Nova)
