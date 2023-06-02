@@ -1,0 +1,621 @@
+.containerMaster {
+  margin-top: 0px;
+  background-image: url(../../../assets/mujerArtificial.svg) !important;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  width: 100%;
+  height: 746px;
+  opacity: 0.5;
+}
+
+.nova {
+  position: absolute;
+  left: 4%;
+  top: 78%;
+  width: 39%;
+  opacity: 0.6;
+}
+
+.input-container {
+  position: absolute;
+  left: 57.6rem;
+  top: 2rem;
+  width: 500px;
+  height: 664px;
+  border-radius: 25px;
+  background: #f5f5f5;
+  filter: drop-shadow(0px 8px 8px rgba(0, 0, 0, 0.25));
+}
+.monito {
+  position: relative;
+  left: 214px;
+  top: 60px;
+  width: 85px;
+}
+
+.texto-1 {
+  position: absolute;
+  left: 12.4rem;
+  top: 11.5rem;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 33px;
+  color: #3c3c3c;
+}
+
+.cajita-1 {
+  position: absolute;
+  left: 6.5rem;
+  top: 315px;
+  width: 19rem;
+  height: 2.5rem;
+  border-radius: 10px;
+  background: rgba(217, 217, 217, 0.5);
+  border-left: rgba(217, 217, 217, 0.5);
+  border-bottom: rgba(217, 217, 217, 0.5);
+  border-top: rgba(217, 217, 217, 0.5);
+  border-right: rgba(217, 217, 217, 0.5);
+  font-weight: 500;
+}
+
+.email {
+  position: absolute;
+  left: 6.8rem;
+  top: 17.5rem;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 33px;
+  color: #3c3c3c;
+}
+
+.iconoMail {
+  position: absolute;
+  top: 20.1rem;
+  left: 119px;
+  font-size: 26px;
+}
+
+.contraseña {
+  position: absolute;
+  left: 6.8rem;
+  top: 24.5rem;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 33px;
+  color: #3c3c3c;
+}
+
+.cajita-1::placeholder {
+  color: #3c3c3c !important;
+}
+
+.cajita-2 {
+  /*input con el nombre arriba y el espacio en blanco en una linea*/
+  position: absolute;
+  left: 6.8rem;
+  top: 26.5rem;
+  width: 19rem;
+  height: 2.5rem;
+  border-radius: 10px;
+  background: rgba(217, 217, 217, 0.5);
+  border-left: rgba(217, 217, 217, 0.5);
+  border-bottom: rgba(217, 217, 217, 0.5);
+  border-top: rgba(217, 217, 217, 0.5);
+  border-right: rgba(217, 217, 217, 0.5);
+  font-weight: 500;
+}
+
+.iconoContraseña {
+  font-size: 26px;
+  position: absolute;
+  top: 27rem;
+  left: 119px;
+}
+.cajita-2::placeholder {
+  color: #3c3c3c !important;
+}
+
+.error-texto {
+  position: absolute;
+  left: 26rem;
+  top: 19.5rem;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #ff0000;
+}
+
+.boton-1 {
+  position: relative;
+  left: 13.8rem;
+  top: 25rem;
+  width: 80px;
+  height: 3rem;
+  background: #ffa500;
+  border: 1px solid #ffffff;
+  box-sizing: border-box;
+  border-radius: 4px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: "Roboto";
+  font-size: 15px;
+}
+
+.boton-1:hover {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #ffa500;
+}
+
+.texto-auxiliar {
+  position: absolute;
+  left: 9.8rem;
+  top: 36rem;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 16px;
+  color: #000000;
+}
+
+.texto-auxiliar:hover {
+  color: #ffa500;
+}
+
+@media screen and (min-width: 1800px) {
+  .containerMaster {
+    margin: 0;
+    background-image: url(../../../assets/mujerArtificial.svg) !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    width: 100%;
+    height: 975px;
+    opacity: 0.5;
+  }
+
+  .nova {
+    position: absolute;
+    left: 2%;
+    top: 78%;
+    width: 40%;
+    opacity: 0.6;
+  }
+
+  .input-container {
+    position: absolute;
+    left: 75.6rem;
+    top: 2rem;
+    width: 650px;
+    height: 860px;
+    border-radius: 25px;
+    background: #f5f5f5;
+    filter: drop-shadow(0px 8px 8px rgba(0, 0, 0, 0.25));
+  }
+
+  .monito {
+    position: relative;
+    left: 280px;
+    top: 60px;
+  }
+
+  .texto-1 {
+    position: absolute;
+    left: 15.8rem;
+    top: 12.5rem;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 33px;
+    color: #3c3c3c;
+  }
+
+  .email {
+    position: absolute;
+    left: 5.8rem;
+    top: 18.5rem;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 33px;
+    color: #3c3c3c;
+  }
+
+  .cajita-1 {
+    position: absolute;
+    left: 5.6rem;
+    top: 330px;
+    width: 30rem;
+    height: 2.5rem;
+    border-radius: 10px;
+    background: rgba(217, 217, 217, 0.5);
+    border-left: rgba(217, 217, 217, 0.5);
+    border-bottom: rgba(217, 217, 217, 0.5);
+    border-top: rgba(217, 217, 217, 0.5);
+    border-right: rgba(217, 217, 217, 0.5);
+    font-weight: 500;
+  }
+
+  .iconoMail {
+    position: relative;
+    top: 223px;
+    left: 105px;
+    font-size: 26px;
+  }
+
+  .contraseña {
+    position: absolute;
+    left: 5.8rem;
+    top: 26.5rem;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 33px;
+    color: #3c3c3c;
+  }
+
+  .cajita-1::placeholder {
+    color: #3c3c3c !important;
+  }
+
+  .cajita-2 {
+    position: absolute;
+    left: 5.6rem;
+    top: 28.6rem;
+    width: 30rem;
+    height: 2.5rem;
+    border-radius: 10px;
+    background: rgba(217, 217, 217, 0.5);
+    border-left: rgba(217, 217, 217, 0.5);
+    border-bottom: rgba(217, 217, 217, 0.5);
+    border-top: rgba(217, 217, 217, 0.5);
+    border-right: rgba(217, 217, 217, 0.5);
+    font-weight: 500;
+  }
+
+  .iconoContraseña {
+    font-size: 26px;
+    position: absolute;
+    top: 465px;
+    left: 106px;
+  }
+
+  .cajita-2::placeholder {
+    color: #3c3c3c !important;
+  }
+
+  .error-texto {
+    position: absolute;
+    left: 26rem;
+    top: 19.5rem;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #ff0000;
+  }
+
+  .boton-1 {
+    position: absolute;
+    left: 17.8rem;
+    top: 39rem;
+    width: 80px;
+    height: 3rem;
+    background: #ffa500;
+    border: 1px solid #ffffff;
+    box-sizing: border-box;
+    border-radius: 4px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: "Roboto";
+    font-size: 15px;
+  }
+
+  .boton-1:hover {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #ffa500;
+  }
+
+  .texto-auxiliar {
+    position: absolute;
+    left: 14.8rem;
+    top: 43rem;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 16px;
+    color: #000000;
+  }
+
+  .texto-auxiliar:hover {
+    color: #ffa500;
+  }
+}
+
+@media screen and (max-width: 1306px) {
+  .containerMaster {
+    margin-top: 0px;
+    background-image: url(../../../assets/mujerArtificial.svg) !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    width: 100%;
+    height: 702px;
+    opacity: 0.5;
+  }
+
+  .nova {
+    position: absolute;
+    left: 4%;
+    top: 79%;
+    width: 39%;
+    opacity: 0.6;
+  }
+
+  .input-container {
+    position: absolute;
+    left: 50.6rem;
+    top: 1rem;
+    width: 448px;
+    height: 655px;
+    border-radius: 25px;
+    background: #f5f5f5;
+    filter: drop-shadow(0px 8px 8px rgba(0, 0, 0, 0.25));
+  }
+  .monito {
+    position: relative;
+    left: 201px;
+    top: 60px;
+    width: 83px;
+  }
+
+  .texto-1 {
+    position: absolute;
+
+    left: 11.5rem;
+    top: 11.5rem;
+
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 33px;
+    color: #3c3c3c;
+  }
+
+  .cajita-1 {
+    position: absolute;
+    left: 5.8rem;
+    top: 280px;
+    width: 18rem;
+    height: 2.5rem;
+    border-radius: 10px;
+    background: rgba(217, 217, 217, 0.5);
+    border-left: rgba(217, 217, 217, 0.5);
+    border-bottom: rgba(217, 217, 217, 0.5);
+    border-top: rgba(217, 217, 217, 0.5);
+    border-right: rgba(217, 217, 217, 0.5);
+    font-weight: 500;
+  }
+
+  .email {
+    position: absolute;
+    left: 5.8rem;
+    top: 15.5rem;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 33px;
+    color: #3c3c3c;
+  }
+
+  .iconoMail {
+    position: absolute;
+    top: 18rem;
+    left: 103px;
+    font-size: 26px;
+  }
+
+  .contraseña {
+    position: absolute;
+    left: 5.8rem;
+    top: 21.5rem;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 33px;
+    color: #3c3c3c;
+  }
+
+  .iconoContraseña {
+    font-size: 26px;
+    position: absolute;
+    top: 24rem;
+    left: 103px;
+  }
+
+  .cajita-1::placeholder {
+    color: #3c3c3c !important;
+  }
+
+  .cajita-2 {
+    /*input con el nombre arriba y el espacio en blanco en una linea*/
+    position: absolute;
+    left: 5.8rem;
+    top: 378px;
+    width: 18rem;
+    height: 2.5rem;
+    border-radius: 10px;
+    background: rgba(217, 217, 217, 0.5);
+    border-left: rgba(217, 217, 217, 0.5);
+    border-bottom: rgba(217, 217, 217, 0.5);
+    border-top: rgba(217, 217, 217, 0.5);
+    border-right: rgba(217, 217, 217, 0.5);
+    font-weight: 500;
+  }
+  .cajita-2::placeholder {
+    color: #3c3c3c !important;
+  }
+
+  .error-texto {
+    position: absolute;
+    left: 26rem;
+    top: 19.5rem;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #ff0000;
+  }
+
+  .boton-1 {
+    position: absolute;
+    left: 12.8rem;
+    top: 30rem;
+    width: 71px;
+    height: 2rem;
+    background: #ffa500;
+    border: 1px solid #ffffff;
+    box-sizing: border-box;
+    border-radius: 4px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: "Roboto";
+    font-size: 15px;
+  }
+
+  .boton-1:hover {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #ffa500;
+  }
+
+  .texto-auxiliar {
+    position: absolute;
+    left: 8.8rem;
+    top: 33rem;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 16px;
+    color: #000000;
+  }
+
+  .texto-auxiliar:hover {
+    color: #ffa500;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .background {
+    position: relative;
+    left: 0rem;
+    top: -5.5rem;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 100%;
+  }
+
+  .input-container {
+    left: 0rem;
+    top: 17.7rem;
+    width: 100%;
+    height: 61.6%;
+  }
+
+  .monito {
+    width: 75px;
+    height: 75px;
+    margin-top: 5%;
+    margin-left: 40%;
+  }
+
+  .texto-1 {
+    left: 33%;
+    top: 22%;
+    font-size: 23px;
+  }
+
+  .cajita-1 {
+    /*input con el nombre arriba y el espacio en blanco en una linea*/
+    position: absolute;
+    left: 3rem;
+    top: 9.5rem;
+    width: 18rem;
+    height: 2rem;
+    font-size: 16px;
+  }
+
+  .cajita-2 {
+    /*input con el nombre arriba y el espacio en blanco en una linea*/
+    position: absolute;
+    left: 3rem;
+    top: 13rem;
+    width: 18rem;
+    height: 2rem;
+    font-size: 16px;
+  }
+
+  .error-texto {
+    left: 13rem;
+    top: 15rem;
+  }
+
+  .boton-1 {
+    /* boton pequeño con borde naranja */
+    position: absolute;
+    left: 3rem;
+    top: 17rem;
+    width: 18.5rem;
+    height: 3rem;
+    background: #ffa500;
+    border: 1px solid #ffffff;
+    box-sizing: border-box;
+    border-radius: 4px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: "Roboto";
+    font-size: 15px;
+    color: #ffffff;
+  }
+
+  .boton-1:hover {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #ffa500;
+  }
+
+  .texto-auxiliar {
+    left: 3rem;
+    top: 21rem;
+    font-size: 14px;
+    background: none;
+  }
+
+  .texto-auxiliar:hover {
+    color: #ffa500;
+  }
+}
