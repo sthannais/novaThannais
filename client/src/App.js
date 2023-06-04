@@ -24,7 +24,7 @@ function App() {
         (authBack === 'logged') ?
         //si estoy en guide, no muestro el navbar
         <>
-          <NavBar />
+          <NavBarNew />
           <Routes>
             <Route path="/listaDePersonal" element={<ListaDePersonal />} />
             <Route path="/guiaDeReparto" element={<GuiaDeReparto />} />

@@ -32,12 +32,12 @@ const ChangeLog = () => {
 
     return (
         <div>
-            <button className={style.changelog} onClick={
+            <p className={style.changelog} onClick={
                 () => {
                     toggle();
                 }
-            } >Ver. 1.5.0
-            </button>
+            } >Ver actualizaciones
+            </p>
             <Modal isOpen={modal} toggle={toggle} style={
                 width > 768 ? modalStyles : modalStylesMobile
             } size="md" backdrop="static" onKeyDown={handleKeydown}>

@@ -10,6 +10,8 @@ import CierreDeSesion from './CierreDeSesion/CierreDeSesion';
 const LoginPage = () => {
 
     const width = window.innerWidth;
+    const height = window.innerHeight;
+    
     const { status } = useSelector((state) => state.Autenticacion.autBack);
     const { error } = useSelector((state) => state.Autenticacion.autBack);
     const channel = new BroadcastChannel('auth');

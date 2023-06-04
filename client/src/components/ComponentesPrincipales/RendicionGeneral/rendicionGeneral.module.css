@@ -9,12 +9,13 @@
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     font-family: 'Roboto';
+    z-index: -1;
 }
 
 .text {
     position: absolute;
-    left: 20%;
-    top: 4.5%;
+    left: 15%;
+    top: 2.8%;
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 800;
@@ -24,8 +25,9 @@
 }
 
 .logo {
-    margin-left: 82rem;
-    margin-top: 1rem;
+    position: absolute;
+    left: 50%;
+    top: 1%;
 }
 
 .button {

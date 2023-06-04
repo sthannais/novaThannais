@@ -1,7 +1,7 @@
 .text {
     position: absolute;
-    left: 20%;
-    top: 4.5%;
+    left: 15%;
+    top: 2.8%;
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 800;
@@ -11,8 +11,9 @@
 }
 
 .logo {
-    margin-left: 82rem;
-    margin-top: 1rem;
+    position: absolute;
+    left: 50%;
+    top: 1%;
 }
 
 .excel{
