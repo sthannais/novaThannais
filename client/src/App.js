@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import { useCheckAuthBack } from "./hooks/useCheckAuthBack";
-import LoginPage from "./components/ComponentesPrincipales/PaginaLogin/LoginNova";
 import Login from "./components/ComponentesPrincipales/PaginaLogin/Login/Login";
 import ListaDePersonal from "./components/ComponentesPrincipales/ListaDePersonal/ListaDePersonal";
 import GuiaDeReparto from "./components/ComponentesPrincipales/GuiaDeReparto/GuiaDeReparto";

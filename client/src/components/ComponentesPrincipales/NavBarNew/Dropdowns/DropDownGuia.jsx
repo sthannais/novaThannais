@@ -23,7 +23,7 @@ function DropdownGuia({ setOpen }) {
     function DropdownItem(props) {
         return (
             <Link 
-                to={ props.children === 'Lista de Personal' ? '/listaDePersonal' : '/rendicionPersonal'} 
+                to={ props.children === 'Guias de Reparto' ? '/guiaDeReparto' : '/historialAnticipos' }
                 className="menu-item" 
                 onClick={() => {
                     props.goToMenu && setActiveMenu(props.goToMenu)

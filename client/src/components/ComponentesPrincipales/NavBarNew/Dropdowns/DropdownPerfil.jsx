@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Monito } from '../../../../assets/JORGITO.svg';
 import { IoPersonCircleOutline } from 'react-icons/io5';
 import { MdPublishedWithChanges } from 'react-icons/md';
+import { AiFillCloseCircle } from 'react-icons/ai';
 import { GoVersions } from 'react-icons/go';
+import { logoutAction } from '../../../../redux/autenticacionSlice/thunks';
 import ChangeLog from '../../../ComponentesAuxiliares/ChangeLog/ChangeLog';
 import { ReactComponent as CaretIcon } from '../../../../assetsOficial/icons/caret.svg';
 import { ReactComponent as CogIcon } from '../../../../assetsOficial/icons/cog.svg';
@@ -15,10 +17,15 @@ import '../navBarNew.css';
 
 function DropdownPerfil() {
 
-    const { rolId, name, lastname } = useSelector((state) => state.Autenticacion.autBack)
+    const { id, rolId, name, lastname } = useSelector((state) => state.Autenticacion.autBack)
     const [activeMenu, setActiveMenu] = useState('main');
     const [menuHeight, setMenuHeight] = useState(null);
     const dropdownRef = useRef(null);
+
+    const dispatch = useDispatch()
+    const handleLogout = () => {
+        dispatch(logoutAction(id))
+    }
 
     useEffect(() => {
         setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
@@ -69,6 +76,21 @@ function DropdownPerfil() {
                     goToMenu="configuracion">
                     Configuracion
                 </DropdownItem>
+                <button onClick={handleLogout} style={{
+                    border: 'none',
+                    background: 'none',
+                    outline: 'none',
+                    cursor: 'pointer',
+                    width: '100%',
+                    height: '100%',
+                }}>
+                <DropdownItem
+                    leftIcon={<AiFillCloseCircle />}
+                    rightIcon={<ChevronIcon />}
+                    goToMenu="cerrarSesion">
+                    Cerrar sesión
+                </DropdownItem>
+                </button>
             </div>
         </CSSTransition>
 
@@ -127,7 +149,6 @@ function DropdownPerfil() {
                 </DropdownItem>
             </div>
         </CSSTransition>
-
         
     </div>
     );
