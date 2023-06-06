@@ -1,9 +1,5 @@
 .changelog {
-    position: absolute;
-    left: 2.8rem;
-    top: 95.5%;
-    width: 8rem;
-    height: 2rem;
+    margin-top: 1rem;
     background-color: transparent;
     border: none;
     color: #FFFFFF;

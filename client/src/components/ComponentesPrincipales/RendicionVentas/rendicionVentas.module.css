@@ -1,7 +1,7 @@
 .container {
     position: absolute;
     top: 70px;
-    left: 17rem;
+    left: 10.5%;
     background-color: #F5F5F5;
     width: 1200px;
     height: 730px;
@@ -9,12 +9,13 @@
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     font-family: 'Roboto';
+    z-index: -1;
 }
 
 .text {
     position: absolute;
-    left: 20%;
-    top: 4.5%;
+    left: 15%;
+    top: 2.8%;
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 800;
@@ -24,8 +25,9 @@
 }
 
 .logo {
-    margin-left: 82rem;
-    margin-top: 1rem;
+    position: absolute;
+    left: 50%;
+    top: 1%;
 }
 
 .inputs {
@@ -184,17 +186,20 @@
 
 @media screen and (min-width: 1800px) {
     .container {
+        top: 8%;
+        left: 9%;
         width: 1590px;
-        height: 860px;
+        height: 870px;
     }
 
     .text {
         left: 15%;
-        top: 3%;;
+        top: 2.5%;
     }
 
     .logo {
-        margin-left: 105rem
+        left: 50%;
+        top: 1%;
     }
 
     .inputs {
@@ -277,15 +282,16 @@
     }
 
     .logo {
-        margin-top: 0.3rem;
-        margin-left: 72rem;
+        position: absolute;
+        left: 50%;
+        top: 1%;
     }
 
     .container {
         width: 1040px;
         height: 750px;
-        top: 52px;
-        left: 16rem;
+        top: 10%;
+        left: 10rem;
     }
 
     .inputs {

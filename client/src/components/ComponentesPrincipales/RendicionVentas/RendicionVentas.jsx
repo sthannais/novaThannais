@@ -111,7 +111,7 @@ const RendicionPage = () => {
 
     return (
         <div className={style.conenedor}>
-            <p className={style.text}>Rendición de gastos</p>
+            <p className={style.text}>Rendición de ventas</p>
             <img src={JorgeGas} alt="logo" className={style.logo} />
             <div className={style.container}>
                 <Select
