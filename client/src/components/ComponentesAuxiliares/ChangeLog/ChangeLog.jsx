@@ -43,6 +43,26 @@ const ChangeLog = () => {
             } size="md" backdrop="static" onKeyDown={handleKeydown}>
                 <ModalHeader toggle={toggle}>Cambios recientes</ModalHeader>
                 <ModalBody>
+                    <h5>Ver. 1.6.0</h5>
+                    <em style={{ color: 'red' }}>05/06/2023</em>
+                    {
+                        verMas && name === 'Ver. 1.6.0' ? (
+                            <ul className={style.newli}>
+                                <li>Nuevo login fresco, remodernizado y representante de nuevas tecnologias para nova</li>
+                                <li>Nueva barra de navegacion optimizado para el crecimiento de nova</li>
+                                <li>Filtro en rendicion de personal optimizado</li>
+                            </ul>
+                        ) : null
+                    }
+                    <br />
+                    <button onClick={
+                        () => {
+                            setVerMas(!verMas);
+                            setName('Ver. 1.6.0')
+                        }
+                    } className={style.verMas}>
+                        { verMas && name === 'Ver. 1.6.0' ? 'Ver menos...' : 'Ver mas...'}
+                    </button>
                     <h5>Ver. 1.5.0</h5>
                     <em style={{ color: 'red' }}>25/05/2023</em>
                     {

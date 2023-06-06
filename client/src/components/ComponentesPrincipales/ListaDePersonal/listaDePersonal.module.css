@@ -92,6 +92,8 @@
 @media screen and ( min-width: 1800px ) {
 
     .container {
+        top: 8%;
+        left: 9%;
         width: 1590px;
         height: 870px;
     }
@@ -132,8 +134,8 @@
     .container {
         width: 1040px;
         height: 618px;
-        top: 52px;
-        left: 16rem;
+        top: 10%;
+        left: 10rem;
     }
 
     .tableContainer {

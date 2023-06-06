@@ -192,8 +192,20 @@
 
 @media screen and ( min-width: 1800px ) {
     .container {
+        top: 8%;
+        left: 9%;
         width: 1590px;
-        height: 850px;
+        height: 870px;
+    }
+
+    .logo {
+        left: 50%;
+        top: 1%;
+    }
+
+    .text {
+        left: 15%;
+        top: 2.5%;
     }
 
     .datePicker {
@@ -253,13 +265,16 @@
     }
 
     .logo {
-        top: 0.5%;
+        position: absolute;
+        left: 50%;
+        top: 1%;
     }
 
     .container {
         width: 1040px;
-        height: 625px;
-        top: 52px;
+        height: 618px;
+        top: 10%;
+        left: 10rem;
     } 
 
     .tableContainer {

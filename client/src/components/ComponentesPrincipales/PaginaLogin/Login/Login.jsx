@@ -6,7 +6,6 @@ import style from "./login.module.css";
 import wave from "../../../../assetsOficial/imgLogin/wave.svg";
 import nova from "../../../../assetsOficial/imgLogin/nova.svg";
 import jorgito from "../../../../assetsOficial/imgLogin/Jorgito.svg";
-import enter from "../../../../assetsOficial/imgLogin/Enter2.svg";
 import Particles from "./Particles/Particles.jsx";
 import CierreDeSesion from "../CierreDeSesion/CierreDeSesion.jsx";
 

@@ -146,17 +146,20 @@
 
 @media screen and (min-width: 1800px) {
     .container {
+        top: 8%;
+        left: 9%;
         width: 1590px;
-        height: 860px;
+        height: 870px;
     }
 
     .text {
         left: 15%;
-        top: 3%;
+        top: 2.5%;
     }
 
     .logo {
-        margin-left: 105rem;
+        left: 50%;
+        top: 1%;
     }
 
     .textDatePicker {
@@ -201,15 +204,16 @@
     }
 
     .logo {
-        margin-top: 0.3rem;
-        margin-left: 72rem;
+        position: absolute;
+        left: 50%;
+        top: 1%;
     }
 
     .container {
         width: 1040px;
         height: 618px;
-        top: 52px;
-        left: 16rem;
+        top: 10%;
+        left: 10rem;
     }
 
     .textDatePicker {

@@ -147,20 +147,20 @@
 @media screen and (min-width: 1800px) {
 
     .container {
-        position: absolute;
-        top: 70px;
-        left: 17rem;
+        top: 8%;
+        left: 9%;
         width: 1590px;
-        height: 850px;
+        height: 870px;
     }
 
     .text {
         left: 15%;
-        top: 3%;
+        top: 2.5%;
     }
 
     .logo {
-        margin-left: 105rem;
+        left: 50%;
+        top: 1%;
     }
 
     .button {
@@ -204,15 +204,16 @@
     }
 
     .logo {
-        margin-top: 0.3rem;
-        margin-left: 72rem;
+        position: absolute;
+        left: 50%;
+        top: 1%;
     }
 
     .container {
         width: 1040px;
-        height: 790px;
-        top: 52px;
-        left: 16rem;
+        height: 670px;
+        top: 10%;
+        left: 10rem;
     }  
 
     .button {

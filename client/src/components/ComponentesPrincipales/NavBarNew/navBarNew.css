@@ -156,3 +156,41 @@ a {
   transform: translateX(110%);
   transition: all var(--speed) ease;
 }
+
+@media screen and (max-width: 1366px) {
+  .navbar-nav {
+    margin-left: 80%;
+  }
+
+  .navbar {
+    padding: 0 0.5rem;
+  }
+
+  .dropdown {
+    width: 250px;
+  }
+
+  .dropdown .menu-item {
+    height: 40px;
+  }
+
+  .dropdown .menu-item .icon-button {
+    width: 30px;
+    height: 30px;
+  }
+
+  .dropdown .menu-item .icon-button svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .dropdown .menu-item .icon-right svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .dropdown .menu-item .icon-right {
+    margin-left: auto;
+  }
+
+}
