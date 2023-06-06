@@ -29,6 +29,8 @@
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     @media screen and (max-width: 768px) {
