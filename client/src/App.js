@@ -10,6 +10,7 @@ import RendicionGeneral from "./components/ComponentesPrincipales/RendicionGener
 import RendicionPersonal from "./components/ComponentesPrincipales/RendicionGeneral/RendicionPersonal/RendicionPersonal";
 import HistorialAnticipos from "./components/ComponentesPrincipales/HistorialAnticipos/HistorialAnticipos";
 import InventarioVales from "./components/ComponentesPrincipales/InventarioVales/InventarioVales";
+import AsistenteNova from "./components/ComponentesPrincipales/AsistenteNova/AsistenteNova";
 
 function App() {
   const authBack = useCheckAuthBack();
@@ -23,6 +24,7 @@ function App() {
         //si estoy en guide, no muestro el navbar
         <>
           <NavBarNew />
+          <AsistenteNova />
           <Routes>
             <Route path="/listaDePersonal" element={<ListaDePersonal />} />
             <Route path="/guiaDeReparto" element={<GuiaDeReparto />} />
