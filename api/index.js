@@ -28,11 +28,13 @@ const {
   Patentes,
   ListaDePrecios,
   InventarioVales,
+  Preguntas,
 } = require("./src/db.js");
 const createRoles = require("./src/testingCreators/roles.js");
 const createPatentes = require("./src/testingCreators/patentes.js");
 const createCuadrantes = require("./src/testingCreators/cuadrante.js");
 const createListaDePrecios = require("./src/testingCreators/listaDePrecios.js");
+const createPreguntasYRespuestas = require("./src/testingCreators/preguntas-respuestas.js");
 const {
   createAdministradores,
   createChoferPeoeneta,
@@ -70,5 +72,8 @@ conn.sync({ force: false }).then(() => {
 
     const listaDePrecios = await ListaDePrecios.findAll();
     if (listaDePrecios.length < 1) createListaDePrecios();
+
+    const preguntas = await Preguntas.findAll();
+    if (preguntas.length < 1) createPreguntasYRespuestas();
   });
 });

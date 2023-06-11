@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AWS from "aws-sdk";
 import "./AsistenteNova.css";
+import {
+  helperAsistenteNova,
+  helperAsistenteNovaRespuestas,
+} from "../../../helpers/AsistenteNova";
 
 AWS.config.update({
   accessKeyId: "AKIA4SZ6OQ66ASMHEFGR",
@@ -12,6 +16,10 @@ const AsistenteNova = () => {
   const [inputText, setInputText] = useState("");
   const [messages, setMessages] = useState([]);
   const [isChatMinimized, setIsChatMinimized] = useState(false);
+  const [questions, setQuestions] = useState();
+  const [answer, setAnswer] = useState();
+
+  console.log(answer, "answer");
 
   const lexClientV2 = new AWS.LexRuntimeV2();
 
@@ -51,6 +59,23 @@ const AsistenteNova = () => {
     setIsChatMinimized(!isChatMinimized);
   };
 
+  const handleAsistenteNova = async () => {
+    const result = await helperAsistenteNova();
+    setQuestions(result);
+    console.log(result, "result");
+  };
+
+  const handleQuestion = async (id, question) => {
+    console.log(id, "id");
+    const result2 = await helperAsistenteNovaRespuestas(id, question);
+    console.log(result2, "result222");
+    setAnswer(result2.respuestas);
+  };
+
+  useEffect(() => {
+    handleAsistenteNova();
+  }, []);
+
   return (
     <div className={`chat-modal ${isChatMinimized ? "minimized" : ""}`}>
       <div className="chat-header" onClick={toggleChat}>
@@ -75,16 +100,41 @@ const AsistenteNova = () => {
                 )}
               </div>
             ))}
-          </div>
-          <div className="input-container">
-            <input
-              type="text"
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-            />
-            <button className="send-button" onClick={handleSendMessage}>
-              Enviar
-            </button>
+            <div className="div">
+              {questions &&
+                questions.map((question, index) => (
+                  <>
+                    <div className="question" key={index}>
+                      <div
+                        className="question-message"
+                        onClick={() => {
+                          handleQuestion(question.id, question.preguntas);
+                        }}
+                      >
+                        NovaChagpt: {question.preguntas}
+                        {answer &&
+                          answer.map((answer, index) => (
+                            <div className="answer" key={index}>
+                              <div className="answer-message">
+                                persona: {answer.respuestas}
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  </>
+                ))}
+              <div className="input-container">
+                <input
+                  type="text"
+                  value={inputText}
+                  onChange={(e) => setInputText(e.target.value)}
+                />
+                <button className="send-button" onClick={handleSendMessage}>
+                  Enviar
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
