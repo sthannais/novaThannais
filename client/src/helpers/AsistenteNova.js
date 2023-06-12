@@ -82,7 +82,7 @@ export const chatGpt = async (message) => {
       {
         headers: {
           Authorization:
-            "Bearer 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",
+            "Bearer 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",
         },
       }
     );
