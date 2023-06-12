@@ -1,9 +1,10 @@
 import axios from "axios";
 
-const helperAsistenteNova = async () => {
+const helperAsistenteNova = async (name) => {
   try {
+    console.log("name", name);
     const response = await axios.get(
-      "http://localhost:3001/asistenteNova/preguntas"
+      `http://localhost:3001/asistenteNova/preguntas/${name}`
     );
     return response.data;
   } catch (error) {
@@ -11,28 +12,55 @@ const helperAsistenteNova = async () => {
   }
 };
 
-const helperAsistenteNovaRespuestas = async (id, question) => {
+const helperAsistenteNovaRespuestas = async (name) => {
   try {
-    const response = await axios.get(
-      `http://localhost:3001/asistenteNova/preguntas/respuestas/${id}`
-    );
-    console.log("responseHAHAHAHAHHA", response.data);
-    if (response.data.servicio === "chatgpt") {
-      const chat = await chatGpt(question);
+    const response = await helperAsistenteNova(name);
+    const chat = await chatGpt(name);
 
+    if (response && response.servicio === "db_nova") {
+      const nameFunction = response.function;
+      const responseData = await dataStructure();
       return {
-        respuestas: [
-          {
-            respuestas: chat.data.choices[0].message.content,
-          },
-        ],
+        name_function: responseData[await nameFunction](),
+        fields: response.columns_name,
+        service: "db_nova",
       };
     }
-
-    return response.data;
+    console.log("Pasoooooo");
+    console.log(chat.data.choices[0].message.content);
+    return {
+      name: chat.data.choices[0].message.content,
+      service: "chat_gpt",
+    };
   } catch (error) {
     console.log(error);
   }
+};
+
+const dataStructure = async () => {
+  let functions = {
+    getListaDePrecios: async function () {
+      try {
+        const response = await axios.get(
+          `http://localhost:3001/listaDePrecios`
+        );
+        console.log("responseHAHAHAHAHHA", response.data);
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    getPersonal: async function () {
+      try {
+        const response = await axios.get(`http://localhost:3001/personal`);
+        console.log("responseHAHAHAHAHHA", response.data);
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  };
+  return functions;
 };
 
 export const chatGpt = async (message) => {
@@ -54,7 +82,7 @@ export const chatGpt = async (message) => {
       {
         headers: {
           Authorization:
-            "Bearer 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",
+            "Bearer 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",
         },
       }
     );
@@ -64,4 +92,4 @@ export const chatGpt = async (message) => {
   }
 };
 
-export { helperAsistenteNova, helperAsistenteNovaRespuestas };
+export { helperAsistenteNova, helperAsistenteNovaRespuestas, dataStructure };

@@ -1,42 +1,37 @@
-const { Preguntas, Respuestas } = require("../db");
+const { Preguntas } = require("../db");
 
-const createPreguntasYRespuestas = async () => {
-  const pregunta1 = await Preguntas.create({
+const createPreguntas = async () => {
+  await Preguntas.create({
     preguntas: "Dame la lista de personal de nova",
+    columns_name: '{"name":1,"precio5kg":1,"precio45kg":1}',
     servicio: "db_nova",
+    function: "inventarioDctoRuts",
   });
-  const respuesta1 = await Respuestas.create({
-    respuestas: "La lista de personal de nova es la siguiente: ",
-    descripcion: "es una lista de personal de nova",
-  });
-  pregunta1.addRespuestas(respuesta1);
-  const pregunta2 = await Preguntas.create({
+  await Preguntas.create({
     preguntas: "¿cuanto vendimos hoy?",
     servicio: "db_nova",
+    columns_name: '{"name":1,"precio5kg":1,"precio45kg":1}',
+    function: "inventarioDctoRuts",
   });
-  const respuesta2 = await Respuestas.create({
-    respuestas: "Vendimos 1000 pesos",
-    descripcion: "es la venta de hoy",
-  });
-  pregunta2.addRespuestas(respuesta2);
-  const pregunta3 = await Preguntas.create({
+
+  await Preguntas.create({
     preguntas: "¿cuanto vendimos ayer?",
+    columns_name: '{"name":1,"precio5kg":1,"precio45kg":1}',
     servicio: "db_nova",
+    function: "inventarioDctoRuts",
   });
-  const respuesta3 = await Respuestas.create({
-    respuestas: "Vendimos 2000 pesos",
-    descripcion: "es la venta de ayer",
-  });
-  pregunta3.addRespuestas(respuesta3);
-  const pregunta4 = await Preguntas.create({
+  await Preguntas.create({
     preguntas: "¿cuanto vendimos esta semana?",
     servicio: "db_nova",
+    columns_name: '{"name":1,"precio5kg":1,"precio45kg":1}',
+    function: "inventarioDctoRuts",
   });
-  const respuesta4 = await Respuestas.create({
-    respuestas: "Vendimos 3000 pesos",
-    descripcion: "es la venta de esta semana",
+  await Preguntas.create({
+    preguntas: "¿nombre del personal?",
+    servicio: "db_nova",
+    columns_name: '{"name":1,"lastname":1,"email":1}',
+    function: "getPersonal",
   });
-  pregunta4.addRespuestas(respuesta4);
 };
 
-module.exports = createPreguntasYRespuestas;
+module.exports = createPreguntas;

@@ -8,5 +8,11 @@ module.exports = (sequelize) => {
     servicio: {
       type: DataTypes.STRING,
     },
+    function: {
+      type: DataTypes.STRING,
+    },
+    columns_name: {
+      type: DataTypes.STRING,
+    },
   });
 };

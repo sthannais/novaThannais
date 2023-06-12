@@ -4,6 +4,7 @@ import "./AsistenteNova.css";
 import {
   helperAsistenteNova,
   helperAsistenteNovaRespuestas,
+  dataStructure,
 } from "../../../helpers/AsistenteNova";
 
 AWS.config.update({
@@ -16,12 +17,10 @@ const AsistenteNova = () => {
   const [inputText, setInputText] = useState("");
   const [messages, setMessages] = useState([]);
   const [isChatMinimized, setIsChatMinimized] = useState(false);
-  const [questions, setQuestions] = useState();
-  const [answer, setAnswer] = useState();
-
-  console.log(answer, "answer");
+  const [fieldConvert, setfieldConvert] = useState({});
 
   const lexClientV2 = new AWS.LexRuntimeV2();
+  console.log("messageswwww", messages);
 
   const enviarMensajeMia = async () => {
     const params = {
@@ -35,23 +34,29 @@ const AsistenteNova = () => {
     try {
       const response = await lexClientV2.recognizeText(params).promise();
       console.log(response);
-
-      // Manejar la respuesta de Lex
-      const botMessage = response.messages[0].content;
-      setMessages([
-        ...messages,
-        { text: botMessage, sender: "bot" },
-        { text: inputText, sender: "user" },
-      ]);
     } catch (error) {
       console.log(error);
       // Manejar los errores aquí
     }
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (inputText.trim() === "") return;
-    enviarMensajeMia();
+    const response = await helperAsistenteNovaRespuestas(inputText);
+    console.log("responseeee", response);
+    let botMessage = response;
+    if (response.service === "db_nova") {
+      console.log("Pasamossss");
+      botMessage = await response.name_function;
+      setfieldConvert(JSON.parse(response.fields));
+    }
+
+    setMessages([
+      ...messages,
+      { text: inputText, sender: "user", service: response.service },
+      { text: botMessage, sender: "bot", service: response.service },
+    ]);
+    //enviarMensajeMia();
     setInputText("");
   };
 
@@ -59,21 +64,8 @@ const AsistenteNova = () => {
     setIsChatMinimized(!isChatMinimized);
   };
 
-  const handleAsistenteNova = async () => {
-    const result = await helperAsistenteNova();
-    setQuestions(result);
-    console.log(result, "result");
-  };
-
-  const handleQuestion = async (id, question) => {
-    console.log(id, "id");
-    const result2 = await helperAsistenteNovaRespuestas(id, question);
-    console.log(result2, "result222");
-    setAnswer(result2.respuestas);
-  };
-
   useEffect(() => {
-    handleAsistenteNova();
+    //handleAsistenteNova();
   }, []);
 
   return (
@@ -96,45 +88,38 @@ const AsistenteNova = () => {
                 {message.sender === "user" ? (
                   <div className="user-message">Tú: {message.text}</div>
                 ) : (
-                  <div className="bot-message">NovaChagpt: {message.text}</div>
+                  <div className="bot-message">
+                    NovaChagpt:
+                    {message.service === "db_nova" ? (
+                      message.text.map((element) => (
+                        <ul>
+                          {Object.keys(fieldConvert).map((key, index) => (
+                            <li key={key} className="">
+                              {element[key]}
+                            </li>
+                          ))}
+                        </ul>
+                      ))
+                    ) : (
+                      <ul>
+                        <li>{message.text.name}</li>
+                      </ul>
+                    )}
+                  </div>
                 )}
               </div>
             ))}
-            <div className="div">
-              {questions &&
-                questions.map((question, index) => (
-                  <>
-                    <div className="question" key={index}>
-                      <div
-                        className="question-message"
-                        onClick={() => {
-                          handleQuestion(question.id, question.preguntas);
-                        }}
-                      >
-                        NovaChagpt: {question.preguntas}
-                        {answer &&
-                          answer.map((answer, index) => (
-                            <div className="answer" key={index}>
-                              <div className="answer-message">
-                                persona: {answer.respuestas}
-                              </div>
-                            </div>
-                          ))}
-                      </div>
-                    </div>
-                  </>
-                ))}
-              <div className="input-container">
-                <input
-                  type="text"
-                  value={inputText}
-                  onChange={(e) => setInputText(e.target.value)}
-                />
-                <button className="send-button" onClick={handleSendMessage}>
-                  Enviar
-                </button>
-              </div>
-            </div>
+          </div>
+
+          <div className="input-container">
+            <input
+              type="text"
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+            />
+            <button className="send-button" onClick={handleSendMessage}>
+              Enviar
+            </button>
           </div>
         </div>
       )}
